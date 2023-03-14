@@ -1,7 +1,11 @@
+import MenuAppBar from "./components/MenuNavBar/MenuAppBar"
+
 function App() {
 
-  return (
-    <h1>Front Beginners</h1>
+  return ( 
+    <>
+      <MenuAppBar />
+    </>
   )
 }
 
