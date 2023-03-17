@@ -1,10 +1,10 @@
-import MenuAppBar from "./components/MenuNavBar/MenuAppBar"
+import MenuSidebar from "./components/MenuNavBar/MenuSidebar"
 
 function App() {
 
   return ( 
     <>
-      <MenuAppBar />
+      <MenuSidebar />
     </>
   )
 }
