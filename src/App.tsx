@@ -1,7 +1,15 @@
+import Workstation from './pages/Workstation/Workstation';
 import { ReactNode } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './components/Header/Header';
 import MenuSidebar from './components/Sidebar/Sidebar';
+import Dashboard from './pages/Dashboard/Dashboard';
+import License from './pages/License/License';
+import Mobile from './pages/Mobile/Mobile';
+import Nobreak from './pages/Nobreak/Nobreak';
+import Printer from './pages/Printer/Printer';
+import User from './pages/User/User';
 
 function App() {
   return (
@@ -10,7 +18,15 @@ function App() {
       <Content>
         <Header />
         <Main>
-          <Rotas></Rotas>
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/workstation" element={<Workstation />} />
+            <Route path="/license" element={<License />} />
+            <Route path="/mobile" element={<Mobile />} />
+            <Route path="/nobreak" element={<Nobreak />} />
+            <Route path="/printer" element={<Printer />} />
+            <Route path="/user" element={<User />} />
+          </Routes>
         </Main>
       </Content>
     </Layout>

@@ -6,7 +6,7 @@ import {
   useProSidebar,
   sidebarClasses,
 } from 'react-pro-sidebar';
-import {theme} from '../../style/Theme'
+import { theme } from '../../style/Theme';
 import { ButtonColapseContainer, SidebarContainer } from './Sidebar.style';
 import { Button, Typography } from '@mui/material';
 import AddTaskIcon from '@mui/icons-material/AddTask';
@@ -16,6 +16,8 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import DevicesIcon from '@mui/icons-material/Devices';
 import PeopleIcon from '@mui/icons-material/People';
 import Divider from '@mui/material/Divider';
+import { Link } from 'react-router-dom';
+import SpeedIcon from '@mui/icons-material/Speed';
 
 export default function MenuSidebar() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
@@ -26,7 +28,7 @@ export default function MenuSidebar() {
       <Sidebar
         rootStyles={{
           [`.${sidebarClasses.container}`]: {
-            backgroundColor: `${(theme.colors.primary)}`
+            backgroundColor: `${theme.colors.primary}`,
           },
         }}
       >
@@ -36,7 +38,7 @@ export default function MenuSidebar() {
               // only apply styles on first level elements of the tree
               if (level === 1)
                 return {
-                  color: disabled ? '#b4b4b4' : `${(theme.colors.black)}`,
+                  color: disabled ? '#b4b4b4' : `${theme.colors.black}`,
                   backgroundColor: !disabled ? '#31313199' : undefined,
                   '&:hover': {
                     backgroundColor: '#9999',
@@ -64,16 +66,25 @@ export default function MenuSidebar() {
               onClick={() => collapseSidebar()}
             ></Button>
           </ButtonColapseContainer>
-          <Divider color='#161616' />
-          <MenuItem icon={<AddTaskIcon />}>Solicitações</MenuItem>
+          <Divider color="#161616" />
+          <MenuItem
+            component={<Link to={'/dashboard'} />}
+            icon={<SpeedIcon />}
+          >
+            Dashboard
+          </MenuItem>
           <SubMenu icon={<DevicesIcon />} label="Ativos">
-            <MenuItem>Estação de trabalho</MenuItem>
-            <MenuItem>Mobile</MenuItem>
-            <MenuItem>Nobreak</MenuItem>
-            <MenuItem>Impressora</MenuItem>
-            <MenuItem>Licenças</MenuItem>
+            <MenuItem component={<Link to={'/workstation'} />}>
+              Estação de trabalho
+            </MenuItem>
+            <MenuItem component={<Link to={'/mobile'} />}>Mobile</MenuItem>
+            <MenuItem component={<Link to={'/nobreak'} />}>Nobreak</MenuItem>
+            <MenuItem component={<Link to={'/printer'} />}>Impressora</MenuItem>
+            <MenuItem component={<Link to={'/license'} />}>Licenças</MenuItem>
           </SubMenu>
-          <MenuItem icon={<PeopleIcon />}>Usuários</MenuItem>
+          <MenuItem icon={<PeopleIcon />} component={<Link to={'/user'} />}>
+            Usuários
+          </MenuItem>
         </Menu>
       </Sidebar>
     </SidebarContainer>
