@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-interface ComponentProps {
+interface Props {
   isColapsed: boolean;
 }
 
@@ -9,11 +9,12 @@ export const SidebarContainer = styled.div`
   height: 100vh;
 `;
 
-export const ButtonColapseContainer = styled.div<ComponentProps>`
+export const ButtonColapseContainer = styled.div<Props>`
   background-color: ${(props) => (props.isColapsed ? '#999' : '#999')};
   justify-content: ${(props) =>
     props.isColapsed ? 'flex-end' : 'space-between'};
-  height: 75px;
+  height: 70px;
   display: flex;
   align-items: center;
 `;
+
