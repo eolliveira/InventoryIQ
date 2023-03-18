@@ -6,12 +6,16 @@ import {
   useProSidebar,
   sidebarClasses,
 } from 'react-pro-sidebar';
-import styled from 'styled-components';
+import { ButtonColapseContainer, SidebarContainer } from './Sidebar.style';
 import AddTaskIcon from '@mui/icons-material/AddTask';
-import { Button, collapseClasses, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import MenuIcon from '@mui/icons-material/Menu';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import DevicesIcon from '@mui/icons-material/Devices';
+import PeopleIcon from '@mui/icons-material/People';
+
+
 
 
 export default function MenuSidebar() {
@@ -23,11 +27,24 @@ export default function MenuSidebar() {
       <Sidebar
         rootStyles={{
           [`.${sidebarClasses.container}`]: {
-            backgroundColor: '#e0e0e0',
+            backgroundColor: '#999',
           },
         }}
       >
-        <Menu>
+        <Menu
+        menuItemStyles={{
+          button: ({ level, active, disabled }) => {
+            // only apply styles on first level elements of the tree
+            if (level === 1) 
+              return {
+                color: disabled ? '#b4b4b4' : '#161616',
+                backgroundColor: !disabled ? '#31313199' : undefined,
+                '&:hover': {
+                  backgroundColor: '#9999',
+                },
+              };
+          },
+        }}>
           <ButtonColapseContainer isColapsed={collapsed}>
             {!collapsed ? <LinkedInIcon fontSize="large" /> : ''}
             {!collapsed ? (
@@ -47,31 +64,18 @@ export default function MenuSidebar() {
               onClick={() => collapseSidebar()}
             ></Button>
           </ButtonColapseContainer>
-          <SubMenu icon={<AddTaskIcon />} label="Charts">
-            <MenuItem> Pie charts </MenuItem>
-            <MenuItem> Line charts </MenuItem>
+          <MenuItem icon={<AddTaskIcon />}>Solicitações</MenuItem>
+          <SubMenu icon={<DevicesIcon />} label="Ativos">
+            <MenuItem>Estação de trabalho</MenuItem>
+            <MenuItem>Mobile</MenuItem>
+            <MenuItem>Nobreak</MenuItem>
+            <MenuItem>Impressora</MenuItem>
+            <MenuItem>Licenças</MenuItem>
           </SubMenu>
-          <MenuItem icon={<AddTaskIcon />}> Documentation </MenuItem>
-          <MenuItem icon={<AddTaskIcon />}> Calendar </MenuItem>
+          <MenuItem icon={<PeopleIcon />}>Usuários</MenuItem>
         </Menu>
       </Sidebar>
     </SidebarContainer>
   );
 }
 
-const SidebarContainer = styled.div`
-  display: flex;
-  height: 100vh;
-`;
-
-interface ComponentProps {
-  isColapsed: boolean;
-}
-
-const ButtonColapseContainer = styled.div<ComponentProps>`
-  background-color: ${(props) => (props.isColapsed ? '#999' : '#999')};
-  justify-content: ${(props) => (props.isColapsed ? 'flex-end' : 'space-between')};
-  height: 50px;
-  display: flex;
-  align-items: center;
-`;
