@@ -1,6 +1,6 @@
-import Workstation from './pages/Workstation/Workstation';
 import { ReactNode } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { theme } from './style/Theme';
 import styled from 'styled-components';
 import Header from './components/Header/Header';
 import MenuSidebar from './components/Sidebar/Sidebar';
@@ -10,6 +10,7 @@ import Mobile from './pages/Mobile/Mobile';
 import Nobreak from './pages/Nobreak/Nobreak';
 import Printer from './pages/Printer/Printer';
 import User from './pages/User/User';
+import Workstation from './pages/Workstation/Workstation';
 
 function App() {
   return (
@@ -53,7 +54,7 @@ const ContentWrapper = styled.div`
   flex: 1;
   height: 100vh;
   overflow: hidden;
-  background-color: red;
+  background-color: '#FDFDFD';
   padding: 10px;
 `;
 

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { theme } from '../../style/Theme';
 
 interface Props {
   isColapsed: boolean;
@@ -10,11 +11,10 @@ export const SidebarContainer = styled.div`
 `;
 
 export const ButtonColapseContainer = styled.div<Props>`
-  background-color: ${(props) => (props.isColapsed ? '#999' : '#999')};
+  background-color: ${theme.colors.primary};
   justify-content: ${(props) =>
     props.isColapsed ? 'flex-end' : 'space-between'};
   height: 70px;
   display: flex;
   align-items: center;
 `;
-
