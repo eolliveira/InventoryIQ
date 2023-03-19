@@ -60,7 +60,16 @@ export default function MenuSidebar() {
           }}
         >
           <ButtonColapseContainer isColapsed={collapsed}>
-            {!collapsed ? <img style={{marginLeft: "10px"}} width={'150px'} src={Image} alt="Logo" /> : ''}
+            {!collapsed ? (
+              <img
+                style={{ marginLeft: '10px' }}
+                width={'150px'}
+                src={Image}
+                alt="Logo"
+              />
+            ) : (
+              ''
+            )}
 
             <Button
               style={{ display: 'flex' }}
@@ -69,16 +78,13 @@ export default function MenuSidebar() {
                   //<MenuIcon fontSize="large" style={{ color: 'black' }} />
 
                   <IconButton
-            size="large"
-            edge="end"
-            aria-label="menu"
-            sx={{ mr: 0,  color: 'black' }}
-          >
-            <MenuIcon />
-          </IconButton>
-
-
-
+                    size="large"
+                    edge="end"
+                    aria-label="menu"
+                    sx={{ mr: 0, color: 'black' }}
+                  >
+                    <MenuIcon />
+                  </IconButton>
                 ) : (
                   <ArrowBackIosNewIcon style={{ color: 'black' }} />
                 )

@@ -57,9 +57,3 @@ const ContentWrapper = styled.div`
   background-color: '#FDFDFD';
   padding: 10px;
 `;
-
-const Rotas = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: darkgreen;
-`;
