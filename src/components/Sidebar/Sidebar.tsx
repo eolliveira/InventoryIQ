@@ -11,7 +11,6 @@ import { ButtonColapseContainer, SidebarContainer } from './Sidebar.style';
 import { Button, IconButton, Typography } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import MenuIcon from '@mui/icons-material/Menu';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import DevicesIcon from '@mui/icons-material/Devices';
 import PeopleIcon from '@mui/icons-material/People';
 import Divider from '@mui/material/Divider';
@@ -19,6 +18,7 @@ import { Link, useLocation } from 'react-router-dom';
 import SpeedIcon from '@mui/icons-material/Speed';
 import { NavLink } from 'react-router-dom';
 import Image from './image.png';
+import DescriptionIcon from '@mui/icons-material/Description';
 export default function MenuSidebar() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
@@ -125,13 +125,14 @@ export default function MenuSidebar() {
             >
               Impressora
             </MenuItem>
-            <MenuItem
-              active={location.pathname === '/license'}
-              component={<Link to={'/license'} />}
-            >
-              Licenças
-            </MenuItem>
           </SubMenu>
+          <MenuItem
+            icon={<DescriptionIcon />}
+            active={location.pathname === '/license'}
+            component={<Link to={'/license'} />}
+          >
+            Licenças
+          </MenuItem>
           <MenuItem
             active={location.pathname === '/user'}
             icon={<PeopleIcon />}
