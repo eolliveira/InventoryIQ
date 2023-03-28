@@ -6,6 +6,7 @@ import TabContext from '@material-ui/lab/TabContext';
 import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import SpeedIcon from '@mui/icons-material/Speed';
+import { theme } from '../../style/Theme';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -25,9 +26,22 @@ export default function WorkstationData() {
   return (
     <div className={classes.root}>
       <TabContext value={value}>
-        <AppBar position="static" color={'primary'}>
-          <TabList onChange={handleChange} aria-label="simple tabs example">
-            <Tab icon={<SpeedIcon/>} label="Item One" value="1" />
+        <AppBar
+          position="static"
+          style={{
+            boxShadow: 'none',
+            //borderBottomStyle: 'outset',
+            //borderBottomColor: 'black',
+            backgroundColor: `${theme.colors.white}`,
+            color: 'black',
+          }}
+        >
+          <TabList
+            indicatorColor={'primary'}
+            onChange={handleChange}
+            aria-label="simple tabs example"
+          >
+            <Tab icon={<SpeedIcon />} label="Item One" value="1" />
             <Tab label="Item Two" value="2" />
             <Tab label="Item Three" value="3" />
           </TabList>
