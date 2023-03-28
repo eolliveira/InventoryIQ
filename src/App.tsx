@@ -8,9 +8,10 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import License from './pages/License/License';
 import Mobile from './pages/Mobile/Mobile';
 import Nobreak from './pages/Nobreak/Nobreak';
-import Printer from './pages/Printer/Printer';
+import Printer from './pages/Printer/PrinterData';
 import User from './pages/User/User';
-import Workstation from './pages/Workstation/Workstation';
+import WorkstationList from './pages/Workstation/WorkstationList';
+import WorkstationData from './pages/Workstation/WorkstationData';
 
 function App() {
   return (
@@ -21,7 +22,9 @@ function App() {
         <Main>
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/workstation" element={<Workstation />} />
+            <Route path="/workstation" element={<WorkstationList />} />
+            <Route path="/workstation/:id" element={<WorkstationData />} />
+
             <Route path="/license" element={<License />} />
             <Route path="/mobile" element={<Mobile />} />
             <Route path="/nobreak" element={<Nobreak />} />
@@ -48,6 +51,7 @@ export function Content({ children }: { children: ReactNode }) {
 export const Main = styled.main`
   height: calc(100% - 60px);
   overflow-y: auto;
+  padding: 10px;
 `;
 
 const ContentWrapper = styled.div`
@@ -55,5 +59,5 @@ const ContentWrapper = styled.div`
   height: 100vh;
   overflow: hidden;
   background-color: '#FDFDFD';
-  padding: 10px;
+  //padding: 10px;
 `;
