@@ -7,6 +7,10 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
+import Badge from '@mui/material/Badge';
+
+import NotificationsIcon from '@mui/icons-material/Notifications';
+
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
@@ -25,8 +29,21 @@ export default function Header() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar sx={{ backgroundColor: 'grey' }} position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+          ></Typography>
           <div>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={7} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
             <IconButton
               size="large"
               aria-label="account of current user"

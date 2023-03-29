@@ -5,8 +5,8 @@ import Tab from '@material-ui/core/Tab';
 import TabContext from '@material-ui/lab/TabContext';
 import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
-import SpeedIcon from '@mui/icons-material/Speed';
 import { theme } from '../../style/Theme';
+import { Typography } from '@mui/material';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -26,12 +26,11 @@ export default function WorkstationData() {
   return (
     <div className={classes.root}>
       <TabContext value={value}>
+      <Typography variant="h5" gutterBottom> Teste </Typography>
         <AppBar
           position="static"
           style={{
             boxShadow: 'none',
-            //borderBottomStyle: 'outset',
-            //borderBottomColor: 'black',
             backgroundColor: `${theme.colors.white}`,
             color: 'black',
           }}
@@ -41,14 +40,20 @@ export default function WorkstationData() {
             onChange={handleChange}
             aria-label="simple tabs example"
           >
-            <Tab icon={<SpeedIcon />} label="Item One" value="1" />
-            <Tab label="Item Two" value="2" />
-            <Tab label="Item Three" value="3" />
+            <Tab label="Detalhes" value="1" />
+            <Tab label="Harware" value="2" />
+            <Tab label="Interfaces" value="3" />
+            <Tab label="Movimentos" value="4" />
+            <Tab label="Licenças" value="5" />
+            <Tab label="Financeiro" value="6" />
           </TabList>
         </AppBar>
         <TabPanel value="1">Item Oneeeeeeeee</TabPanel>
         <TabPanel value="2">Item Twooooooooooooooo</TabPanel>
         <TabPanel value="3">Item Threeeeeeeeeeeee</TabPanel>
+        <TabPanel value="4">Item Threeeeeeeeeeeee</TabPanel>
+        <TabPanel value="5">Item Threeeeeeeeeeeee</TabPanel>
+        <TabPanel value="6">Item Threeeeeeeeeeeee</TabPanel>
       </TabContext>
     </div>
   );
