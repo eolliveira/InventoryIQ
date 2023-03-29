@@ -75,7 +75,6 @@ export default function MenuSidebar() {
               style={{ display: 'flex' }}
               startIcon={
                 collapsed ? (
-                  //<MenuIcon fontSize="large" style={{ color: 'black' }} />
                   <IconButton
                     size="large"
                     edge="end"

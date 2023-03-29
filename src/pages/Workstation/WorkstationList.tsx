@@ -1,9 +1,7 @@
 import styled from 'styled-components';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import { Link } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { flexbox } from '@mui/system/Box';
+import { DataGrid, GridColDef, GridRowHeightParams } from '@mui/x-data-grid';
+import { Typography } from '@mui/material';
+
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../../http/requests';
@@ -16,6 +14,7 @@ export default function Workstation() {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChangePage = (params: any) => {
     setCurrentPage(params.page);
@@ -27,6 +26,7 @@ export default function Workstation() {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const params: AxiosParams = {
       method: 'GET',
       url: `${BASE_URL}/workstation`,
@@ -36,38 +36,36 @@ export default function Workstation() {
       },
     };
 
-    axios(params).then((response) => {
-      setPage(response.data);
-      console.log(response.data);
-      
-    });
-
-    // axios
-    //   .get(BASE_URL + '/workstation')
-    //   .then((response) => {
-    //     setPage(response.data);
-    //   })
+    axios(params)
+      .then((response) => {
+        setPage(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log('Erro' + error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'nome', headerName: 'Nome', width: 130 },
-    { field: 'modelo', headerName: 'Modelo', width: 130 },
+    { field: 'nome', headerName: 'Nome', width: 250 },
+    { field: 'nomeHost', headerName: 'Hostname', width: 150 },
+    { field: 'modelo', headerName: 'Modelo', width: 200 },
     {
       field: 'fabricante',
       headerName: 'Fabricante',
       type: 'number',
-      width: 90,
+      width: 250,
     },
-    // {
-    //   field: 'fullName',
-    //   headerName: 'Full name',
-    //   description: 'This column has a value getter and is not sortable.',
-    //   sortable: false,
-    //   width: 160,
-    //   valueGetter: (params: GridValueGetterParams) =>
-    //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-    // },
+    {
+      field: 'status',
+      headerName: 'Status',
+      type: 'string',
+      width: 150,
+    },
   ];
 
   const rows = [
@@ -87,10 +85,19 @@ export default function Workstation() {
       <DataGrid
         rows={page?.content ?? []}
         columns={columns}
+        loading={isLoading}
+        pageSizeOptions={[25, 50, 100]}
         pagination
-        rowCount={page?.number}
-        onPaginationModelChange={handleChangePage}
-        //checkboxSelection
+        rowCount={page?.totalElements}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 12,
+            },
+          },
+        }}
+        paginationMode="client"
+        rowHeight={35}       
       />
     </div>
   );
