@@ -138,38 +138,9 @@ import { AxiosParams } from 'types/vendor/axios';
 import axios from 'axios';
 import { workstation } from 'types/workstation';
 import { SpringPage } from 'types/vendor/spring';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
 export default function WorkstationList() {
   const [page, setPage] = useState<SpringPage<workstation>>();
@@ -180,10 +151,10 @@ export default function WorkstationList() {
     const params: AxiosParams = {
       method: 'GET',
       url: `${BASE_URL}/workstation`,
-      params: {
-        page: 0,
-        size: 12,
-      },
+      // params: {
+      //   page: 0,
+      //   size: 12,
+      // },
     };
 
     axios(params)
@@ -200,30 +171,28 @@ export default function WorkstationList() {
   }, []);
 
   return (
-    <TableContainer component={Paper} sx={{ height: '90%' }}>
-      <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer component={Paper} sx={{ height: '100%' }}>
+      <Table stickyHeader sx={{ minWidth: 650, '& td': { height: 35, padding:0} }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Id</TableCell>
+            <TableCell align="left">Nome</TableCell>
+            <TableCell align="left">Modelo</TableCell>
+            <TableCell align="left">Fabricante</TableCell>
+            <TableCell align="left">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {page?.content.map((row) => (
             <TableRow
               key={row.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 }, '&:hover': {backgroundColor: '#ebebeb'} }}
             >
-              <TableCell component="th" scope="row">
-                {row.nome}
-              </TableCell>
-              <TableCell align="right">{row.descricao}</TableCell>
-              <TableCell align="right">{row.dominio}</TableCell>
-              <TableCell align="right">{row.memoriaRam}</TableCell>
-              <TableCell align="right">{row.modelo}</TableCell>
+              <TableCell align='center'> <StyledLink to={'/workstation/1'}>{row.id}</StyledLink></TableCell>
+              <TableCell align="left"><StyledLink to={'/workstation/1'}>{row.nome}</StyledLink></TableCell>
+              <TableCell align="left"><StyledLink to={'/workstation/1'}>{row.modelo}</StyledLink></TableCell>
+              <TableCell align="left"><StyledLink to={'/workstation/1'}>{row.fabricante}</StyledLink></TableCell>
+              <TableCell align="left"><StyledLink to={'/workstation/1'}>{row.status}</StyledLink></TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -231,3 +200,13 @@ export default function WorkstationList() {
     </TableContainer>
   );
 }
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: unset;
+
+  &:hover {
+    text-decoration: underline;
+    color: unset;
+  }
+`;
