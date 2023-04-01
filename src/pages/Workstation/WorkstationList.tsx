@@ -140,6 +140,8 @@ import { workstation } from 'types/workstation';
 import { SpringPage } from 'types/vendor/spring';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { pink } from '@mui/material/colors';
+import { theme } from '../../style/Theme';
 
 
 export default function WorkstationList() {
@@ -172,14 +174,14 @@ export default function WorkstationList() {
 
   return (
     <TableContainer component={Paper} sx={{ height: '100%' }}>
-      <Table stickyHeader sx={{ minWidth: 650, '& td': { height: 35, padding:0} }} aria-label="simple table">
+      <Table stickyHeader sx={{ minWidth: 650, '& td': { height: 35, padding:0}}} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Id</TableCell>
-            <TableCell align="left">Nome</TableCell>
-            <TableCell align="left">Modelo</TableCell>
-            <TableCell align="left">Fabricante</TableCell>
-            <TableCell align="left">Status</TableCell>
+            <TableCell style={{ backgroundColor: `${theme.colors.primary}` }}>Id</TableCell>
+            <TableCell style={{ backgroundColor: `${theme.colors.primary}` }} align="left">Nome</TableCell>
+            <TableCell style={{ backgroundColor: `${theme.colors.primary}` }} align="left">Modelo</TableCell>
+            <TableCell style={{ backgroundColor: `${theme.colors.primary}` }} align="left">Fabricante</TableCell>
+            <TableCell style={{ backgroundColor: `${theme.colors.primary}` }} align="left">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

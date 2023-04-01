@@ -13,6 +13,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import { theme } from '../../style/Theme';
+import { black } from 'material-ui/styles/colors';
 
 export default function Header() {
   const [auth, setAuth] = React.useState(true);
@@ -27,18 +29,18 @@ export default function Header() {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar sx={{ backgroundColor: 'grey' }} position="static">
+      <AppBar sx={{ backgroundColor: `${theme.colors.white}`, boxShadow: 'none' }} position="static">
         <Toolbar>
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1 }}
-          ></Typography>
+            sx={{ flexGrow: 1, color: 'black' }}
+          >Estações de Trabalho</Typography>
           <div>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
-              color="inherit"
+              style={{ color: `${theme.colors.black}`}}
             >
               <Badge badgeContent={7} color="error">
                 <NotificationsIcon />
@@ -50,7 +52,7 @@ export default function Header() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleMenu}
-              color="inherit"
+              style={{ color: `${theme.colors.black}`}}
             >
               <AccountCircle />
             </IconButton>
