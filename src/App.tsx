@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Router, Routes } from 'react-router-dom';
 import { theme } from './style/Theme';
 import styled from 'styled-components';
 import Header from './components/Header/Header';
@@ -12,27 +12,26 @@ import Printer from './pages/Printer/PrinterData';
 import User from './pages/User/User';
 import WorkstationList from './pages/Workstation/WorkstationList';
 import WorkstationData from './pages/Workstation/WorkstationData';
+import Login from './pages/Login/Login';
+import RouteManager from './RouteManager';
 
 function App() {
   return (
-    <Layout>
-      <MenuSidebar />
-      <Content>
-        <Header />
-        <Main>
-          <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/workstation" element={<WorkstationList />} />
-            <Route path="/workstation/:id" element={<WorkstationData />} />
-            <Route path="/license" element={<License />} />
-            <Route path="/mobile" element={<Mobile />} />
-            <Route path="/nobreak" element={<Nobreak />} />
-            <Route path="/printer" element={<Printer />} />
-            <Route path="/user" element={<User />} />
-          </Routes>
-        </Main>
-      </Content>
-    </Layout>
+    <>
+      {true ? (
+        <Login />
+      ) : (
+        <Layout>
+          <MenuSidebar />
+          <Content>
+            <Header />
+            <Main>
+              <RouteManager />
+            </Main>
+          </Content>
+        </Layout>
+      )}
+    </>
   );
 }
 
