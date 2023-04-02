@@ -7,6 +7,15 @@ export const CLIENT_ID = 'snmpmanager';
 
 export const CLIENT_ID_SECRET = 'snmpmanager123';
 
+type LoginResponse = {
+  access_token: string;
+  expires_in: number;
+  scope: string;
+  token_type: string;
+  userFirstName: string;
+  userId: number;
+};
+
 type LoginData = {
   username: string;
   password: string;
@@ -31,3 +40,13 @@ export const requestBackendLogin = (loginData: LoginData) => {
     data,
   });
 };
+
+export function saveAuthData(obj: LoginResponse) {
+  localStorage.setItem('authData', JSON.stringify(obj))
+}
+
+export function getAuthData() {
+  const str = localStorage.getItem('authData') ?? "{}"
+  return JSON.parse(str) as LoginResponse
+}
+

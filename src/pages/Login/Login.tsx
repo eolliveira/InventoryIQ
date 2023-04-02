@@ -1,4 +1,4 @@
-import { requestBackendLogin } from '../../http/requests';
+import { requestBackendLogin, saveAuthData } from '../../http/requests';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -17,6 +17,7 @@ export default function Login() {
   const onSubmit = (formData: FormData) => {
     requestBackendLogin(formData)
       .then((response) => {
+        saveAuthData(response.data)
         console.log('sucesso: ' + response);
       })
       .catch((error) => {
