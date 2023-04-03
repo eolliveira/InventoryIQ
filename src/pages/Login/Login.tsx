@@ -12,22 +12,24 @@ type FormData = {
 //imprementar erro na requisição usando um estado
 
 export default function Login() {
-  
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
   const navigate = useNavigate();
 
   const onSubmit = (formData: FormData) => {
     requestBackendLogin(formData)
       .then((response) => {
-        saveAuthData(response.data)
-        console.log('sucesso: ' + response);
-        navigate('/dashboard')
+        saveAuthData(response.data);
+        //*****  verificar uma outra forma de fazer o redirecionamento  ****//
+        //navigate('/');
+        window.location.href = '/dashboard';
       })
       .catch((error) => {
         console.log('error:' + error);
       });
-
-    console.log(formData);
   };
 
   return (
@@ -36,7 +38,7 @@ export default function Login() {
       <div>{errors.username?.message}</div>
       <input
         {...register('username', {
-            required: 'Login obrigatorio'
+          required: 'Login obrigatorio',
         })}
         name="username"
         type="text"
@@ -47,14 +49,14 @@ export default function Login() {
       <div>{errors.password?.message}</div>
       <input
         {...register('password', {
-            required: 'Informe a senha'
+          required: 'Informe a senha',
         })}
         name="password"
         type="password"
         placeholder="senha"
       />
 
-      <button type="submit">Entrar</button>
+      <button>Entrar</button>
     </FormWrapper>
   );
 }
