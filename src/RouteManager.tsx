@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
 import WorkstationList from './pages/Workstation/WorkstationList';
 import WorkstationData from './pages/Workstation/WorkstationData';
@@ -12,7 +12,7 @@ import Login from './pages/Login/Login';
 export default function RouteManager() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Navigate to="/dashboard" />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/workstation" element={<WorkstationList />} />
       <Route path="/workstation/:id" element={<WorkstationData />} />

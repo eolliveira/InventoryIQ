@@ -133,7 +133,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
-import { BASE_URL } from '../../http/requests';
+import { BASE_URL, requestBackend } from '../../http/requests';
 import axios, { AxiosRequestConfig } from 'axios';
 import { workstation } from 'types/workstation';
 import { SpringPage } from 'types/vendor/spring';
@@ -152,14 +152,14 @@ export default function WorkstationList() {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/workstation`,
-      baseURL: BASE_URL,
+      withCredentials: true,
       params: {
         page: 0,
         size: 12,
       },
     };
 
-    axios(params)
+    requestBackend(params)
       .then((response) => {
         setPage(response.data);
         console.log(response.data);

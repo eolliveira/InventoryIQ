@@ -1,6 +1,6 @@
 import { requestBackendLogin, saveAuthData } from '../../http/requests';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 type FormData = {
@@ -12,13 +12,16 @@ type FormData = {
 //imprementar erro na requisição usando um estado
 
 export default function Login() {
+  
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const navigate = useNavigate();
 
   const onSubmit = (formData: FormData) => {
     requestBackendLogin(formData)
       .then((response) => {
         saveAuthData(response.data)
         console.log('sucesso: ' + response);
+        navigate('/dashboard')
       })
       .catch((error) => {
         console.log('error:' + error);

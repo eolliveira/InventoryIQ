@@ -1,11 +1,14 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import qs from 'qs';
+import jwtDecode from 'jwt-decode';
+import { TokenData } from 'types/TokenData';
 
 export const BASE_URL = 'http://localhost:8080';
 
 export const CLIENT_ID = 'snmpmanager';
 
 export const CLIENT_ID_SECRET = 'snmpmanager123';
+
 
 type LoginResponse = {
   access_token: string;
@@ -41,12 +44,71 @@ export const requestBackendLogin = (loginData: LoginData) => {
   });
 };
 
+export const requestBackend = (config: AxiosRequestConfig) => {
+  const headers = config.withCredentials
+    ? {
+        ...config.headers,
+        Authorization: 'Bearer ' + getAuthData().access_token,
+      }
+    : config.headers;
+
+  return axios({ ...config, baseURL: BASE_URL, headers });
+};
+
 export function saveAuthData(obj: LoginResponse) {
-  localStorage.setItem('authData', JSON.stringify(obj))
+  localStorage.setItem('authData', JSON.stringify(obj));
 }
 
 export function getAuthData() {
-  const str = localStorage.getItem('authData') ?? "{}"
-  return JSON.parse(str) as LoginResponse
+  const str = localStorage.getItem('authData') ?? '{}';
+  return JSON.parse(str) as LoginResponse;
 }
 
+
+export const getTokenData = (): TokenData | undefined => {
+  try {
+    return jwtDecode(getAuthData().access_token) as TokenData;
+  } catch (error) {
+    return undefined;
+  }
+};
+
+//função que identifica se o usuário esta autênticado
+export const isAuthenticated = (): boolean => {
+  const tokenData = getTokenData();
+  return tokenData && tokenData?.exp * 1000 > Date.now() ? true : false;
+};
+
+
+/////
+
+axios.interceptors.request.use(
+  function (config) {
+    // Do something before request is sent
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
+
+// Add a response interceptor
+axios.interceptors.response.use(
+  function (response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    return response;
+  },
+  function (error) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+
+    //redireciona para tela de login
+    if (error.response.status === 401 || 403) {
+      window.location.href = '/login';
+    }
+
+    return Promise.reject(error);
+  }
+);
