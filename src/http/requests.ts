@@ -1,24 +1,10 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import qs from 'qs';
-import jwtDecode from 'jwt-decode';
-import { TokenData } from 'types/TokenData';
+import { getAuthData } from '../utils/LocalStorage';
 
 export const BASE_URL = 'http://localhost:8080';
-
 export const CLIENT_ID = 'snmpmanager';
-
 export const CLIENT_ID_SECRET = 'snmpmanager123';
-
-
-type LoginResponse = {
-  access_token: string;
-  expires_in: string;
-  scope: string;
-  token_type: string;
-  userFirstName: string;
-  userId: string;
-};
-
 
 type LoginData = {
   username: string;
@@ -56,36 +42,6 @@ export const requestBackend = (config: AxiosRequestConfig) => {
   return axios({ ...config, baseURL: BASE_URL, headers });
 };
 
-export function saveAuthData(obj: LoginResponse) {
-  localStorage.setItem('authData', JSON.stringify(obj));
-}
-
-export function getAuthData() {
-  return JSON.parse(localStorage.getItem('authData') ?? '{}') as LoginResponse;
-}
-
-export const removeAuthData = () => {
-  localStorage.removeItem('authData');
-};
-
-
-export const getTokenData = (): TokenData | undefined => {
-  try {
-    return jwtDecode(getAuthData().access_token) as TokenData;
-  } catch (error) {
-    return undefined;
-  }
-};
-
-//função que identifica se o usuário esta autênticado
-export const isAuthenticated = (): boolean => {
-  const tokenData = getTokenData();
-  return tokenData && tokenData?.exp * 1000 > Date.now() ? true : false;
-};
-
-
-/////
-
 axios.interceptors.request.use(
   function (config) {
     // Do something before request is sent
@@ -97,7 +53,6 @@ axios.interceptors.request.use(
   }
 );
 
-// Add a response interceptor
 axios.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
@@ -105,12 +60,12 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-
-    //redireciona para tela de login
     if (error.response.status === 401 || 403) {
       window.location.href = '/login';
+    }
+
+    if (error.response.status === 403) {
+      window.location.href = '/dashboard';
     }
 
     return Promise.reject(error);

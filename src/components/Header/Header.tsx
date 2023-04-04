@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import * as React from 'react';
+import { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,50 +15,39 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { theme } from '../../style/Theme';
-import { black } from 'material-ui/styles/colors';
-import { TokenData } from 'types/TokenData';
-import { useEffect, useState } from 'react';
-import { getTokenData, isAuthenticated, removeAuthData } from '../../http/requests';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-export type AuthData = {
-  authenticated: boolean;
-  tokenData?: TokenData;
-};
+import { AuthContext } from '../../contexts/AuthContext';
+import { removeAuthData } from '../../utils/LocalStorage';
+import { getTokenData, isAuthenticated } from '../../utils/Auth';
 
 export default function Header() {
-
   const navigate = useNavigate();
-
-  const [authData, setAuthData] = useState<AuthData>({
-    authenticated: false,
-  });
-
+  const { authContextData, setAuthContextData } = useContext(AuthContext);
 
   const handleLoginClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     removeAuthData();
-    setAuthData({
-      authenticated: false
+    setAuthContextData({
+      authenticated: false,
     });
-    navigate('/login')
+    navigate('/login');
     //history.replace('/');
-  }
+  };
 
   useEffect(() => {
     if (isAuthenticated()) {
       //se estiver autenticado, armazena os dados do token
-      setAuthData({
+      setAuthContextData({
         authenticated: true,
         tokenData: getTokenData(),
       });
     } else {
-      setAuthData({
+      setAuthContextData({
         authenticated: false,
       });
     }
-  }, []);
-
+  }, [setAuthContextData]);
 
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -67,30 +57,34 @@ export default function Header() {
   };
 
   const handleClose = () => {
-    removeAuthData();
-    setAuthData({
-      authenticated: false
-    });
-    navigate('/login')
-    //history.replace('/');
     setAnchorEl(null);
+    removeAuthData();
+    setAuthContextData({
+      authenticated: false,
+    });
+    navigate('/login');
+    //history.replace('/');
   };
-
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar sx={{ backgroundColor: `${theme.colors.white}`, boxShadow: 'none' }} position="static">
+      <AppBar
+        sx={{ backgroundColor: `${theme.colors.white}`, boxShadow: 'none' }}
+        position="static"
+      >
         <Toolbar>
           <Typography
             variant="h6"
             component="div"
             sx={{ flexGrow: 1, color: 'black' }}
-          >Estações de Trabalho</Typography>
+          >
+            Estações de Trabalho
+          </Typography>
           <div>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
-              style={{ color: `${theme.colors.black}`}}
+              style={{ color: `${theme.colors.black}` }}
             >
               <Badge badgeContent={7} color="error">
                 <NotificationsIcon />
@@ -102,7 +96,7 @@ export default function Header() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleMenu}
-              style={{ color: `${theme.colors.black}`}}
+              style={{ color: `${theme.colors.black}` }}
             >
               <AccountCircle />
             </IconButton>
@@ -121,7 +115,7 @@ export default function Header() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <Box>{authData.tokenData?.user_name}</Box>
+              <Box>{authContextData.tokenData?.user_name}</Box>
               <MenuItem>Profile</MenuItem>
               <MenuItem onClick={handleClose}>Sair</MenuItem>
             </Menu>

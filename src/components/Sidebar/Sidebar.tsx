@@ -19,6 +19,7 @@ import SpeedIcon from '@mui/icons-material/Speed';
 import { NavLink } from 'react-router-dom';
 import Image from './image.png';
 import DescriptionIcon from '@mui/icons-material/Description';
+import { hasAnyHoles } from '../../utils/Auth';
 export default function MenuSidebar() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
@@ -131,13 +132,15 @@ export default function MenuSidebar() {
           >
             Licenças
           </MenuItem>
-          <MenuItem
-            active={location.pathname === '/user'}
-            icon={<PeopleIcon />}
-            component={<Link to={'/user'} />}
-          >
-            Usuários
-          </MenuItem>
+          {hasAnyHoles(['ROLE_ADMIN']) && (
+            <MenuItem
+              active={location.pathname === '/user'}
+              icon={<PeopleIcon />}
+              component={<Link to={'/user'} />}
+            >
+              Usuários
+            </MenuItem>
+          )}
         </Menu>
       </Sidebar>
     </SidebarContainer>

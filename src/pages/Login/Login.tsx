@@ -1,7 +1,11 @@
-import { requestBackendLogin, saveAuthData } from '../../http/requests';
+import { AuthContext } from '../../contexts/AuthContext';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useContext } from 'react';
+import { requestBackendLogin } from '../../http/requests';
+import { saveAuthData } from '../../utils/LocalStorage';
+import { getTokenData } from '../../utils/Auth';
 
 type FormData = {
   username: string;
@@ -12,14 +16,21 @@ type FormData = {
 //imprementar erro na requisição usando um estado
 
 export default function Login() {
+  const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const { setAuthContextData } = useContext(AuthContext);
+
 
   const onSubmit = (formData: FormData) => {
     requestBackendLogin(formData)
       .then((response) => {
         saveAuthData(response.data);
+        setAuthContextData({
+          authenticated: true,
+          tokenData: getTokenData()
+        })
         //*****  verificar uma outra forma de fazer o redirecionamento  ****//
-        //navigate('/');
+        //navigate('/dashboard');
         window.location.href = '/dashboard';
       })
       .catch((error) => {
