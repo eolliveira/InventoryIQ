@@ -29,9 +29,7 @@ export default function Login() {
           authenticated: true,
           tokenData: getTokenData()
         })
-        //*****  verificar uma outra forma de fazer o redirecionamento  ****//
-        //navigate('/dashboard');
-        window.location.href = '/dashboard';
+        navigate('/dashboard');
       })
       .catch((error) => {
         console.log('error:' + error);
