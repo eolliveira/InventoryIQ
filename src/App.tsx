@@ -11,7 +11,6 @@ import Login from './pages/Login/Login';
 import Layout from './pages/Layout/Layout';
 import { AuthContext, AuthContextData } from './contexts/AuthContext';
 import { useState } from 'react';
-import { isAuthenticated } from './utils/Auth';
 
 export default function App() {
   const [authContextData, setAuthContextData] = useState<AuthContextData>({
