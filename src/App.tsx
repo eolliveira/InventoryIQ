@@ -23,7 +23,8 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         {/* ele ta acaindo aqui mais sempre vai cair no login pq o isAuthticated nn muda se não der refrash */}
-        <Route path="/" element={isAuthenticated() ? <Layout /> : <Navigate to="/login" replace />}>
+        {/* <Route path="/" element={isAuthenticated() ? <Layout /> : <Navigate to="/login" replace />}> */}
+        <Route path="/" element={<Layout /> } >
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="workstation" element={<WorkstationList />} />
           <Route path="workstation/:id" element={<WorkstationData />} />
