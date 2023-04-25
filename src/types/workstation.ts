@@ -1,4 +1,4 @@
-export type workstation = {
+export type Workstation = {
   id: string;
   nome: string;
   fabricante: string;

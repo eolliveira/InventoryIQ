@@ -152,36 +152,51 @@
 // `;
 
 //////////  teste
-import DataTable from 'react-data-table-component';
+import DataTable, { TableColumn } from 'react-data-table-component';
 import Card from '@material-ui/core/Card';
-import SortIcon from '@mui/icons-material/ArrowDownward';
-import movies from './movies';
 import { useNavigate } from 'react-router-dom';
+import { requestBackend } from '../../http/requests';
+import { useEffect, useState } from 'react';
+import { AxiosRequestConfig } from 'axios';
+import { SpringPage } from 'types/vendor/spring';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Workstation } from 'types/Workstation';
 
-const columns = [
-  {
-    name: 'Title',
-    selector: 'title',
-    sortable: true,
-  },
-  {
-    name: 'Directior',
-    selector: 'director',
-    sortable: true,
-  },
-  {
-    name: 'Runtime (m)',
-    selector: 'runtime',
-    sortable: true,
-    right: true,
-  },
+const columns: TableColumn<Workstation>[] = [
+  { name: 'Nome', selector: row => row.nome, sortable: true },
+  { name: 'Fabricante', selector: row => row.fabricante, sortable: true },
+  { name: 'Modelo', selector: row => row.modelo, sortable: true },
+  { name: 'Status', selector: row => row.status, sortable: true },
+  { name: 'Dt.Aquisição', selector: row => row.dtAquisicao, sortable: true },
 ];
 
 export default function WorkstationList() {
   const navigate = useNavigate();
 
-  //passar tipo do dado
-  const handleRowClicked = (row: { id: any }) => {
+  const [page, setPage] = useState<SpringPage<Workstation>>();
+
+  useEffect(() => {
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: `/workstation`,
+      //withCredentials: true,
+      // params: {
+      //   page: 0,
+      //   size: 22,
+      // },
+    };
+
+    requestBackend(params)
+      .then((response) => {
+        setPage(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log('Erro' + error);
+      });
+  }, []);
+
+  const handleRowClicked = (row: Workstation) => {
     console.log(row.id);
     navigate(`/workstation/${row.id}`);
   };
@@ -192,14 +207,16 @@ export default function WorkstationList() {
         <DataTable
           title="Estação de Trabalho"
           columns={columns}
-          data={movies}
-          defaultSortField="title"
-          sortIcon={<SortIcon />}
-          pagination
+          data={page ? page?.content : []}
+          sortIcon={<ExpandMoreIcon />}
           selectableRows
           pointerOnHover
           highlightOnHover
           onRowClicked={handleRowClicked}
+          ////
+          pagination
+          paginationPerPage={12}
+          paginationTotalRows={page?.numberOfElements}
         />
       </Card>
     </div>

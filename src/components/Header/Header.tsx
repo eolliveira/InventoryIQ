@@ -32,7 +32,6 @@ export default function Header() {
       authenticated: false,
     });
     navigate('/login');
-    //history.replace('/');
   };
 
   useEffect(() => {
