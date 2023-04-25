@@ -6,13 +6,16 @@ import ArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
 type Props = {
   pageCount: number;
+  totalElements: number;
+  totalPages: number;
   range: number;
   onChange?: (pageNumber: number) => void;
 };
 
-const Pagination = ({ pageCount, range, onChange }: Props) => {
+const Pagination = ({ pageCount, totalElements, totalPages, range, onChange }: Props) => {
   return (
     <>
+
       <ReactPaginate
         pageCount={pageCount}
         pageRangeDisplayed={range}
@@ -32,6 +35,9 @@ const Pagination = ({ pageCount, range, onChange }: Props) => {
         disabledLinkClassName='arrow-inactive'
         onPageChange={(items) => (onChange) ? onChange(items.selected) : {}}
       />
+      <h1> teste {range}</h1>
+      <h1> numero de linhas {totalElements}</h1>
+      <h1> numero de paginas {totalPages}</h1>
       
 
       {/* <div className="pagination-container">

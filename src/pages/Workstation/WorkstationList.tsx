@@ -7,6 +7,7 @@ import { Workstation } from 'types/Workstation';
 import Card from '@material-ui/core/Card';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
+import Pagination from '../../components/Pagination';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -30,7 +31,7 @@ export default function WorkstationList() {
       url: `/workstation`,
       params: {
         page: pageNumber,
-        size: 3,
+        size: 5,
       },
     };
 
@@ -44,7 +45,6 @@ export default function WorkstationList() {
   };
 
   const handleRowClicked = (row: Workstation) => {
-    console.log(row.id);
     navigate(`/workstation/${row.id}`);
   };
 
@@ -53,7 +53,9 @@ export default function WorkstationList() {
       <Card>
         {/* <Pagination
           pageCount={page ? page.totalPages : 0}
-          range={0}
+          totalElements={page ? page?.totalElements : 0}
+          totalPages={page ? page?.totalPages : 0}
+          range={3}
           onChange={getWorkstation}
         />  */}
         <DataTable
@@ -65,13 +67,14 @@ export default function WorkstationList() {
           pointerOnHover
           highlightOnHover
           onRowClicked={handleRowClicked}
+          fixedHeader
+          fixedHeaderScrollHeight="300px"
 
           pagination
-          //paginationTotalRows={page?.numberOfElements}
-          //onChangePage={handlePageChange}
-          //paginationPerPage={5}
-          // paginationTotalRows={page?.numberOfElements}
-          // paginationRowsPerPageOptions={[5,25,50,100,300]}
+          onChangePage={(event) => {console.log(event)
+          }}
+          paginationTotalRows={100}
+          paginationRowsPerPageOptions={[5,25,50,100,300]}
         />
       </Card>
     </div>
