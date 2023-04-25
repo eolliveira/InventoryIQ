@@ -151,49 +151,55 @@
 //   }
 // `;
 
-
 //////////  teste
-
-
-import React from "react";
-import ReactDOM from "react-dom";
-import DataTable from "react-data-table-component";
-import Card from "@material-ui/core/Card";
+import DataTable from 'react-data-table-component';
+import Card from '@material-ui/core/Card';
 import SortIcon from '@mui/icons-material/ArrowDownward';
-import movies from "./movies";
-import { log } from "console";
+import movies from './movies';
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
   {
-    name: "Title",
-    selector: "title",
-    sortable: true
-  },
-  {
-    name: "Directior",
-    selector: "director",
-    sortable: true
-  },
-  {
-    name: "Runtime (m)",
-    selector: "runtime",
+    name: 'Title',
+    selector: 'title',
     sortable: true,
-    right: true
-  }
+  },
+  {
+    name: 'Directior',
+    selector: 'director',
+    sortable: true,
+  },
+  {
+    name: 'Runtime (m)',
+    selector: 'runtime',
+    sortable: true,
+    right: true,
+  },
 ];
 
 export default function WorkstationList() {
+  const navigate = useNavigate();
+
+  //passar tipo do dado
+  const handleRowClicked = (row: { id: any }) => {
+    console.log(row.id);
+    navigate(`/workstation/${row.id}`);
+  };
+
   return (
     <div className="App">
       <Card>
         <DataTable
-          title="Movies"
+          title="Estação de Trabalho"
           columns={columns}
           data={movies}
           defaultSortField="title"
           sortIcon={<SortIcon />}
           pagination
           selectableRows
+          pointerOnHover
+          highlightOnHover
+          onRowClicked={handleRowClicked}
         />
       </Card>
     </div>
