@@ -21,6 +21,7 @@ import Image from './image.png';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { hasAnyHoles } from '../../utils/Auth';
 export default function MenuSidebar() {
+  
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
 
@@ -62,13 +63,14 @@ export default function MenuSidebar() {
         >
           <ButtonColapseContainer isColapsed={collapsed}>
             {!collapsed ? (
-              <img
-                style={{ marginLeft: '10px' }}
-                width={'150px'}
-                src={Image}
-                alt="Logo"
-              />
+              <img src="" alt="" />
             ) : (
+              // <img
+              //   style={{ marginLeft: '10px' }}
+              //   width={'150px'}
+              //   src={Image}
+              //   alt="Logo"
+              // />
               ''
             )}
 

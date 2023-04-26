@@ -1,13 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { requestBackend } from '../../http/requests';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import { SpringPage } from 'types/vendor/spring';
 import { Workstation } from 'types/Workstation';
 import Card from '@material-ui/core/Card';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import Pagination from '../../components/Pagination';
+import { Stack } from '@mui/material';
+import Pagination from '@material-ui/lab/Pagination';
+import styled from 'styled-components';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -19,18 +21,15 @@ const columns: TableColumn<Workstation>[] = [
 
 export default function WorkstationList() {
   const [page, setPage] = useState<SpringPage<Workstation>>();
+  const [numberPage, setNumberPage] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getWorkstation(0);
-  }, []);
-
-  const getWorkstation = (pageNumber: number) => {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/workstation`,
       params: {
-        page: pageNumber,
+        page: numberPage,
         size: 5,
       },
     };
@@ -42,7 +41,7 @@ export default function WorkstationList() {
       .catch((error) => {
         console.log('Erro' + error);
       });
-  };
+  }, [numberPage]);
 
   const handleRowClicked = (row: Workstation) => {
     navigate(`/workstation/${row.id}`);
@@ -50,33 +49,40 @@ export default function WorkstationList() {
 
   return (
     <div className="App">
+      <HeaderContainer>
+        <Stack spacing={2}>
+          <Pagination
+            onChange={(event: ChangeEvent<unknown>, numberPage: number) => {
+              setNumberPage(numberPage - 1);
+            }}
+            defaultPage={0}
+            count={page?.totalPages}
+            variant="outlined"
+            shape="rounded"
+            size="small"
+          />
+        </Stack>
+      </HeaderContainer>
       <Card>
-        {/* <Pagination
-          pageCount={page ? page.totalPages : 0}
-          totalElements={page ? page?.totalElements : 0}
-          totalPages={page ? page?.totalPages : 0}
-          range={3}
-          onChange={getWorkstation}
-        />  */}
         <DataTable
-          title="Estação de Trabalho"
+          subHeaderComponent={<h1>teste</h1>}
           columns={columns}
           data={page ? page?.content : []}
           sortIcon={<ExpandMoreIcon />}
           selectableRows
           pointerOnHover
           highlightOnHover
-          onRowClicked={handleRowClicked}
+          dense
           fixedHeader
-          fixedHeaderScrollHeight="300px"
-
-          pagination
-          onChangePage={(event) => {console.log(event)
-          }}
-          paginationTotalRows={100}
-          paginationRowsPerPageOptions={[5,25,50,100,300]}
+          onRowClicked={handleRowClicked}
         />
       </Card>
     </div>
   );
 }
+
+const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+`;
