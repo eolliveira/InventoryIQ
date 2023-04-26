@@ -5,7 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import TabContext from '@material-ui/lab/TabContext';
 import TabPanel from '@material-ui/lab/TabPanel';
 import { theme } from '../../style/Theme';
-import { Stack } from '@mui/material';
+import { IconButton, Stack, Typography } from '@mui/material';
 import WorkstationDetails from './WorkstationDetails/WorkstationDetails';
 import WorkstationMovements from './WorkstationMovements/WorkstationMovements';
 import WorkstationLicenses from './WorkstationLicenses/WorkstationLicenses';
@@ -15,6 +15,9 @@ import WorkstationInterfaces from './WorkstationInterfaces/WorkstationInterfaces
 import Tabs from '@material-ui/core/Tabs';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import SyncIcon from '@mui/icons-material/Sync';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CustomButton from '../../components/CustomButton';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -33,15 +36,43 @@ export default function Workstation() {
 
   return (
     <Wapper className="row">
-      <Container className="col-lg-8">
-        {/* <Typography variant="h5" gutterBottom>
-          Teste5
-        </Typography> */}
-        <Stack spacing={2} direction="row">
-          <CustomButton text='teste btn' />
-          <Button color='primary' variant="contained">Contained</Button>
-          <Button size='small' variant="contained">Outlinedddddddddddddddddd</Button>
-        </Stack>
+      <Container className="col-lg-10">
+        <HeaderWorkstation>
+          <IconButton aria-label="delete">
+            <ArrowBackIcon />
+          </IconButton>
+          <Typography
+            fontWeight={'bold'}
+            fontSize={20}
+            marginLeft={2}
+            variant="h5"
+            flex={1}
+          >
+            15564 - Computador Erick
+          </Typography>
+          <Stack spacing={2} direction="row">
+            <Button
+              style={{
+                color: 'white',
+                backgroundColor: `${theme.colors.secondary}`,
+              }}
+              variant="contained"
+              endIcon={<KeyboardArrowDownIcon />}
+            >
+              Ações
+            </Button>
+            <Button
+              style={{
+                color: 'white',
+                backgroundColor: `${theme.colors.secondary}`,
+              }}
+              variant="contained"
+              startIcon={<SyncIcon />}
+            >
+              Sincronizar
+            </Button>
+          </Stack>
+        </HeaderWorkstation>
         <TabContext value={value}>
           <AppBar
             position="static"
@@ -86,7 +117,7 @@ export default function Workstation() {
           </TabPanel>
         </TabContext>
       </Container>
-      <ContainerSidePanel className="col-lg-4">
+      <ContainerSidePanel className="col-lg-2">
         <h1>componente lateral</h1>
         <h1>componente lateral</h1>
         <h1>componente lateral</h1>
@@ -99,6 +130,13 @@ const Wapper = styled.div`
   margin: 5px;
   border: 1px solid green;
   height: calc(100vh - 110px);
+`;
+
+const HeaderWorkstation = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
 `;
 
 const Container = styled.div`

@@ -1,3 +1,4 @@
+import { theme } from '../../style/Theme';
 import styled from 'styled-components';
 
 type CustomButtonProps = {
@@ -10,11 +11,16 @@ export default function CustomButton({ text }: CustomButtonProps) {
 
 export const Button = styled.button`
     border: none;
-  padding: 0 15px;
-  color: white;
-  background-color: #2b2222;
+    border-radius: 5px;
+    padding: 0 15px;
+    color: white;
+   background-color: ${theme.colors.secondary};
 
   &:hover {
-    background-color: aqua;
+    background-color: #3f3f3f;
+  }
+
+  &:active {
+    background-color: #686565;
   }
 `;
