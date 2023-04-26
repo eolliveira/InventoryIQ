@@ -71,7 +71,9 @@ export default function Header() {
         sx={{ backgroundColor: `${theme.colors.white}`, boxShadow: 'none' }}
         position="static"
       >
-        <Toolbar>
+        <Toolbar sx={{
+          backgroundColor: 'white' //`${theme.colors.yellow}`
+        }}>
           <Typography
             variant="h6"
             component="div"

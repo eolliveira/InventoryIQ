@@ -102,28 +102,16 @@ export default function MenuSidebar() {
             Dashboard
           </MenuItem>
           <SubMenu icon={<DevicesIcon />} label="Ativos">
-            <MenuItem
-              active={location.pathname === '/workstation'}
-              component={<NavLink to={'/workstation'} />}
-            >
+            <MenuItem active={location.pathname === '/workstation'} component={<NavLink to={'/workstation'} />}>
               Estação de trabalho
             </MenuItem>
-            <MenuItem
-              active={location.pathname === '/mobile'}
-              component={<Link to={'/mobile'} />}
-            >
+            <MenuItem active={location.pathname === '/mobile'} component={<Link to={'/mobile'} />}>
               Mobile
             </MenuItem>
-            <MenuItem
-              active={location.pathname === '/nobreak'}
-              component={<Link to={'/nobreak'} />}
-            >
+            <MenuItem active={location.pathname === '/nobreak'} component={<Link to={'/nobreak'} />}>
               Nobreak
             </MenuItem>
-            <MenuItem
-              active={location.pathname === '/printer'}
-              component={<Link to={'/printer'} />}
-            >
+            <MenuItem active={location.pathname === '/printer'} component={<Link to={'/printer'} />}>
               Impressora
             </MenuItem>
           </SubMenu>

@@ -53,9 +53,11 @@ export default function WorkstationList() {
         <Stack spacing={2}>
           <Pagination
             onChange={(event: ChangeEvent<unknown>, numberPage: number) => {
+              console.log("teste");
+              
               setNumberPage(numberPage - 1);
             }}
-            defaultPage={0}
+            defaultPage={1}
             count={page?.totalPages}
             variant="outlined"
             shape="rounded"
