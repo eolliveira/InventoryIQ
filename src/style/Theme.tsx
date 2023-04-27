@@ -9,8 +9,8 @@ export const theme = {
     /// color succes and warnig
   },
   size: {
-    xs: '4px',
-    s: '8px',
-    m: '12px',
+    sm: '13px',
+    md: '14x',
+    lg: '16px',
   },
 };

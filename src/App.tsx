@@ -6,7 +6,7 @@ import Nobreak from './pages/Nobreak/Nobreak';
 import Printer from './pages/Printer/PrinterData';
 import User from './pages/User/User';
 import WorkstationList from './pages/Workstation/WorkstationList';
-import Workstation from './pages/Workstation/Workstation';
+import WorkstationData from './pages/Workstation/WorkstationData';
 import Login from './pages/Login/Login';
 import Layout from './pages/Layout/Layout';
 import { AuthContext, AuthContextData } from './contexts/AuthContext';
@@ -26,7 +26,7 @@ export default function App() {
         <Route path="/" element={<Layout /> } >
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="workstation" element={<WorkstationList />} />
-          <Route path="workstation/:id" element={<Workstation />} />
+          <Route path="workstation/:workstationId" element={<WorkstationData />} />
           <Route path="license" element={<License />} />
           <Route path="mobile" element={<Mobile />} />
           <Route path="nobreak" element={<Nobreak />} />

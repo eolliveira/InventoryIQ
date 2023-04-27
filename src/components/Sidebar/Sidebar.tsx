@@ -48,14 +48,14 @@ export default function MenuSidebar() {
                 return {
                   color: disabled ? 'black' : 'black',
                   fontWeight: active ? 'bold' : 'normal',
-                  backgroundColor: `${theme.colors.primary}`,
-                  fontSize: '13px'
+                  backgroundColor: '#c9c9c9',
+                  fontSize: '14px'
                 };
 
               //menu externo(fora)
               if (level === 0)
                 return {
-                  color: disabled ? 'black' : 'black',
+                  color: 'black',
                   fontSize: '14px',
                   fontWeight: active ? 'bold' : 'normal',
                   '&:hover': {},
