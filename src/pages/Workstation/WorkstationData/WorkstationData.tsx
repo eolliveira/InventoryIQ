@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tab from '@material-ui/core/Tab';
 import TabContext from '@material-ui/lab/TabContext';
-import { theme } from '../../style/Theme';
+import { theme } from '../../../style/Theme';
 import Tabs from '@material-ui/core/Tabs';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
@@ -17,11 +17,10 @@ import WorkstationMaintenance from './WorkstationMaintenance/WorkstationMaintena
 import WorkstationHardware from './WorkstationHardware/WorkstationHardware';
 import WorkstationInterfaces from './WorkstationInterfaces/WorkstationInterfaces';
 
-import StockButton from '../../components/StockButton';
+import StockButton from '../../../components/StockButton';
 import { Link, useParams } from 'react-router-dom';
-import { requestBackend } from '../../http/requests';
-import { Workstation } from '../../types/Workstation';
-import { NavLink } from 'react-router-dom';
+import { requestBackend } from '../../../http/requests';
+import { Workstation } from '../../../types/Workstation';
 
 export default function WorkstationData() {
   type urlParams = {
@@ -205,7 +204,6 @@ const ContainerSidePanel = styled.div`
 
   border: 1px solid blue;
 `;
-
 
 //verificar
 const CustomLink = styled(Link)`

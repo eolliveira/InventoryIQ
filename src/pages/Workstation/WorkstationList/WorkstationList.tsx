@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { requestBackend } from '../../http/requests';
+import { requestBackend } from '../../../http/requests';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import { SpringPage } from 'types/vendor/spring';
@@ -9,7 +9,7 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 import { Stack } from '@mui/material';
 import Pagination from '@material-ui/lab/Pagination';
 import styled from 'styled-components';
-import { Workstation } from '../../types/Workstation';
+import { Workstation } from '../../../types/Workstation';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
