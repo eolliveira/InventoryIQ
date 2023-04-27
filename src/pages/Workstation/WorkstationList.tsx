@@ -3,7 +3,7 @@ import { requestBackend } from '../../http/requests';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import { SpringPage } from 'types/vendor/spring';
-import { Workstation } from 'types/Workstation';
+import { Workstation } from '../../types/workstation';
 import Card from '@material-ui/core/Card';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';

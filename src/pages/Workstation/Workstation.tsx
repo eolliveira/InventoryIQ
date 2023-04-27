@@ -5,7 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import TabContext from '@material-ui/lab/TabContext';
 import TabPanel from '@material-ui/lab/TabPanel';
 import { theme } from '../../style/Theme';
-import { IconButton, Stack, Typography } from '@mui/material';
+import { IconButton, PaletteOptions, Stack, Typography } from '@mui/material';
 import WorkstationDetails from './WorkstationDetails/WorkstationDetails';
 import WorkstationMovements from './WorkstationMovements/WorkstationMovements';
 import WorkstationLicenses from './WorkstationLicenses/WorkstationLicenses';
@@ -20,13 +20,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CustomButton from '../../components/CustomButton';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
-
 export default function Workstation() {
   const [value, setValue] = React.useState('1');
 
@@ -38,12 +31,12 @@ export default function Workstation() {
     <Wapper className="row">
       <Container className="col-lg-10">
         <HeaderWorkstation>
-          <IconButton aria-label="delete">
+          <IconButton aria-label="back">
             <ArrowBackIcon />
           </IconButton>
           <Typography
             fontWeight={'bold'}
-            fontSize={20}
+            fontSize={16}
             marginLeft={2}
             variant="h5"
             flex={1}
@@ -79,7 +72,6 @@ export default function Workstation() {
             style={{
               boxShadow: 'none',
               backgroundColor: `${theme.colors.white}`,
-              color: 'black',
             }}
           >
             <Tabs
@@ -127,6 +119,9 @@ export default function Workstation() {
 }
 
 const Wapper = styled.div`
+display: flex;
+justify-content: space-between;
+flex-wrap: wrap;
   margin: 5px;
   border: 1px solid green;
   height: calc(100vh - 110px);

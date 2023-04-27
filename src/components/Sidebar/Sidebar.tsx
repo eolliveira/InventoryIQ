@@ -49,12 +49,14 @@ export default function MenuSidebar() {
                   color: disabled ? 'black' : 'black',
                   fontWeight: active ? 'bold' : 'normal',
                   backgroundColor: `${theme.colors.primary}`,
+                  fontSize: '13px'
                 };
 
               //menu externo(fora)
               if (level === 0)
                 return {
                   color: disabled ? 'black' : 'black',
+                  fontSize: '14px',
                   fontWeight: active ? 'bold' : 'normal',
                   '&:hover': {},
                 };
