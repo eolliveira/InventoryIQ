@@ -46,19 +46,24 @@ export default function MenuSidebar() {
               ///menu interno
               if (level === 1)
                 return {
-                  color: disabled ? 'black' : 'black',
+                  color: 'black',
                   fontWeight: active ? 'bold' : 'normal',
                   backgroundColor: '#c9c9c9',
-                  fontSize: '14px'
+                  fontSize: '14px',
+                  '&:hover': {
+                    backgroundColor: '#c4c4c4'
+                  }
                 };
 
-              //menu externo(fora)
+              //menu externo
               if (level === 0)
                 return {
                   color: 'black',
                   fontSize: '14px',
                   fontWeight: active ? 'bold' : 'normal',
-                  '&:hover': {},
+                  '&:hover': {
+                    backgroundColor: '#c4c4c4'
+                  },
                 };
             },
           }}
@@ -107,13 +112,13 @@ export default function MenuSidebar() {
             <MenuItem active={location.pathname === '/workstation'} component={<NavLink to={'/workstation'} />}>
               Estação de trabalho
             </MenuItem>
-            <MenuItem active={location.pathname === '/mobile'} component={<Link to={'/mobile'} />}>
+            <MenuItem active={location.pathname === '/mobile'} component={<NavLink to={'/mobile'} />}>
               Mobile
             </MenuItem>
-            <MenuItem active={location.pathname === '/nobreak'} component={<Link to={'/nobreak'} />}>
+            <MenuItem active={location.pathname === '/nobreak'} component={<NavLink to={'/nobreak'} />}>
               Nobreak
             </MenuItem>
-            <MenuItem active={location.pathname === '/printer'} component={<Link to={'/printer'} />}>
+            <MenuItem active={location.pathname === '/printer'} component={<NavLink to={'/printer'} />}>
               Impressora
             </MenuItem>
           </SubMenu>
