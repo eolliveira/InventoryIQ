@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import Menu from '@mui/material/Menu';
+import styled from 'styled-components';
 
 type StockButtonProps = {
   onClickAdd?: Function;
@@ -49,16 +50,10 @@ export default function StockButton({
       >
         Ações
       </Button>
-      <Menu
+      <CustomMenu
         id="demo-customized-menu"
         MenuListProps={{
           'aria-labelledby': 'demo-customized-button',
-          sx: {
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            alignItems: 'normal',
-          },
         }}
         anchorEl={anchorEl}
         open={open}
@@ -71,9 +66,10 @@ export default function StockButton({
               handleClose();
             }}
             disableRipple
-            sx={{ mb: 0.5 }}
           >
-            <AddIcon sx={{ mr: 0.5 }} />
+            <ContainerIcon>
+              <AddIcon />
+            </ContainerIcon>
             Adicionar
           </MenuItem>
         )}
@@ -116,7 +112,18 @@ export default function StockButton({
             Excluir
           </MenuItem>
         )}
-      </Menu>
+      </CustomMenu>
     </div>
   );
 }
+
+const ContainerIcon = styled.span`
+  margin-right: 0.5px;
+`;
+
+const CustomMenu = styled(Menu)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: normal;
+`;
