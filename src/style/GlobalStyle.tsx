@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
-    font-family: 'Roboto', sans-serif;
+      font-family: 'Roboto', sans-serif;
     }
 
     li, a {
@@ -37,7 +37,7 @@ export const Label = styled.label`
   background-color: unset;
   font-size: ${theme.size.sm};
   color: ${theme.colors.black};
-  `;
+`;
 
 
 export const Field = styled.div`
