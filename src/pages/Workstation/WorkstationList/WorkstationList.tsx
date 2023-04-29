@@ -10,6 +10,7 @@ import { Stack } from '@mui/material';
 import Pagination from '@material-ui/lab/Pagination';
 import styled from 'styled-components';
 import { Workstation } from '../../../types/Workstation';
+import localeData from '../../../mocks/wokstationData.json'
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -20,27 +21,30 @@ const columns: TableColumn<Workstation>[] = [
 ];
 
 export default function WorkstationList() {
-  const [page, setPage] = useState<SpringPage<Workstation>>();
+ // const [page, setPage] = useState<SpringPage<Workstation>>();
+  const [page, setPage] = useState<SpringPage<any>>();
   const [numberPage, setNumberPage] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const params: AxiosRequestConfig = {
-      method: 'GET',
-      url: `/workstation`,
-      params: {
-        page: numberPage,
-        size: 5,
-      },
-    };
+    setPage(localeData)
+    
+    // const params: AxiosRequestConfig = {
+    //   method: 'GET',
+    //   url: `/workstation`,
+    //   params: {
+    //     page: numberPage,
+    //     size: 5,
+    //   },
+    // };
 
-    requestBackend(params)
-      .then((response) => {
-        setPage(response.data);
-      })
-      .catch((error) => {
-        console.log('Erro' + error);
-      });
+    // requestBackend(params)
+    //   .then((response) => {
+    //     setPage(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log('Erro' + error);
+    //   });
   }, [numberPage]);
 
   const handleRowClicked = (row: Workstation) => {
@@ -67,7 +71,6 @@ export default function WorkstationList() {
       </HeaderContainer>
       <Card>
         <DataTable
-          subHeaderComponent={<h1>teste</h1>}
           columns={columns}
           data={page ? page?.content : []}
           sortIcon={<ExpandMoreIcon />}

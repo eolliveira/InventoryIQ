@@ -5,13 +5,13 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { ThemeProvider } from 'styled-components';
 import { ProSidebarProvider } from 'react-pro-sidebar';
 import { theme } from './style/Theme';
-import { GlobalStyle } from './style/GlobalStyle';
+import { GlobalStyles } from './style/GlobalStyles';
 import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <ThemeProvider theme={theme}>
+    <GlobalStyles />
     <ProSidebarProvider>
-      <GlobalStyle />
       <BrowserRouter>
         <App />
       </BrowserRouter>

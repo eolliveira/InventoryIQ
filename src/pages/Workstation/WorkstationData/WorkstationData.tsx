@@ -21,7 +21,7 @@ import StockButton from '../../../components/StockButton/StockButon';
 import { Link, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import { Workstation } from '../../../types/Workstation';
-import { Field, Input, Label } from '../../../style/GlobalStyle';
+import { Field, Input, Label } from '../../../style/GlobalStyles';
 
 export default function WorkstationData() {
   type urlParams = {
