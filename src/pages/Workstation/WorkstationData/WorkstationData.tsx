@@ -17,10 +17,11 @@ import WorkstationMaintenance from './WorkstationMaintenance/WorkstationMaintena
 import WorkstationHardware from './WorkstationHardware/WorkstationHardware';
 import WorkstationInterfaces from './WorkstationInterfaces/WorkstationInterfaces';
 
-import StockButton from '../../../components/StockButton';
+import StockButton from '../../../components/StockButton/StockButon';
 import { Link, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import { Workstation } from '../../../types/Workstation';
+import { Field, Input, Label } from '../../../style/GlobalStyle';
 
 export default function WorkstationData() {
   type urlParams = {
@@ -28,7 +29,6 @@ export default function WorkstationData() {
   };
 
   const { workstationId } = useParams<urlParams>();
-
   const [active, setActive] = useState<Workstation>();
 
   useEffect(() => {
@@ -115,6 +115,7 @@ export default function WorkstationData() {
               textColor="primary"
               indicatorColor="primary"
               aria-label="secondary tabs example"
+              
             >
               {/* refatorar */}
               <Tab
@@ -149,30 +150,36 @@ export default function WorkstationData() {
               />
             </Tabs>
           </AppBar>
-          <TabPanel value="1">
-            <WorkstationDetails teste={10} />
-          </TabPanel>
-          <TabPanel value="2">
+          {/* //refatorar */}
+          <Panel value="1">
+            <WorkstationDetails data={active ? active : {} }  />
+          </Panel>
+          <Panel value="2">
             <WorkstationHardware teste={10} />
-          </TabPanel>
-          <TabPanel value="3">
+          </Panel>
+          <Panel value="3">
             <WorkstationInterfaces teste={10} />
-          </TabPanel>
-          <TabPanel value="4">
+          </Panel>
+          <Panel value="4">
             <WorkstationMovements teste={10} />
-          </TabPanel>
-          <TabPanel value="5">
+          </Panel>
+          <Panel value="5">
             <WorkstationLicenses teste={10} />
-          </TabPanel>
-          <TabPanel value="6">
+          </Panel>
+          <Panel value="6">
             <WorkstationMaintenance teste={10} />
-          </TabPanel>
+          </Panel>
         </TabContext>
       </Container>
       <ContainerSidePanel className="col-lg-2">
-        <h1>componente lateral</h1>
-        <h1>componente lateral</h1>
-        <h1>componente lateral</h1>
+        <Field>
+          <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
+          <Input id="ultmSinc" />
+        </Field>
+        <Field>
+          <Label htmlFor="status">Status</Label>
+          <Input name="status" id="status" />
+        </Field>
       </ContainerSidePanel>
     </Wapper>
   );
@@ -201,7 +208,6 @@ const Container = styled.div`
 const ContainerSidePanel = styled.div`
   /* display: flex;
   flex-direction: column; */
-
   border: 1px solid blue;
 `;
 
@@ -210,4 +216,9 @@ const CustomLink = styled(Link)`
   text-decoration: none;
   color: inherit;
   cursor: inherit;
+`;
+
+const Panel = styled(TabPanel)`
+  margin: 0;
+  padding: 0;
 `;
