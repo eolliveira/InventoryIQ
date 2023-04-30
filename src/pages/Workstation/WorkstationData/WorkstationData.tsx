@@ -9,7 +9,8 @@ import Button from '@material-ui/core/Button';
 import TabPanel from '@material-ui/lab/TabPanel';
 import SyncIcon from '@mui/icons-material/Sync';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { IconButton, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import WorkstationDetails from './WorkstationDetails/WorkstationDetails';
 import WorkstationMovements from './WorkstationMovements/WorkstationMovements';
 import WorkstationLicenses from './WorkstationLicenses/WorkstationLicenses';
@@ -18,12 +19,16 @@ import WorkstationHardware from './WorkstationHardware/WorkstationHardware';
 import WorkstationInterfaces from './WorkstationInterfaces/WorkstationInterfaces';
 
 import StockButton from '../../../components/StockButton/StockButon';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import { Workstation } from '../../../types/Workstation';
 import { Field, Input, Label } from '../../../style/GlobalStyles';
 
+import '@mui/material/styles';
+
 export default function WorkstationData() {
+  const navigate = useNavigate();
+
   type urlParams = {
     workstationId: string;
   };
@@ -67,11 +72,10 @@ export default function WorkstationData() {
     <Wapper className="row">
       <Container className="col-lg-10">
         <HeaderWorkstation>
-          <CustomLink to={'/workstation'}>
-            <IconButton size="large" aria-label="back">
-              <ArrowBackIcon />
-            </IconButton>
-          </CustomLink>
+          <Button onClick={() => navigate('/workstation')} variant="text">
+            <ArrowBackIcon />
+          </Button>
+
           <Typography
             fontWeight={'bold'}
             fontSize={16}
@@ -115,7 +119,6 @@ export default function WorkstationData() {
               textColor="primary"
               indicatorColor="primary"
               aria-label="secondary tabs example"
-              
             >
               {/* refatorar */}
               <Tab
@@ -152,7 +155,7 @@ export default function WorkstationData() {
           </AppBar>
           {/* //refatorar */}
           <Panel value="1">
-            <WorkstationDetails data={active ? active : {} }  />
+            <WorkstationDetails data={active ? active : {}} />
           </Panel>
           <Panel value="2">
             <WorkstationHardware teste={10} />
