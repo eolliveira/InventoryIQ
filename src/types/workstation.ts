@@ -1,3 +1,5 @@
+import { Usuario } from "./Usuario";
+
 export type Workstation = {
   id: string;
   nome: string;
@@ -17,8 +19,7 @@ export type Workstation = {
   dtUltimoSincronismo: string;
   vlrAquisicao: number;
   observacao: string;
-  usuario: null;
-  fornecedor: null;
+  usuario: Usuario;
   sistemaOperacional: string;
   processador: string;
   arquiteturaSo: string;

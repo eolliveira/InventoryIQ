@@ -23,8 +23,11 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import { Workstation } from '../../../types/Workstation';
 import { Field, Input, Label } from '../../../style/GlobalStyles';
+import localeData from '../../../mocks/wokstation.json'
+
 
 import '@mui/material/styles';
+import UserCard from '../../../components/UserCard/UserCard';
 
 export default function WorkstationData() {
   const navigate = useNavigate();
@@ -37,14 +40,19 @@ export default function WorkstationData() {
   const [active, setActive] = useState<Workstation>();
 
   useEffect(() => {
-    requestBackend({ url: `/workstation/${workstationId}` })
-      .then((response) => {
-        setActive(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // requestBackend({ url: `/workstation/${workstationId}` })
+    //   .then((response) => {
+    //     setActive(response.data);
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    setActive(localeData)
+
+
+      
+
   }, [workstationId]);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
@@ -183,6 +191,10 @@ export default function WorkstationData() {
           <Label htmlFor="status">Status</Label>
           <Input name="status" id="status" />
         </Field>
+
+        <h4>teste</h4>
+
+        <UserCard nome={active ? active.usuario.nome : ' - ' } email={active ? active.usuario.email : ' - '}  />
       </ContainerSidePanel>
     </Wapper>
   );

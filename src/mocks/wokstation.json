@@ -1,0 +1,31 @@
+{
+  "id": 21,
+  "nome": "Notebook Erick",
+  "fabricante": "Dell Inc.",
+  "modelo": "Inspiron 3583",
+  "descricao": null,
+  "numeroSerie": "35XYP63",
+  "nomeHost": "ERICK",
+  "inativo": null,
+  "dominio": "ERICK.rorato.local",
+  "tempoLigado": "0 dias, 00:00:19",
+  "status": "DISPONIVEL",
+  "gateway": "10.0.0.1",
+  "memoriaRam": "7,9",
+  "sistemaOperacional": "Microsoft Windows 10 build 19044",
+  "processador": "Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz",
+  "arquiteturaSo": "64",
+  "dtAquisicao": "2023-02-08",
+  "dtVencimentoGarantia": "2022-12-31",
+  "dtExpiracao": "2023-01-31",
+  "ultimoUsuarioLogado": "ERICK$",
+  "dns": "[10.0.0.8, 10.0.0.10]",
+  "dtUltimoSincronismo": "2023-04-24T14:08:32.000+00:00",
+  "vlrAquisicao": 150,
+  "observacao": "Porta almoxarifado , utilizado para conferencia de NF e gerar Requisições",
+  "usuario": {
+    "id": 1845,
+    "nome": "Erick Oliveira Rosa",
+    "email": "erickoliveira@ajrorato.ind.br"
+  }
+}

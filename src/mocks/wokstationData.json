@@ -19,7 +19,11 @@
           "dtUltimoSincronismo": "2023-04-24T14:08:32.000+00:00",
           "vlrAquisicao": 150,
           "observacao": "Porta almoxarifado , utilizado para conferencia de NF e gerar Requisições",
-          "usuarioId": null,
+          "usuario": {
+            "id": 1845,
+            "nome": "Erick Oliveira Rosa",
+            "email": "erickoliveira@ajrorato.ind.br"
+          },
           "localIndustriaId": null,
           "movimentos": [],
           "licencas": [],
