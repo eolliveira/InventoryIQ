@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 
 type WorkstationDetailsProps = {
-  data: Workstation;
+  data?: Workstation;
 };
 
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
@@ -34,11 +34,11 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
     setValue('modelo', data.modelo);
     setValue('dtAquisicao', data.dtAquisicao);
     setValue('dtExpiracao', data.dtExpiracao);
-  }
+  };
 
   useEffect(() => {
-    setData(data)
-    console.log("use efecct teste wokstationDetails");
+    if (data) setData(data);
+    console.log('use efecct teste wokstationDetails');
   }, []);
 
   return (
@@ -69,7 +69,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               type="text"
               name="fabricante"
               placeholder="Fabricante"
-              id='fabricante'
+              id="fabricante"
             />
           </Field>
           <Field>

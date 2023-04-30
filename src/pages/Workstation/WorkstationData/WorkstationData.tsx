@@ -155,7 +155,7 @@ export default function WorkstationData() {
           </AppBar>
           {/* //refatorar */}
           <Panel value="1">
-            <WorkstationDetails data={active ? active : {}} />
+            <WorkstationDetails data={active} />
           </Panel>
           <Panel value="2">
             <WorkstationHardware teste={10} />
