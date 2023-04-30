@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { theme } from './Theme';
 
 export const GlobalStyles = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
     * {
         margin: 0;
@@ -12,15 +11,9 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      /* font-family: -- 'Roboto', sans-serif; */
+      font-family: 'Roboto', sans-serif;
     }
-
-    li, a {
-        list-style-type: none;
-        text-decoration: none;
-    }
-
+    
 `;
 
 //estilo base para inputs
