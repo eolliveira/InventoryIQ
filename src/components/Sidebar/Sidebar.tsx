@@ -9,7 +9,6 @@ import {
 import { theme } from '../../style/Theme';
 import { ButtonColapseContainer, SidebarContainer } from './Sidebar.style';
 import { Button, IconButton, Typography } from '@mui/material';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import MenuIcon from '@mui/icons-material/Menu';
 import DevicesIcon from '@mui/icons-material/Devices';
 import PeopleIcon from '@mui/icons-material/People';
@@ -20,6 +19,7 @@ import { NavLink } from 'react-router-dom';
 import Image from './image.png';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { hasAnyHoles } from '../../utils/Auth';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 export default function MenuSidebar() {
   
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
@@ -94,7 +94,10 @@ export default function MenuSidebar() {
                     <MenuIcon />
                   </IconButton>
                 ) : (
-                  <ArrowBackIosNewIcon style={{ color: 'black' }} />
+                  //<ArrowBackIosNewIcon color='black' style={{ color: 'black' }} />
+                  <IconButton disableFocusRipple aria-label="delete" size="large">
+                  <ArrowBackIosNewIcon />
+                </IconButton>
                 )
               }
               onClick={() => collapseSidebar()}

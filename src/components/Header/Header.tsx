@@ -72,7 +72,7 @@ export default function Header() {
         position="static"
       >
         <Toolbar sx={{
-          backgroundColor: 'white' //`${theme.colors.yellow}`
+          backgroundColor: `${theme.colors.yellow}`
         }}>
           <Typography
             variant="h6"
