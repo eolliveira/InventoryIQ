@@ -67,19 +67,21 @@ export default function WorkstationList() {
           />
         </Stack>
       </HeaderContainer>
-      <Card>
+      <div>
         <DataTable
           columns={columns}
           data={page ? page?.content : []}
           sortIcon={<ExpandMoreIcon />}
+          responsive
           selectableRows
           pointerOnHover
           highlightOnHover
           dense
           fixedHeader
+          fixedHeaderScrollHeight={'82vh'}
           onRowClicked={handleRowClicked}
         />
-      </Card>
+      </div>
     </div>
   );
 }

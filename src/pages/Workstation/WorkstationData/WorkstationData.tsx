@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-
 import TabContext from '@material-ui/lab/TabContext';
 import { theme } from '../../../style/Theme';
 
@@ -20,8 +19,8 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import { Workstation } from '../../../types/Workstation';
 import { Field, Input, Label } from '../../../style/GlobalStyles';
-import localeData from '../../../mocks/wokstation.json'
-
+import localeData from '../../../mocks/wokstation.json';
+import EditIcon from '@mui/icons-material/Edit';
 
 import '@mui/material/styles';
 import UserCard from '../../../components/UserCard/UserCard';
@@ -32,6 +31,9 @@ import Button from '@mui/material/Button';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import { Divider } from '@material-ui/core';
+import StatusControl from '../../../components/StatusControl/StatusControl';
 
 export default function WorkstationData() {
   const navigate = useNavigate();
@@ -52,11 +54,7 @@ export default function WorkstationData() {
     //   .catch((error) => {
     //     console.log(error);
     //   });
-    setActive(localeData)
-
-
-      
-
+    setActive(localeData);
   }, [workstationId]);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
@@ -84,9 +82,13 @@ export default function WorkstationData() {
     <Wapper className="row">
       <Container className="col-lg-10">
         <HeaderWorkstation>
-          <Button onClick={() => navigate('/workstation')} variant="text">
+          <IconButton
+            aria-label="back"
+            size="large"
+            onClick={() => navigate('/workstation')}
+          >
             <ArrowBackIcon />
-          </Button>
+          </IconButton>
 
           <Typography
             fontWeight={'bold'}
@@ -109,6 +111,7 @@ export default function WorkstationData() {
               style={{
                 color: 'white',
                 backgroundColor: `${theme.colors.secondary}`,
+                textTransform: 'none',
               }}
               variant="contained"
               startIcon={<SyncIcon />}
@@ -125,45 +128,66 @@ export default function WorkstationData() {
               backgroundColor: `${theme.colors.white}`,
             }}
           >
-            <Tabs
-              value={tabValue}
-              onChange={handleTabChange}
-              textColor="primary"
-              indicatorColor="primary"
-              aria-label="secondary tabs example"
-            >
-              {/* refatorar */}
-              <Tab
-                value="1"
-                label="Detalhes"
-                style={{ fontSize: `${theme.size.sm}` }}
-              />
-              <Tab
-                value="2"
-                label="Hardware"
-                style={{ fontSize: `${theme.size.sm}` }}
-              />
-              <Tab
-                value="3"
-                label="Interfaces"
-                style={{ fontSize: `${theme.size.sm}` }}
-              />
-              <Tab
-                value="4"
-                label="Movimentos"
-                style={{ fontSize: `${theme.size.sm}` }}
-              />
-              <Tab
-                value="5"
-                label="Licenças"
-                style={{ fontSize: `${theme.size.sm}` }}
-              />
-              <Tab
-                value="6"
-                label="Manutenção"
-                style={{ fontSize: `${theme.size.sm}` }}
-              />
-            </Tabs>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <CustomTabs
+                value={tabValue}
+                onChange={handleTabChange}
+                textColor="inherit"
+                indicatorColor="primary"
+                aria-label="secondary tabs example"
+                style={{ color: `${theme.colors.black}` }}
+              >
+                {/* refatorar */}
+                <Tab
+                  value="1"
+                  label="Detalhes"
+                  style={{
+                    fontSize: `${theme.size.sm}`,
+                    textTransform: 'none',
+                  }}
+                />
+                <Tab
+                  value="2"
+                  label="Hardware"
+                  style={{
+                    fontSize: `${theme.size.sm}`,
+                    textTransform: 'none',
+                  }}
+                />
+                <Tab
+                  value="3"
+                  label="Interfaces"
+                  style={{
+                    fontSize: `${theme.size.sm}`,
+                    textTransform: 'none',
+                  }}
+                />
+                <Tab
+                  value="4"
+                  label="Movimentos"
+                  style={{
+                    fontSize: `${theme.size.sm}`,
+                    textTransform: 'none',
+                  }}
+                />
+                <Tab
+                  value="5"
+                  label="Licenças"
+                  style={{
+                    fontSize: `${theme.size.sm}`,
+                    textTransform: 'none',
+                  }}
+                />
+                <Tab
+                  value="6"
+                  label="Manutenção"
+                  style={{
+                    fontSize: `${theme.size.sm}`,
+                    textTransform: 'none',
+                  }}
+                />
+              </CustomTabs>
+            </Box>
           </AppBar>
           {/* //refatorar */}
           <Panel value="1">
@@ -189,21 +213,26 @@ export default function WorkstationData() {
       <ContainerSidePanel className="col-lg-2">
         <Field>
           <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
-          <Input id="ultmSinc" />
-        </Field>
-        <Field>
-          <Label htmlFor="status">Status</Label>
-          <Input name="status" id="status" />
+          <Input value={'12/02/2023 09:30:02'} id="ultmSinc" />
         </Field>
 
-        <h4>teste</h4>
-
-        <UserCard nome={active ? active.usuario.nome : ' - ' } email={active ? active.usuario.email : ' - '}  />
+        <StatusControl status={active?.status} handleEdit={() => {}} />
+        <Box
+          sx={{
+            marginTop: 2,
+            marginBottom: 2,
+            borderBottom: 1,
+            borderColor: 'divider',
+          }}
+        />
+        <UserCard
+          nome={active ? active.usuario.nome : ' - '}
+          email={active ? active.usuario.email : ' - '}
+        />
       </ContainerSidePanel>
     </Wapper>
   );
 }
-
 
 const Wapper = styled.div`
   display: flex;
@@ -241,4 +270,15 @@ const CustomLink = styled(Link)`
 const Panel = styled(TabPanel)`
   margin: 0;
   padding: 0;
+`;
+
+const CustomTabs = styled(Tabs)`
+  .Mui-selected {
+    //font-weight: bold;
+    color: ${theme.colors.secondary};
+  }
+
+  .MuiTabs-indicator {
+    background-color: ${theme.colors.secondary}; /* cor personalizada */
+  }
 `;

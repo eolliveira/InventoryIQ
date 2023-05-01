@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { theme } from '../../style/Theme';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
 
 import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
@@ -10,6 +9,7 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import Menu from '@mui/material/Menu';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
 
 type StockButtonProps = {
   onClickAdd?: Function;
@@ -48,7 +48,7 @@ export default function StockButton({
           backgroundColor: `${theme.colors.secondary}`,
         }}
       >
-        Ações
+        <Text>Ações</Text>
       </Button>
       <CustomMenu
         id="demo-customized-menu"
@@ -65,12 +65,11 @@ export default function StockButton({
               onClickAdd();
               handleClose();
             }}
+            sx={{ mb: 0.5 }}
             disableRipple
           >
-            <ContainerIcon>
-              <AddIcon />
-            </ContainerIcon>
-            Adicionar
+             <AddIcon fontSize='medium'  sx={{ mr: 0.5 }} />
+            <TextItem>Adicionar</TextItem>
           </MenuItem>
         )}
         {onClickEdit && (
@@ -82,8 +81,8 @@ export default function StockButton({
             disableRipple
             sx={{ mb: 0.5 }}
           >
-            <EditIcon sx={{ mr: 0.5 }} />
-            Editar
+            <EditIcon fontSize='medium'  sx={{ mr: 0.5 }} />
+            <TextItem>Editar</TextItem>
           </MenuItem>
         )}
         {onClickDuplicate && (
@@ -95,8 +94,9 @@ export default function StockButton({
             disableRipple
             sx={{ mb: 0.5 }}
           >
-            <FileCopyIcon sx={{ mr: 0.5 }} />
-            Duplicar
+            <FileCopyIcon  fontSize='medium' sx={{ mr: 0.5 }} />
+            
+            <TextItem>Duplicar</TextItem>
           </MenuItem>
         )}
         {onClickRemove && (
@@ -108,8 +108,9 @@ export default function StockButton({
             disableRipple
             sx={{ mb: 0.5 }}
           >
-            <DeleteIcon sx={{ mr: 0.5 }} />
-            Excluir
+            <DeleteIcon fontSize='medium' sx={{ mr: 0.5 }} />
+             <TextItem>Excluir</TextItem>
+             
           </MenuItem>
         )}
       </CustomMenu>
@@ -127,3 +128,19 @@ const CustomMenu = styled(Menu)`
   justify-content: space-between;
   align-items: normal;
 `;
+
+const Text = styled.p`
+  color: 'white';
+  background-color: ${theme.colors.secondary};
+  text-transform: none;
+  margin: 0;
+`;
+
+const TextItem = styled.p`
+  color: 'red';
+  /* background-color: ${theme.colors.secondary}; */
+  text-transform: none;
+  font-size: 14px;
+  margin: 0;
+`;
+
