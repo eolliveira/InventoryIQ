@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { theme } from '../../style/Theme';
-import Button from '@material-ui/core/Button';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -10,6 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import Menu from '@mui/material/Menu';
 import styled from 'styled-components';
+import Button from '@mui/material/Button';
 
 type StockButtonProps = {
   onClickAdd?: Function;

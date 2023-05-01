@@ -3,14 +3,14 @@ import { requestBackend } from '../../../http/requests';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import { SpringPage } from 'types/vendor/spring';
-import Card from '@material-ui/core/Card';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import { Stack } from '@mui/material';
-import Pagination from '@material-ui/lab/Pagination';
 import styled from 'styled-components';
 import { Workstation } from '../../../types/Workstation';
-import localeData from '../../../mocks/wokstationData.json'
+import localeData from '../../../mocks/wokstationData.json';
+import Stack from '@mui/material/Stack';
+import Card from '@material-ui/core/Card';
+import Pagination from '@mui/material/Pagination';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -21,14 +21,14 @@ const columns: TableColumn<Workstation>[] = [
 ];
 
 export default function WorkstationList() {
- // const [page, setPage] = useState<SpringPage<Workstation>>();
+  // const [page, setPage] = useState<SpringPage<Workstation>>();
   const [page, setPage] = useState<SpringPage<any>>();
   const [numberPage, setNumberPage] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setPage(localeData)
-    
+    setPage(localeData);
+
     // const params: AxiosRequestConfig = {
     //   method: 'GET',
     //   url: `/workstation`,
@@ -52,11 +52,13 @@ export default function WorkstationList() {
   };
 
   return (
-    <div className="App">
+    <div>
       <HeaderContainer>
         <Stack spacing={2}>
           <Pagination
-            onChange={(event: ChangeEvent<unknown>, numberPage: number) => setNumberPage(numberPage - 1)}
+            onChange={(event: ChangeEvent<unknown>, numberPage: number) =>
+              setNumberPage(numberPage - 1)
+            }
             defaultPage={1}
             count={page?.totalPages}
             variant="outlined"

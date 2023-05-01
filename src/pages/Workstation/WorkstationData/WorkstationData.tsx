@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Tab from '@material-ui/core/Tab';
+
+
 import TabContext from '@material-ui/lab/TabContext';
 import { theme } from '../../../style/Theme';
-import Tabs from '@material-ui/core/Tabs';
+
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
-import TabPanel from '@material-ui/lab/TabPanel';
 import SyncIcon from '@mui/icons-material/Sync';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Stack, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import WorkstationDetails from './WorkstationDetails/WorkstationDetails';
 import WorkstationMovements from './WorkstationMovements/WorkstationMovements';
@@ -28,6 +25,13 @@ import localeData from '../../../mocks/wokstation.json'
 
 import '@mui/material/styles';
 import UserCard from '../../../components/UserCard/UserCard';
+import TabPanel from '@material-ui/lab/TabPanel';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import AppBar from '@mui/material/AppBar';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 export default function WorkstationData() {
   const navigate = useNavigate();
@@ -199,6 +203,7 @@ export default function WorkstationData() {
     </Wapper>
   );
 }
+
 
 const Wapper = styled.div`
   display: flex;

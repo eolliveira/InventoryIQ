@@ -11,7 +11,7 @@ type UserCardProps = {
 export default function UserCard({ nome, email }: UserCardProps) {
   return (
     <>
-      <p>Usuário</p>
+      <Text>Usuário</Text>
       <Card>
         <AccountCircleIcon
           sx={{ marginRight: 1, color: `${theme.colors.secondary}` }}
@@ -32,6 +32,7 @@ export default function UserCard({ nome, email }: UserCardProps) {
 
 const Card = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   border-radius: 5px;
@@ -44,6 +45,12 @@ const Content = styled.div`
   flex: 1;
   flex-direction: column;
   justify-content: flex-start;
+`;
+
+const Text = styled.p`
+  font-size: 13px;
+  font-weight: bold;
+  margin: 2px 0px;
 `;
 
 const Username = styled.h6`
