@@ -15,12 +15,10 @@ import WorkstationHardware from './WorkstationHardware/WorkstationHardware';
 import WorkstationInterfaces from './WorkstationInterfaces/WorkstationInterfaces';
 
 import StockButton from '../../../components/StockButton/StockButon';
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
-import { Workstation } from '../../../types/Workstation';
+import { Workstation } from '../../../types/workstation';
 import { Field, Input, Label } from '../../../style/GlobalStyles';
-import localeData from '../../../mocks/wokstation.json';
-import EditIcon from '@mui/icons-material/Edit';
 
 import '@mui/material/styles';
 import UserCard from '../../../components/UserCard/UserCard';
@@ -32,7 +30,6 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { Divider } from '@material-ui/core';
 import StatusControl from '../../../components/StatusControl/StatusControl';
 
 export default function WorkstationData() {
@@ -46,15 +43,15 @@ export default function WorkstationData() {
   const [active, setActive] = useState<Workstation>();
 
   useEffect(() => {
-    // requestBackend({ url: `/workstation/${workstationId}` })
-    //   .then((response) => {
-    //     setActive(response.data);
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    setActive(localeData);
+    requestBackend({ url: `/workstation/${workstationId}` })
+      .then((response) => {
+        setActive(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // setActive(localeData);
   }, [workstationId]);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>

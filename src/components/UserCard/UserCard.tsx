@@ -2,10 +2,11 @@ import { theme } from '../../style/Theme';
 import styled from 'styled-components';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EditIcon from '@mui/icons-material/Edit';
+import { toCamelCase } from '../../utils/Converter';
 
 type UserCardProps = {
-  nome: string;
-  email: string;
+  nome?: string;
+  email?: string;
 };
 
 export default function UserCard({ nome, email }: UserCardProps) {
@@ -18,8 +19,8 @@ export default function UserCard({ nome, email }: UserCardProps) {
           fontSize="large"
         />
         <Content>
-          <Username>{nome}</Username>
-          <Email>{email}</Email>
+          <Username>{toCamelCase(nome ? nome : '')}</Username>
+          <Email>{toCamelCase(email ? email : '')}</Email>
         </Content>
         <EditIcon
           sx={{ color: `${theme.colors.secondary}` }}

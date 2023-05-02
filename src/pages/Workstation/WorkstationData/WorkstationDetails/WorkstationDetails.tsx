@@ -1,4 +1,4 @@
-import { Workstation } from '../../../../types/Workstation';
+import { Workstation } from '../../../../types/workstation';
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
