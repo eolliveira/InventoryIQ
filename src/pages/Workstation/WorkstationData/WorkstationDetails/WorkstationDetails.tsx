@@ -11,9 +11,11 @@ import styled from '@emotion/styled';
 
 type WorkstationDetailsProps = {
   data?: Workstation;
+  isEditing?: boolean;
+  isAdding?: boolean;
 };
 
-export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
+export default function WorkstationDetails({ data, isAdding, isEditing }: WorkstationDetailsProps) {
   const [active, setActive] = useState<Workstation>();
 
   const {
@@ -31,7 +33,8 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   useEffect(() => {
     setActive(data);
     if (data) setData(data);
-
+    console.log("isadding: " + isAdding);
+    
     console.log('evento useEffecct WorkstationDetails');
   }, [data]);
 
@@ -70,6 +73,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               type="text"
               name="nome"
               placeholder="Nome do ativo"
+              disabled={isEditing && isAdding }
             />
           </Field>
           <Field>

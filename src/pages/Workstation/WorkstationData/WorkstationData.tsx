@@ -38,9 +38,16 @@ export default function WorkstationData() {
 
   const { workstationId } = useParams<urlParams>();
   const [active, setActive] = useState<Workstation>();
+  const [isAdding, setIsAdding] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  if(workstationId == 'create') {
+      setIsAdding(true)
+  }
 
   useEffect(() => {
-    requestBackend({ url: `/workstation/${workstationId}` })
+    if(!isAdding || isEditing){
+      requestBackend({ url: `/workstation/${workstationId}` })
       .then((response) => {
         setActive(response.data);
 
@@ -51,6 +58,7 @@ export default function WorkstationData() {
         console.log(error);
       });
     // setActive(localeData);
+    }
   }, [workstationId]);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
@@ -59,6 +67,8 @@ export default function WorkstationData() {
   const [tabValue, setTabValue] = useState('1');
 
   const handleAdd = () => {
+    navigate('/workstation/create', { replace: true });
+    setIsAdding(true)
     console.log('evento para adicionar');
   };
 
@@ -76,6 +86,14 @@ export default function WorkstationData() {
 
   return (
     <Wapper className="row">
+      <ContainerSidePanel className="col-lg-2">
+        <SidePanelData
+          nome={active?.usuario.nome}
+          email={active?.usuario.email}
+          status={active?.status}
+          dtUltimoSincronismo={active?.dtUltimoSincronismo}
+        />
+      </ContainerSidePanel>
       <Container className="col-lg-10">
         <HeaderWorkstation>
           <IconButton
@@ -133,7 +151,6 @@ export default function WorkstationData() {
                 aria-label="secondary tabs example"
                 style={{ color: `${theme.colors.black}` }}
               >
-                {/* refatorar */}
                 <Tab
                   value="1"
                   label="Detalhes"
@@ -185,9 +202,8 @@ export default function WorkstationData() {
               </CustomTabs>
             </Box>
           </AppBar>
-          {/* //refatorar */}
           <Panel value="1">
-            <WorkstationDetails data={active} />
+            <WorkstationDetails data={active} isEditing={isEditing} isAdding={isAdding} />
           </Panel>
           <Panel value="2">
             <WorkstationHardware teste={10} />
@@ -206,14 +222,6 @@ export default function WorkstationData() {
           </Panel>
         </TabContext>
       </Container>
-      <ContainerSidePanel className="col-lg-2">
-        <SidePanelData
-          nome={active?.usuario.nome}
-          email={active?.usuario.email}
-          status={active?.status}
-          dtUltimoSincronismo={active?.dtUltimoSincronismo}
-        />
-      </ContainerSidePanel>
     </Wapper>
   );
 }
@@ -221,10 +229,13 @@ export default function WorkstationData() {
 const Wapper = styled.div`
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
   margin: 5px;
   border: 1px solid green;
   height: calc(100vh - 110px);
+
+  @media (min-width: 992px) {
+    flex-direction: row-reverse;
+  }
 `;
 
 const HeaderWorkstation = styled.div`
@@ -239,8 +250,6 @@ const Container = styled.div`
 `;
 
 const ContainerSidePanel = styled.div`
-  /* display: flex;
-  flex-direction: column; */
   border: 1px solid blue;
 `;
 
