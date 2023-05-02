@@ -79,7 +79,11 @@ export default function Header() {
             component="div"
             sx={{ flexGrow: 1, color: 'black' }}
           >
-            Estações de Trabalho
+            {/* 
+            
+            remover essa linha?
+            
+            */}
           </Typography>
           <div>
             <IconButton

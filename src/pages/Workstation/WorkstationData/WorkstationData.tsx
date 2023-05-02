@@ -18,10 +18,7 @@ import StockButton from '../../../components/StockButton/StockButon';
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import { Workstation } from '../../../types/workstation';
-import { Field, Input, Label } from '../../../style/GlobalStyles';
 
-import '@mui/material/styles';
-import UserCard from '../../../components/UserCard/UserCard';
 import TabPanel from '@material-ui/lab/TabPanel';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -30,7 +27,7 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import StatusControl from '../../../components/StatusControl/StatusControl';
+import SidePanelData from '../../../components/SidePanelData/SidePanelData';
 
 export default function WorkstationData() {
   const navigate = useNavigate();
@@ -210,23 +207,11 @@ export default function WorkstationData() {
         </TabContext>
       </Container>
       <ContainerSidePanel className="col-lg-2">
-        <Field>
-          <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
-          <Input value={active?.dtUltimoSincronismo} id="ultmSinc" />
-        </Field>
-
-        <StatusControl status={active?.status} handleEdit={() => {}} />
-        <Box
-          sx={{
-            marginTop: 2,
-            marginBottom: 2,
-            borderBottom: 1,
-            borderColor: 'divider',
-          }}
-        />
-        <UserCard
-          nome={active ? active.usuario.nome : ' - '}
-          email={active ? active.usuario.email : ' - '}
+        <SidePanelData
+          nome={active?.usuario.nome}
+          email={active?.usuario.email}
+          status={active?.status}
+          dtUltimoSincronismo={active?.dtUltimoSincronismo}
         />
       </ContainerSidePanel>
     </Wapper>
