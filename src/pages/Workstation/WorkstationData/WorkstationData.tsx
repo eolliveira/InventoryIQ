@@ -15,7 +15,7 @@ import WorkstationHardware from './WorkstationHardware/WorkstationHardware';
 import WorkstationInterfaces from './WorkstationInterfaces/WorkstationInterfaces';
 
 import StockButton from '../../../components/StockButton/StockButon';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import { Workstation } from '../../../types/workstation';
 import { Field, Input, Label } from '../../../style/GlobalStyles';
@@ -46,6 +46,8 @@ export default function WorkstationData() {
     requestBackend({ url: `/workstation/${workstationId}` })
       .then((response) => {
         setActive(response.data);
+
+        console.log('evento useEffect WorkstationData');
         console.log(response.data);
       })
       .catch((error) => {
@@ -94,7 +96,7 @@ export default function WorkstationData() {
             variant="h5"
             flex={1}
           >
-            {active?.id + ' - ' + active?.nome}
+            <Text>{active?.id + ' - ' + active?.nome}</Text>
           </Typography>
           <Stack spacing={2} direction="row">
             <StockButton
@@ -210,7 +212,7 @@ export default function WorkstationData() {
       <ContainerSidePanel className="col-lg-2">
         <Field>
           <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
-          <Input value={'12/02/2023 09:30:02'} id="ultmSinc" />
+          <Input value={active?.dtUltimoSincronismo} id="ultmSinc" />
         </Field>
 
         <StatusControl status={active?.status} handleEdit={() => {}} />
@@ -257,11 +259,11 @@ const ContainerSidePanel = styled.div`
   border: 1px solid blue;
 `;
 
-//verificar
-const CustomLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-  cursor: inherit;
+const Text = styled.p`
+  font-size: ${theme.size.lg};
+  color: ${theme.colors.secondary};
+  font-weight: bold;
+  margin: 0;
 `;
 
 const Panel = styled(TabPanel)`
@@ -271,11 +273,10 @@ const Panel = styled(TabPanel)`
 
 const CustomTabs = styled(Tabs)`
   .Mui-selected {
-    //font-weight: bold;
     color: ${theme.colors.secondary};
   }
 
   .MuiTabs-indicator {
-    background-color: ${theme.colors.secondary}; /* cor personalizada */
+    background-color: ${theme.colors.secondary};
   }
 `;

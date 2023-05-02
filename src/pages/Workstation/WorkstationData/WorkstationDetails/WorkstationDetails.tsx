@@ -1,13 +1,15 @@
 import { Workstation } from '../../../../types/workstation';
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type WorkstationDetailsProps = {
   data?: Workstation;
 };
 
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
+  const [active, setActive] = useState<Workstation>();
+
   const {
     register,
     handleSubmit,
@@ -17,8 +19,15 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   } = useForm<Workstation>();
 
   const onSubmit = (formData: Workstation) => {
-    console.log('submit do form' + formData);
+    console.log('vento submit do form' + formData);
   };
+
+  useEffect(() => {
+    setActive(data);
+    if (data) setData(data);
+
+    console.log('evento useEffecct WorkstationDetails');
+  }, [data]);
 
   const setData = (data: Workstation) => {
     setValue('nome', data.nome);
@@ -36,11 +45,6 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
     setValue('dtExpiracao', data.dtExpiracao);
   };
 
-  useEffect(() => {
-    if (data) setData(data);
-    console.log('use efecct teste wokstationDetails');
-  }, []);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="row">
@@ -51,7 +55,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               {...register('nome', {
                 required: 'Campo requerido',
               })}
-              className={`form-control base-input mb-3 ${
+              className={`form-control base-input mb-2 ${
                 errors.nome ? 'is-invalid' : ''
               }`}
               type="text"
@@ -63,7 +67,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             <Label htmlFor="fabricante">Fabricante</Label>
             <Input
               {...register('fabricante')}
-              className={`form-control base-input mb-3 ${
+              className={`form-control base-input mb-2 ${
                 errors.fabricante ? 'is-invalid' : ''
               }`}
               type="text"
@@ -74,49 +78,139 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           </Field>
           <Field>
             <Label htmlFor="nomeHost">Hostname</Label>
-            <Input id="nomeHost" />
+            <Input
+              {...register('nomeHost')}
+              className={`form-control base-input mb-2 ${
+                errors.nomeHost ? 'is-invalid' : ''
+              }`}
+              type="text"
+              name="nomeHost"
+              placeholder="Hostname"
+              id="nomeHost"
+            />
           </Field>
           <Field>
             <Label htmlFor="dominio">Dominio</Label>
-            <Input id="dominio" />
+            <Input
+              {...register('dominio')}
+              className={`form-control base-input mb-2 ${
+                errors.dominio ? 'is-invalid' : ''
+              }`}
+              type="text"
+              name="dominio"
+              placeholder="Dominio"
+              id="dominio"
+            />
           </Field>
           <Field>
             <Label htmlFor="dns">Dns</Label>
-            <Input id="dns" />
+            <Input 
+            {...register('dns')}
+            className={`form-control base-input mb-2 ${
+              errors.dns ? 'is-invalid' : ''
+            }`}
+            type="text"
+            name="dns"
+            placeholder="Dns"
+            id="dns" />
           </Field>
           <Field>
             <Label htmlFor="ultimoUsuarioLogado">Ultimo usuário logado</Label>
-            <Input id="ultimoUsuarioLogado" />
+            <Input 
+             {...register('ultimoUsuarioLogado')}
+             className={`form-control base-input mb-2 ${
+               errors.ultimoUsuarioLogado ? 'is-invalid' : ''
+             }`}
+             type="text"
+             name="ultimoUsuarioLogado"
+             placeholder="Ultimo Usuario Logado"
+             id="ultimoUsuarioLogado" />
           </Field>
           <Field>
             <Label htmlFor="tempoLigado">Tempo atividade</Label>
-            <Input id="tempoLigado" />
+            <Input 
+            {...register('tempoLigado')}
+            className={`form-control base-input mb-2 ${
+              errors.tempoLigado ? 'is-invalid' : ''
+            }`}
+            type="text"
+            name="tempoLigado"
+            placeholder="Tempo Ligado"
+            id="tempoLigado" />
           </Field>
         </div>
         <div className="col-lg-6">
           <Field>
             <Label htmlFor="sistemaOperacional">Sistema operacional</Label>
-            <Input id="sistemaOperacional" />
+            <Input 
+            {...register('sistemaOperacional')}
+            className={`form-control base-input mb-2 ${
+              errors.sistemaOperacional ? 'is-invalid' : ''
+            }`}
+            type="text"
+            name="sistemaOperacional"
+            placeholder="Sistema Operacional"
+            id="sistemaOperacional" />
           </Field>
           <Field>
             <Label htmlFor="processador">Processador</Label>
-            <Input id="processador" />
+            <Input 
+            {...register('processador')}
+            className={`form-control base-input mb-2 ${
+              errors.processador ? 'is-invalid' : ''
+            }`}
+            type="text"
+            name="processador"
+            placeholder="Processador"
+            id="processador" />
           </Field>
           <Field>
             <Label htmlFor="numeroSerie">Numero de série</Label>
-            <Input id="numeroSerie" />
+            <Input 
+            {...register('numeroSerie')}
+            className={`form-control base-input mb-2 ${
+              errors.numeroSerie ? 'is-invalid' : ''
+            }`}
+            type="text"
+            name="numeroSerie"
+            placeholder="Numero de Série"
+            id="numeroSerie" />
           </Field>
           <Field>
             <Label htmlFor="modelo">Modelo</Label>
-            <Input id="modelo" />
+            <Input 
+            {...register('modelo')}
+            className={`form-control base-input mb-2 ${
+              errors.modelo ? 'is-invalid' : ''
+            }`}
+            type="text"
+            name="modelo"
+            placeholder="Modelo"
+            id="modelo" />
           </Field>
           <Field>
-            <Label htmlFor="status">Data aquisição</Label>
-            <Input name="status" id="status" />
+            <Label htmlFor="dtAquisicao">Data aquisição</Label>
+            <Input 
+            {...register('dtAquisicao')}
+            className={`form-control base-input mb-2 ${
+              errors.dtAquisicao ? 'is-invalid' : ''
+            }`}
+            type="text"
+            placeholder="Data aquisição"
+            name="dtAquisicao" 
+            id="dtAquisicao" />
           </Field>
           <Field>
-            <Label htmlFor="status">Data expiração</Label>
-            <Input name="status" id="status" />
+            <Label htmlFor="dtExpiracao">Data expiração</Label>
+            <Input 
+            {...register('dtExpiracao')}
+            className={`form-control base-input mb-2 ${
+              errors.dtExpiracao ? 'is-invalid' : ''
+            }`}
+            type="text"
+            placeholder="Data expiração"
+            name="dtExpiracao" 
+            id="dtExpiracao" />
           </Field>
         </div>
       </div>
