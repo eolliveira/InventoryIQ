@@ -10,6 +10,9 @@ import { theme } from '../../../../style/Theme';
 import styled from '@emotion/styled';
 import { FormContext } from '../../../../contexts/FormContext';
 import { Navigate, useNavigate } from 'react-router-dom';
+import CloseIcon from '@mui/icons-material/Close';
+import { AxiosRequestConfig } from 'axios';
+import { requestBackend } from '../../../../http/requests';
 
 type WorkstationDetailsProps = {
   data?: Workstation;
@@ -17,8 +20,6 @@ type WorkstationDetailsProps = {
 
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   const [active, setActive] = useState<Workstation>();
-
-  const navigate = useNavigate();
 
   const { formContextData, setFormContextData } = useContext(FormContext);
 
@@ -31,7 +32,26 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   } = useForm<Workstation>();
 
   const onSubmit = (formData: Workstation) => {
-    console.log('evento submit do form' + formData);
+    if (data) {
+      const params: AxiosRequestConfig = {
+        method: formContextData.isEditing ? 'PUT' : 'POST',
+        url: formContextData.isEditing
+          ? `/workstation/${data.id}/update`
+          : '/workstation',
+        data: formData,
+      };
+
+      requestBackend(params).then(() => {
+        console.log('requisição de update realizada com sucesso');
+
+        setFormContextData({
+          isAdding: false,
+          isEditing: false,
+        });
+
+        window.alert('Gravado com sucesso!');
+      });
+    }
   };
 
   const onCancelForm = () => {
@@ -39,22 +59,17 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
       isAdding: false,
       isEditing: false,
     });
-    console.log('evento cancelar do workstationDEtails');
   };
 
   useEffect(() => {
-    console.log('evento useEffecct WorkstationDetails');
-
     if (!formContextData.isAdding) {
-      setActive(data);
-      if (data) setData(data);
-      console.log('isadding: ' + formContextData.isAdding);
+      if (data) setFormData(data);
     } else {
-      clearData();
+      clearFormData();
     }
-  }, [data, formContextData]);
+  }, [data, setFormContextData]);
 
-  const setData = (data: Workstation) => {
+  const setFormData = (data: Workstation) => {
     setValue('nome', data.nome);
     setValue('fabricante', data.fabricante);
     setValue('nomeHost', data.nomeHost);
@@ -68,12 +83,11 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
     setValue('modelo', data.modelo);
     setValue('dtAquisicao', data.dtAquisicao);
     setValue('dtExpiracao', data.dtExpiracao);
-
     setValue('dtVencimentoGarantia', data.dtVencimentoGarantia);
     setValue('vlrAquisicao', data.vlrAquisicao);
   };
 
-  const clearData = () => {
+  const clearFormData = () => {
     setValue('nome', '');
     setValue('fabricante', '');
     setValue('nomeHost', '');
@@ -92,9 +106,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="row">
         <div className="col-lg-6">
           <Field>
@@ -357,7 +369,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             textTransform: 'none',
           }}
           variant="contained"
-          startIcon={<SaveIcon />}
+          startIcon={<CloseIcon />}
           onClick={onCancelForm}
         >
           Cancelar

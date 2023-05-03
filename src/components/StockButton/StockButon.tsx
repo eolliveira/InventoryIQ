@@ -71,7 +71,7 @@ export default function StockButton({
             sx={{ mb: 0.5 }}
             disableRipple
           >
-             <AddIcon fontSize='small'  sx={{ mr: 0.5 }} />
+             <AddIcon fontSize='small'  sx={{ mr: 0.5, color: `${theme.colors.secondary}` }} />
             <TextItem>Adicionar</TextItem>
           </MenuItem>
         )}
@@ -84,7 +84,7 @@ export default function StockButton({
             disableRipple
             sx={{ mb: 0.5 }}
           >
-            <EditIcon fontSize='small'  sx={{ mr: 0.5 }} />
+            <EditIcon fontSize='small'  sx={{ mr: 0.5, color: `${theme.colors.secondary}` }} />
             <TextItem>Editar</TextItem>
           </MenuItem>
         )}
@@ -97,7 +97,7 @@ export default function StockButton({
             disableRipple
             sx={{ mb: 0.5 }}
           >
-            <FileCopyIcon  fontSize='small' sx={{ mr: 0.5 }} />
+            <FileCopyIcon  fontSize='small' sx={{ mr: 0.5, color: `${theme.colors.secondary}` }} />
             
             <TextItem>Duplicar</TextItem>
           </MenuItem>
@@ -111,7 +111,7 @@ export default function StockButton({
             disableRipple
             sx={{ mb: 0.5 }}
           >
-            <DeleteIcon fontSize='small' sx={{ mr: 0.5 }} />
+            <DeleteIcon fontSize='small' sx={{ mr: 0.5, color: `${theme.colors.secondary}` }} />
              <TextItem>Excluir</TextItem>
              
           </MenuItem>

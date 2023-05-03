@@ -33,11 +33,7 @@ export default function App() {
           <Route path="/" element={<Layout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="workstation" element={<WorkstationList />} />
-            <Route
-              path="workstation/:workstationId"
-              element={<WorkstationData />}
-            />
-            {/* verificar se dessa forma esta correto? */}
+            <Route path="workstation/:workstationId" element={<WorkstationData />} />
             <Route path="workstation/create" element={<WorkstationData />} />
             <Route path="license" element={<License />} />
             <Route path="mobile" element={<Mobile />} />

@@ -13,8 +13,8 @@ import WorkstationLicenses from './WorkstationLicenses/WorkstationLicenses';
 import WorkstationMaintenance from './WorkstationMaintenance/WorkstationMaintenance';
 import WorkstationHardware from './WorkstationHardware/WorkstationHardware';
 import WorkstationInterfaces from './WorkstationInterfaces/WorkstationInterfaces';
-
 import StockButton from '../../../components/StockButton/StockButon';
+
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import { Workstation } from '../../../types/workstation';
@@ -32,6 +32,9 @@ import localeData from '../../../mocks/wokstation.json';
 import { FormContext } from '../../../contexts/FormContext';
 
 export default function WorkstationData() {
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
+    setTabValue(newValue);
+
   const navigate = useNavigate();
 
   type urlParams = {
@@ -40,19 +43,24 @@ export default function WorkstationData() {
 
   const { workstationId } = useParams<urlParams>();
   const [active, setActive] = useState<Workstation>();
-
   const { formContextData, setFormContextData } = useContext(FormContext);
 
   useEffect(() => {
-    console.log('evento useEffect WorkstationData');
+    // if (workstationId == 'create') {
+    //   setFormContextData({
+    //     isAdding: true
+    //   });
+    // }
 
-    if (workstationId == 'create') {
+  
+    if (formContextData.isAdding || formContextData.isEditing) {
       setFormContextData({
-        isAdding: true,
+        isAdding: false,
+        isEditing: false,
       });
     }
 
-    if (!(formContextData.isAdding || formContextData.isEditing)) {
+    if (!formContextData.isAdding) {
       requestBackend({ url: `/workstation/${workstationId}` })
         .then((response) => {
           setActive(response.data);
@@ -62,28 +70,15 @@ export default function WorkstationData() {
         });
     }
 
-    if(formContextData.isAdding) {
-      window.alert("esta adicionando")
-      console.log('esta adicionando');
-      
-    }
-
-
-
     //setActive(localeData);
   }, [workstationId]);
-
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
-    setTabValue(newValue);
 
   const [tabValue, setTabValue] = useState('1');
 
   const handleAdd = () => {
-    navigate('/workstation/create', { replace: true });
     setFormContextData({
-      isAdding: true
+      isAdding: true,
     });
-    console.log('evento para adicionar');
   };
 
   const handleEdit = () => {
@@ -91,15 +86,15 @@ export default function WorkstationData() {
       isEditing: true,
     });
     //setIsEditing(true)
-    console.log('evento para editar');
+    console.log('evento StockButton para editar');
   };
 
   const handleRemove = () => {
-    console.log('evento para remover');
+    console.log('evento StockButton para remover');
   };
 
   const handleDuplicate = () => {
-    console.log('evento para duplicar');
+    console.log('evento StockButton para duplicar');
   };
 
   return (
@@ -134,7 +129,6 @@ export default function WorkstationData() {
           <Stack spacing={2} direction="row">
             <StockButton
               isDisabled={formContextData.isAdding || formContextData.isEditing}
-              onClickAdd={handleAdd}
               onClickDuplicate={handleDuplicate}
               onClickEdit={handleEdit}
               onClickRemove={handleRemove}
