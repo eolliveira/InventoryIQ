@@ -17,7 +17,7 @@ import WorkstationInterfaces from './WorkstationInterfaces/WorkstationInterfaces
 import StockButton from '../../../components/StockButton/StockButon';
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
-import { Workstation } from '../../../types/workstation';
+import { Workstation } from '../../../types/Workstation';
 
 import TabPanel from '@material-ui/lab/TabPanel';
 import Typography from '@mui/material/Typography';
@@ -28,6 +28,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import SidePanelData from '../../../components/SidePanelData/SidePanelData';
+import localeData from '../../../mocks/wokstation.json';
 
 export default function WorkstationData() {
   const navigate = useNavigate();
@@ -46,19 +47,21 @@ export default function WorkstationData() {
   }
 
   useEffect(() => {
-    if(!isAdding || isEditing){
-      requestBackend({ url: `/workstation/${workstationId}` })
-      .then((response) => {
-        setActive(response.data);
+    console.log('evento useEffect WorkstationData');
+    // if(!(isAdding || isEditing)){
+    //   requestBackend({ url: `/workstation/${workstationId}` })
+    //   .then((response) => {
+    //     setActive(response.data);
 
-        console.log('evento useEffect WorkstationData');
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // setActive(localeData);
-    }
+        
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+   
+    // }
+      setActive(localeData);
   }, [workstationId]);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
@@ -73,6 +76,7 @@ export default function WorkstationData() {
   };
 
   const handleEdit = () => {
+    setIsEditing(true)
     console.log('evento para editar');
   };
 
@@ -115,6 +119,7 @@ export default function WorkstationData() {
           </Typography>
           <Stack spacing={2} direction="row">
             <StockButton
+              isDisabled={isAdding || isEditing}
               onClickAdd={handleAdd}
               onClickDuplicate={handleDuplicate}
               onClickEdit={handleEdit}
@@ -122,6 +127,7 @@ export default function WorkstationData() {
             />
 
             <Button
+              disabled={isAdding || isEditing}
               style={{
                 color: 'white',
                 backgroundColor: `${theme.colors.secondary}`,

@@ -1,4 +1,4 @@
-import { Workstation } from '../../../../types/workstation';
+import { Workstation } from '../../../../types/Workstation';
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
@@ -15,7 +15,11 @@ type WorkstationDetailsProps = {
   isAdding?: boolean;
 };
 
-export default function WorkstationDetails({ data, isAdding, isEditing }: WorkstationDetailsProps) {
+export default function WorkstationDetails({
+  data,
+  isAdding,
+  isEditing,
+}: WorkstationDetailsProps) {
   const [active, setActive] = useState<Workstation>();
 
   const {
@@ -31,12 +35,16 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
   };
 
   useEffect(() => {
-    setActive(data);
-    if (data) setData(data);
-    console.log("isadding: " + isAdding);
-    
     console.log('evento useEffecct WorkstationDetails');
-  }, [data]);
+
+    if (!isAdding) {
+      setActive(data);
+      if (data) setData(data);
+      console.log('isadding: ' + isAdding);
+    } else {
+      clearData()
+    }
+  }, [data, isAdding, isEditing]);
 
   const setData = (data: Workstation) => {
     setValue('nome', data.nome);
@@ -57,6 +65,25 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
     setValue('vlrAquisicao', data.vlrAquisicao);
   };
 
+  const clearData = () => {
+    setValue('nome', '');
+    setValue('fabricante','');
+    setValue('nomeHost', '');
+    setValue('dominio', '');
+    setValue('dns', '');
+    setValue('ultimoUsuarioLogado','');
+    setValue('tempoLigado','');
+    setValue('sistemaOperacional','');
+    setValue('processador', '');
+    setValue('numeroSerie', '');
+    setValue('modelo', '');
+    setValue('dtAquisicao', '');
+    setValue('dtExpiracao', '');
+
+    setValue('dtVencimentoGarantia', '');
+    setValue('vlrAquisicao', 0);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="row">
@@ -72,8 +99,8 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
               }`}
               type="text"
               name="nome"
-              placeholder="Nome do ativo"
-              disabled={isEditing && isAdding }
+              id={'nome'}
+              disabled={!(isEditing || isAdding)}
             />
           </Field>
           <Field>
@@ -85,8 +112,8 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
               }`}
               type="text"
               name="fabricante"
-              placeholder="Fabricante"
               id="fabricante"
+              disabled={!(isEditing || isAdding)}
             />
           </Field>
           <Field>
@@ -98,8 +125,8 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
               }`}
               type="text"
               name="nomeHost"
-              placeholder="Hostname"
               id="nomeHost"
+              disabled={!(isEditing || isAdding)}
             />
           </Field>
           <Field>
@@ -111,8 +138,8 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
               }`}
               type="text"
               name="dominio"
-              placeholder="Dominio"
               id="dominio"
+              disabled={!(isEditing || isAdding)}
             />
           </Field>
           <Field>
@@ -124,8 +151,8 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
               }`}
               type="text"
               name="dns"
-              placeholder="Dns"
               id="dns"
+              disabled={!(isEditing || isAdding)}
             />
           </Field>
           <Field>
@@ -137,8 +164,8 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
               }`}
               type="text"
               name="ultimoUsuarioLogado"
-              placeholder="Ultimo Usuario Logado"
               id="ultimoUsuarioLogado"
+              disabled={!(isEditing || isAdding)}
             />
           </Field>
           <Field>
@@ -150,8 +177,8 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
               }`}
               type="text"
               name="tempoLigado"
-              placeholder="Tempo Ligado"
               id="tempoLigado"
+              disabled={!(isEditing || isAdding)}
             />
           </Field>
         </div>
@@ -165,8 +192,8 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
               }`}
               type="text"
               name="sistemaOperacional"
-              placeholder="Sistema Operacional"
               id="sistemaOperacional"
+              disabled={!(isEditing || isAdding)}
             />
           </Field>
           <Field>
@@ -178,8 +205,8 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
               }`}
               type="text"
               name="processador"
-              placeholder="Processador"
               id="processador"
+              disabled={!(isEditing || isAdding)}
             />
           </Field>
           <Field>
@@ -191,8 +218,8 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
               }`}
               type="text"
               name="numeroSerie"
-              placeholder="Numero de Série"
               id="numeroSerie"
+              disabled={!(isEditing || isAdding)}
             />
           </Field>
           <Field>
@@ -204,8 +231,8 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
               }`}
               type="text"
               name="modelo"
-              placeholder="Modelo"
               id="modelo"
+              disabled={!(isEditing || isAdding)}
             />
           </Field>
 
@@ -219,9 +246,9 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
                     errors.dtAquisicao ? 'is-invalid' : ''
                   }`}
                   type="text"
-                  placeholder="Data aquisição"
                   name="dtAquisicao"
                   id="dtAquisicao"
+                  disabled={!(isEditing || isAdding)}
                 />
               </Field>
             </div>
@@ -234,9 +261,9 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
                     errors.dtExpiracao ? 'is-invalid' : ''
                   }`}
                   type="text"
-                  placeholder="Data expiração"
                   name="dtExpiracao"
                   id="dtExpiracao"
+                  disabled={!(isEditing || isAdding)}
                 />
               </Field>
             </div>
@@ -254,9 +281,9 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
                     errors.dtVencimentoGarantia ? 'is-invalid' : ''
                   }`}
                   type="text"
-                  placeholder="Data vencimento garantia"
                   name="dtVencimentoGarantia"
                   id="dtVencimentoGarantia"
+                  disabled={!(isEditing || isAdding)}
                 />
               </Field>
               <Field>
@@ -267,9 +294,9 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
                     errors.vlrAquisicao ? 'is-invalid' : ''
                   }`}
                   type="number"
-                  placeholder="Valor de compra"
                   name="vlrAquisicao"
                   id="vlrAquisicao"
+                  disabled={!(isEditing || isAdding)}
                 />
               </Field>
             </div>
@@ -295,13 +322,13 @@ export default function WorkstationDetails({ data, isAdding, isEditing }: Workst
         </Button>
 
         <LoadingButton
-        type='submit'
+          type="submit"
           color="inherit"
           loading={false}
           loadingPosition="start"
           startIcon={<SaveIcon />}
           variant="outlined"
-          sx={{color: '#64D49E'}}
+          sx={{ color: '#64D49E' }}
         >
           <span>Salvar</span>
         </LoadingButton>
@@ -315,4 +342,5 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin-top: 20px;
+
 `;

@@ -16,6 +16,7 @@ type StockButtonProps = {
   onClickEdit?: Function;
   onClickRemove?: Function;
   onClickDuplicate?: Function;
+  isDisabled?: boolean
 };
 
 export default function StockButton({
@@ -23,6 +24,7 @@ export default function StockButton({
   onClickEdit,
   onClickRemove,
   onClickDuplicate,
+  isDisabled
 }: StockButtonProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -43,6 +45,7 @@ export default function StockButton({
         disableElevation
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
+        disabled={isDisabled}
         style={{
           color: 'white',
           backgroundColor: `${theme.colors.secondary}`,
