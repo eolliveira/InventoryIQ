@@ -17,7 +17,7 @@ import WorkstationInterfaces from './WorkstationInterfaces/WorkstationInterfaces
 import StockButton from '../../../components/StockButton/StockButon';
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
-import { Workstation } from '../../../types/Workstation';
+import { Workstation } from '../../../types/workstation';
 
 import TabPanel from '@material-ui/lab/TabPanel';
 import Typography from '@mui/material/Typography';
@@ -48,20 +48,20 @@ export default function WorkstationData() {
 
   useEffect(() => {
     console.log('evento useEffect WorkstationData');
-    // if(!(isAdding || isEditing)){
-    //   requestBackend({ url: `/workstation/${workstationId}` })
-    //   .then((response) => {
-    //     setActive(response.data);
+    if(!(isAdding || isEditing)){
+      requestBackend({ url: `/workstation/${workstationId}` })
+      .then((response) => {
+        setActive(response.data);
 
         
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
    
-    // }
-      setActive(localeData);
+    }
+      //setActive(localeData);
   }, [workstationId]);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
@@ -86,6 +86,13 @@ export default function WorkstationData() {
 
   const handleDuplicate = () => {
     console.log('evento para duplicar');
+  };
+
+
+  const handleCancel = () => {
+    setIsEditing(false)
+    setIsAdding(false)
+    console.log('evento cancelar tela WorkstationData');
   };
 
   return (
@@ -209,7 +216,7 @@ export default function WorkstationData() {
             </Box>
           </AppBar>
           <Panel value="1">
-            <WorkstationDetails data={active} isEditing={isEditing} isAdding={isAdding} />
+            <WorkstationDetails data={active} isEditing={isEditing} isAdding={isAdding} onCancel={handleCancel} />
           </Panel>
           <Panel value="2">
             <WorkstationHardware teste={10} />

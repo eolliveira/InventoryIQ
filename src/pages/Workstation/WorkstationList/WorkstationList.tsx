@@ -6,7 +6,7 @@ import { SpringPage } from 'types/vendor/spring';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import styled from 'styled-components';
-import { Workstation } from '../../../types/Workstation';
+import { Workstation } from '../../../types/workstation';
 import localeData from '../../../mocks/wokstationData.json';
 import Stack from '@mui/material/Stack';
 import Card from '@material-ui/core/Card';
@@ -21,30 +21,30 @@ const columns: TableColumn<Workstation>[] = [
 ];
 
 export default function WorkstationList() {
-  //const [page, setPage] = useState<SpringPage<Workstation>>();
-  const [page, setPage] = useState<SpringPage<any>>();
+  const [page, setPage] = useState<SpringPage<Workstation>>();
+  //const [page, setPage] = useState<SpringPage<any>>();
   const [numberPage, setNumberPage] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setPage(localeData);
+    //setPage(localeData);
 
-    // const params: AxiosRequestConfig = {
-    //   method: 'GET',
-    //   url: `/workstation`,
-    //   params: {
-    //     page: numberPage,
-    //     size: 5,
-    //   },
-    // };
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: `/workstation`,
+      params: {
+        page: numberPage,
+        size: 5,
+      },
+    };
 
-    // requestBackend(params)
-    //   .then((response) => {
-    //     setPage(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log('Erro' + error);
-    //   });
+    requestBackend(params)
+      .then((response) => {
+        setPage(response.data);
+      })
+      .catch((error) => {
+        console.log('Erro' + error);
+      });
   }, [numberPage]);
 
   const handleRowClicked = (row: Workstation) => {

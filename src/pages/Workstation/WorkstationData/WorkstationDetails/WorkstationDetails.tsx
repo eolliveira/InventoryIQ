@@ -1,4 +1,4 @@
-import { Workstation } from '../../../../types/Workstation';
+import { Workstation } from '../../../../types/workstation';
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
@@ -13,12 +13,14 @@ type WorkstationDetailsProps = {
   data?: Workstation;
   isEditing?: boolean;
   isAdding?: boolean;
+  onCancel?: Function;
 };
 
 export default function WorkstationDetails({
   data,
   isAdding,
   isEditing,
+  onCancel
 }: WorkstationDetailsProps) {
   const [active, setActive] = useState<Workstation>();
 
@@ -31,7 +33,12 @@ export default function WorkstationDetails({
   } = useForm<Workstation>();
 
   const onSubmit = (formData: Workstation) => {
-    console.log('vento submit do form' + formData);
+    console.log('evento submit do form' + formData);
+  };
+
+  const onCancelForm = () => {
+    oncancel
+    console.log('evento cancelar do workstationDEtails');
   };
 
   useEffect(() => {
@@ -42,7 +49,7 @@ export default function WorkstationDetails({
       if (data) setData(data);
       console.log('isadding: ' + isAdding);
     } else {
-      clearData()
+      clearData();
     }
   }, [data, isAdding, isEditing]);
 
@@ -67,13 +74,13 @@ export default function WorkstationDetails({
 
   const clearData = () => {
     setValue('nome', '');
-    setValue('fabricante','');
+    setValue('fabricante', '');
     setValue('nomeHost', '');
     setValue('dominio', '');
     setValue('dns', '');
-    setValue('ultimoUsuarioLogado','');
-    setValue('tempoLigado','');
-    setValue('sistemaOperacional','');
+    setValue('ultimoUsuarioLogado', '');
+    setValue('tempoLigado', '');
+    setValue('sistemaOperacional', '');
     setValue('processador', '');
     setValue('numeroSerie', '');
     setValue('modelo', '');
@@ -307,7 +314,7 @@ export default function WorkstationDetails({
         </div>
       </div>
 
-      <ButtonContainer>
+      <ButtonContainer isEnable={isAdding || isEditing}>
         <Button
           style={{
             color: 'white',
@@ -317,6 +324,7 @@ export default function WorkstationDetails({
           }}
           variant="contained"
           startIcon={<SaveIcon />}
+          onClick={onCancelForm}
         >
           Cancelar
         </Button>
@@ -337,10 +345,13 @@ export default function WorkstationDetails({
   );
 }
 
-const ButtonContainer = styled.div`
-  display: flex;
+type ButtonContainerProps = {
+  isEnable?: boolean;
+};
+
+const ButtonContainer = styled.div<ButtonContainerProps>`
+  display: ${(props) => (props.isEnable || props.isEnable ? 'flex' : 'none')};
   justify-content: flex-end;
   align-items: center;
   margin-top: 20px;
-
 `;
