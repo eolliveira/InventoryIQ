@@ -1,28 +1,26 @@
 import { Workstation } from '../../../../types/workstation';
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import Button from '@mui/material/Button';
 import { theme } from '../../../../style/Theme';
 import styled from '@emotion/styled';
+import { FormContext } from '../../../../contexts/FormContext';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 type WorkstationDetailsProps = {
   data?: Workstation;
-  isEditing?: boolean;
-  isAdding?: boolean;
-  onCancel?: Function;
 };
 
-export default function WorkstationDetails({
-  data,
-  isAdding,
-  isEditing,
-  onCancel
-}: WorkstationDetailsProps) {
+export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   const [active, setActive] = useState<Workstation>();
+
+  const navigate = useNavigate();
+
+  const { formContextData, setFormContextData } = useContext(FormContext);
 
   const {
     register,
@@ -37,21 +35,24 @@ export default function WorkstationDetails({
   };
 
   const onCancelForm = () => {
-    oncancel
+    setFormContextData({
+      isAdding: false,
+      isEditing: false,
+    });
     console.log('evento cancelar do workstationDEtails');
   };
 
   useEffect(() => {
     console.log('evento useEffecct WorkstationDetails');
 
-    if (!isAdding) {
+    if (!formContextData.isAdding) {
       setActive(data);
       if (data) setData(data);
-      console.log('isadding: ' + isAdding);
+      console.log('isadding: ' + formContextData.isAdding);
     } else {
       clearData();
     }
-  }, [data, isAdding, isEditing]);
+  }, [data, formContextData]);
 
   const setData = (data: Workstation) => {
     setValue('nome', data.nome);
@@ -86,13 +87,14 @@ export default function WorkstationDetails({
     setValue('modelo', '');
     setValue('dtAquisicao', '');
     setValue('dtExpiracao', '');
-
     setValue('dtVencimentoGarantia', '');
     setValue('vlrAquisicao', 0);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="row">
         <div className="col-lg-6">
           <Field>
@@ -107,7 +109,9 @@ export default function WorkstationDetails({
               type="text"
               name="nome"
               id={'nome'}
-              disabled={!(isEditing || isAdding)}
+              disabled={
+                !(formContextData.isEditing || formContextData.isAdding)
+              }
             />
           </Field>
           <Field>
@@ -120,7 +124,9 @@ export default function WorkstationDetails({
               type="text"
               name="fabricante"
               id="fabricante"
-              disabled={!(isEditing || isAdding)}
+              disabled={
+                !(formContextData.isEditing || formContextData.isAdding)
+              }
             />
           </Field>
           <Field>
@@ -133,7 +139,9 @@ export default function WorkstationDetails({
               type="text"
               name="nomeHost"
               id="nomeHost"
-              disabled={!(isEditing || isAdding)}
+              disabled={
+                !(formContextData.isEditing || formContextData.isAdding)
+              }
             />
           </Field>
           <Field>
@@ -146,7 +154,9 @@ export default function WorkstationDetails({
               type="text"
               name="dominio"
               id="dominio"
-              disabled={!(isEditing || isAdding)}
+              disabled={
+                !(formContextData.isEditing || formContextData.isAdding)
+              }
             />
           </Field>
           <Field>
@@ -159,7 +169,9 @@ export default function WorkstationDetails({
               type="text"
               name="dns"
               id="dns"
-              disabled={!(isEditing || isAdding)}
+              disabled={
+                !(formContextData.isEditing || formContextData.isAdding)
+              }
             />
           </Field>
           <Field>
@@ -172,7 +184,9 @@ export default function WorkstationDetails({
               type="text"
               name="ultimoUsuarioLogado"
               id="ultimoUsuarioLogado"
-              disabled={!(isEditing || isAdding)}
+              disabled={
+                !(formContextData.isEditing || formContextData.isAdding)
+              }
             />
           </Field>
           <Field>
@@ -185,7 +199,9 @@ export default function WorkstationDetails({
               type="text"
               name="tempoLigado"
               id="tempoLigado"
-              disabled={!(isEditing || isAdding)}
+              disabled={
+                !(formContextData.isEditing || formContextData.isAdding)
+              }
             />
           </Field>
         </div>
@@ -200,7 +216,9 @@ export default function WorkstationDetails({
               type="text"
               name="sistemaOperacional"
               id="sistemaOperacional"
-              disabled={!(isEditing || isAdding)}
+              disabled={
+                !(formContextData.isEditing || formContextData.isAdding)
+              }
             />
           </Field>
           <Field>
@@ -213,7 +231,9 @@ export default function WorkstationDetails({
               type="text"
               name="processador"
               id="processador"
-              disabled={!(isEditing || isAdding)}
+              disabled={
+                !(formContextData.isEditing || formContextData.isAdding)
+              }
             />
           </Field>
           <Field>
@@ -226,7 +246,9 @@ export default function WorkstationDetails({
               type="text"
               name="numeroSerie"
               id="numeroSerie"
-              disabled={!(isEditing || isAdding)}
+              disabled={
+                !(formContextData.isEditing || formContextData.isAdding)
+              }
             />
           </Field>
           <Field>
@@ -239,7 +261,9 @@ export default function WorkstationDetails({
               type="text"
               name="modelo"
               id="modelo"
-              disabled={!(isEditing || isAdding)}
+              disabled={
+                !(formContextData.isEditing || formContextData.isAdding)
+              }
             />
           </Field>
 
@@ -255,7 +279,9 @@ export default function WorkstationDetails({
                   type="text"
                   name="dtAquisicao"
                   id="dtAquisicao"
-                  disabled={!(isEditing || isAdding)}
+                  disabled={
+                    !(formContextData.isEditing || formContextData.isAdding)
+                  }
                 />
               </Field>
             </div>
@@ -270,7 +296,9 @@ export default function WorkstationDetails({
                   type="text"
                   name="dtExpiracao"
                   id="dtExpiracao"
-                  disabled={!(isEditing || isAdding)}
+                  disabled={
+                    !(formContextData.isEditing || formContextData.isAdding)
+                  }
                 />
               </Field>
             </div>
@@ -290,7 +318,9 @@ export default function WorkstationDetails({
                   type="text"
                   name="dtVencimentoGarantia"
                   id="dtVencimentoGarantia"
-                  disabled={!(isEditing || isAdding)}
+                  disabled={
+                    !(formContextData.isEditing || formContextData.isAdding)
+                  }
                 />
               </Field>
               <Field>
@@ -303,7 +333,9 @@ export default function WorkstationDetails({
                   type="number"
                   name="vlrAquisicao"
                   id="vlrAquisicao"
-                  disabled={!(isEditing || isAdding)}
+                  disabled={
+                    !(formContextData.isEditing || formContextData.isAdding)
+                  }
                 />
               </Field>
             </div>
@@ -314,7 +346,9 @@ export default function WorkstationDetails({
         </div>
       </div>
 
-      <ButtonContainer isEnable={isAdding || isEditing}>
+      <ButtonContainer
+        isEnable={formContextData.isEditing || formContextData.isAdding}
+      >
         <Button
           style={{
             color: 'white',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import TabContext from '@material-ui/lab/TabContext';
 import { theme } from '../../../style/Theme';
@@ -29,6 +29,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import SidePanelData from '../../../components/SidePanelData/SidePanelData';
 import localeData from '../../../mocks/wokstation.json';
+import { FormContext } from '../../../contexts/FormContext';
 
 export default function WorkstationData() {
   const navigate = useNavigate();
@@ -39,29 +40,37 @@ export default function WorkstationData() {
 
   const { workstationId } = useParams<urlParams>();
   const [active, setActive] = useState<Workstation>();
-  const [isAdding, setIsAdding] = useState<boolean>(false);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  if(workstationId == 'create') {
-      setIsAdding(true)
-  }
+  const { formContextData, setFormContextData } = useContext(FormContext);
 
   useEffect(() => {
     console.log('evento useEffect WorkstationData');
-    if(!(isAdding || isEditing)){
-      requestBackend({ url: `/workstation/${workstationId}` })
-      .then((response) => {
-        setActive(response.data);
 
-        
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
+    if (workstationId == 'create') {
+      setFormContextData({
+        isAdding: true,
       });
-   
     }
-      //setActive(localeData);
+
+    if (!(formContextData.isAdding || formContextData.isEditing)) {
+      requestBackend({ url: `/workstation/${workstationId}` })
+        .then((response) => {
+          setActive(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    if(formContextData.isAdding) {
+      window.alert("esta adicionando")
+      console.log('esta adicionando');
+      
+    }
+
+
+
+    //setActive(localeData);
   }, [workstationId]);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
@@ -71,12 +80,17 @@ export default function WorkstationData() {
 
   const handleAdd = () => {
     navigate('/workstation/create', { replace: true });
-    setIsAdding(true)
+    setFormContextData({
+      isAdding: true
+    });
     console.log('evento para adicionar');
   };
 
   const handleEdit = () => {
-    setIsEditing(true)
+    setFormContextData({
+      isEditing: true,
+    });
+    //setIsEditing(true)
     console.log('evento para editar');
   };
 
@@ -86,13 +100,6 @@ export default function WorkstationData() {
 
   const handleDuplicate = () => {
     console.log('evento para duplicar');
-  };
-
-
-  const handleCancel = () => {
-    setIsEditing(false)
-    setIsAdding(false)
-    console.log('evento cancelar tela WorkstationData');
   };
 
   return (
@@ -126,7 +133,7 @@ export default function WorkstationData() {
           </Typography>
           <Stack spacing={2} direction="row">
             <StockButton
-              isDisabled={isAdding || isEditing}
+              isDisabled={formContextData.isAdding || formContextData.isEditing}
               onClickAdd={handleAdd}
               onClickDuplicate={handleDuplicate}
               onClickEdit={handleEdit}
@@ -134,7 +141,7 @@ export default function WorkstationData() {
             />
 
             <Button
-              disabled={isAdding || isEditing}
+              disabled={formContextData.isAdding || formContextData.isEditing}
               style={{
                 color: 'white',
                 backgroundColor: `${theme.colors.secondary}`,
@@ -216,7 +223,7 @@ export default function WorkstationData() {
             </Box>
           </AppBar>
           <Panel value="1">
-            <WorkstationDetails data={active} isEditing={isEditing} isAdding={isAdding} onCancel={handleCancel} />
+            <WorkstationDetails data={active} />
           </Panel>
           <Panel value="2">
             <WorkstationHardware teste={10} />

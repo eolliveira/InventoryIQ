@@ -11,31 +11,42 @@ import Login from './pages/Login/Login';
 import Layout from './pages/Layout/Layout';
 import { AuthContext, AuthContextData } from './contexts/AuthContext';
 import { useState } from 'react';
+import { FormContext, FormContextData } from './contexts/FormContext';
 
 export default function App() {
   const [authContextData, setAuthContextData] = useState<AuthContextData>({
     authenticated: false,
   });
 
+  const [formContextData, setFormContextData] = useState<FormContextData>({
+    isAdding: false,
+    isEditing: false,
+  });
+
   return (
     <AuthContext.Provider value={{ authContextData, setAuthContextData }}>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        {/* ele ta acaindo aqui mais sempre vai cair no login pq o isAuthticated nn muda se não der refrash */}
-        {/* <Route path="/" element={isAuthenticated() ? <Layout /> : <Navigate to="/login" replace />}> */}
-        <Route path="/" element={<Layout /> } >
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="workstation" element={<WorkstationList />} />
-          <Route path="workstation/:workstationId" element={<WorkstationData />} />
-          {/* verificar se dessa forma esta correto? */}
-          <Route path="workstation/create" element={<WorkstationData />} />
-          <Route path="license" element={<License />} />
-          <Route path="mobile" element={<Mobile />} />
-          <Route path="nobreak" element={<Nobreak />} />
-          <Route path="printer" element={<Printer />} />
-          <Route path="user" element={<User />} />
-        </Route>
-      </Routes>
+      <FormContext.Provider value={{ formContextData, setFormContextData }}>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          {/* ele ta acaindo aqui mais sempre vai cair no login pq o isAuthticated nn muda se não der refrash */}
+          {/* <Route path="/" element={isAuthenticated() ? <Layout /> : <Navigate to="/login" replace />}> */}
+          <Route path="/" element={<Layout />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="workstation" element={<WorkstationList />} />
+            <Route
+              path="workstation/:workstationId"
+              element={<WorkstationData />}
+            />
+            {/* verificar se dessa forma esta correto? */}
+            <Route path="workstation/create" element={<WorkstationData />} />
+            <Route path="license" element={<License />} />
+            <Route path="mobile" element={<Mobile />} />
+            <Route path="nobreak" element={<Nobreak />} />
+            <Route path="printer" element={<Printer />} />
+            <Route path="user" element={<User />} />
+          </Route>
+        </Routes>
+      </FormContext.Provider>
     </AuthContext.Provider>
   );
 }
