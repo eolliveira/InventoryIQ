@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import TabContext from '@material-ui/lab/TabContext';
 import { theme } from '../../../style/Theme';
@@ -31,49 +31,39 @@ import SidePanelData from '../../../components/SidePanelData/SidePanelData';
 import localeData from '../../../mocks/wokstation.json';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
+import { log } from 'console';
+import { AxiosRequestConfig } from 'axios';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 export default function WorkstationData() {
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
-    setTabValue(newValue);
-
-  const navigate = useNavigate();
-
   type urlParams = {
     workstationId: string;
   };
 
   const { workstationId } = useParams<urlParams>();
   const [active, setActive] = useState<Workstation>();
+  const [isSincronized, setSynchronizing] = useState(false);
   const { formContextData, setFormContextData } = useContext(FormContext);
+  const [tabValue, setTabValue] = useState('1');
+  const navigate = useNavigate();
+
+  const getWorkstationData = useCallback(() => {
+    requestBackend({ url: `/workstation/${workstationId}` })
+      .then((response) => {
+        setActive(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [workstationId, isSincronized, formContextData]);
 
   useEffect(() => {
-    // if (workstationId == 'create') {
-    //   setFormContextData({
-    //     isAdding: true
-    //   });
-    // }
+    //setActive(localeData);
+    getWorkstationData();
+  }, [getWorkstationData]);
 
-    // if (formContextData.isAdding || formContextData.isEditing) {
-    //   setFormContextData({
-    //     isAdding: false,
-    //     isEditing: false,
-    //   });
-    // }
-
-    // if (!formContextData.isAdding) {
-    //   requestBackend({ url: `/workstation/${workstationId}` })
-    //     .then((response) => {
-    //       setActive(response.data);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // }
-
-    setActive(localeData);
-  }, [workstationId]);
-
-  const [tabValue, setTabValue] = useState('1');
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
+    setTabValue(newValue);
 
   const handleAdd = () => {
     setFormContextData({
@@ -85,7 +75,6 @@ export default function WorkstationData() {
     setFormContextData({
       isEditing: true,
     });
-    //setIsEditing(true)
     console.log('evento StockButton para editar');
   };
 
@@ -95,6 +84,26 @@ export default function WorkstationData() {
 
   const handleDuplicate = () => {
     console.log('evento StockButton para duplicar');
+  };
+
+  const handleSync = () => {
+    setSynchronizing(true);
+    const params: AxiosRequestConfig = {
+      method: 'PUT',
+      url: `/workstation/${active?.id}/synchronize`,
+    };
+
+    requestBackend(params)
+      .then(() => {
+        console.log('sucesso no sincronismo');
+        window.alert('Sucesso ao sincronizar dados do ativo!');
+      })
+      .catch((error) => {
+        console.log('sucesso no sincronismo' + error);
+      })
+      .finally(() => {
+        setSynchronizing(false);
+      });
   };
 
   return (
@@ -134,18 +143,22 @@ export default function WorkstationData() {
               onClickRemove={handleRemove}
             />
 
-            <Button
+            <LoadingButton
               disabled={formContextData.isAdding || formContextData.isEditing}
+              color="secondary"
               style={{
                 color: 'white',
                 backgroundColor: `${theme.colors.secondary}`,
                 textTransform: 'none',
               }}
-              variant="contained"
+              onClick={handleSync}
+              loading={isSincronized}
+              loadingPosition="start"
               startIcon={<SyncIcon />}
+              variant="contained"
             >
-              Sincronizar
-            </Button>
+              <span>Sincronizar</span>
+            </LoadingButton>
           </Stack>
         </HeaderWorkstation>
         <TabContext value={tabValue}>
@@ -254,7 +267,7 @@ const Wapper = styled.div`
 
 const HeaderWorkstation = styled.div`
   display: flex;
-  
+
   align-items: center;
   justify-content: space-between;
   margin: 20px 0;

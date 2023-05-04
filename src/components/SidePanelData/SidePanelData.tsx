@@ -31,13 +31,13 @@ export default function SidePanelData({
 }: SidePanelDataProps) {
   return (
     <BaseCard style={{ height: '100%' }}>
-      <StatusContainer >
-        <div>
+      <Container >
+        <DateContainer>
           <Field className="mb-2">
             <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
             <Input value={dtUltimoSincronismo} id="ultmSinc" />
           </Field>
-        </div>
+        </DateContainer>
 
         <div>
           <Title>Status</Title>
@@ -48,7 +48,7 @@ export default function SidePanelData({
             </IconButton>
           </Status>
         </div>
-      </StatusContainer>
+      </Container>
       <Box
         sx={{
           marginTop: 2,
@@ -62,24 +62,30 @@ export default function SidePanelData({
   );
 }
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (min-width: 992px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+
+const DateContainer = styled.div`
+  max-width: 150px;
+`;
+
+
 const Status = styled.div`
   display: flex;
   text-align: center;
   justify-content: space-around;
-  max-width: 180px;
   border-radius: 3px;
   background: #65d59f;
   padding: 1.5px;
-`;
-
-const StatusContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  @media (min-width: 1190px) {
-    flex-direction: row;
-  }
 `;
 
 
@@ -92,10 +98,10 @@ const Title = styled.h6`
 
 const Text = styled.p`
   margin: 0;
-  padding: 0;
+  padding: 0px 5px;
   text-align: center;
-  margin-top: 3px;
-  font-size: 14px;
+  margin-top: 5px;
+  font-size: 13px;
   font-weight: bold;
   color: ${theme.colors.secondary};
 `;

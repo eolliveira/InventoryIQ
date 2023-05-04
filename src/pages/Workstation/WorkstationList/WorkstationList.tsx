@@ -27,24 +27,24 @@ export default function WorkstationList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setPage(localeData);
+    //setPage(localeData);
 
-    // const params: AxiosRequestConfig = {
-    //   method: 'GET',
-    //   url: `/workstation`,
-    //   params: {
-    //     page: numberPage,
-    //     size: 5,
-    //   },
-    // };
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: `/workstation`,
+      params: {
+        page: numberPage,
+        size: 5,
+      },
+    };
 
-    // requestBackend(params)
-    //   .then((response) => {
-    //     setPage(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log('Erro' + error);
-    //   });
+    requestBackend(params)
+      .then((response) => {
+        setPage(response.data);
+      })
+      .catch((error) => {
+        console.log('Erro' + error);
+      });
   }, [numberPage]);
 
   const handleRowClicked = (row: Workstation) => {
