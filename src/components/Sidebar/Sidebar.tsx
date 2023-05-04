@@ -81,27 +81,25 @@ export default function MenuSidebar() {
               ''
             )}
 
-            <Button
-              style={{ display: 'flex' }}
-              startIcon={
+            {
                 collapsed ? (
                   <IconButton
                     size="large"
                     edge="end"
                     aria-label="menu"
                     sx={{ mr: 0, color: 'black' }}
+                    onClick={() => collapseSidebar()}
                   >
                     <MenuIcon />
                   </IconButton>
                 ) : (
                   //<ArrowBackIosNewIcon color='black' style={{ color: 'black' }} />
-                  <IconButton disableFocusRipple aria-label="delete" size="large">
+                  <IconButton onClick={() => collapseSidebar()} disableFocusRipple aria-label="delete" size="large">
                   <ArrowBackIosNewIcon />
                 </IconButton>
                 )
               }
-              onClick={() => collapseSidebar()}
-            ></Button>
+            
           </ButtonColapseContainer>
           <Divider color="#161616" />
           <MenuItem

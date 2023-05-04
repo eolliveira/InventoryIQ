@@ -34,7 +34,7 @@ export default function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="workstation" element={<WorkstationList />} />
             <Route path="workstation/:workstationId" element={<WorkstationData />} />
-            <Route path="workstation/create" element={<WorkstationData />} />
+            {/* <Route path="workstation/create" element={<WorkstationData />} /> */}
             <Route path="license" element={<License />} />
             <Route path="mobile" element={<Mobile />} />
             <Route path="nobreak" element={<Nobreak />} />

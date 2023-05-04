@@ -131,9 +131,9 @@ export default function Header() {
   );
 }
 
-export const Wrapper = styled.div`
-  height: 50px;
-  margin-bottom: 10px;
-  width: 100%;
-  background-color: #2b2222;
-`;
+// const Wrapper = styled.div`
+//   height: 50px;
+//   margin-bottom: 10px;
+//   width: 100%;
+//   background-color: #2b2222;
+// `;

@@ -22,7 +22,8 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   const [active, setActive] = useState<Workstation>();
 
   const { formContextData, setFormContextData } = useContext(FormContext);
-
+  
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -35,13 +36,12 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
     if (data) {
       const params: AxiosRequestConfig = {
         method: formContextData.isEditing ? 'PUT' : 'POST',
-        url: formContextData.isEditing
-          ? `/workstation/${data.id}/update`
-          : '/workstation',
+        url: formContextData.isEditing ? `/workstation/${data.id}/update` : '/workstation',
         data: formData,
       };
 
-      requestBackend(params).then(() => {
+      requestBackend(params)
+      .then((response) => {
         console.log('requisição de update realizada com sucesso');
 
         setFormContextData({
@@ -50,6 +50,11 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
         });
 
         window.alert('Gravado com sucesso!');
+
+        navigate(`/workstation/${response.data.id}`)
+        
+      }).catch((error) => {
+        console.log("Erro ao inserir novo ativo" + error);
       });
     }
   };
@@ -62,12 +67,19 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   };
 
   useEffect(() => {
+    
     if (!formContextData.isAdding) {
       if (data) setFormData(data);
-    } else {
-      clearFormData();
+    } 
+
+
+    if(formContextData.isAdding) {
+      clearFormData()
     }
-  }, [data, setFormContextData]);
+
+
+
+  }, [data, formContextData]);
 
   const setFormData = (data: Workstation) => {
     setValue('nome', data.nome);

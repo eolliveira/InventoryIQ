@@ -57,10 +57,22 @@ export default function WorkstationData() {
       });
   }, [workstationId, isSincronized, formContextData]);
 
+
+  
   useEffect(() => {
     //setActive(localeData);
-    getWorkstationData();
+
+    if(formContextData.isAdding){
+      navigate('/workstation/create')
+    }
+
+    if(!formContextData.isAdding){
+      getWorkstationData();
+    }
+   
   }, [getWorkstationData]);
+
+
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
     setTabValue(newValue);
@@ -155,11 +167,11 @@ export default function WorkstationData() {
           <Stack spacing={2} direction="row">
             <StockButton
               isDisabled={formContextData.isAdding || formContextData.isEditing}
+              onClickAdd={handleAdd}
               onClickDuplicate={handleDuplicate}
               onClickEdit={handleEdit}
               onClickRemove={handleRemove}
             />
-
             <LoadButton
               disabled={formContextData.isAdding || formContextData.isEditing}
               color="secondary"
