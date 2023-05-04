@@ -17,7 +17,7 @@ import StockButton from '../../../components/StockButton/StockButon';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
-import { Workstation } from '../../../types/workstation';
+import { Workstation } from '../../../types/Workstation';
 
 import TabPanel from '@material-ui/lab/TabPanel';
 import Typography from '@mui/material/Typography';
@@ -30,6 +30,7 @@ import Box from '@mui/material/Box';
 import SidePanelData from '../../../components/SidePanelData/SidePanelData';
 import localeData from '../../../mocks/wokstation.json';
 import { FormContext } from '../../../contexts/FormContext';
+import { BaseCard } from '../../../style/GlobalStyles';
 
 export default function WorkstationData() {
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
@@ -52,25 +53,24 @@ export default function WorkstationData() {
     //   });
     // }
 
-  
-    if (formContextData.isAdding || formContextData.isEditing) {
-      setFormContextData({
-        isAdding: false,
-        isEditing: false,
-      });
-    }
+    // if (formContextData.isAdding || formContextData.isEditing) {
+    //   setFormContextData({
+    //     isAdding: false,
+    //     isEditing: false,
+    //   });
+    // }
 
-    if (!formContextData.isAdding) {
-      requestBackend({ url: `/workstation/${workstationId}` })
-        .then((response) => {
-          setActive(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    // if (!formContextData.isAdding) {
+    //   requestBackend({ url: `/workstation/${workstationId}` })
+    //     .then((response) => {
+    //       setActive(response.data);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // }
 
-    //setActive(localeData);
+    setActive(localeData);
   }, [workstationId]);
 
   const [tabValue, setTabValue] = useState('1');
@@ -99,7 +99,7 @@ export default function WorkstationData() {
 
   return (
     <Wapper className="row">
-      <ContainerSidePanel className="col-lg-2">
+      <ContainerSidePanel className="col-lg-3">
         <SidePanelData
           nome={active?.usuario.nome}
           email={active?.usuario.email}
@@ -107,7 +107,7 @@ export default function WorkstationData() {
           dtUltimoSincronismo={active?.dtUltimoSincronismo}
         />
       </ContainerSidePanel>
-      <Container className="col-lg-10">
+      <BaseCard className="col-lg-9">
         <HeaderWorkstation>
           <IconButton
             aria-label="back"
@@ -235,7 +235,7 @@ export default function WorkstationData() {
             <WorkstationMaintenance teste={10} />
           </Panel>
         </TabContext>
-      </Container>
+      </BaseCard>
     </Wapper>
   );
 }
@@ -244,27 +244,42 @@ const Wapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 5px;
-  border: 1px solid green;
+  //border: 1px solid green;
   height: calc(100vh - 110px);
 
-  @media (min-width: 992px) {
+  @media (min-width: 991px) {
     flex-direction: row-reverse;
   }
 `;
 
 const HeaderWorkstation = styled.div`
   display: flex;
+  
   align-items: center;
   justify-content: space-between;
   margin: 20px 0;
 `;
 
-const Container = styled.div`
-  border: 1px solid red;
+const Card = styled(BaseCard)`
+  @media (min-width: 1474px) {
+    margin-left: 4px;
+  }
 `;
 
 const ContainerSidePanel = styled.div`
-  border: 1px solid blue;
+  //border: 1px solid blue;
+
+  padding: 0px;
+  margin-bottom: 4px;
+
+  @media (min-width: 1100px) {
+    margin-bottom: 0px;
+  }
+
+  @media (min-width: 991px) {
+    margin-bottom: 0px;
+    padding: 0px 0px 0px 4px;
+  }
 `;
 
 const Text = styled.p`

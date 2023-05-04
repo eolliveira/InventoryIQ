@@ -20,7 +20,7 @@ export default function UserCard({ nome, email }: UserCardProps) {
         />
         <Content>
           <Username>{toCamelCase(nome ? nome : '')}</Username>
-          <Email>{toCamelCase(email ? email : '')}</Email>
+          <Email>{email ? email : ''}</Email>
         </Content>
         <EditIcon
           sx={{ color: `${theme.colors.secondary}` }}
@@ -69,3 +69,8 @@ const Email = styled.p`
   margin: 0;
   font-size: 13px;
 `;
+
+
+
+
+
