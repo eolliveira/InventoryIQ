@@ -41,9 +41,9 @@ export default function WorkstationData() {
   };
 
   const { workstationId } = useParams<urlParams>();
+  const { formContextData, setFormContextData } = useContext(FormContext);
   const [active, setActive] = useState<Workstation>();
   const [isSincronized, setSynchronizing] = useState(false);
-  const { formContextData, setFormContextData } = useContext(FormContext);
   const [tabValue, setTabValue] = useState('1');
   const navigate = useNavigate();
 
@@ -79,7 +79,24 @@ export default function WorkstationData() {
   };
 
   const handleRemove = () => {
-    console.log('evento StockButton para remover');
+    if (!window.confirm('Deseja remover o ativo?')) {
+      return;
+    }
+
+    const params: AxiosRequestConfig = {
+      method: 'DELETE',
+      url: `/active/${active?.id}`,
+    };
+
+    requestBackend(params)
+      .then(() => {
+        console.log('ativo removido com sucesso!');
+        window.alert('ativo removido com sucesso!');
+        navigate('/workstation');
+      })
+      .catch((error) => {
+        console.log('erro a remover ativo' + error);
+      });
   };
 
   const handleDuplicate = () => {
@@ -143,14 +160,9 @@ export default function WorkstationData() {
               onClickRemove={handleRemove}
             />
 
-            <LoadingButton
+            <LoadButton
               disabled={formContextData.isAdding || formContextData.isEditing}
               color="secondary"
-              style={{
-                color: 'white',
-                backgroundColor: `${theme.colors.secondary}`,
-                textTransform: 'none',
-              }}
               onClick={handleSync}
               loading={isSincronized}
               loadingPosition="start"
@@ -158,7 +170,7 @@ export default function WorkstationData() {
               variant="contained"
             >
               <span>Sincronizar</span>
-            </LoadingButton>
+            </LoadButton>
           </Stack>
         </HeaderWorkstation>
         <TabContext value={tabValue}>
@@ -315,4 +327,10 @@ const CustomTabs = styled(Tabs)`
   .MuiTabs-indicator {
     background-color: ${theme.colors.secondary};
   }
+`;
+
+const LoadButton = styled(LoadingButton)`
+  color: white !important;
+  background-color: ${theme.colors.secondary} !important;
+  text-transform: none !important;
 `;
