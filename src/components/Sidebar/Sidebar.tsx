@@ -21,7 +21,6 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import { hasAnyHoles } from '../../utils/Auth';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 export default function MenuSidebar() {
-  
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
 
@@ -51,8 +50,8 @@ export default function MenuSidebar() {
                   backgroundColor: '#c9c9c9',
                   fontSize: '14px',
                   '&:hover': {
-                    backgroundColor: '#c4c4c4'
-                  }
+                    backgroundColor: '#c4c4c4',
+                  },
                 };
 
               //menu externo
@@ -62,7 +61,7 @@ export default function MenuSidebar() {
                   fontSize: '14px',
                   fontWeight: active ? 'bold' : 'normal',
                   '&:hover': {
-                    backgroundColor: '#c4c4c4'
+                    backgroundColor: '#c4c4c4',
                   },
                 };
             },
@@ -81,25 +80,27 @@ export default function MenuSidebar() {
               ''
             )}
 
-            {
-                collapsed ? (
-                  <IconButton
-                    size="large"
-                    edge="end"
-                    aria-label="menu"
-                    sx={{ mr: 0, color: 'black' }}
-                    onClick={() => collapseSidebar()}
-                  >
-                    <MenuIcon />
-                  </IconButton>
-                ) : (
-                  //<ArrowBackIosNewIcon color='black' style={{ color: 'black' }} />
-                  <IconButton onClick={() => collapseSidebar()} disableFocusRipple aria-label="delete" size="large">
-                  <ArrowBackIosNewIcon />
-                </IconButton>
-                )
-              }
-            
+            {collapsed ? (
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="menu"
+                sx={{ mr: 2, color: 'black' }}
+                onClick={() => collapseSidebar()}
+              >
+                <MenuIcon />
+              </IconButton>
+            ) : (
+              <IconButton
+                disableFocusRipple
+                aria-label="delete"
+                size="large"
+                sx={{ mr: 2, color: 'black' }}
+                onClick={() => collapseSidebar()}
+              >
+                <ArrowBackIosNewIcon />
+              </IconButton>
+            )}
           </ButtonColapseContainer>
           <Divider color="#161616" />
           <MenuItem
@@ -110,16 +111,28 @@ export default function MenuSidebar() {
             Dashboard
           </MenuItem>
           <SubMenu icon={<DevicesIcon />} label="Ativos">
-            <MenuItem active={location.pathname === '/workstation'} component={<NavLink to={'/workstation'} />}>
+            <MenuItem
+              active={location.pathname === '/workstation'}
+              component={<NavLink to={'/workstation'} />}
+            >
               Estação de trabalho
             </MenuItem>
-            <MenuItem active={location.pathname === '/mobile'} component={<NavLink to={'/mobile'} />}>
+            <MenuItem
+              active={location.pathname === '/mobile'}
+              component={<NavLink to={'/mobile'} />}
+            >
               Mobile
             </MenuItem>
-            <MenuItem active={location.pathname === '/nobreak'} component={<NavLink to={'/nobreak'} />}>
+            <MenuItem
+              active={location.pathname === '/nobreak'}
+              component={<NavLink to={'/nobreak'} />}
+            >
               Nobreak
             </MenuItem>
-            <MenuItem active={location.pathname === '/printer'} component={<NavLink to={'/printer'} />}>
+            <MenuItem
+              active={location.pathname === '/printer'}
+              component={<NavLink to={'/printer'} />}
+            >
               Impressora
             </MenuItem>
           </SubMenu>
