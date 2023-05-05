@@ -1,19 +1,12 @@
-import React, { useState } from 'react';
+import { useContext } from 'react';
 import { theme } from '../../style/Theme';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import DeleteIcon from '@mui/icons-material/Delete';
-
-import MenuItem from '@mui/material/MenuItem';
-import EditIcon from '@mui/icons-material/Edit';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import Menu from '@mui/material/Menu';
-import styled from 'styled-components';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import IconButton from '@mui/material/IconButton';
+import { FormContext } from '../../contexts/FormContext';
 import { BaseCard, Field, Input, Label } from '../../style/GlobalStyles';
-import StatusControl from '../../components/StatusControl/StatusControl';
+
 import Box from '@mui/material/Box';
+import styled from 'styled-components';
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
 import UserCard from '../../components/UserCard/UserCard';
 
 type SidePanelDataProps = {
@@ -29,6 +22,8 @@ export default function SidePanelData({
   nome,
   email,
 }: SidePanelDataProps) {
+  const { formContextData } = useContext(FormContext);
+
   return (
     <BaseCard style={{ height: '100%' }}>
       <Container>
@@ -37,8 +32,8 @@ export default function SidePanelData({
             <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
             <Input
               id="ultmSinc"
-              onChange={e => {}}
-              value={dtUltimoSincronismo ? dtUltimoSincronismo : ''}
+              onChange={(e) => {}}
+              value={formContextData.isAdding ? '' : (dtUltimoSincronismo ? dtUltimoSincronismo : '')}
             />
           </Field>
         </DateContainer>
@@ -46,7 +41,7 @@ export default function SidePanelData({
         <div>
           <Title>Status</Title>
           <Status>
-            <Text>{status}</Text>
+            <Text>{formContextData.isAdding ? '' : status}</Text>
             <IconButton aria-label="delete" size="small">
               <EditIcon fontSize="inherit" />
             </IconButton>
@@ -61,7 +56,10 @@ export default function SidePanelData({
           borderColor: 'divider',
         }}
       />
-      <UserCard nome={nome ? nome : ' - '} email={email ? email : ' - '} />
+      <UserCard
+        nome={formContextData.isAdding ? ' - ' : nome}
+        email={formContextData.isAdding ? ' - ' : email}
+      />
     </BaseCard>
   );
 }
@@ -92,6 +90,7 @@ const Status = styled.div`
 `;
 
 const Title = styled.h6`
+  min-width: 150px;
   font-size: ${theme.size.sm};
   color: ${theme.colors.secondary};
   font-weight: bold;

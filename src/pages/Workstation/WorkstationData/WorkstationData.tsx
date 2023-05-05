@@ -56,17 +56,16 @@ export default function WorkstationData() {
         console.log(error);
       });
   }, [workstationId, isSincronized, formContextData]);
-
-
   
   useEffect(() => {
     //setActive(localeData);
 
-    if(formContextData.isAdding){
-      navigate('/workstation/create')
+    if(workstationId == 'create' && !formContextData.isAdding) {
+      navigate('/workstation')
     }
 
-    if(!formContextData.isAdding){
+
+    if(!formContextData.isAdding && workstationId !== undefined && workstationId !== 'create'){
       getWorkstationData();
     }
    
@@ -80,12 +79,16 @@ export default function WorkstationData() {
   const handleAdd = () => {
     setFormContextData({
       isAdding: true,
+      isChangingForm: true
     });
+
+    navigate('/workstation/create')
   };
 
   const handleEdit = () => {
     setFormContextData({
       isEditing: true,
+      isChangingForm: true
     });
     console.log('evento StockButton para editar');
   };
@@ -162,7 +165,7 @@ export default function WorkstationData() {
             variant="h5"
             flex={1}
           >
-            <Text>{active?.id + ' - ' + active?.nome}</Text>
+            <Text>{(active ? active?.id : '')  + ' - ' + (active ? active?.nome : '')}</Text>
           </Typography>
           <Stack spacing={2} direction="row">
             <StockButton

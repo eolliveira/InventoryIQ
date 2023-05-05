@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import { theme } from '../../../../style/Theme';
 import styled from '@emotion/styled';
 import { FormContext } from '../../../../contexts/FormContext';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useBeforeUnload, useLocation, useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../../http/requests';
@@ -31,7 +31,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
     setValue,
     control,
   } = useForm<Workstation>();
-
+ 
   const onSubmit = (formData: Workstation) => {
     if (data) {
       const params: AxiosRequestConfig = {
@@ -63,6 +63,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
     setFormContextData({
       isAdding: false,
       isEditing: false,
+      isChangingForm: false
     });
   };
 
@@ -118,7 +119,8 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}>
       <div className="row">
         <div className="col-lg-6">
           <Field>
