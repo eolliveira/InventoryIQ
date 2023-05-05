@@ -31,11 +31,15 @@ export default function SidePanelData({
 }: SidePanelDataProps) {
   return (
     <BaseCard style={{ height: '100%' }}>
-      <Container >
+      <Container>
         <DateContainer>
           <Field className="mb-2">
             <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
-            <Input value={dtUltimoSincronismo} id="ultmSinc" />
+            <Input
+              id="ultmSinc"
+              onChange={e => {}}
+              value={dtUltimoSincronismo ? dtUltimoSincronismo : ''}
+            />
           </Field>
         </DateContainer>
 
@@ -78,7 +82,6 @@ const DateContainer = styled.div`
   max-width: 150px;
 `;
 
-
 const Status = styled.div`
   display: flex;
   text-align: center;
@@ -87,7 +90,6 @@ const Status = styled.div`
   background: #65d59f;
   padding: 1.5px;
 `;
-
 
 const Title = styled.h6`
   font-size: ${theme.size.sm};
