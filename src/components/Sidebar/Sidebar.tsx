@@ -98,7 +98,7 @@ export default function MenuSidebar() {
                 sx={{ mr: 2, color: 'black' }}
                 onClick={() => collapseSidebar()}
               >
-                <ArrowBackIosNewIcon />
+                <ArrowBackIosNewIcon fontSize='small' />
               </IconButton>
             )}
           </ButtonColapseContainer>
