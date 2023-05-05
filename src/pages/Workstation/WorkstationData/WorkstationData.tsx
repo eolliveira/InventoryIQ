@@ -263,7 +263,7 @@ export default function WorkstationData() {
             <WorkstationHardware teste={10} />
           </Panel>
           <Panel value="3">
-            <WorkstationInterfaces teste={10} />
+            <WorkstationInterfaces workstationId={active?.id} />
           </Panel>
           <Panel value="4">
             <WorkstationMovements teste={10} />
