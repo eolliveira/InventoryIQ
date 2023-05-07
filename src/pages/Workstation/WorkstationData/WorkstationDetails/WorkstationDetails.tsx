@@ -65,6 +65,10 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
       isEditing: false,
       isChangingForm: false
     });
+
+    
+
+
   };
 
   useEffect(() => {

@@ -31,7 +31,6 @@ import SidePanelData from '../../../components/SidePanelData/SidePanelData';
 import localeData from '../../../mocks/wokstation.json';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
-import { log } from 'console';
 import { AxiosRequestConfig } from 'axios';
 import LoadingButton from '@mui/lab/LoadingButton';
 
@@ -39,28 +38,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import WorkstationForm from '../../../modals/WorkstationForm';
 
 export default function WorkstationData() {
-
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  ////
-
+  const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
 
   type urlParams = {
     workstationId: string;
@@ -82,41 +63,34 @@ export default function WorkstationData() {
         console.log(error);
       });
   }, [workstationId, isSincronized, formContextData]);
-  
-  useEffect(() => {
-    //setActive(localeData);
 
-    if(workstationId == 'create' && !formContextData.isAdding) {
-      navigate('/workstation')
+  useEffect(() => {
+    if (workstationId == 'create' && !formContextData.isAdding) {
+      navigate('/workstation');
     }
 
-
-    if(!formContextData.isAdding && workstationId !== undefined && workstationId !== 'create'){
+    if (
+      !formContextData.isAdding &&
+      workstationId !== undefined &&
+      workstationId !== 'create'
+    ) {
       getWorkstationData();
     }
-   
   }, [getWorkstationData]);
 
-
-
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setTabValue(newValue);
+  };
 
   const handleAdd = () => {
-    // setFormContextData({
-    //   isAdding: true,
-    //   isChangingForm: true
-    // });
-
-    // navigate('/workstation/create')
+    setOpenWorkstationForm(true);
   };
 
   const handleEdit = () => {
     setFormContextData({
       isEditing: true,
-      isChangingForm: true
+      isChangingForm: true,
     });
-    console.log('evento StockButton para editar');
   };
 
   const handleRemove = () => {
@@ -131,7 +105,6 @@ export default function WorkstationData() {
 
     requestBackend(params)
       .then(() => {
-        console.log('ativo removido com sucesso!');
         window.alert('ativo removido com sucesso!');
         navigate('/workstation');
       })
@@ -141,7 +114,7 @@ export default function WorkstationData() {
   };
 
   const handleDuplicate = () => {
-    console.log('evento StockButton para duplicar');
+    setOpenWorkstationForm(false)
   };
 
   const handleSync = () => {
@@ -191,12 +164,16 @@ export default function WorkstationData() {
             variant="h5"
             flex={1}
           >
-            <Text>{(active ? active?.id : '')  + ' - ' + (active ? active?.nome : '')}</Text>
+            <Text>
+              {(active ? active?.id : '') +
+                ' - ' +
+                (active ? active?.nome : '')}
+            </Text>
           </Typography>
           <Stack spacing={2} direction="row">
             <StockButton
               isDisabled={formContextData.isAdding || formContextData.isEditing}
-              onClickAdd={handleOpen}
+              onClickAdd={handleAdd}
               onClickDuplicate={handleDuplicate}
               onClickEdit={handleEdit}
               onClickRemove={handleRemove}
@@ -302,26 +279,10 @@ export default function WorkstationData() {
           </Panel>
         </TabContext>
       </BaseCard>
-      {/* --------- */}
-
-
-      <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Text in a modal
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography>
-      </Box>
-    </Modal>
-
-
+      <WorkstationForm
+        openForm={openWorkstationForm}
+        closeForm={() => setOpenWorkstationForm(false)}
+      />
     </Wapper>
   );
 }
