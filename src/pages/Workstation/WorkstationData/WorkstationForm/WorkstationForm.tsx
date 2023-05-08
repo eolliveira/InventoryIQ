@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Button, IconButton } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
-import { Workstation } from '../../../../types/Workstation';
+import { Workstation } from '../../../../types/Workstation/Workstation';
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect, useState } from 'react';

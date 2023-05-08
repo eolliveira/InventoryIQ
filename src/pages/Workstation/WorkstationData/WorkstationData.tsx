@@ -17,7 +17,7 @@ import StockButton from '../../../components/StockButton/StockButon';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
-import { Workstation } from '../../../types/Workstation';
+import { Workstation } from '../../../types/Workstation/Workstation';
 
 import TabPanel from '@material-ui/lab/TabPanel';
 

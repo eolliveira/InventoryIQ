@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import { SpringPage } from 'types/vendor/spring';
-import { Workstation } from '../../../types/Workstation';
+import { Workstation } from '../../../types/Workstation/Workstation';
 import { ChangeEvent, useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
