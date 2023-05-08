@@ -2,14 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import { SpringPage } from 'types/vendor/spring';
 import { Workstation } from '../../../types/Workstation';
-import { AxiosRequestConfig } from 'axios';
 import { ChangeEvent, useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import styled from 'styled-components';
+import { BaseCard } from '../../../style/GlobalStyles';
+import { AxiosRequestConfig } from 'axios';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
-import { BaseCard } from '../../../style/GlobalStyles';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },

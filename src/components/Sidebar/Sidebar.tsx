@@ -8,21 +8,19 @@ import {
 } from 'react-pro-sidebar';
 import { theme } from '../../style/Theme';
 import { ButtonColapseContainer, SidebarContainer } from './Sidebar.style';
-import { Button, IconButton, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DevicesIcon from '@mui/icons-material/Devices';
 import PeopleIcon from '@mui/icons-material/People';
-import Divider from '@mui/material/Divider';
 import { Link, useLocation } from 'react-router-dom';
 import SpeedIcon from '@mui/icons-material/Speed';
 import { NavLink } from 'react-router-dom';
-import Image from './image.png';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { hasAnyHoles } from '../../utils/Auth';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
 export default function MenuSidebar() {
-  const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
-    useProSidebar();
+  const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } = useProSidebar();
 
   const location = useLocation();
 
