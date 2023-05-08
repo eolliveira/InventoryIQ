@@ -3,27 +3,18 @@ import { Field, Input, Label } from '../../../../style/GlobalStyles';
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect, useState } from 'react';
 
-import LoadingButton from '@mui/lab/LoadingButton';
-import SaveIcon from '@mui/icons-material/Save';
-import Button from '@mui/material/Button';
 import { theme } from '../../../../style/Theme';
-import styled from '@emotion/styled';
+
 import { FormContext } from '../../../../contexts/FormContext';
-import { Navigate, useBeforeUnload, useLocation, useNavigate } from 'react-router-dom';
-import CloseIcon from '@mui/icons-material/Close';
-import { AxiosRequestConfig } from 'axios';
-import { requestBackend } from '../../../../http/requests';
+
 
 type WorkstationDetailsProps = {
   data?: Workstation;
 };
 
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
-  const [active, setActive] = useState<Workstation>();
 
   const { formContextData, setFormContextData } = useContext(FormContext);
-  
-  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -31,59 +22,9 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
     setValue,
     control,
   } = useForm<Workstation>();
- 
-  const onSubmit = (formData: Workstation) => {
-    if (data) {
-      const params: AxiosRequestConfig = {
-        method: formContextData.isEditing ? 'PUT' : 'POST',
-        url: formContextData.isEditing ? `/workstation/${data.id}/update` : '/workstation',
-        data: formData,
-      };
-
-      requestBackend(params)
-      .then((response) => {
-        console.log('requisição de update realizada com sucesso');
-
-        setFormContextData({
-          isAdding: false,
-          isEditing: false,
-        });
-
-        window.alert('Gravado com sucesso!');
-
-        navigate(`/workstation/${response.data.id}`)
-        
-      }).catch((error) => {
-        console.log("Erro ao inserir novo ativo" + error);
-      });
-    }
-  };
-
-  const onCancelForm = () => {
-    setFormContextData({
-      isAdding: false,
-      isEditing: false,
-      isChangingForm: false
-    });
-
-    
-
-
-  };
 
   useEffect(() => {
-    
-    if (!formContextData.isAdding) {
-      if (data) setFormData(data);
-    } 
-
-
-    if(formContextData.isAdding) {
-      clearFormData()
-    }
-
-
-
+    if (data) setFormData(data);
   }, [data, formContextData]);
 
   const setFormData = (data: Workstation) => {
@@ -104,59 +45,30 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
     setValue('vlrAquisicao', data.vlrAquisicao);
   };
 
-  const clearFormData = () => {
-    setValue('nome', '');
-    setValue('fabricante', '');
-    setValue('nomeHost', '');
-    setValue('dominio', '');
-    setValue('dns', '');
-    setValue('ultimoUsuarioLogado', '');
-    setValue('tempoLigado', '');
-    setValue('sistemaOperacional', '');
-    setValue('processador', '');
-    setValue('numeroSerie', '');
-    setValue('modelo', '');
-    setValue('dtAquisicao', '');
-    setValue('dtExpiracao', '');
-    setValue('dtVencimentoGarantia', '');
-    setValue('vlrAquisicao', 0);
-  };
-
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <div className="row">
         <div className="col-lg-6">
           <Field>
             <Label htmlFor="nome">Nome</Label>
             <Input
-              {...register('nome', {
-                required: 'Campo requerido',
-              })}
-              className={`form-control base-input mb-2 ${
-                errors.nome ? 'is-invalid' : ''
-              }`}
+              value={data ? data.nome : ''}  
+              onChange={() => {}}
               type="text"
               name="nome"
               id={'nome'}
-              disabled={
-                !(formContextData.isEditing || formContextData.isAdding)
-              }
+              disabled={true}
             />
           </Field>
           <Field>
             <Label htmlFor="fabricante">Fabricante</Label>
             <Input
-              {...register('fabricante')}
-              className={`form-control base-input mb-2 ${
-                errors.fabricante ? 'is-invalid' : ''
-              }`}
+              value={data ? data.fabricante : ''}  
+              onChange={() => {}}
               type="text"
               name="fabricante"
               id="fabricante"
-              disabled={
-                !(formContextData.isEditing || formContextData.isAdding)
-              }
+              disabled={true}
             />
           </Field>
           <Field>
@@ -169,9 +81,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               type="text"
               name="nomeHost"
               id="nomeHost"
-              disabled={
-                !(formContextData.isEditing || formContextData.isAdding)
-              }
+              disabled={true}
             />
           </Field>
           <Field>
@@ -184,9 +94,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               type="text"
               name="dominio"
               id="dominio"
-              disabled={
-                !(formContextData.isEditing || formContextData.isAdding)
-              }
+              disabled={true}
             />
           </Field>
           <Field>
@@ -199,9 +107,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               type="text"
               name="dns"
               id="dns"
-              disabled={
-                !(formContextData.isEditing || formContextData.isAdding)
-              }
+              disabled={true}
             />
           </Field>
           <Field>
@@ -214,9 +120,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               type="text"
               name="ultimoUsuarioLogado"
               id="ultimoUsuarioLogado"
-              disabled={
-                !(formContextData.isEditing || formContextData.isAdding)
-              }
+              disabled={true}
             />
           </Field>
           <Field>
@@ -232,6 +136,26 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               disabled={
                 !(formContextData.isEditing || formContextData.isAdding)
               }
+            />
+          </Field>
+          <Field>
+            <Label htmlFor="descricao">Descrição</Label>
+            <textarea
+              rows={10}
+              {...register('descricao')}
+              className={`form-control base-input mb-2 ${
+                errors.descricao ? 'is-invalid' : ''
+              }`}
+              style={{
+                padding: 5,
+                borderRadius: 3,
+                backgroundColor: 'unset',
+                fontSize: `${theme.size.sm}`,
+                color: `${theme.colors.black}`,
+                border: `1px solid ${theme.colors.secondary}`,
+              }}
+              name="descricao"
+              id="descricao"
             />
           </Field>
         </div>
@@ -375,47 +299,6 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           </div>
         </div>
       </div>
-
-      <ButtonContainer
-        isEnable={formContextData.isEditing || formContextData.isAdding}
-      >
-        <Button
-          style={{
-            color: 'white',
-            marginRight: '10px',
-            backgroundColor: '#e66d6d',
-            textTransform: 'none',
-          }}
-          variant="contained"
-          startIcon={<CloseIcon />}
-          onClick={onCancelForm}
-        >
-          Cancelar
-        </Button>
-
-        <LoadingButton
-          type="submit"
-          color="inherit"
-          loading={false}
-          loadingPosition="start"
-          startIcon={<SaveIcon />}
-          variant="outlined"
-          sx={{ color: '#64D49E' }}
-        >
-          <span>Salvar</span>
-        </LoadingButton>
-      </ButtonContainer>
     </form>
   );
 }
-
-type ButtonContainerProps = {
-  isEnable?: boolean;
-};
-
-const ButtonContainer = styled.div<ButtonContainerProps>`
-  display: ${(props) => (props.isEnable || props.isEnable ? 'flex' : 'none')};
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 20px;
-`;

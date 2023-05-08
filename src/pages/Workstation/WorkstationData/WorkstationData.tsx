@@ -38,7 +38,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import WorkstationForm from '../../../modals/WorkstationForm';
+import WorkstationForm from './WorkstationForm/WorkstationForm';
 
 export default function WorkstationData() {
   const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
@@ -65,17 +65,7 @@ export default function WorkstationData() {
   }, [workstationId, isSincronized, formContextData]);
 
   useEffect(() => {
-    if (workstationId == 'create' && !formContextData.isAdding) {
-      navigate('/workstation');
-    }
-
-    if (
-      !formContextData.isAdding &&
-      workstationId !== undefined &&
-      workstationId !== 'create'
-    ) {
-      getWorkstationData();
-    }
+    getWorkstationData();
   }, [getWorkstationData]);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
@@ -83,14 +73,17 @@ export default function WorkstationData() {
   };
 
   const handleAdd = () => {
+    setFormContextData({
+      isAdding: true,
+    });
     setOpenWorkstationForm(true);
   };
 
   const handleEdit = () => {
     setFormContextData({
       isEditing: true,
-      isChangingForm: true,
     });
+    setOpenWorkstationForm(true);
   };
 
   const handleRemove = () => {
@@ -113,9 +106,7 @@ export default function WorkstationData() {
       });
   };
 
-  const handleDuplicate = () => {
-    setOpenWorkstationForm(false)
-  };
+  const handleDuplicate = () => {};
 
   const handleSync = () => {
     setSynchronizing(true);
@@ -279,10 +270,13 @@ export default function WorkstationData() {
           </Panel>
         </TabContext>
       </BaseCard>
-      <WorkstationForm
-        openForm={openWorkstationForm}
-        closeForm={() => setOpenWorkstationForm(false)}
-      />
+      {openWorkstationForm && (
+        <WorkstationForm
+          data={active}
+          openForm={openWorkstationForm}
+          closeForm={() => setOpenWorkstationForm(false)}
+        />
+      )}
     </Wapper>
   );
 }

@@ -1,16 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
-import { ChangeEvent, useEffect, useState } from 'react';
-import { AxiosRequestConfig } from 'axios';
 import { SpringPage } from 'types/vendor/spring';
+import { Workstation } from '../../../types/Workstation';
+import { AxiosRequestConfig } from 'axios';
+import { ChangeEvent, useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import styled from 'styled-components';
-import { Workstation } from '../../../types/Workstation';
-import localeData from '../../../mocks/wokstationData.json';
 import Stack from '@mui/material/Stack';
-import Card from '@material-ui/core/Card';
 import Pagination from '@mui/material/Pagination';
+import { BaseCard } from '../../../style/GlobalStyles';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -22,19 +21,16 @@ const columns: TableColumn<Workstation>[] = [
 
 export default function WorkstationList() {
   const [page, setPage] = useState<SpringPage<Workstation>>();
-  //const [page, setPage] = useState<SpringPage<any>>();
   const [numberPage, setNumberPage] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    //setPage(localeData);
-
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/workstation`,
       params: {
         page: numberPage,
-        size: 5,
+        size: 50,
       },
     };
 
@@ -47,12 +43,11 @@ export default function WorkstationList() {
       });
   }, [numberPage]);
 
-  const handleRowClicked = (row: Workstation) => {
+  const handleRowClicked = (row: Workstation) =>
     navigate(`/workstation/${row.id}`);
-  };
 
   return (
-    <div>
+    <BaseCard>
       <HeaderContainer>
         <Stack spacing={2}>
           <Pagination
@@ -82,7 +77,7 @@ export default function WorkstationList() {
           onRowClicked={handleRowClicked}
         />
       </div>
-    </div>
+    </BaseCard>
   );
 }
 
