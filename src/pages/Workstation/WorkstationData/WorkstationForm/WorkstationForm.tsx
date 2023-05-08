@@ -27,6 +27,13 @@ import CustomModal from '../../../../components/CustomModal/CustomModal';
 import { theme } from '../../../../style/Theme';
 import SearchIcon from '@mui/icons-material/Search';
 
+//
+
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { Dayjs } from 'dayjs';
+
 type WorkstationFormProps = {
   data?: Workstation;
   openForm: boolean;
@@ -46,6 +53,12 @@ export default function WorkstationForm({
     setValue,
     control,
   } = useForm<Workstation>();
+
+
+  const [valueDate, setValueDate] = React.useState<Dayjs | null>(null);
+
+
+  ////
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -361,6 +374,18 @@ export default function WorkstationForm({
                         id="vlrAquisicao"
                       />
                     </Field>
+
+
+
+           
+                    {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker value={valueDate} onChange={(newValue) => {
+                        setValueDate(newValue)
+                        console.log(valueDate);
+                      }} />
+                    </LocalizationProvider> */}
+
+
                   </div>
                 </div>
               </div>

@@ -1712,6 +1712,18 @@
     prop-types "^15.8.1"
     reselect "^4.1.7"
 
+"@mui/x-date-pickers@^6.3.1":
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-6.3.1.tgz#afe5b20be9f7da01f1cd51c7e9a5d95269c162ab"
+  integrity sha512-YPQrsi10rpeEUJkp77NkHqkcZbzAAWITl3MZJ8Mv8ZiS9MEFKmr2kU+SPWUomDByor2UlaS9EmvtslQW74hiWg==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+    "@mui/utils" "^5.12.3"
+    "@types/react-transition-group" "^4.4.5"
+    clsx "^1.2.1"
+    prop-types "^15.8.1"
+    react-transition-group "^4.4.5"
+
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
   resolved "https://registry.yarnpkg.com/@nicolo-ribaudo/chokidar-2/-/chokidar-2-2.1.8-no-fsevents.3.tgz#323d72dd25103d0c4fbdce89dadf574a787b1f9b"
@@ -2134,6 +2146,11 @@ csstype@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.2.tgz#1d4bf9d572f11c14031f0436e1c10bc1f571f50b"
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
+
+dayjs@^1.11.7:
+  version "1.11.7"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.7.tgz#4b296922642f70999544d1144a2c25730fce63e2"
+  integrity sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==
 
 debug@^4.1.0, debug@^4.1.1:
   version "4.3.4"
