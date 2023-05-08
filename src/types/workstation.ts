@@ -5,7 +5,6 @@ export type Workstation = {
   nome: string;
   fabricante: string;
   modelo: string;
-  descricao: string;
   numeroSerie: string;
   nomeHost: string;
   inativo: boolean;

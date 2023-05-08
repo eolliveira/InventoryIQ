@@ -1,50 +1,13 @@
 import { Workstation } from '../../../../types/Workstation';
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
-import { useForm } from 'react-hook-form';
-import { useContext, useEffect, useState } from 'react';
 
 import { theme } from '../../../../style/Theme';
-
-import { FormContext } from '../../../../contexts/FormContext';
-
 
 type WorkstationDetailsProps = {
   data?: Workstation;
 };
 
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
-
-  const { formContextData, setFormContextData } = useContext(FormContext);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    control,
-  } = useForm<Workstation>();
-
-  useEffect(() => {
-    if (data) setFormData(data);
-  }, [data, formContextData]);
-
-  const setFormData = (data: Workstation) => {
-    setValue('nome', data.nome);
-    setValue('fabricante', data.fabricante);
-    setValue('nomeHost', data.nomeHost);
-    setValue('dominio', data.dominio);
-    setValue('dns', data.dns);
-    setValue('ultimoUsuarioLogado', data.ultimoUsuarioLogado);
-    setValue('tempoLigado', data.tempoLigado);
-    setValue('sistemaOperacional', data.sistemaOperacional);
-    setValue('processador', data.processador);
-    setValue('numeroSerie', data.numeroSerie);
-    setValue('modelo', data.modelo);
-    setValue('dtAquisicao', data.dtAquisicao);
-    setValue('dtExpiracao', data.dtExpiracao);
-    setValue('dtVencimentoGarantia', data.dtVencimentoGarantia);
-    setValue('vlrAquisicao', data.vlrAquisicao);
-  };
-
   return (
     <form>
       <div className="row">
@@ -52,10 +15,9 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="nome">Nome</Label>
             <Input
-              value={data ? data.nome : ''}  
+              value={data ? data.nome : ''}
               onChange={() => {}}
               type="text"
-              name="nome"
               id={'nome'}
               disabled={true}
             />
@@ -63,10 +25,9 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="fabricante">Fabricante</Label>
             <Input
-              value={data ? data.fabricante : ''}  
+              value={data ? data.fabricante : ''}
               onChange={() => {}}
               type="text"
-              name="fabricante"
               id="fabricante"
               disabled={true}
             />
@@ -74,12 +35,9 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="nomeHost">Hostname</Label>
             <Input
-              {...register('nomeHost')}
-              className={`form-control base-input mb-2 ${
-                errors.nomeHost ? 'is-invalid' : ''
-              }`}
+              value={data ? data.nomeHost : ''}
+              onChange={() => {}}
               type="text"
-              name="nomeHost"
               id="nomeHost"
               disabled={true}
             />
@@ -87,12 +45,9 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="dominio">Dominio</Label>
             <Input
-              {...register('dominio')}
-              className={`form-control base-input mb-2 ${
-                errors.dominio ? 'is-invalid' : ''
-              }`}
+              value={data ? data.dominio : ''}
+              onChange={() => {}}
               type="text"
-              name="dominio"
               id="dominio"
               disabled={true}
             />
@@ -100,12 +55,9 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="dns">Dns</Label>
             <Input
-              {...register('dns')}
-              className={`form-control base-input mb-2 ${
-                errors.dns ? 'is-invalid' : ''
-              }`}
+              value={data ? data.dns : ''}
+              onChange={() => {}}
               type="text"
-              name="dns"
               id="dns"
               disabled={true}
             />
@@ -113,12 +65,9 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="ultimoUsuarioLogado">Ultimo usuário logado</Label>
             <Input
-              {...register('ultimoUsuarioLogado')}
-              className={`form-control base-input mb-2 ${
-                errors.ultimoUsuarioLogado ? 'is-invalid' : ''
-              }`}
+              value={data ? data.ultimoUsuarioLogado : ''}
+              onChange={() => {}}
               type="text"
-              name="ultimoUsuarioLogado"
               id="ultimoUsuarioLogado"
               disabled={true}
             />
@@ -126,26 +75,19 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="tempoLigado">Tempo atividade</Label>
             <Input
-              {...register('tempoLigado')}
-              className={`form-control base-input mb-2 ${
-                errors.tempoLigado ? 'is-invalid' : ''
-              }`}
+              value={data ? data.tempoLigado : ''}
+              onChange={() => {}}
               type="text"
-              name="tempoLigado"
               id="tempoLigado"
-              disabled={
-                !(formContextData.isEditing || formContextData.isAdding)
-              }
+              disabled={true}
             />
           </Field>
           <Field>
-            <Label htmlFor="descricao">Descrição</Label>
+            <Label htmlFor="observacao">Observação</Label>
             <textarea
               rows={10}
-              {...register('descricao')}
-              className={`form-control base-input mb-2 ${
-                errors.descricao ? 'is-invalid' : ''
-              }`}
+              value={data ? data.observacao : ''}
+              onChange={() => {}}
               style={{
                 padding: 5,
                 borderRadius: 3,
@@ -154,8 +96,8 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                 color: `${theme.colors.black}`,
                 border: `1px solid ${theme.colors.secondary}`,
               }}
-              name="descricao"
-              id="descricao"
+              id="observacao"
+              disabled={true}
             />
           </Field>
         </div>
@@ -163,61 +105,41 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="sistemaOperacional">Sistema operacional</Label>
             <Input
-              {...register('sistemaOperacional')}
-              className={`form-control base-input mb-2 ${
-                errors.sistemaOperacional ? 'is-invalid' : ''
-              }`}
+              value={data ? data.sistemaOperacional : ''}
+              onChange={() => {}}
               type="text"
-              name="sistemaOperacional"
               id="sistemaOperacional"
-              disabled={
-                !(formContextData.isEditing || formContextData.isAdding)
-              }
+              disabled={true}
             />
           </Field>
           <Field>
             <Label htmlFor="processador">Processador</Label>
             <Input
-              {...register('processador')}
-              className={`form-control base-input mb-2 ${
-                errors.processador ? 'is-invalid' : ''
-              }`}
+              value={data ? data.processador : ''}
+              onChange={() => {}}
               type="text"
-              name="processador"
               id="processador"
-              disabled={
-                !(formContextData.isEditing || formContextData.isAdding)
-              }
+              disabled={true}
             />
           </Field>
           <Field>
             <Label htmlFor="numeroSerie">Numero de série</Label>
             <Input
-              {...register('numeroSerie')}
-              className={`form-control base-input mb-2 ${
-                errors.numeroSerie ? 'is-invalid' : ''
-              }`}
+              value={data ? data.numeroSerie : ''}
+              onChange={() => {}}
               type="text"
-              name="numeroSerie"
               id="numeroSerie"
-              disabled={
-                !(formContextData.isEditing || formContextData.isAdding)
-              }
+              disabled={true}
             />
           </Field>
           <Field>
             <Label htmlFor="modelo">Modelo</Label>
             <Input
-              {...register('modelo')}
-              className={`form-control base-input mb-2 ${
-                errors.modelo ? 'is-invalid' : ''
-              }`}
+              value={data ? data.modelo : ''}
+              onChange={() => {}}
               type="text"
-              name="modelo"
               id="modelo"
-              disabled={
-                !(formContextData.isEditing || formContextData.isAdding)
-              }
+              disabled={true}
             />
           </Field>
 
@@ -226,16 +148,11 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               <Field>
                 <Label htmlFor="dtAquisicao">Data aquisição</Label>
                 <Input
-                  {...register('dtAquisicao')}
-                  className={`form-control base-input mb-2 ${
-                    errors.dtAquisicao ? 'is-invalid' : ''
-                  }`}
+                  value={data ? data.dtAquisicao : ''}
+                  onChange={() => {}}
                   type="text"
-                  name="dtAquisicao"
                   id="dtAquisicao"
-                  disabled={
-                    !(formContextData.isEditing || formContextData.isAdding)
-                  }
+                  disabled={true}
                 />
               </Field>
             </div>
@@ -243,16 +160,11 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               <Field>
                 <Label htmlFor="dtExpiracao">Data expiração</Label>
                 <Input
-                  {...register('dtExpiracao')}
-                  className={`form-control base-input mb-2 ${
-                    errors.dtExpiracao ? 'is-invalid' : ''
-                  }`}
+                  value={data ? data.dtExpiracao : ''}
+                  onChange={() => {}}
                   type="text"
-                  name="dtExpiracao"
                   id="dtExpiracao"
-                  disabled={
-                    !(formContextData.isEditing || formContextData.isAdding)
-                  }
+                  disabled={true}
                 />
               </Field>
             </div>
@@ -265,31 +177,21 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   Data venc. Garantia
                 </Label>
                 <Input
-                  {...register('dtVencimentoGarantia')}
-                  className={`form-control base-input mb-2 ${
-                    errors.dtVencimentoGarantia ? 'is-invalid' : ''
-                  }`}
+                  value={data ? data.dtVencimentoGarantia : ''}
+                  onChange={() => {}}
                   type="text"
-                  name="dtVencimentoGarantia"
                   id="dtVencimentoGarantia"
-                  disabled={
-                    !(formContextData.isEditing || formContextData.isAdding)
-                  }
+                  disabled={true}
                 />
               </Field>
               <Field>
                 <Label htmlFor="vlrAquisicao">Valor compra</Label>
                 <Input
-                  {...register('vlrAquisicao')}
-                  className={`form-control base-input mb-2 ${
-                    errors.vlrAquisicao ? 'is-invalid' : ''
-                  }`}
+                  value={data ? data.vlrAquisicao : ''}
+                  onChange={() => {}}
                   type="number"
-                  name="vlrAquisicao"
                   id="vlrAquisicao"
-                  disabled={
-                    !(formContextData.isEditing || formContextData.isAdding)
-                  }
+                  disabled={true}
                 />
               </Field>
             </div>

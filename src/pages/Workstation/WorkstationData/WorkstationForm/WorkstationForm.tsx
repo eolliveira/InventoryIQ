@@ -88,7 +88,6 @@ export default function WorkstationForm({
 
   const setFormData = (data: Workstation) => {
     setValue('nome', data.nome);
-    setValue('descricao', data.descricao);
     setValue('fabricante', data.fabricante);
     setValue('nomeHost', data.nomeHost);
     setValue('dominio', data.dominio);
@@ -103,6 +102,7 @@ export default function WorkstationForm({
     setValue('dtExpiracao', data.dtExpiracao);
     setValue('dtVencimentoGarantia', data.dtVencimentoGarantia);
     setValue('vlrAquisicao', data.vlrAquisicao);
+    setValue('observacao', data.observacao);
   };
 
   return (
@@ -228,12 +228,12 @@ export default function WorkstationForm({
                   />
                 </Field>
                 <Field>
-                  <Label htmlFor="descricao">Descrição</Label>
+                  <Label htmlFor="observacao">Observação</Label>
                   <textarea
                     rows={10}
-                    {...register('descricao')}
+                    {...register('observacao')}
                     className={`form-control base-input mb-2 ${
-                      errors.descricao ? 'is-invalid' : ''
+                      errors.observacao ? 'is-invalid' : ''
                     }`}
                     style={{
                       padding: 5,
@@ -243,8 +243,8 @@ export default function WorkstationForm({
                       color: `${theme.colors.black}`,
                       border: `1px solid ${theme.colors.secondary}`,
                     }}
-                    name="descricao"
-                    id="descricao"
+                    name="observacao"
+                    id="observacao"
                   />
                 </Field>
               </div>
