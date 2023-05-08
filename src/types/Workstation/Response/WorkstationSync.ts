@@ -1,5 +1,5 @@
 import { Interface } from 'types/Interface';
-import { Disco } from './Disco';
+import { Disco } from '../Disco';
 
 export type WorkstationSync = {
   fabricante: string;

@@ -4,9 +4,8 @@ import Typography from '@mui/material/Typography';
 import { BaseCard } from '../../../../style/GlobalStyles';
 import styled from 'styled-components';
 import { Button, IconButton } from '@mui/material';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
-import { Workstation } from '../../../../types/Workstation/Workstation';
+import { Workstation } from '../../../../types/Workstation/Response/Workstation';
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect, useState } from 'react';
@@ -27,12 +26,12 @@ import CustomModal from '../../../../components/CustomModal/CustomModal';
 import { theme } from '../../../../style/Theme';
 import SearchIcon from '@mui/icons-material/Search';
 
-//
-
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import TextField from '@material-ui/core/TextField';
+import { WorkstationSync } from 'types/Workstation/Response/WorkstationSync';
 
 type WorkstationFormProps = {
   data?: Workstation;
@@ -45,7 +44,15 @@ export default function WorkstationForm({
   openForm,
   closeForm,
 }: WorkstationFormProps) {
+  //const [selectedDate, setSelectedDate] = useState(null);
+
+  //const formattedDate = dayjs(selectedDate).format("DD/MM/YYYY HH:mm");
+
   const { formContextData, setFormContextData } = useContext(FormContext);
+  const [dataSync, setDataSync] = useState<WorkstationSync>();
+  const [synchronizing, setSynchronizing] = useState(false);
+  const [ipAddress, setIpAddress] = useState('');
+
   const {
     register,
     handleSubmit,
@@ -54,9 +61,7 @@ export default function WorkstationForm({
     control,
   } = useForm<Workstation>();
 
-
   const [valueDate, setValueDate] = React.useState<Dayjs | null>(null);
-
 
   ////
   const navigate = useNavigate();
@@ -99,6 +104,40 @@ export default function WorkstationForm({
     closeForm();
   };
 
+  const handleSync = () => {
+    setSynchronizing(true);
+
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: `/workstation/data/${ipAddress}`,
+    };
+
+    requestBackend(params)
+      .then((response) => {
+        setDataSync(response.data);
+        
+        setValue('fabricante', response.data.fabricante);
+        setValue('nomeHost', response.data.nomeHost);
+        setValue('dominio', response.data.dominio);
+        setValue('dns', response.data.dns);
+        setValue('ultimoUsuarioLogado', response.data.ultimoUsuarioLogado);
+        setValue('tempoLigado', response.data.tempoLigado);
+        setValue('sistemaOperacional', response.data.sistemaOperacional);
+        setValue('processador', response.data.processador);
+        setValue('numeroSerie', response.data.numeroSerie);
+        setValue('modelo', response.data.modelo);
+
+        //não esta chegando valor
+        console.log(dataSync);
+      })
+      .catch((error) => {
+        console.log('Erro ao buscar dados do ativo: ' + error);
+      })
+      .finally(() => {
+        setSynchronizing(false);
+      });
+  };
+
   const setFormData = (data: Workstation) => {
     setValue('nome', data.nome);
     setValue('fabricante', data.fabricante);
@@ -132,15 +171,27 @@ export default function WorkstationForm({
                   type="text"
                   name="enderedIp"
                   id="enderedIp"
+                  onChange={e => setIpAddress(e.target.value)}
                 />
               </Field>
-              <IconButton
-                size="large"
+
+              <LoadingButton
+                size="small"
                 sx={{ mt: 2, color: 'black' }}
-                onClick={() => {}}
+                onClick={handleSync}
+                loading={synchronizing}
+                variant="text"
               >
                 <SearchIcon fontSize="medium" />
-              </IconButton>
+              </LoadingButton>
+
+              {/* <IconButton
+                size="large"
+                sx={{ mt: 2, color: 'black' }}
+                onClick={handleSync}
+              >
+                <SearchIcon fontSize="medium" />
+              </IconButton> */}
             </SearchAddressContainer>
           )}
           <Box
@@ -375,9 +426,6 @@ export default function WorkstationForm({
                       />
                     </Field>
 
-
-
-           
                     {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker value={valueDate} onChange={(newValue) => {
                         setValueDate(newValue)
@@ -385,7 +433,16 @@ export default function WorkstationForm({
                       }} />
                     </LocalizationProvider> */}
 
+                    {/* 
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      value={selectedDate}
+                      onChange={(date) => setSelectedDate(date)}
+                    />
+                    </LocalizationProvider>
 
+                    <p>A data selecionada é: {formattedDate}</p>
+ */}
                   </div>
                 </div>
               </div>

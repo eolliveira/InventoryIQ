@@ -1,4 +1,4 @@
-import { Workstation } from '../../../../types/Workstation/Workstation';
+import { Workstation } from '../../../../types/Workstation/Response/Workstation';
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 
 import { theme } from '../../../../style/Theme';
