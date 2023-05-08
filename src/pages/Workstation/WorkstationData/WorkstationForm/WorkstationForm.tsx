@@ -110,24 +110,26 @@ export default function WorkstationForm({
       <Card>
         <Container>
           <h1>Adicionando Estação de Trabalho</h1>
-          <SearchAddressContainer>
-            <Field>
-              <Label htmlFor="enderedIp">Endereço Ip</Label>
-              <Input
-                style={{ maxWidth: 140 }}
-                type="text"
-                name="enderedIp"
-                id="enderedIp"
-              />
-            </Field>
-            <IconButton
-              size="large"
-              sx={{ mt: 2, color: 'black' }}
-              onClick={() => {}}
-            >
-              <SearchIcon fontSize="medium" />
-            </IconButton>
-          </SearchAddressContainer>
+          {formContextData.isAdding && (
+            <SearchAddressContainer>
+              <Field>
+                <Label htmlFor="enderedIp">Endereço Ip</Label>
+                <Input
+                  style={{ maxWidth: 140 }}
+                  type="text"
+                  name="enderedIp"
+                  id="enderedIp"
+                />
+              </Field>
+              <IconButton
+                size="large"
+                sx={{ mt: 2, color: 'black' }}
+                onClick={() => {}}
+              >
+                <SearchIcon fontSize="medium" />
+              </IconButton>
+            </SearchAddressContainer>
+          )}
           <Box
             sx={{
               marginTop: 2,

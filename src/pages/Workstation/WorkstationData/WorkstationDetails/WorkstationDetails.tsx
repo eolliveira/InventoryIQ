@@ -8,6 +8,7 @@ type WorkstationDetailsProps = {
 };
 
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
+
   return (
     <form>
       <div className="row">

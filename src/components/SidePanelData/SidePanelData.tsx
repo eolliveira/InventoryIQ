@@ -1,6 +1,4 @@
-import { useContext } from 'react';
 import { theme } from '../../style/Theme';
-import { FormContext } from '../../contexts/FormContext';
 import { BaseCard, Field, Input, Label } from '../../style/GlobalStyles';
 
 import Box from '@mui/material/Box';
@@ -8,6 +6,7 @@ import styled from 'styled-components';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import UserCard from '../../components/UserCard/UserCard';
+import { toDateTime } from '../../utils/Date';
 
 type SidePanelDataProps = {
   status?: string;
@@ -22,26 +21,23 @@ export default function SidePanelData({
   nome,
   email,
 }: SidePanelDataProps) {
-  const { formContextData } = useContext(FormContext);
-
   return (
-    <BaseCard style={{ height: '100%' }}>
+    <Wapper>
       <Container>
         <DateContainer>
           <Field className="mb-2">
             <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
             <Input
               id="ultmSinc"
-              onChange={(e) => {}}
-              value={formContextData.isAdding ? '' : (dtUltimoSincronismo ? dtUltimoSincronismo : '')}
+              onChange={e => {}}
+              value={dtUltimoSincronismo ? toDateTime(dtUltimoSincronismo) : ''}
             />
           </Field>
         </DateContainer>
-
         <div>
           <Title>Status</Title>
           <Status>
-            <Text>{formContextData.isAdding ? '' : status}</Text>
+            <Text>{status}</Text>
             <IconButton aria-label="delete" size="small">
               <EditIcon fontSize="inherit" />
             </IconButton>
@@ -56,13 +52,14 @@ export default function SidePanelData({
           borderColor: 'divider',
         }}
       />
-      <UserCard
-        nome={formContextData.isAdding ? ' - ' : nome}
-        email={formContextData.isAdding ? ' - ' : email}
-      />
-    </BaseCard>
+      <UserCard nome={nome ? nome : ' - '} email={email ? email : ' - '} />
+    </Wapper>
   );
 }
+
+const Wapper = styled(BaseCard)`
+  height: 100%;
+`;
 
 const Container = styled.div`
   display: flex;
