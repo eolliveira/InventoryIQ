@@ -24,5 +24,5 @@ export type Workstation = {
   arquiteturaSo: string;
   memoriaRam: string;
   ultimoUsuarioLogado: string;
-  dnsList: string;
+  dns: string;
 };

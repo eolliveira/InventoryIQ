@@ -2,21 +2,12 @@ import { Workstation } from '../../../../types/Workstation/Response/Workstation'
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 
 import { theme } from '../../../../style/Theme';
-import { useEffect } from 'react';
 
 type WorkstationDetailsProps = {
   data?: Workstation;
 };
 
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
-
-
-  useEffect(() => {
-    console.log(  'teste 0000' );
-    console.log(data?.dnsList);
-    
-  })
-
   return (
     <form>
       <div className="row">
@@ -39,7 +30,6 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               disabled={true}
             />
           </Field>
-
           <div className="row">
             <div className="col-lg-6">
               <Field>
@@ -56,7 +46,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               <Field>
                 <Label htmlFor="memoriaRam">Memória Virtual</Label>
                 <Input
-                value={data?.memoriaRam + ' GB' || ''}
+                  value={data?.memoriaRam + ' GB' || ''}
                   type="text"
                   id="memoriaRam"
                   disabled={true}
@@ -64,7 +54,6 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               </Field>
             </div>
           </div>
-
           <Field>
             <Label htmlFor="dominio">Dominio</Label>
             <Input
@@ -74,15 +63,30 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               disabled={true}
             />
           </Field>
-          <Field>
-            <Label htmlFor="dnsList">Dns</Label>
-            <Input
-              value={data?.dnsList || ''}
-              type="text"
-              id="dnsList"
-              disabled={true}
-            />
-          </Field>
+          <div className="row">
+            <div className="col-lg-6">
+              <Field>
+                <Label htmlFor="dns">Dns</Label>
+                <Input
+                  value={data?.dns || ''}
+                  type="text"
+                  id="dns"
+                  disabled={true}
+                />
+              </Field>
+            </div>
+            <div className="col-lg-6">
+              <Field>
+                <Label htmlFor="gateway">Gateway</Label>
+                <Input
+                  value={data?.gateway || ''}
+                  type="text"
+                  id="gateway"
+                  disabled={true}
+                />
+              </Field>
+            </div>
+          </div>
           <Field>
             <Label htmlFor="ultimoUsuarioLogado">Ultimo usuário logado</Label>
             <Input
@@ -147,15 +151,31 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               disabled={true}
             />
           </Field>
-          <Field>
-            <Label htmlFor="modelo">Modelo</Label>
-            <Input
-              value={data ? data.modelo : ''}
-              type="text"
-              id="modelo"
-              disabled={true}
-            />
-          </Field>
+
+          <div className="row">
+            <div className="col-lg-9">
+              <Field>
+                <Label htmlFor="modelo">Modelo</Label>
+                <Input
+                  value={data ? data.modelo : ''}
+                  type="text"
+                  id="modelo"
+                  disabled={true}
+                />
+              </Field>
+            </div>
+            <div className="col-lg-3">
+              <Field>
+                <Label htmlFor="arquiteturaSo">Arquitetura</Label>
+                <Input
+                  value={data ? data.arquiteturaSo : ''}
+                  type="text"
+                  name="arquiteturaSo"
+                  id="arquiteturaSo"
+                />
+              </Field>
+            </div>
+          </div>
 
           <div className="row">
             <div className="col-lg-6">

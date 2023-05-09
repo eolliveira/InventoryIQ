@@ -2,6 +2,7 @@ import { Interface } from 'types/Interface';
 import { Disco } from '../Disco';
 
 export type WorkstationSync = {
+  nome: string;
   fabricante: string;
   numeroSerie: string;
   modelo: string;
@@ -15,6 +16,12 @@ export type WorkstationSync = {
   nomeHost: string;
   dominio: string;
   ultimoUsuarioLogado: string;
+  dtAquisicao: string;
+  dtVencimentoGarantia: string;
+  dtExpiracao: string;
+  vlrAquisicao: number;
+  observacao: string;
   interfaces: Interface[];
   discos: Disco[];
+  
 };

@@ -1,31 +1,24 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import { BaseCard } from '../../../../style/GlobalStyles';
-import styled from 'styled-components';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 
 import { Workstation } from '../../../../types/Workstation/Response/Workstation';
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect, useState } from 'react';
 
-import LoadingButton from '@mui/lab/LoadingButton';
-import SaveIcon from '@mui/icons-material/Save';
 import { FormContext } from '../../../../contexts/FormContext';
 import { useNavigate } from 'react-router-dom';
-import CloseIcon from '@mui/icons-material/Close';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../../http/requests';
-import CustomModal from '../../../../components/CustomModal/CustomModal';
 import { theme } from '../../../../style/Theme';
+import LoadingButton from '@mui/lab/LoadingButton';
+import SaveIcon from '@mui/icons-material/Save';
+import CloseIcon from '@mui/icons-material/Close';
+import CustomModal from '../../../../components/CustomModal/CustomModal';
+import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs, { Dayjs } from 'dayjs';
-import TextField from '@material-ui/core/TextField';
 import { WorkstationSync } from 'types/Workstation/Response/WorkstationSync';
 import { Interface } from 'types/Interface';
 
@@ -43,7 +36,6 @@ export default function WorkstationForm({
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [synchronizing, setSynchronizing] = useState(false);
   const [ipAddress, setIpAddress] = useState('');
-
   const {
     register,
     handleSubmit,
@@ -51,15 +43,13 @@ export default function WorkstationForm({
     setValue,
     control,
   } = useForm<WorkstationSync>();
-
-  ////
   const navigate = useNavigate();
 
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
   }, []);
 
-  const onSubmit = (formData: Workstation) => {
+  const onSubmit = (formData: WorkstationSync) => {
     const params: AxiosRequestConfig = {
       method: formContextData.isAdding ? 'POST' : 'PUT',
       url: formContextData.isAdding
@@ -107,6 +97,8 @@ export default function WorkstationForm({
 
         setValue('fabricante', response.data.fabricante);
         setValue('nomeHost', response.data.nomeHost);
+        setValue('memoriaRam', response.data.memoriaRam);
+        setValue('gateway', response.data.gateway);
         setValue('dominio', response.data.dominio);
         setValue('dnsList', response.data.dnsList);
         setValue('ultimoUsuarioLogado', response.data.ultimoUsuarioLogado);
@@ -117,12 +109,7 @@ export default function WorkstationForm({
         setValue('modelo', response.data.modelo);
 
         response.data.interfaces.forEach((i: Interface) => interfaces.push(i));
-
         setValue('interfaces', interfaces);
-
-        interfaces.forEach((element) => {
-          console.log(element);
-        });
       })
       .catch((error) => {
         console.log('Erro ao buscar dados do ativo: ' + error);
@@ -137,7 +124,9 @@ export default function WorkstationForm({
     setValue('fabricante', data.fabricante);
     setValue('nomeHost', data.nomeHost);
     setValue('dominio', data.dominio);
-    setValue('dnsList', data.dnsList);
+    setValue('dnsList', data.dns);
+    setValue('gateway', data.gateway);
+    setValue('arquiteturaSo', data.arquiteturaSo);
     setValue('memoriaRam', data.memoriaRam);
     setValue('ultimoUsuarioLogado', data.ultimoUsuarioLogado);
     setValue('tempoLigado', data.tempoLigado);
@@ -166,7 +155,7 @@ export default function WorkstationForm({
                   type="text"
                   name="enderedIp"
                   id="enderedIp"
-                  onChange={e => setIpAddress(e.target.value)}
+                  onChange={(e) => setIpAddress(e.target.value)}
                 />
               </Field>
 
@@ -262,18 +251,38 @@ export default function WorkstationForm({
                     id="dominio"
                   />
                 </Field>
-                <Field>
-                  <Label htmlFor="dnsList">Dns</Label>
-                  <Input
-                    {...register('dnsList')}
-                    className={`form-control base-input mb-2 ${
-                      errors.dns ? 'is-invalid' : ''
-                    }`}
-                    type="text"
-                    name="dnsList"
-                    id="dnsList"
-                  />
-                </Field>
+
+                <div className="row">
+                  <div className="col-lg-6">
+                    <Field>
+                      <Label htmlFor="dnsList">Dns</Label>
+                      <Input
+                        {...register('dnsList')}
+                        className={`form-control base-input mb-2 ${
+                          errors.dnsList ? 'is-invalid' : ''
+                        }`}
+                        type="text"
+                        name="dnsList"
+                        id="dnsList"
+                      />
+                    </Field>
+                  </div>
+                  <div className="col-lg-6">
+                    <Field>
+                      <Label htmlFor="gateway">Gateway</Label>
+                      <Input
+                        {...register('gateway')}
+                        className={`form-control base-input mb-2 ${
+                          errors.gateway ? 'is-invalid' : ''
+                        }`}
+                        type="text"
+                        name="gateway"
+                        id="gateway"
+                      />
+                    </Field>
+                  </div>
+                </div>
+
                 <Field>
                   <Label htmlFor="ultimoUsuarioLogado">
                     Ultimo usuário logado
@@ -360,18 +369,37 @@ export default function WorkstationForm({
                     id="numeroSerie"
                   />
                 </Field>
-                <Field>
-                  <Label htmlFor="modelo">Modelo</Label>
-                  <Input
-                    {...register('modelo')}
-                    className={`form-control base-input mb-2 ${
-                      errors.modelo ? 'is-invalid' : ''
-                    }`}
-                    type="text"
-                    name="modelo"
-                    id="modelo"
-                  />
-                </Field>
+
+                <div className="row">
+                  <div className="col-lg-9">
+                    <Field>
+                      <Label htmlFor="modelo">Modelo</Label>
+                      <Input
+                        {...register('modelo')}
+                        className={`form-control base-input mb-2 ${
+                          errors.modelo ? 'is-invalid' : ''
+                        }`}
+                        type="text"
+                        name="modelo"
+                        id="modelo"
+                      />
+                    </Field>
+                  </div>
+                  <div className="col-lg-3">
+                    <Field>
+                      <Label htmlFor="arquiteturaSo">Arquitetura</Label>
+                      <Input
+                        {...register('arquiteturaSo')}
+                        className={`form-control base-input mb-2 ${
+                          errors.arquiteturaSo ? 'is-invalid' : ''
+                        }`}
+                        type="text"
+                        name="arquiteturaSo"
+                        id="arquiteturaSo"
+                      />
+                    </Field>
+                  </div>
+                </div>
 
                 <div className="row">
                   <div className="col-lg-6">
@@ -433,23 +461,13 @@ export default function WorkstationForm({
                       />
                     </Field>
 
-                    {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker value={valueDate} onChange={(newValue) => {
-                        setValueDate(newValue)
-                        console.log(valueDate);
-                      }} />
-                    </LocalizationProvider> */}
 
-                    {/* 
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      value={selectedDate}
-                      onChange={(date) => setSelectedDate(date)}
-                    />
-                    </LocalizationProvider>
+                        
+                    
 
-                    <p>A data selecionada é: {formattedDate}</p>
- */}
+
+                
+
                   </div>
                 </div>
               </div>
