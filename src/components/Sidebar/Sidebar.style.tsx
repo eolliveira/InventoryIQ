@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { theme } from '../../style/Theme';
 
 interface Props {
-  isColapsed: boolean;
+  iscollapsed?: string;
 }
 
 export const SidebarContainer = styled.div`
@@ -13,7 +13,7 @@ export const SidebarContainer = styled.div`
 export const ButtonColapseContainer = styled.div<Props>`
   background-color: ${theme.colors.primary};
   justify-content: ${(props) =>
-    props.isColapsed ? 'flex-end' : 'space-between'};
+    props.iscollapsed ? 'flex-end' : 'space-between'};
   height: 70px;
   display: flex;
   align-items: center;

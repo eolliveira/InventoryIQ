@@ -16,8 +16,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="nome">Nome</Label>
             <Input
-              value={data ? data.nome : ''}
-              onChange={() => {}}
+              value={data?.nome || ''}
               type="text"
               id={'nome'}
               disabled={true}
@@ -26,8 +25,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="fabricante">Fabricante</Label>
             <Input
-              value={data ? data.fabricante : ''}
-              onChange={() => {}}
+              value={data?.fabricante || ''}
               type="text"
               id="fabricante"
               disabled={true}
@@ -36,8 +34,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="nomeHost">Hostname</Label>
             <Input
-              value={data ? data.nomeHost : ''}
-              onChange={() => {}}
+              value={data?.nomeHost || ''}
               type="text"
               id="nomeHost"
               disabled={true}
@@ -46,8 +43,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="dominio">Dominio</Label>
             <Input
-              value={data ? data.dominio : ''}
-              onChange={() => {}}
+              value={data?.dominio || ''}
               type="text"
               id="dominio"
               disabled={true}
@@ -56,8 +52,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="dns">Dns</Label>
             <Input
-              value={data ? data.dns : ''}
-              onChange={() => {}}
+              value={data?.dns || ''}
               type="text"
               id="dns"
               disabled={true}
@@ -66,8 +61,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="ultimoUsuarioLogado">Ultimo usuário logado</Label>
             <Input
-              value={data ? data.ultimoUsuarioLogado : ''}
-              onChange={() => {}}
+              value={data?.ultimoUsuarioLogado || ''}
               type="text"
               id="ultimoUsuarioLogado"
               disabled={true}
@@ -76,8 +70,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="tempoLigado">Tempo atividade</Label>
             <Input
-              value={data ? data.tempoLigado : ''}
-              onChange={() => {}}
+              value={data?.tempoLigado || ''}
               type="text"
               id="tempoLigado"
               disabled={true}
@@ -87,8 +80,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             <Label htmlFor="observacao">Observação</Label>
             <textarea
               rows={10}
-              value={data ? data.observacao : ''}
-              onChange={() => {}}
+              value={data?.observacao || ''}
               style={{
                 padding: 5,
                 borderRadius: 3,
@@ -106,8 +98,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="sistemaOperacional">Sistema operacional</Label>
             <Input
-              value={data ? data.sistemaOperacional : ''}
-              onChange={() => {}}
+              value={data?.sistemaOperacional || ''}
               type="text"
               id="sistemaOperacional"
               disabled={true}
@@ -116,8 +107,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="processador">Processador</Label>
             <Input
-              value={data ? data.processador : ''}
-              onChange={() => {}}
+              value={data?.processador || ''}
               type="text"
               id="processador"
               disabled={true}
@@ -126,8 +116,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="numeroSerie">Numero de série</Label>
             <Input
-              value={data ? data.numeroSerie : ''}
-              onChange={() => {}}
+              value={data?.numeroSerie || ''}
               type="text"
               id="numeroSerie"
               disabled={true}
@@ -137,7 +126,6 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             <Label htmlFor="modelo">Modelo</Label>
             <Input
               value={data ? data.modelo : ''}
-              onChange={() => {}}
               type="text"
               id="modelo"
               disabled={true}
@@ -149,8 +137,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               <Field>
                 <Label htmlFor="dtAquisicao">Data aquisição</Label>
                 <Input
-                  value={data ? data.dtAquisicao : ''}
-                  onChange={() => {}}
+                  value={data?.dtAquisicao || ''}
                   type="text"
                   id="dtAquisicao"
                   disabled={true}
@@ -161,8 +148,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               <Field>
                 <Label htmlFor="dtExpiracao">Data expiração</Label>
                 <Input
-                  value={data ? data.dtExpiracao : ''}
-                  onChange={() => {}}
+                  value={data?.dtExpiracao || ''}
                   type="text"
                   id="dtExpiracao"
                   disabled={true}
@@ -178,8 +164,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   Data venc. Garantia
                 </Label>
                 <Input
-                  value={data ? data.dtVencimentoGarantia : ''}
-                  onChange={() => {}}
+                  value={data?.dtVencimentoGarantia || ''}
                   type="text"
                   id="dtVencimentoGarantia"
                   disabled={true}
@@ -188,8 +173,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               <Field>
                 <Label htmlFor="vlrAquisicao">Valor compra</Label>
                 <Input
-                  value={data ? data.vlrAquisicao : ''}
-                  onChange={() => {}}
+                  value={data?.vlrAquisicao || ''}
                   type="number"
                   id="vlrAquisicao"
                   disabled={true}

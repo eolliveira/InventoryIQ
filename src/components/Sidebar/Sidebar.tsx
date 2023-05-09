@@ -20,7 +20,8 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 export default function MenuSidebar() {
-  const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } = useProSidebar();
+  const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
+    useProSidebar();
 
   const location = useLocation();
 
@@ -65,7 +66,7 @@ export default function MenuSidebar() {
             },
           }}
         >
-          <ButtonColapseContainer isColapsed={collapsed}>
+          <ButtonColapseContainer iscollapsed={`${collapsed}`}>
             {!collapsed ? (
               <img src="" alt="" />
             ) : (
@@ -96,7 +97,7 @@ export default function MenuSidebar() {
                 sx={{ mr: 2, color: 'black' }}
                 onClick={() => collapseSidebar()}
               >
-                <ArrowBackIosNewIcon fontSize='small' />
+                <ArrowBackIosNewIcon fontSize="small" />
               </IconButton>
             )}
           </ButtonColapseContainer>
