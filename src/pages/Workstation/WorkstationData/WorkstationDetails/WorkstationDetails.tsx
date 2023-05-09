@@ -2,12 +2,20 @@ import { Workstation } from '../../../../types/Workstation/Response/Workstation'
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 
 import { theme } from '../../../../style/Theme';
+import { useEffect } from 'react';
 
 type WorkstationDetailsProps = {
   data?: Workstation;
 };
 
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
+
+
+  useEffect(() => {
+    console.log(  'teste 0000' );
+    console.log(data?.dnsList);
+    
+  })
 
   return (
     <form>
@@ -31,15 +39,32 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               disabled={true}
             />
           </Field>
-          <Field>
-            <Label htmlFor="nomeHost">Hostname</Label>
-            <Input
-              value={data?.nomeHost || ''}
-              type="text"
-              id="nomeHost"
-              disabled={true}
-            />
-          </Field>
+
+          <div className="row">
+            <div className="col-lg-6">
+              <Field>
+                <Label htmlFor="nomeHost">Hostname</Label>
+                <Input
+                  value={data?.nomeHost || ''}
+                  type="text"
+                  id="nomeHost"
+                  disabled={true}
+                />
+              </Field>
+            </div>
+            <div className="col-lg-6">
+              <Field>
+                <Label htmlFor="memoriaRam">Memória Virtual</Label>
+                <Input
+                value={data?.memoriaRam + ' GB' || ''}
+                  type="text"
+                  id="memoriaRam"
+                  disabled={true}
+                />
+              </Field>
+            </div>
+          </div>
+
           <Field>
             <Label htmlFor="dominio">Dominio</Label>
             <Input
@@ -50,11 +75,11 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             />
           </Field>
           <Field>
-            <Label htmlFor="dns">Dns</Label>
+            <Label htmlFor="dnsList">Dns</Label>
             <Input
-              value={data?.dns || ''}
+              value={data?.dnsList || ''}
               type="text"
-              id="dns"
+              id="dnsList"
               disabled={true}
             />
           </Field>

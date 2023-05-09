@@ -13,12 +13,7 @@ import { useContext, useEffect, useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import { FormContext } from '../../../../contexts/FormContext';
-import {
-  Navigate,
-  useBeforeUnload,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../../http/requests';
@@ -32,6 +27,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 import TextField from '@material-ui/core/TextField';
 import { WorkstationSync } from 'types/Workstation/Response/WorkstationSync';
+import { Interface } from 'types/Interface';
 
 type WorkstationFormProps = {
   data?: Workstation;
@@ -44,12 +40,7 @@ export default function WorkstationForm({
   openForm,
   closeForm,
 }: WorkstationFormProps) {
-  //const [selectedDate, setSelectedDate] = useState(null);
-
-  //const formattedDate = dayjs(selectedDate).format("DD/MM/YYYY HH:mm");
-
   const { formContextData, setFormContextData } = useContext(FormContext);
-  const [dataSync, setDataSync] = useState<WorkstationSync>();
   const [synchronizing, setSynchronizing] = useState(false);
   const [ipAddress, setIpAddress] = useState('');
 
@@ -59,9 +50,7 @@ export default function WorkstationForm({
     formState: { errors },
     setValue,
     control,
-  } = useForm<Workstation>();
-
-  const [valueDate, setValueDate] = React.useState<Dayjs | null>(null);
+  } = useForm<WorkstationSync>();
 
   ////
   const navigate = useNavigate();
@@ -114,12 +103,12 @@ export default function WorkstationForm({
 
     requestBackend(params)
       .then((response) => {
-        setDataSync(response.data);
-        
+        const interfaces: Interface[] = [];
+
         setValue('fabricante', response.data.fabricante);
         setValue('nomeHost', response.data.nomeHost);
         setValue('dominio', response.data.dominio);
-        setValue('dns', response.data.dns);
+        setValue('dnsList', response.data.dnsList);
         setValue('ultimoUsuarioLogado', response.data.ultimoUsuarioLogado);
         setValue('tempoLigado', response.data.tempoLigado);
         setValue('sistemaOperacional', response.data.sistemaOperacional);
@@ -127,8 +116,13 @@ export default function WorkstationForm({
         setValue('numeroSerie', response.data.numeroSerie);
         setValue('modelo', response.data.modelo);
 
-        //não esta chegando valor
-        console.log(dataSync);
+        response.data.interfaces.forEach((i: Interface) => interfaces.push(i));
+
+        setValue('interfaces', interfaces);
+
+        interfaces.forEach((element) => {
+          console.log(element);
+        });
       })
       .catch((error) => {
         console.log('Erro ao buscar dados do ativo: ' + error);
@@ -143,7 +137,8 @@ export default function WorkstationForm({
     setValue('fabricante', data.fabricante);
     setValue('nomeHost', data.nomeHost);
     setValue('dominio', data.dominio);
-    setValue('dns', data.dns);
+    setValue('dnsList', data.dnsList);
+    setValue('memoriaRam', data.memoriaRam);
     setValue('ultimoUsuarioLogado', data.ultimoUsuarioLogado);
     setValue('tempoLigado', data.tempoLigado);
     setValue('sistemaOperacional', data.sistemaOperacional);
@@ -184,14 +179,6 @@ export default function WorkstationForm({
               >
                 <SearchIcon fontSize="medium" />
               </LoadingButton>
-
-              {/* <IconButton
-                size="large"
-                sx={{ mt: 2, color: 'black' }}
-                onClick={handleSync}
-              >
-                <SearchIcon fontSize="medium" />
-              </IconButton> */}
             </SearchAddressContainer>
           )}
           <Box
@@ -231,18 +218,38 @@ export default function WorkstationForm({
                     id="fabricante"
                   />
                 </Field>
-                <Field>
-                  <Label htmlFor="nomeHost">Hostname</Label>
-                  <Input
-                    {...register('nomeHost')}
-                    className={`form-control base-input mb-2 ${
-                      errors.nomeHost ? 'is-invalid' : ''
-                    }`}
-                    type="text"
-                    name="nomeHost"
-                    id="nomeHost"
-                  />
-                </Field>
+
+                <div className="row">
+                  <div className="col-lg-6">
+                    <Field>
+                      <Label htmlFor="nomeHost">Hostname</Label>
+                      <Input
+                        {...register('nomeHost')}
+                        className={`form-control base-input mb-2 ${
+                          errors.nomeHost ? 'is-invalid' : ''
+                        }`}
+                        type="text"
+                        name="nomeHost"
+                        id="nomeHost"
+                      />
+                    </Field>
+                  </div>
+                  <div className="col-lg-6">
+                    <Field>
+                      <Label htmlFor="memoriaRam">Memória ram(Virtual)</Label>
+                      <Input
+                        {...register('memoriaRam')}
+                        className={`form-control base-input mb-2 ${
+                          errors.memoriaRam ? 'is-invalid' : ''
+                        }`}
+                        type="text"
+                        name="memoriaRam"
+                        id="memoriaRam"
+                      />
+                    </Field>
+                  </div>
+                </div>
+
                 <Field>
                   <Label htmlFor="dominio">Dominio</Label>
                   <Input
@@ -256,15 +263,15 @@ export default function WorkstationForm({
                   />
                 </Field>
                 <Field>
-                  <Label htmlFor="dns">Dns</Label>
+                  <Label htmlFor="dnsList">Dns</Label>
                   <Input
-                    {...register('dns')}
+                    {...register('dnsList')}
                     className={`form-control base-input mb-2 ${
                       errors.dns ? 'is-invalid' : ''
                     }`}
                     type="text"
-                    name="dns"
-                    id="dns"
+                    name="dnsList"
+                    id="dnsList"
                   />
                 </Field>
                 <Field>

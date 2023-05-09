@@ -67,13 +67,13 @@ export default function WorkstationList() {
           columns={columns}
           data={page ? page?.content : []}
           sortIcon={<ExpandMoreIcon />}
+          fixedHeader
+          fixedHeaderScrollHeight={'82vh'}
           responsive
           selectableRows
           pointerOnHover
           highlightOnHover
           dense
-          fixedHeader
-          fixedHeaderScrollHeight={'82vh'}
           onRowClicked={handleRowClicked}
         />
       </div>
