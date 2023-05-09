@@ -27,7 +27,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               value={data?.fabricante || ''}
               type="text"
               id="fabricante"
-              disabled={true}
+              readOnly
             />
           </Field>
           <div className="row">
@@ -38,7 +38,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   value={data?.nomeHost || ''}
                   type="text"
                   id="nomeHost"
-                  disabled={true}
+                  readOnly
                 />
               </Field>
             </div>
@@ -49,7 +49,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   value={data?.memoriaRam + ' GB' || ''}
                   type="text"
                   id="memoriaRam"
-                  disabled={true}
+                  readOnly
                 />
               </Field>
             </div>
@@ -60,19 +60,14 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               value={data?.dominio || ''}
               type="text"
               id="dominio"
-              disabled={true}
+              readOnly
             />
           </Field>
           <div className="row">
             <div className="col-lg-6">
               <Field>
                 <Label htmlFor="dns">Dns</Label>
-                <Input
-                  value={data?.dns || ''}
-                  type="text"
-                  id="dns"
-                  disabled={true}
-                />
+                <Input value={data?.dns || ''} type="text" id="dns" readOnly />
               </Field>
             </div>
             <div className="col-lg-6">
@@ -82,7 +77,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   value={data?.gateway || ''}
                   type="text"
                   id="gateway"
-                  disabled={true}
+                  readOnly
                 />
               </Field>
             </div>
@@ -93,7 +88,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               value={data?.ultimoUsuarioLogado || ''}
               type="text"
               id="ultimoUsuarioLogado"
-              disabled={true}
+              readOnly
             />
           </Field>
           <Field>
@@ -102,7 +97,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               value={data?.tempoLigado || ''}
               type="text"
               id="tempoLigado"
-              disabled={true}
+              readOnly
             />
           </Field>
           <Field>
@@ -119,7 +114,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                 border: `1px solid ${theme.colors.secondary}`,
               }}
               id="observacao"
-              disabled={true}
+              readOnly
             />
           </Field>
         </div>
@@ -130,7 +125,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               value={data?.sistemaOperacional || ''}
               type="text"
               id="sistemaOperacional"
-              disabled={true}
+              readOnly
             />
           </Field>
           <Field>
@@ -139,7 +134,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               value={data?.processador || ''}
               type="text"
               id="processador"
-              disabled={true}
+              readOnly
             />
           </Field>
           <Field>
@@ -148,7 +143,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               value={data?.numeroSerie || ''}
               type="text"
               id="numeroSerie"
-              disabled={true}
+              readOnly
             />
           </Field>
 
@@ -160,7 +155,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   value={data ? data.modelo : ''}
                   type="text"
                   id="modelo"
-                  disabled={true}
+                  readOnly
                 />
               </Field>
             </div>
@@ -185,7 +180,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   value={data?.dtAquisicao || ''}
                   type="text"
                   id="dtAquisicao"
-                  disabled={true}
+                  readOnly
                 />
               </Field>
             </div>
@@ -196,7 +191,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   value={data?.dtExpiracao || ''}
                   type="text"
                   id="dtExpiracao"
-                  disabled={true}
+                  readOnly
                 />
               </Field>
             </div>
@@ -212,7 +207,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   value={data?.dtVencimentoGarantia || ''}
                   type="text"
                   id="dtVencimentoGarantia"
-                  disabled={true}
+                  readOnly
                 />
               </Field>
               <Field>
@@ -221,7 +216,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   value={data?.vlrAquisicao || ''}
                   type="number"
                   id="vlrAquisicao"
-                  disabled={true}
+                  readOnly
                 />
               </Field>
             </div>

@@ -84,7 +84,8 @@ export default function MenuSidebar() {
                 size="large"
                 edge="end"
                 aria-label="menu"
-                sx={{ mr: 2, color: 'black' }}
+                sx={{ mr: 2}}
+                color='primary'
                 onClick={() => collapseSidebar()}
               >
                 <MenuIcon />
@@ -94,7 +95,8 @@ export default function MenuSidebar() {
                 disableFocusRipple
                 aria-label="delete"
                 size="large"
-                sx={{ mr: 2, color: 'black' }}
+                sx={{ mr: 2}}
+                color='primary'
                 onClick={() => collapseSidebar()}
               >
                 <ArrowBackIosNewIcon fontSize="small" />

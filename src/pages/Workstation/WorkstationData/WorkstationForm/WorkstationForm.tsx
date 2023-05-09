@@ -21,6 +21,8 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import { WorkstationSync } from 'types/Workstation/Response/WorkstationSync';
 import { Interface } from 'types/Interface';
+import { Disco } from 'types/Workstation/Disco';
+import { Particao } from 'types/Workstation/Particao';
 
 type WorkstationFormProps = {
   data?: Workstation;
@@ -36,6 +38,12 @@ export default function WorkstationForm({
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [synchronizing, setSynchronizing] = useState(false);
   const [ipAddress, setIpAddress] = useState('');
+
+
+  const [ interfaces, setInterfaces ] = useState<Interface[]>()
+  const [ discos , setDiscos ] = useState<Disco[]>()
+
+
   const {
     register,
     handleSubmit,
@@ -65,12 +73,12 @@ export default function WorkstationForm({
           isEditing: false,
         });
 
-        window.alert('Gravado com sucesso!');
+        window.alert('Ativo foi salvo com sucesso!');
         navigate(`/workstation/${response.data.id}`);
         closeForm();
       })
       .catch((error) => {
-        console.log('Erro ao inserir novo ativo' + error);
+        window.alert(error.response.data.message);
       });
   };
 
@@ -94,6 +102,7 @@ export default function WorkstationForm({
     requestBackend(params)
       .then((response) => {
         const interfaces: Interface[] = [];
+        const discos: Disco[] = [];
 
         setValue('fabricante', response.data.fabricante);
         setValue('nomeHost', response.data.nomeHost);
@@ -109,7 +118,24 @@ export default function WorkstationForm({
         setValue('modelo', response.data.modelo);
 
         response.data.interfaces.forEach((i: Interface) => interfaces.push(i));
+        setInterfaces(response.data.interfaces)
+
+        response.data.discos.forEach((disco: Disco) => {
+          disco.particoes.forEach((particao: Particao) => {
+            const p: Particao = {
+              pontoMontagem: particao.pontoMontagem,
+              capacidade: particao.capacidade,
+              usado: particao.usado,
+            };
+            disco.particoes.push(p);
+          });
+          discos.push(disco);
+        });
+
+        setDiscos(response.data.discos)
+
         setValue('interfaces', interfaces);
+        setValue('discos', discos);
       })
       .catch((error) => {
         console.log('Erro ao buscar dados do ativo: ' + error);
@@ -460,16 +486,22 @@ export default function WorkstationForm({
                         id="vlrAquisicao"
                       />
                     </Field>
-
-
-                        
-                    
-
-
-                
-
                   </div>
                 </div>
+
+                <h3>Rede(interfaces)</h3>
+                {
+                  interfaces?.map((e) => <h6>{e.enderecoMac}</h6>)
+                }
+
+
+                <h3>Armazenamento</h3>
+                {
+                  discos?.map((d) => <h6>{d.modelo}</h6>)
+                }
+
+
+
               </div>
             </div>
 

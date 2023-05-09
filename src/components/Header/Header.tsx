@@ -71,9 +71,11 @@ export default function Header() {
         sx={{ backgroundColor: `${theme.colors.white}`, boxShadow: 'none' }}
         position="static"
       >
-        <Toolbar sx={{
-          backgroundColor: `${theme.colors.yellow}`
-        }}>
+        <Toolbar
+          sx={{
+            backgroundColor: `${theme.colors.yellow}`,
+          }}
+        >
           <Typography
             variant="h6"
             component="div"
@@ -89,7 +91,7 @@ export default function Header() {
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
-              style={{ color: `${theme.colors.black}` }}
+              color="primary"
             >
               <Badge badgeContent={7} color="error">
                 <NotificationsIcon />
@@ -101,7 +103,7 @@ export default function Header() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleMenu}
-              style={{ color: `${theme.colors.black}` }}
+              color="primary"
             >
               <AccountCircle />
             </IconButton>
@@ -130,10 +132,3 @@ export default function Header() {
     </Box>
   );
 }
-
-// const Wrapper = styled.div`
-//   height: 50px;
-//   margin-bottom: 10px;
-//   width: 100%;
-//   background-color: #2b2222;
-// `;
