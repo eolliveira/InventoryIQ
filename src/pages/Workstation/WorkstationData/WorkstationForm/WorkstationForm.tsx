@@ -171,7 +171,7 @@ export default function WorkstationForm({
     setValue('processador', data.processador);
     setValue('numeroSerie', data.numeroSerie);
     setValue('modelo', data.modelo);
-    setValue('dtAquisicao', dayjs(data.dtAquisicao));
+    setValue('dtAquisicao', data.dtAquisicao);
     setValue('dtExpiracao', data.dtExpiracao);
     setValue('dtVencimentoGarantia', data.dtVencimentoGarantia);
     setValue('vlrAquisicao', data.vlrAquisicao);
@@ -460,7 +460,7 @@ export default function WorkstationForm({
                       name={'dtAquisicao'}
                       render={({ field: { onChange, value } }) => (
                         <DatePicker
-                          value={value || null}
+                          value={dayjs(value) || null}
                           onChange={onChange}
                           format={'DD/MM/YYYY'}
                         />

@@ -16,6 +16,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             <Label htmlFor="nome">Nome</Label>
             <Input
               value={data?.nome || ''}
+              onChange={() => {}}
               type="text"
               id={'nome'}
               disabled={true}
@@ -24,6 +25,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="fabricante">Fabricante</Label>
             <Input
+              onChange={() => {}}
               value={data?.fabricante || ''}
               type="text"
               id="fabricante"
@@ -35,6 +37,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               <Field>
                 <Label htmlFor="nomeHost">Hostname</Label>
                 <Input
+                  onChange={() => {}}
                   value={data?.nomeHost || ''}
                   type="text"
                   id="nomeHost"
@@ -46,6 +49,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               <Field>
                 <Label htmlFor="memoriaRam">Memória Virtual</Label>
                 <Input
+                  onChange={() => {}}
                   value={data?.memoriaRam + ' GB' || ''}
                   type="text"
                   id="memoriaRam"
@@ -57,6 +61,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="dominio">Dominio</Label>
             <Input
+              onChange={() => {}}
               value={data?.dominio || ''}
               type="text"
               id="dominio"
@@ -67,13 +72,20 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             <div className="col-lg-6">
               <Field>
                 <Label htmlFor="dns">Dns</Label>
-                <Input value={data?.dns || ''} type="text" id="dns" readOnly />
+                <Input
+                  onChange={() => {}}
+                  value={data?.dns || ''}
+                  type="text"
+                  id="dns"
+                  readOnly
+                />
               </Field>
             </div>
             <div className="col-lg-6">
               <Field>
                 <Label htmlFor="gateway">Gateway</Label>
                 <Input
+                  onChange={() => {}}
                   value={data?.gateway || ''}
                   type="text"
                   id="gateway"
@@ -85,6 +97,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="ultimoUsuarioLogado">Ultimo usuário logado</Label>
             <Input
+              onChange={() => {}}
               value={data?.ultimoUsuarioLogado || ''}
               type="text"
               id="ultimoUsuarioLogado"
@@ -94,6 +107,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="tempoLigado">Tempo atividade</Label>
             <Input
+              onChange={() => {}}
               value={data?.tempoLigado || ''}
               type="text"
               id="tempoLigado"
@@ -122,6 +136,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="sistemaOperacional">Sistema operacional</Label>
             <Input
+              onChange={() => {}}
               value={data?.sistemaOperacional || ''}
               type="text"
               id="sistemaOperacional"
@@ -131,6 +146,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="processador">Processador</Label>
             <Input
+              onChange={() => {}}
               value={data?.processador || ''}
               type="text"
               id="processador"
@@ -140,6 +156,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           <Field>
             <Label htmlFor="numeroSerie">Numero de série</Label>
             <Input
+              onChange={() => {}}
               value={data?.numeroSerie || ''}
               type="text"
               id="numeroSerie"
@@ -152,6 +169,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               <Field>
                 <Label htmlFor="modelo">Modelo</Label>
                 <Input
+                  onChange={() => {}}
                   value={data ? data.modelo : ''}
                   type="text"
                   id="modelo"
@@ -163,6 +181,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               <Field>
                 <Label htmlFor="arquiteturaSo">Arquitetura</Label>
                 <Input
+                  onChange={() => {}}
                   value={data ? data.arquiteturaSo : ''}
                   type="text"
                   name="arquiteturaSo"
@@ -177,6 +196,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               <Field>
                 <Label htmlFor="dtAquisicao">Data aquisição</Label>
                 <Input
+                  onChange={() => {}}
                   value={data?.dtAquisicao || ''}
                   type="text"
                   id="dtAquisicao"
@@ -188,6 +208,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               <Field>
                 <Label htmlFor="dtExpiracao">Data expiração</Label>
                 <Input
+                  onChange={() => {}}
                   value={data?.dtExpiracao || ''}
                   type="text"
                   id="dtExpiracao"
@@ -204,6 +225,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   Data venc. Garantia
                 </Label>
                 <Input
+                  onChange={() => {}}
                   value={data?.dtVencimentoGarantia || ''}
                   type="text"
                   id="dtVencimentoGarantia"
@@ -213,6 +235,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               <Field>
                 <Label htmlFor="vlrAquisicao">Valor compra</Label>
                 <Input
+                  onChange={() => {}}
                   value={data?.vlrAquisicao || ''}
                   type="number"
                   id="vlrAquisicao"
