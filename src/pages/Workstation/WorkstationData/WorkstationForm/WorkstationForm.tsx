@@ -24,7 +24,6 @@ import { Interface } from 'types/Interface';
 import { Disco } from 'types/Workstation/Disco';
 import { Particao } from 'types/Workstation/Particao';
 
-
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -32,7 +31,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { Controller } from 'react-hook-form';
-
+import { height } from '@mui/system';
 
 type WorkstationFormProps = {
   data?: Workstation;
@@ -45,15 +44,12 @@ export default function WorkstationForm({
   openForm,
   closeForm,
 }: WorkstationFormProps) {
-
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [synchronizing, setSynchronizing] = useState(false);
   const [ipAddress, setIpAddress] = useState('');
 
-
-  const [ interfaces, setInterfaces ] = useState<Interface[]>()
-  const [ discos , setDiscos ] = useState<Disco[]>()
-
+  const [interfaces, setInterfaces] = useState<Interface[]>();
+  const [discos, setDiscos] = useState<Disco[]>();
 
   const {
     register,
@@ -129,7 +125,7 @@ export default function WorkstationForm({
         setValue('modelo', response.data.modelo);
 
         response.data.interfaces.forEach((i: Interface) => interfaces.push(i));
-        setInterfaces(response.data.interfaces)
+        setInterfaces(response.data.interfaces);
 
         response.data.discos.forEach((disco: Disco) => {
           disco.particoes.forEach((particao: Particao) => {
@@ -143,7 +139,7 @@ export default function WorkstationForm({
           discos.push(disco);
         });
 
-        setDiscos(response.data.discos)
+        setDiscos(response.data.discos);
 
         setValue('interfaces', interfaces);
         setValue('discos', discos);
@@ -438,104 +434,84 @@ export default function WorkstationForm({
                   </div>
                 </div>
 
-                <div className="row">
-                  <div className="col-lg-6">
-                    {/* <Field>
-                      <Label htmlFor="dtAquisicao">Data aquisição</Label>
-                      <Input
-                        {...register('dtAquisicao')}
-                        className={`form-control base-input mb-2 ${
-                          errors.dtAquisicao ? 'is-invalid' : ''
-                        }`}
-                        type="text"
-                        name="dtAquisicao"
-                        id="dtAquisicao"
-                      />
-                    </Field> */}
-                    
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <Controller
-                      control={control}
-                      defaultValue={''}
-                      name={'dtAquisicao'}
-                      render={({ field: { onChange, value } }) => (
-                        <DatePicker
-                          value={dayjs(value) || null}
-                          onChange={onChange}
-                          format={'DD/MM/YYYY'}
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <Controller
+                        name={'dtAquisicao'}
+                        rules={{ required: false }}
+                        control={control}
+                        defaultValue=""
+                        render={({ field: { onChange, value } }) => (
+                          <DatePicker
+                            label={'Data aquisição'}
+                            value={dayjs(value) || null}
+                            onChange={onChange}
+                            format={'DD/MM/YYYY'}
+                          />
+                        )}
+                      />
+                    </div>
+                    <div className="col-lg-6">
+                      <Controller
+                        name={'dtExpiracao'}
+                        rules={{ required: false }}
+                        control={control}
+                        defaultValue=""
+                        render={({ field: { onChange, value } }) => (
+                          <DatePicker
+                            label={'Data expiração'}
+                            value={dayjs(value) || null}
+                            onChange={onChange}
+                            format={'DD/MM/YYYY'}
+                          />
+                        )}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <Controller
+                        name={'dtVencimentoGarantia'}
+                        rules={{ required: false }}
+                        control={control}
+                        defaultValue=""
+                        render={({ field: { onChange, value } }) => (
+                          <DatePicker
+                            label={'Data venc. Garantia'}
+                            value={dayjs(value) || null}
+                            onChange={onChange}
+                            format={'DD/MM/YYYY'}
+                          />
+                        )}
+                      />
+
+                      <Field>
+                        <Label htmlFor="vlrAquisicao">Valor compra</Label>
+                        <Input
+                          {...register('vlrAquisicao')}
+                          className={`form-control base-input mb-2 ${
+                            errors.vlrAquisicao ? 'is-invalid' : ''
+                          }`}
+                          type="number"
+                          name="vlrAquisicao"
+                          id="vlrAquisicao"
                         />
-                      )}
-                    />
+                      </Field>
+                    </div>
+                  </div>
                 </LocalizationProvider>
 
-
-
-                  </div>
-                  <div className="col-lg-6">
-                    <Field>
-                      <Label htmlFor="dtExpiracao">Data expiração</Label>
-                      <Input
-                        {...register('dtExpiracao')}
-                        className={`form-control base-input mb-2 ${
-                          errors.dtExpiracao ? 'is-invalid' : ''
-                        }`}
-                        type="text"
-                        name="dtExpiracao"
-                        id="dtExpiracao"
-                      />
-                    </Field>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-lg-6">
-                    <Field>
-                      <Label htmlFor="dtVencimentoGarantia">
-                        Data venc. Garantia
-                      </Label>
-                      <Input
-                        {...register('dtVencimentoGarantia')}
-                        className={`form-control base-input mb-2 ${
-                          errors.dtVencimentoGarantia ? 'is-invalid' : ''
-                        }`}
-                        type="text"
-                        name="dtVencimentoGarantia"
-                        id="dtVencimentoGarantia"
-                      />
-                    </Field>
-                    <Field>
-                      <Label htmlFor="vlrAquisicao">Valor compra</Label>
-                      <Input
-                        {...register('vlrAquisicao')}
-                        className={`form-control base-input mb-2 ${
-                          errors.vlrAquisicao ? 'is-invalid' : ''
-                        }`}
-                        type="number"
-                        name="vlrAquisicao"
-                        id="vlrAquisicao"
-                      />
-                    </Field>
-                  </div>
-                </div>
-
-
-
-
-
-
                 <h3>Rede(interfaces)</h3>
-                {
-                  interfaces?.map((e) => <h6>{e.enderecoMac}</h6>)
-                }
-
+                {interfaces?.map((e) => (
+                  <h6>{e.enderecoMac}</h6>
+                ))}
 
                 <h3>Armazenamento</h3>
-                {
-                  discos?.map((d) => <h6>{d.modelo}</h6>)
-                }
-
-
-
+                {discos?.map((d) => (
+                  <h6>{d.modelo}</h6>
+                ))}
               </div>
             </div>
 

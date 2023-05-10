@@ -2,6 +2,7 @@ import { Workstation } from '../../../../types/Workstation/Response/Workstation'
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 
 import { theme } from '../../../../style/Theme';
+import dayjs from 'dayjs';
 
 type WorkstationDetailsProps = {
   data?: Workstation;
@@ -197,7 +198,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                 <Label htmlFor="dtAquisicao">Data aquisição</Label>
                 <Input
                   onChange={() => {}}
-                  value={data?.dtAquisicao || ''}
+                  value={data ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY') : ''}
                   type="text"
                   id="dtAquisicao"
                   readOnly
