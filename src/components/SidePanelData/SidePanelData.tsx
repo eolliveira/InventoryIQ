@@ -7,6 +7,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import UserCard from '../../components/UserCard/UserCard';
 import { toDateTime } from '../../utils/Date';
+import ChangeState from '../../components/ChangeState/ChangeState';
+import { useState } from 'react';
 
 type SidePanelDataProps = {
   status?: string;
@@ -21,6 +23,9 @@ export default function SidePanelData({
   nome,
   email,
 }: SidePanelDataProps) {
+
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <Wapper>
       <Container>
@@ -38,7 +43,11 @@ export default function SidePanelData({
           <Title>Status</Title>
           <Status>
             <Text>{status}</Text>
-            <IconButton aria-label="delete" size="small">
+            <IconButton onClick={(e) => {
+              
+              setOpenModal(true)
+
+            }} aria-label="delete" size="small">
               <EditIcon fontSize="inherit" />
             </IconButton>
           </Status>
@@ -53,6 +62,13 @@ export default function SidePanelData({
         }}
       />
       <UserCard nome={nome ? nome : ' - '} email={email ? email : ' - '} />
+      {openModal && (
+        <ChangeState 
+          oldState={status}
+          openForm={openModal}
+          closeForm={() => setOpenModal(false)}
+        />
+      )}
     </Wapper>
   );
 }

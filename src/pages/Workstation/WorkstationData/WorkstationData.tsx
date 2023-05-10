@@ -250,22 +250,22 @@ export default function WorkstationData() {
               </CustomTabs>
             </Box>
           </AppBar>
-          <Panel value="1" style={{ padding: 0 }}>
+          <Panel value="1" >
             <WorkstationDetails data={active} />
           </Panel>
-          <Panel value="2" style={{ padding: 0 }}>
+          <Panel value="2" >
             <WorkstationHardware teste={10} />
           </Panel>
-          <Panel value="3" style={{ padding: 0 }}>
+          <Panel value="3">
             <WorkstationInterfaces workstationId={active?.id} />
           </Panel>
-          <Panel value="4" style={{ padding: 0 }}>
+          <Panel value="4" >
             <WorkstationMovements teste={10} />
           </Panel>
-          <Panel value="5" style={{ padding: 0 }}>
+          <Panel value="5" >
             <WorkstationLicenses teste={10} />
           </Panel>
-          <Panel value="6" style={{ padding: 0 }}>
+          <Panel value="6" >
             <WorkstationMaintenance teste={10} />
           </Panel>
         </TabContext>
@@ -325,8 +325,7 @@ const Text = styled.p`
 `;
 
 const Panel = styled(TabPanel)`
-  margin: 0;
-  padding: 0;
+  padding: 0 !important;
 `;
 
 const CustomTabs = styled(Tabs)`
