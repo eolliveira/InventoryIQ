@@ -46,14 +46,6 @@ export default function WorkstationForm({
   closeForm,
 }: WorkstationFormProps) {
 
-
-  const [dateValue, setDateValue] = useState<Dayjs | null>(null);
-
-
-  const formattedDate = dayjs.utc(dateValue).local().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-  console.log(formattedDate);
-  
-  ////
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [synchronizing, setSynchronizing] = useState(false);
   const [ipAddress, setIpAddress] = useState('');
@@ -179,7 +171,7 @@ export default function WorkstationForm({
     setValue('processador', data.processador);
     setValue('numeroSerie', data.numeroSerie);
     setValue('modelo', data.modelo);
-    setValue('dtAquisicao', data.dtAquisicao);
+    setValue('dtAquisicao', dayjs(data.dtAquisicao));
     setValue('dtExpiracao', data.dtExpiracao);
     setValue('dtVencimentoGarantia', data.dtVencimentoGarantia);
     setValue('vlrAquisicao', data.vlrAquisicao);
@@ -448,7 +440,7 @@ export default function WorkstationForm({
 
                 <div className="row">
                   <div className="col-lg-6">
-                    <Field>
+                    {/* <Field>
                       <Label htmlFor="dtAquisicao">Data aquisição</Label>
                       <Input
                         {...register('dtAquisicao')}
@@ -459,7 +451,25 @@ export default function WorkstationForm({
                         name="dtAquisicao"
                         id="dtAquisicao"
                       />
-                    </Field>
+                    </Field> */}
+                    
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <Controller
+                      control={control}
+                      defaultValue={''}
+                      name={'dtAquisicao'}
+                      render={({ field: { onChange, value } }) => (
+                        <DatePicker
+                          value={value || null}
+                          onChange={onChange}
+                          format={'DD/MM/YYYY'}
+                        />
+                      )}
+                    />
+                </LocalizationProvider>
+
+
+
                   </div>
                   <div className="col-lg-6">
                     <Field>
@@ -507,63 +517,6 @@ export default function WorkstationForm({
                     </Field>
                   </div>
                 </div>
-
-                
-
-
-
-
-
-
-
-
-
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-
-
-                          <Controller
-                  name="dtAquisicao"
-                  control={control}
-                  defaultValue=""
-                  render={({ field: { value, onChange } }) => (
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker
-                        label="Data"
-                        format="DD/MM/YYYY"
-                        value={value ? dayjs(value) : null}
-                        onChange={(newValue) => {
-                          const dateFormat = dayjs.utc(newValue).local().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-                          onChange(dateFormat);
-                        }}
-                      />
-                    </LocalizationProvider>
-                  )}
-                />
-
-
-
-
-
-
-
-
-
-                  <DatePicker 
-                    format="DD/MM/YYYY" 
-                    value={dateValue} 
-                    onChange={(newValue) => {
-                      const dataFormatada = dayjs.utc(newValue).local().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
-                      console.log(dataFormatada);
-                      }} />
-                </LocalizationProvider>
-
-                {
-                  
-                  <h1>{String(dateValue)}</h1>
-                }
-
-
-
 
 
 

@@ -295,6 +295,18 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@date-io/core@^2.16.0":
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@date-io/core/-/core-2.16.0.tgz#7871bfc1d9bca9aa35ad444a239505589d0f22f6"
+  integrity sha512-DYmSzkr+jToahwWrsiRA2/pzMEtz9Bq1euJwoOuYwuwIYXnZFtHajY2E6a1VNVDc9jP8YUXK1BvnZH9mmT19Zg==
+
+"@date-io/dayjs@^2.16.0":
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@date-io/dayjs/-/dayjs-2.16.0.tgz#0d2c254ad8db1306fdc4b8eda197cb53c9af89dc"
+  integrity sha512-y5qKyX2j/HG3zMvIxTobYZRGnd1FUW2olZLS0vTj7bEkBQkjd2RO7/FEwDY03Z1geVGlXKnzIATEVBVaGzV4Iw==
+  dependencies:
+    "@date-io/core" "^2.16.0"
+
 "@emotion/babel-plugin@^11.10.6":
   version "11.10.6"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.10.6.tgz#a68ee4b019d661d6f37dec4b8903255766925ead"
