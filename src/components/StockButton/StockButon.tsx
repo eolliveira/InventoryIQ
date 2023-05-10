@@ -16,7 +16,7 @@ type StockButtonProps = {
   onClickEdit?: Function;
   onClickRemove?: Function;
   onClickDuplicate?: Function;
-  isDisabled?: boolean
+  isDisabled?: boolean;
 };
 
 export default function StockButton({
@@ -24,7 +24,7 @@ export default function StockButton({
   onClickEdit,
   onClickRemove,
   onClickDuplicate,
-  isDisabled
+  isDisabled,
 }: StockButtonProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -46,10 +46,7 @@ export default function StockButton({
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
         disabled={isDisabled}
-        style={{
-          color: 'white',
-          backgroundColor: `${theme.colors.secondary}`,
-        }}
+        color='primary'
       >
         <Text>Ações</Text>
       </Button>
@@ -71,7 +68,7 @@ export default function StockButton({
             sx={{ mb: 0.5 }}
             disableRipple
           >
-             <AddIcon fontSize='small'  sx={{ mr: 0.5, color: `${theme.colors.secondary}` }} />
+            <AddIcon fontSize="small" color="primary" sx={{ mr: 0.5 }} />
             <TextItem>Adicionar</TextItem>
           </MenuItem>
         )}
@@ -84,7 +81,7 @@ export default function StockButton({
             disableRipple
             sx={{ mb: 0.5 }}
           >
-            <EditIcon fontSize='small'  sx={{ mr: 0.5, color: `${theme.colors.secondary}` }} />
+            <EditIcon fontSize="small" color="primary" sx={{ mr: 0.5 }} />
             <TextItem>Editar</TextItem>
           </MenuItem>
         )}
@@ -97,8 +94,8 @@ export default function StockButton({
             disableRipple
             sx={{ mb: 0.5 }}
           >
-            <FileCopyIcon  fontSize='small' sx={{ mr: 0.5, color: `${theme.colors.secondary}` }} />
-            
+            <FileCopyIcon fontSize="small" color="primary" sx={{ mr: 0.5 }} />
+
             <TextItem>Duplicar</TextItem>
           </MenuItem>
         )}
@@ -111,9 +108,8 @@ export default function StockButton({
             disableRipple
             sx={{ mb: 0.5 }}
           >
-            <DeleteIcon fontSize='small' sx={{ mr: 0.5, color: `${theme.colors.secondary}` }} />
-             <TextItem>Excluir</TextItem>
-             
+            <DeleteIcon fontSize="small" color="primary" sx={{ mr: 0.5 }} />
+            <TextItem>Excluir</TextItem>
           </MenuItem>
         )}
       </CustomMenu>
@@ -133,17 +129,13 @@ const CustomMenu = styled(Menu)`
 `;
 
 const Text = styled.p`
-  color: 'white';
-  background-color: ${theme.colors.secondary};
   text-transform: none;
   margin: 0;
 `;
 
 const TextItem = styled.p`
   color: 'red';
-  /* background-color: ${theme.colors.secondary}; */
   text-transform: none;
   font-size: 13px;
   margin: 0;
 `;
-

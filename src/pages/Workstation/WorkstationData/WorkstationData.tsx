@@ -169,17 +169,17 @@ export default function WorkstationData() {
               onClickEdit={handleEdit}
               onClickRemove={handleRemove}
             />
-            <LoadButton
+            <LoadingButton
               disabled={formContextData.isAdding || formContextData.isEditing}
-              color="secondary"
+              color="primary"
               onClick={handleSync}
               loading={isSincronized}
               loadingPosition="start"
               startIcon={<SyncIcon />}
               variant="contained"
             >
-              <span>Sincronizar</span>
-            </LoadButton>
+              <span style={{textTransform: 'none'}}>Sincronizar</span>
+            </LoadingButton>
           </Stack>
         </HeaderWorkstation>
         <TabContext value={tabValue}>
@@ -301,12 +301,6 @@ const HeaderWorkstation = styled.div`
   margin: 20px 0;
 `;
 
-const Card = styled(BaseCard)`
-  @media (min-width: 1474px) {
-    margin-left: 4px;
-  }
-`;
-
 const ContainerSidePanel = styled.div`
   //border: 1px solid blue;
 
@@ -343,10 +337,4 @@ const CustomTabs = styled(Tabs)`
   .MuiTabs-indicator {
     background-color: ${theme.colors.secondary};
   }
-`;
-
-const LoadButton = styled(LoadingButton)`
-  color: white !important;
-  background-color: ${theme.colors.secondary} !important;
-  text-transform: none !important;
 `;
