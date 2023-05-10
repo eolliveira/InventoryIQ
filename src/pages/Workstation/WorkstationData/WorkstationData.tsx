@@ -178,7 +178,7 @@ export default function WorkstationData() {
               startIcon={<SyncIcon />}
               variant="contained"
             >
-              <span style={{textTransform: 'none'}}>Sincronizar</span>
+              <span style={{ textTransform: 'none' }}>Sincronizar</span>
             </LoadingButton>
           </Stack>
         </HeaderWorkstation>
@@ -194,10 +194,10 @@ export default function WorkstationData() {
               <CustomTabs
                 value={tabValue}
                 onChange={handleTabChange}
-                textColor="inherit"
-                indicatorColor="primary"
+                textColor="primary"
+                indicatorColor="secondary"
                 aria-label="secondary tabs example"
-                style={{ color: `${theme.colors.black}` }}
+                // style={{ color: `${theme.colors.yellow}` }}
               >
                 <Tab
                   value="1"
@@ -250,22 +250,22 @@ export default function WorkstationData() {
               </CustomTabs>
             </Box>
           </AppBar>
-          <Panel value="1">
+          <Panel value="1" style={{ padding: 0 }}>
             <WorkstationDetails data={active} />
           </Panel>
-          <Panel value="2">
+          <Panel value="2" style={{ padding: 0 }}>
             <WorkstationHardware teste={10} />
           </Panel>
-          <Panel value="3">
+          <Panel value="3" style={{ padding: 0 }}>
             <WorkstationInterfaces workstationId={active?.id} />
           </Panel>
-          <Panel value="4">
+          <Panel value="4" style={{ padding: 0 }}>
             <WorkstationMovements teste={10} />
           </Panel>
-          <Panel value="5">
+          <Panel value="5" style={{ padding: 0 }}>
             <WorkstationLicenses teste={10} />
           </Panel>
-          <Panel value="6">
+          <Panel value="6" style={{ padding: 0 }}>
             <WorkstationMaintenance teste={10} />
           </Panel>
         </TabContext>
