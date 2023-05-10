@@ -24,6 +24,16 @@ import { Interface } from 'types/Interface';
 import { Disco } from 'types/Workstation/Disco';
 import { Particao } from 'types/Workstation/Particao';
 
+
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs, { Dayjs } from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { Controller } from 'react-hook-form';
+
+
 type WorkstationFormProps = {
   data?: Workstation;
   openForm: boolean;
@@ -35,6 +45,15 @@ export default function WorkstationForm({
   openForm,
   closeForm,
 }: WorkstationFormProps) {
+
+
+  const [dateValue, setDateValue] = useState<Dayjs | null>(null);
+
+
+  const formattedDate = dayjs.utc(dateValue).local().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+  console.log(formattedDate);
+  
+  ////
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [synchronizing, setSynchronizing] = useState(false);
   const [ipAddress, setIpAddress] = useState('');
@@ -488,6 +507,68 @@ export default function WorkstationForm({
                     </Field>
                   </div>
                 </div>
+
+                
+
+
+
+
+
+
+
+
+
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+
+
+                          <Controller
+                  name="dtAquisicao"
+                  control={control}
+                  defaultValue=""
+                  render={({ field: { value, onChange } }) => (
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                        label="Data"
+                        format="DD/MM/YYYY"
+                        value={value ? dayjs(value) : null}
+                        onChange={(newValue) => {
+                          const dateFormat = dayjs.utc(newValue).local().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+                          onChange(dateFormat);
+                        }}
+                      />
+                    </LocalizationProvider>
+                  )}
+                />
+
+
+
+
+
+
+
+
+
+                  <DatePicker 
+                    format="DD/MM/YYYY" 
+                    value={dateValue} 
+                    onChange={(newValue) => {
+                      const dataFormatada = dayjs.utc(newValue).local().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+                      console.log(dataFormatada);
+                      }} />
+                </LocalizationProvider>
+
+                {
+                  
+                  <h1>{String(dateValue)}</h1>
+                }
+
+
+
+
+
+
+
+
 
                 <h3>Rede(interfaces)</h3>
                 {
