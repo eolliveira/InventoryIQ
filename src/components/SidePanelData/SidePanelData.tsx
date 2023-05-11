@@ -1,7 +1,6 @@
 import { theme } from '../../style/Theme';
 import { BaseCard, Field, Input, Label } from '../../style/GlobalStyles';
 
-import Box from '@mui/material/Box';
 import styled from 'styled-components';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
@@ -13,6 +12,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Typography from '@mui/material/Typography';
 import { toCamelCase } from '../../utils/Converter';
 import Divider from '@mui/material/Divider';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Box from '@mui/material/Box';
 
 type SidePanelDataProps = {
   nome?: string;
@@ -25,16 +26,16 @@ type SidePanelDataProps = {
 export default function SidePanelData({
   status,
   assetId,
-  dtUltimoSincronismo,
   nome,
   email,
+  dtUltimoSincronismo,
 }: SidePanelDataProps) {
   const { setFormContextData } = useContext(FormContext);
   const [openModal, setOpenModal] = useState(false);
 
   return (
     <Wapper>
-      <Container>
+      <HeaderContainer>
         <DateContainer>
           <Field className="mb-2">
             <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
@@ -45,7 +46,8 @@ export default function SidePanelData({
             />
           </Field>
         </DateContainer>
-        <div>
+
+        <Box>
           <Typography fontSize={13} variant="subtitle2">
             Status
           </Typography>
@@ -61,31 +63,99 @@ export default function SidePanelData({
               aria-label="delete"
               size="small"
             >
-              <EditIcon fontSize="inherit" />
+              <EditIcon color="action" fontSize="inherit" />
             </IconButton>
           </Status>
-        </div>
-      </Container>
+        </Box>
+      </HeaderContainer>
       <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
-      <Typography fontSize={13} variant="subtitle2">
+      <Typography marginTop={2} fontSize={13} variant="subtitle2">
         Usuário
       </Typography>
       <Card>
-        <AccountCircleIcon
-          color="primary"
-          fontSize="large"
-          sx={{ marginRight: 1 }}
-        />
-        <Content>
-          <Typography fontSize={14} variant="subtitle2">
-            {toCamelCase(nome ? nome : '')}
-          </Typography>
-          <Typography fontSize={13} variant="subtitle2">
-            {email ? email : ''}
-          </Typography>
-        </Content>
-        <EditIcon color="primary" fontSize="small" />
+        <Box
+          display={'flex'}
+          justifyContent={'space-around'}
+          alignItems={'center'}
+        >
+          <AccountCircleIcon
+            color="action"
+            fontSize="medium"
+            sx={{ marginRight: 1 }}
+          />
+          <Box
+            display={'flex'}
+            flex={1}
+            flexDirection={'column'}
+            justifyContent={'flex-start'}
+          >
+            <Typography color={'primary'} fontSize={14} variant="subtitle2">
+              {toCamelCase(nome ? nome : '')}
+            </Typography>
+            <Typography color={'primary'} fontSize={13} variant="subtitle2">
+              {email ? email : ''}
+            </Typography>
+          </Box>
+          <EditIcon color="action" fontSize="small" />
+        </Box>
       </Card>
+      <Typography marginTop={2} fontSize={13} variant="subtitle2">
+        Local da Industria
+      </Typography>
+
+      <Card>
+        <Box
+          display={'flex'}
+          justifyContent={'space-around'}
+          alignItems={'center'}
+        >
+          <LocationOnIcon
+            style={{ marginRight: 5 }}
+            color="action"
+            fontSize="medium"
+          />
+          <Typography
+            color={'primary'}
+            flex={1}
+            fontSize={13}
+            marginTop={0.5}
+            variant="subtitle2"
+          >
+            124 - Comercial
+          </Typography>
+          <EditIcon color="action" fontSize="small" />
+        </Box>
+        <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
+        <Box display={'flex'} flexDirection={'column'}>
+          <Typography fontSize={13} variant="subtitle2">
+            Centro de custo
+          </Typography>
+          <Typography color={'primary'} fontSize={12} variant="subtitle2">
+            70 - Tecnologia da informação
+          </Typography>
+        </Box>
+      </Card>
+
+      <Typography marginTop={2} fontSize={13} variant="subtitle2">
+        Nota Fiscal
+      </Typography>
+
+      <Card>
+        <Box display={'flex'} flexDirection={'column'}>
+        <Typography fontSize={13} variant="subtitle2">
+            Centro de custo
+          </Typography>
+
+
+          <Typography  fontSize={13} variant="subtitle2">
+        Nota Fiscal
+      </Typography>
+              
+
+
+        </Box>
+      </Card>
+
       {openModal && (
         <ChangeStateModal
           assetId={assetId}
@@ -101,7 +171,7 @@ const Wapper = styled(BaseCard)`
   height: 100%;
 `;
 
-const Container = styled.div`
+const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -111,6 +181,12 @@ const Container = styled.div`
     flex-direction: column;
     align-items: flex-start;
   }
+`;
+
+const Card = styled(Box)`
+  border-radius: 8px;
+  border: 1px solid ${theme.colors.primary};
+  padding: 12px;
 `;
 
 const DateContainer = styled.div`
@@ -134,23 +210,4 @@ const Text = styled.p`
   font-size: 13px;
   font-weight: bold;
   color: ${theme.colors.secondary};
-`;
-
-///////
-
-const Card = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 5px;
-  border: 1px solid ${theme.colors.primary};
-  padding: 7px;
-`;
-
-const Content = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: flex-start;
 `;
