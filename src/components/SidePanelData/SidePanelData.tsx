@@ -150,6 +150,7 @@ export default function SidePanelData({
           <Typography  fontSize={13} variant="subtitle2">
         Nota Fiscal
       </Typography>
+
               
 
 
