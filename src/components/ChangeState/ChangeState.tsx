@@ -14,8 +14,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import styled from 'styled-components';
 import { requestBackend } from '../../http/requests';
 import { AxiosRequestConfig } from 'axios';
+import Typography from '@material-ui/core/Typography';
 
 type ChangeStateProps = {
+  assetId?: number;
   oldState?: string;
   openForm: boolean;
   closeForm: () => void;
@@ -48,54 +50,65 @@ const assetTypes = [
 
 export default function ChangeState({
   oldState,
+  assetId,
   openForm,
   closeForm,
 }: ChangeStateProps) {
-  const [age, setAge] = useState('');
+  const [state, setState] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+    setState(event.target.value as string);
   };
 
   const onSave = () => {
+    const data = {
+      statusAtivo: oldState,
+      descricao: description,
+      ativo: {
+          id: assetId
+      },
+      usuario: {
+          id: 6566
+      }
+  }
+
 
     const params: AxiosRequestConfig = {
       method: 'POST',
-      url: '/movement'
-      //data: formData,
+      url: '/movement',
+      data
     };
 
     requestBackend(params)
       .then((response) => {
-      
         window.alert('Status do ativo foi alterado com sucesso!');
         closeForm();
       })
       .catch((error) => {
         window.alert(error.response.data.message);
       });
-
-  }
+  };
 
   const onCancel = () => {
     console.log('cancelou modal ');
     closeForm();
-  }
+  };
 
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <h1>Alterar Status</h1>
-
-        <Box sx={{ minWidth: 100 }}>
-          <FormControl>
+        <Box padding={2} sx={{ minWidth: 100 }}>
+          <Typography variant="h6">Alterar Status</Typography>
+          <FormControl sx={{ marginTop: 3 }}>
             <InputLabel id="demo-simple-select-label">Status</InputLabel>
             <Select
+              required
               size="small"
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={age}
-              label="Age"
+              value={state}
+              label="Status"
               onChange={handleChange}
             >
               {assetTypes.map((type) => (
@@ -103,30 +116,29 @@ export default function ChangeState({
               ))}
             </Select>
 
-            <Label htmlFor="observacao">Descrição</Label>
+            <Label style={{ marginTop: 10 }} htmlFor="descricao">
+              Descrição
+            </Label>
             <textarea
               rows={8}
               cols={50}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               style={{
                 padding: 5,
                 borderRadius: 3,
                 backgroundColor: 'unset',
-                fontSize: `${theme.size.sm}`,
+                fontSize: `${theme.size.md}`,
                 color: `${theme.colors.black}`,
                 border: `1px solid ${theme.colors.secondary}`,
               }}
-              id="observacao"
+              id="descricao"
             />
 
             <ButtonContainer>
               <div>
                 <Button
-                  style={{
-                    color: 'white',
-                    marginRight: '10px',
-                    backgroundColor: '#e66d6d',
-                    textTransform: 'none',
-                  }}
+                  color="error"
                   variant="contained"
                   startIcon={<CloseIcon />}
                   onClick={onCancel}
@@ -135,12 +147,13 @@ export default function ChangeState({
                 </Button>
                 <LoadingButton
                   type="submit"
-                  color="inherit"
+                  color="success"
                   loading={false}
                   loadingPosition="start"
                   startIcon={<SaveIcon />}
-                  variant="outlined"
-                  sx={{ color: '#64D49E' }}
+                  variant="contained"
+                  sx={{marginLeft: 2}}
+                  onClick={onSave}
                 >
                   <span>Salvar</span>
                 </LoadingButton>
@@ -152,7 +165,6 @@ export default function ChangeState({
     </CustomModal>
   );
 }
-
 
 const ButtonContainer = styled.div`
   display: flex;
