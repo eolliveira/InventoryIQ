@@ -1,21 +1,22 @@
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import CustomModal from '../CustomModal/CustomModal';
 import { BaseCard, Label } from '../../style/GlobalStyles';
 import { theme } from '../../style/Theme';
 import { useContext, useState } from 'react';
 import { Button } from '@mui/material';
+import { requestBackend } from '../../http/requests';
+import { FormContext } from '../../contexts/FormContext';
+import { AxiosRequestConfig } from 'axios';
+import { ButtonContainer, TextButton }  from './ChangeStateModal.style'
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import CustomModal from '../CustomModal/CustomModal';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
-import styled from 'styled-components';
-import { requestBackend } from '../../http/requests';
-import { AxiosRequestConfig } from 'axios';
-import { FormContext } from '../../contexts/FormContext';
 import Typography from '@material-ui/core/Typography';
+
 type ChangeStateProps = {
   assetId?: string;
   openForm: boolean;
@@ -46,6 +47,7 @@ const assetTypes = [
 ];
 
 export default function ChangeStateModal({ assetId, openForm, closeForm }: ChangeStateProps) {
+
   const { setFormContextData } = useContext(FormContext);
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');
@@ -147,15 +149,3 @@ export default function ChangeStateModal({ assetId, openForm, closeForm }: Chang
     </CustomModal>
   );
 }
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: end;
-  margin-top: 20px;
-`;
-
-const TextButton = styled.p`
-  font-size: ${theme.size.md};
-  text-transform: none;
-  margin: 0;
-`;
