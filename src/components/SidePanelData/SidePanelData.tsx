@@ -5,18 +5,21 @@ import Box from '@mui/material/Box';
 import styled from 'styled-components';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
-import UserCard from '../../components/UserCard/UserCard';
 import { toDateTime } from '../../utils/Date';
-import ChangeState from '../../components/ChangeState/ChangeState';
+import ChangeStateModal from '../ChangeStateModal/ChangeStateModal';
 import { useContext, useState } from 'react';
 import { FormContext } from '../../contexts/FormContext';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Typography from '@mui/material/Typography';
+import { toCamelCase } from '../../utils/Converter';
+import Divider from '@mui/material/Divider';
 
 type SidePanelDataProps = {
   nome?: string;
   email?: string;
   status?: string;
   assetId?: string;
-  dtUltimoSincronismo?: string;
+  dtUltimoSincronismo: string;
 };
 
 export default function SidePanelData({
@@ -43,7 +46,9 @@ export default function SidePanelData({
           </Field>
         </DateContainer>
         <div>
-          <Title>Status</Title>
+          <Typography fontSize={13} variant="subtitle2">
+            Status
+          </Typography>
           <Status>
             <Text>{status}</Text>
             <IconButton
@@ -61,17 +66,28 @@ export default function SidePanelData({
           </Status>
         </div>
       </Container>
-      <Box
-        sx={{
-          marginTop: 2,
-          marginBottom: 2,
-          borderBottom: 1,
-          borderColor: 'divider',
-        }}
-      />
-      <UserCard nome={nome ? nome : ' - '} email={email ? email : ' - '} />
+      <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
+      <Typography fontSize={13} variant="subtitle2">
+        Usuário
+      </Typography>
+      <Card>
+        <AccountCircleIcon
+          color="primary"
+          fontSize="large"
+          sx={{ marginRight: 1 }}
+        />
+        <Content>
+          <Typography fontSize={14} variant="subtitle2">
+            {toCamelCase(nome ? nome : '')}
+          </Typography>
+          <Typography fontSize={13} variant="subtitle2">
+            {email ? email : ''}
+          </Typography>
+        </Content>
+        <EditIcon color="primary" fontSize="small" />
+      </Card>
       {openModal && (
-        <ChangeState
+        <ChangeStateModal
           assetId={assetId}
           openForm={openModal}
           closeForm={() => setOpenModal(false)}
@@ -110,14 +126,6 @@ const Status = styled.div`
   padding: 1.5px;
 `;
 
-const Title = styled.h6`
-  min-width: 150px;
-  font-size: ${theme.size.sm};
-  color: ${theme.colors.secondary};
-  font-weight: bold;
-  margin: 0;
-`;
-
 const Text = styled.p`
   margin: 0;
   padding: 0px 5px;
@@ -126,4 +134,23 @@ const Text = styled.p`
   font-size: 13px;
   font-weight: bold;
   color: ${theme.colors.secondary};
+`;
+
+///////
+
+const Card = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  border: 1px solid ${theme.colors.primary};
+  padding: 7px;
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
 `;

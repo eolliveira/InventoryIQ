@@ -3,7 +3,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import CustomModal from '../../components/CustomModal/CustomModal';
+import CustomModal from '../CustomModal/CustomModal';
 import { BaseCard, Label } from '../../style/GlobalStyles';
 import { theme } from '../../style/Theme';
 import { useContext, useState } from 'react';
@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import { requestBackend } from '../../http/requests';
 import { AxiosRequestConfig } from 'axios';
 import { FormContext } from '../../contexts/FormContext';
+import Typography from '@material-ui/core/Typography';
 type ChangeStateProps = {
   assetId?: string;
   openForm: boolean;
@@ -44,24 +45,17 @@ const assetTypes = [
   },
 ];
 
-export default function ChangeState({
-  assetId,
-  openForm,
-  closeForm,
-}: ChangeStateProps) {
+export default function ChangeStateModal({ assetId, openForm, closeForm }: ChangeStateProps) {
   const { setFormContextData } = useContext(FormContext);
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setState(event.target.value as string);
-  };
-
-  const handleSave = () => {
+  function handleSave() {
     const data = {
       statusAtivo: state,
       descricao: description,
       ativoId: assetId,
+      //deve obter o id do usuário logado
       usuarioId: 6566,
     };
 
@@ -73,15 +67,9 @@ export default function ChangeState({
     };
 
     requestBackend(params)
-      .then((response) => {
-        console.log(response.data);
-
+      .then(() => {
         window.alert('Status do ativo foi alterado com sucesso!');
-
-        setFormContextData({
-          isEditing: false,
-        });
-
+        setFormContextData({ isEditing: false });
         closeForm();
       })
       .catch((error) => {
@@ -89,22 +77,17 @@ export default function ChangeState({
       });
   };
 
-  const handleCancel = () => {
-    console.log('cancelou modal ');
-
-    setFormContextData({
-      isEditing: false,
-    });
-
+  function handleCancel() {
+    setFormContextData({ isEditing: false });
     closeForm();
-  };
+  }
 
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
         <Box sx={{ minWidth: 100, padding: 2 }}>
-          <h1>Alterar Status</h1>
-          <FormControl>
+          <Typography variant="h6">Alterar Status</Typography>
+          <FormControl sx={{ marginTop: 3 }}>
             <InputLabel id="demo-simple-select-label">Status</InputLabel>
             <Select
               size="small"
@@ -112,7 +95,7 @@ export default function ChangeState({
               id="demo-simple-select"
               value={state}
               label="Status"
-              onChange={handleChange}
+              onChange={e => setState(e.target.value as string)}
             >
               {assetTypes.map((type) => (
                 <MenuItem value={type.value}>{type.desc}</MenuItem>
@@ -137,7 +120,6 @@ export default function ChangeState({
                 border: `1px solid ${theme.colors.secondary}`,
               }}
             />
-
             <ButtonContainer>
               <Button
                 variant="contained"
