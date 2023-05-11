@@ -5,8 +5,6 @@ export const theme = {
     yellow: '#FFCE2F',
     black: '#333333',
     white: '#ffffff',
-
-    /// color succes and warnig
   },
   size: {
     sm: '13px',
