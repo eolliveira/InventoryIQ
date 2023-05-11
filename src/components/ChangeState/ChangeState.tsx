@@ -6,7 +6,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import CustomModal from '../../components/CustomModal/CustomModal';
 import { BaseCard, Label } from '../../style/GlobalStyles';
 import { theme } from '../../style/Theme';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
@@ -14,9 +14,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import styled from 'styled-components';
 import { requestBackend } from '../../http/requests';
 import { AxiosRequestConfig } from 'axios';
-
+import { FormContext } from '../../contexts/FormContext';
 type ChangeStateProps = {
-  oldState?: string;
+  assetId?: string;
   openForm: boolean;
   closeForm: () => void;
 };
@@ -30,12 +30,10 @@ const assetTypes = [
     desc: 'Em reparo',
     value: 'EM_REPARO',
   },
-
   {
     desc: 'Disponível',
     value: 'DISPONIVEL',
   },
-
   {
     desc: 'Inativo',
     value: 'INATIVO',
@@ -47,55 +45,73 @@ const assetTypes = [
 ];
 
 export default function ChangeState({
-  oldState,
+  assetId,
   openForm,
   closeForm,
 }: ChangeStateProps) {
-  const [age, setAge] = useState('');
+  const { setFormContextData } = useContext(FormContext);
+  const [state, setState] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+    setState(event.target.value as string);
   };
 
-  const onSave = () => {
+  const handleSave = () => {
+    const data = {
+      statusAtivo: state,
+      descricao: description,
+      ativoId: assetId,
+      usuarioId: 6566,
+    };
 
     const params: AxiosRequestConfig = {
       method: 'POST',
-      url: '/movement'
-      //data: formData,
+      url: '/movement',
+      data: data,
+      withCredentials: false,
     };
 
     requestBackend(params)
       .then((response) => {
-      
+        console.log(response.data);
+
         window.alert('Status do ativo foi alterado com sucesso!');
+
+        setFormContextData({
+          isEditing: false,
+        });
+
         closeForm();
       })
       .catch((error) => {
         window.alert(error.response.data.message);
       });
+  };
 
-  }
-
-  const onCancel = () => {
+  const handleCancel = () => {
     console.log('cancelou modal ');
+
+    setFormContextData({
+      isEditing: false,
+    });
+
     closeForm();
-  }
+  };
 
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <h1>Alterar Status</h1>
-
-        <Box sx={{ minWidth: 100 }}>
+        <Box sx={{ minWidth: 100, padding: 2 }}>
+          <h1>Alterar Status</h1>
           <FormControl>
             <InputLabel id="demo-simple-select-label">Status</InputLabel>
             <Select
               size="small"
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={age}
-              label="Age"
+              value={state}
+              label="Status"
               onChange={handleChange}
             >
               {assetTypes.map((type) => (
@@ -103,10 +119,15 @@ export default function ChangeState({
               ))}
             </Select>
 
-            <Label htmlFor="observacao">Descrição</Label>
+            <Label style={{ marginTop: 10 }} htmlFor="observacao">
+              Descrição
+            </Label>
             <textarea
               rows={8}
               cols={50}
+              id="observacao"
+              required
+              onChange={(e) => setDescription(e.target.value)}
               style={{
                 padding: 5,
                 borderRadius: 3,
@@ -115,36 +136,28 @@ export default function ChangeState({
                 color: `${theme.colors.black}`,
                 border: `1px solid ${theme.colors.secondary}`,
               }}
-              id="observacao"
             />
 
             <ButtonContainer>
-              <div>
-                <Button
-                  style={{
-                    color: 'white',
-                    marginRight: '10px',
-                    backgroundColor: '#e66d6d',
-                    textTransform: 'none',
-                  }}
-                  variant="contained"
-                  startIcon={<CloseIcon />}
-                  onClick={onCancel}
-                >
-                  Cancelar
-                </Button>
-                <LoadingButton
-                  type="submit"
-                  color="inherit"
-                  loading={false}
-                  loadingPosition="start"
-                  startIcon={<SaveIcon />}
-                  variant="outlined"
-                  sx={{ color: '#64D49E' }}
-                >
-                  <span>Salvar</span>
-                </LoadingButton>
-              </div>
+              <Button
+                variant="contained"
+                color="error"
+                startIcon={<CloseIcon />}
+                onClick={handleCancel}
+              >
+                <TextButton>Cancelar</TextButton>
+              </Button>
+              <LoadingButton
+                color="success"
+                loading={false}
+                loadingPosition="start"
+                startIcon={<SaveIcon />}
+                variant="contained"
+                onClick={handleSave}
+                style={{ marginLeft: 10 }}
+              >
+                <TextButton>Salvar</TextButton>
+              </LoadingButton>
             </ButtonContainer>
           </FormControl>
         </Box>
@@ -153,9 +166,14 @@ export default function ChangeState({
   );
 }
 
-
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: end;
   margin-top: 20px;
+`;
+
+const TextButton = styled.p`
+  font-size: ${theme.size.md};
+  text-transform: none;
+  margin: 0;
 `;

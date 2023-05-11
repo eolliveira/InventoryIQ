@@ -132,6 +132,7 @@ export default function WorkstationData() {
     <Wapper className="row">
       <ContainerSidePanel className="col-lg-3">
         <SidePanelData
+          assetId={active?.id}
           nome={active?.usuario.nome}
           email={active?.usuario.email}
           status={active?.status}

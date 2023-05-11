@@ -8,22 +8,25 @@ import IconButton from '@mui/material/IconButton';
 import UserCard from '../../components/UserCard/UserCard';
 import { toDateTime } from '../../utils/Date';
 import ChangeState from '../../components/ChangeState/ChangeState';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { FormContext } from '../../contexts/FormContext';
 
 type SidePanelDataProps = {
-  status?: string;
-  dtUltimoSincronismo?: string;
   nome?: string;
   email?: string;
+  status?: string;
+  assetId?: string;
+  dtUltimoSincronismo?: string;
 };
 
 export default function SidePanelData({
   status,
+  assetId,
   dtUltimoSincronismo,
   nome,
   email,
 }: SidePanelDataProps) {
-
+  const { setFormContextData } = useContext(FormContext);
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -34,7 +37,7 @@ export default function SidePanelData({
             <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
             <Input
               id="ultmSinc"
-              onChange={e => {}}
+              onChange={(e) => {}}
               value={dtUltimoSincronismo ? toDateTime(dtUltimoSincronismo) : ''}
             />
           </Field>
@@ -43,11 +46,16 @@ export default function SidePanelData({
           <Title>Status</Title>
           <Status>
             <Text>{status}</Text>
-            <IconButton onClick={(e) => {
-              
-              setOpenModal(true)
-
-            }} aria-label="delete" size="small">
+            <IconButton
+              onClick={(e) => {
+                setOpenModal(true);
+                setFormContextData({
+                  isEditing: true,
+                });
+              }}
+              aria-label="delete"
+              size="small"
+            >
               <EditIcon fontSize="inherit" />
             </IconButton>
           </Status>
@@ -63,8 +71,8 @@ export default function SidePanelData({
       />
       <UserCard nome={nome ? nome : ' - '} email={email ? email : ' - '} />
       {openModal && (
-        <ChangeState 
-          oldState={status}
+        <ChangeState
+          assetId={assetId}
           openForm={openModal}
           closeForm={() => setOpenModal(false)}
         />

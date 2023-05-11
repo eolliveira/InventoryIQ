@@ -29,8 +29,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { Controller } from 'react-hook-form';
 
 
@@ -50,10 +48,6 @@ export default function WorkstationForm({
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
 
 
-  // const formattedDate = dayjs.utc(dateValue).local().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-  // console.log(formattedDate);
-  
-  ////
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [synchronizing, setSynchronizing] = useState(false);
   const [ipAddress, setIpAddress] = useState('');
