@@ -28,6 +28,7 @@ export function Content({ children }: { children: ReactNode }) {
 }
 
 export const Main = styled.main`
+  background-color: rgb(238, 242, 246);
   height: calc(100% - 60px);
   overflow-y: auto;
   padding: 10px;
@@ -37,6 +38,6 @@ const ContentWrapper = styled.div`
   flex: 1;
   height: 100vh;
   overflow: hidden;
-  background-color: '#FDFDFD';
+  background-color: '#ffffff';
   //padding: 10px;
 `;

@@ -19,6 +19,8 @@ import { hasAnyHoles } from '../../utils/Auth';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
+import styled from 'styled-components';
+import { type } from 'os';
 export default function MenuSidebar() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
@@ -30,26 +32,27 @@ export default function MenuSidebar() {
       <Sidebar
         rootStyles={{
           [`.${sidebarClasses.container}`]: {
-            backgroundColor: `${theme.colors.primary}`,
+            //backgroundColor: `${theme.colors.primary}`,
+            backgroundColor: 'rgb(255, 255, 255)'
           },
         }}
       >
-        <Menu
+        <Menu 
           menuItemStyles={{
             icon: ({ active, open }) => ({
-              scale: active ? '1.2' : '1.0',
+              scale: active ? '1.1' : '1.0',
               color: 'black',
             }),
             button: ({ level, active, disabled }) => {
               ///menu interno
               if (level === 1)
                 return {
-                  color: 'black',
+                  color: 'rede',
                   fontWeight: active ? 'bold' : 'normal',
-                  backgroundColor: '#c9c9c9',
-                  fontSize: '14px',
+                  backgroundColor: active ? '#F5DF4E' : 'rgb(255, 255, 255)',
+                  fontSize: '12px',
                   '&:hover': {
-                    backgroundColor: '#c4c4c4',
+                    backgroundColor: '#f5df4ea6',
                   },
                 };
 
@@ -58,9 +61,10 @@ export default function MenuSidebar() {
                 return {
                   color: 'black',
                   fontSize: '14px',
+                  backgroundColor: active ? '#F5DF4E' : 'rgb(255, 255, 255)',
                   fontWeight: active ? 'bold' : 'normal',
                   '&:hover': {
-                    backgroundColor: '#c4c4c4',
+                    backgroundColor: '#f5df4ea6',
                   },
                 };
             },
@@ -103,34 +107,59 @@ export default function MenuSidebar() {
               </IconButton>
             )}
           </ButtonColapseContainer>
-          <Divider color="#161616" />
+          {/* <Divider color="#161616" /> */}
           <MenuItem
+          style={{
+            margin: !collapsed ? '2px 10px' : '0px',
+            borderRadius:8            
+          }}
             active={location.pathname === '/dashboard'}
             component={<Link to={'/dashboard'} />}
             icon={<SpeedIcon />}
           >
             Dashboard
-          </MenuItem>
-          <SubMenu icon={<DevicesIcon />} label="Ativos">
+          </MenuItem> 
+          <SubMenu 
+          style={{
+            margin: !collapsed ? '2px 10px' : '0px',
+            borderRadius:8            
+          }}
+          icon={<DevicesIcon />} label="Ativos">
             <MenuItem
+            style={{  
+              margin: !collapsed ? '2px 10px' : '0px',
+              borderRadius:8            
+            }}
               active={location.pathname === '/workstation'}
               component={<NavLink to={'/workstation'} />}
             >
               Estação de trabalho
             </MenuItem>
             <MenuItem
+             style={{
+              margin: !collapsed ? '2px 10px' : '0px',
+              borderRadius:8            
+            }}
               active={location.pathname === '/mobile'}
               component={<NavLink to={'/mobile'} />}
             >
               Mobile
             </MenuItem>
             <MenuItem
+            style={{  
+              margin: !collapsed ? '2px 10px' : '0px',
+              borderRadius:8            
+            }}
               active={location.pathname === '/nobreak'}
               component={<NavLink to={'/nobreak'} />}
             >
               Nobreak
             </MenuItem>
             <MenuItem
+            style={{  
+              margin: !collapsed ? '2px 10px' : '0px',
+              borderRadius:8            
+            }}
               active={location.pathname === '/printer'}
               component={<NavLink to={'/printer'} />}
             >
@@ -138,6 +167,10 @@ export default function MenuSidebar() {
             </MenuItem>
           </SubMenu>
           <MenuItem
+          style={{
+            margin: !collapsed ? '2px 10px' : '0px',
+            borderRadius:8            
+          }}
             icon={<DescriptionIcon />}
             active={location.pathname === '/license'}
             component={<Link to={'/license'} />}

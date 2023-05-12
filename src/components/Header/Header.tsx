@@ -62,7 +62,6 @@ export default function Header() {
       authenticated: false,
     });
     navigate('/login');
-    //history.replace('/');
   };
 
   return (
@@ -73,7 +72,8 @@ export default function Header() {
       >
         <Toolbar
           sx={{
-            backgroundColor: `${theme.colors.yellow}`,
+            // backgroundColor: `${theme.colors.yellow}`,
+            backgroundColor: '#F5DF4E'
           }}
         >
           <Typography

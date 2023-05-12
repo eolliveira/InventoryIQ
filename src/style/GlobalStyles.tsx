@@ -41,9 +41,10 @@ export const Field = styled.div`
 
 
 export const BaseCard = styled.div`
+background-color: rgb(255, 255, 255);
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid ${theme.colors.primary};
-  background-color: #f8f8f8;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.25);
+  /* border: 1px solid ${theme.colors.primary};  */
+  /* background-color: #f8f8f8; */
+  /* box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.25); */
 `;

@@ -1,19 +1,19 @@
 import { theme } from '../../style/Theme';
+import { useContext, useState } from 'react';
+import { toDateTime } from '../../utils/Date';
+import { toCamelCase } from '../../utils/Converter';
+import { FormContext } from '../../contexts/FormContext';
 import { BaseCard, Field, Input, Label } from '../../style/GlobalStyles';
 
+import Box from '@mui/material/Box';
 import styled from 'styled-components';
+import Divider from '@mui/material/Divider';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
-import { toDateTime } from '../../utils/Date';
-import ChangeStateModal from '../ChangeStateModal/ChangeStateModal';
-import { useContext, useState } from 'react';
-import { FormContext } from '../../contexts/FormContext';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Typography from '@mui/material/Typography';
-import { toCamelCase } from '../../utils/Converter';
-import Divider from '@mui/material/Divider';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import Box from '@mui/material/Box';
+import ChangeStateModal from '../ChangeStateModal/ChangeStateModal';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 type SidePanelDataProps = {
   nome?: string;
@@ -41,12 +41,11 @@ export default function SidePanelData({
             <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
             <Input
               id="ultmSinc"
-              onChange={(e) => {}}
+              onChange={e => {}}
               value={dtUltimoSincronismo ? toDateTime(dtUltimoSincronismo) : ''}
             />
           </Field>
         </DateContainer>
-
         <Box>
           <Typography fontSize={13} variant="subtitle2">
             Status
@@ -54,7 +53,7 @@ export default function SidePanelData({
           <Status>
             <Text>{status}</Text>
             <IconButton
-              onClick={(e) => {
+              onClick={e => {
                 setOpenModal(true);
                 setFormContextData({
                   isEditing: true,
@@ -69,7 +68,7 @@ export default function SidePanelData({
         </Box>
       </HeaderContainer>
       <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
-      <Typography marginTop={2} fontSize={13} variant="subtitle2">
+      <Typography marginTop={1} fontSize={13} variant="subtitle2">
         Usuário
       </Typography>
       <Card>
@@ -99,10 +98,9 @@ export default function SidePanelData({
           <EditIcon color="action" fontSize="small" />
         </Box>
       </Card>
-      <Typography marginTop={2} fontSize={13} variant="subtitle2">
+      <Typography marginTop={1} fontSize={13} variant="subtitle2">
         Local da Industria
       </Typography>
-
       <Card>
         <Box
           display={'flex'}
@@ -135,11 +133,9 @@ export default function SidePanelData({
           </Typography>
         </Box>
       </Card>
-
-      <Typography marginTop={2} fontSize={13} variant="subtitle2">
+      <Typography marginTop={1} fontSize={13} variant="subtitle2">
         Nota Fiscal
       </Typography>
-
       <Card>
         <Box display={'flex'} justifyContent={'space-between'}>
           <Box display={'flex'} flexDirection={'column'}>
@@ -153,7 +149,6 @@ export default function SidePanelData({
           <EditIcon color="action" fontSize="small" />
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
-
         <Box display={'flex'} flexDirection={'column'}>
           <Typography fontSize={13} variant="subtitle2">
             Fornecedor
@@ -163,7 +158,6 @@ export default function SidePanelData({
           </Typography>
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
-
         <Box display={'flex'} flexDirection={'column'}>
           <Typography fontSize={13} variant="subtitle2">
             Valor da nota
@@ -173,7 +167,6 @@ export default function SidePanelData({
           </Typography>
         </Box>
       </Card>
-
       {openModal && (
         <ChangeStateModal
           assetId={assetId}

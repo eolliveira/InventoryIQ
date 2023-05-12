@@ -74,7 +74,7 @@ export default function ChangeStateModal({ assetId, openForm, closeForm }: Chang
         setFormContextData({ isEditing: false });
         closeForm();
       })
-      .catch((error) => {
+      .catch(error => {
         window.alert(error.response.data.message);
       });
   };
@@ -101,7 +101,7 @@ export default function ChangeStateModal({ assetId, openForm, closeForm }: Chang
               onChange={e => setState(e.target.value as string)}
             >
               {assetTypes.map((type) => (
-                <MenuItem value={type.value}>{type.desc}</MenuItem>
+                <MenuItem key={type.value} value={type.value}>{type.desc}</MenuItem>
               ))}
             </Select>
 
@@ -113,7 +113,7 @@ export default function ChangeStateModal({ assetId, openForm, closeForm }: Chang
               cols={50}
               id="observacao"
               required
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={e => setDescription(e.target.value)}
               style={{
                 padding: 5,
                 borderRadius: 3,

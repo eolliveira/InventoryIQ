@@ -3,11 +3,11 @@ import { requestBackend } from '../../../http/requests';
 import { SpringPage } from 'types/vendor/spring';
 import { Workstation } from '../../../types/Workstation/Response/Workstation';
 import { ChangeEvent, useEffect, useState } from 'react';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import DataTable, { TableColumn } from 'react-data-table-component';
-import styled from 'styled-components';
 import { BaseCard } from '../../../style/GlobalStyles';
 import { AxiosRequestConfig } from 'axios';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+  import DataTable, { TableColumn } from 'react-data-table-component';
+import styled from 'styled-components';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 
