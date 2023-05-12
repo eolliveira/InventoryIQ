@@ -17,10 +17,7 @@ import { NavLink } from 'react-router-dom';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { hasAnyHoles } from '../../utils/Auth';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import styled from 'styled-components';
-import { type } from 'os';
 export default function MenuSidebar() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
