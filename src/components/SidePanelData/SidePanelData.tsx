@@ -92,7 +92,7 @@ export default function SidePanelData({
             <Typography color={'primary'} fontSize={14} variant="subtitle2">
               {toCamelCase(nome ? nome : ' - ')}
             </Typography>
-            <Typography color={'primary'} fontSize={13} variant="subtitle2">
+            <Typography color={'primary'} fontSize={12} variant="subtitle2">
               {email ? email : ' - '}
             </Typography>
           </Box>
@@ -146,7 +146,7 @@ export default function SidePanelData({
             <Typography fontSize={13} variant="subtitle2">
               Numero nota fiscal
             </Typography>
-            <Typography color={'primary'} fontSize={13} variant="subtitle2">
+            <Typography color={'primary'} fontSize={12} variant="subtitle2">
               521865
             </Typography>
           </Box>
