@@ -90,10 +90,10 @@ export default function SidePanelData({
             justifyContent={'flex-start'}
           >
             <Typography color={'primary'} fontSize={14} variant="subtitle2">
-              {toCamelCase(nome ? nome : '')}
+              {toCamelCase(nome ? nome : ' - ')}
             </Typography>
             <Typography color={'primary'} fontSize={13} variant="subtitle2">
-              {email ? email : ''}
+              {email ? email : ' - '}
             </Typography>
           </Box>
           <EditIcon color="action" fontSize="small" />
@@ -141,19 +141,36 @@ export default function SidePanelData({
       </Typography>
 
       <Card>
+        <Box display={'flex'} justifyContent={'space-between'}>
+          <Box display={'flex'} flexDirection={'column'}>
+            <Typography fontSize={13} variant="subtitle2">
+              Numero nota fiscal
+            </Typography>
+            <Typography color={'primary'} fontSize={13} variant="subtitle2">
+              521865
+            </Typography>
+          </Box>
+          <EditIcon color="action" fontSize="small" />
+        </Box>
+        <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
+
         <Box display={'flex'} flexDirection={'column'}>
-        <Typography fontSize={13} variant="subtitle2">
-            Centro de custo
+          <Typography fontSize={13} variant="subtitle2">
+            Fornecedor
           </Typography>
+          <Typography color={'primary'} fontSize={12} variant="subtitle2">
+            70524 - KABUM TECNOLOGIA LTDA
+          </Typography>
+        </Box>
+        <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
 
-
-          <Typography  fontSize={13} variant="subtitle2">
-        Nota Fiscal
-      </Typography>
-
-              
-
-
+        <Box display={'flex'} flexDirection={'column'}>
+          <Typography fontSize={13} variant="subtitle2">
+            Valor da nota
+          </Typography>
+          <Typography color={'primary'} fontSize={12} variant="subtitle2">
+            R$ 1.500,00
+          </Typography>
         </Box>
       </Card>
 
