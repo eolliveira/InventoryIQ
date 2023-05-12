@@ -1,70 +1,165 @@
 import { theme } from '../../style/Theme';
 import { BaseCard, Field, Input, Label } from '../../style/GlobalStyles';
 
-import Box from '@mui/material/Box';
 import styled from 'styled-components';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
-import UserCard from '../../components/UserCard/UserCard';
 import { toDateTime } from '../../utils/Date';
-import ChangeState from '../../components/ChangeState/ChangeState';
-import { useState } from 'react';
+import ChangeStateModal from '../ChangeStateModal/ChangeStateModal';
+import { useContext, useState } from 'react';
+import { FormContext } from '../../contexts/FormContext';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Typography from '@mui/material/Typography';
+import { toCamelCase } from '../../utils/Converter';
+import Divider from '@mui/material/Divider';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Box from '@mui/material/Box';
 
 type SidePanelDataProps = {
-  status?: string;
-  dtUltimoSincronismo?: string;
   nome?: string;
   email?: string;
+  status?: string;
+  assetId?: string;
+  dtUltimoSincronismo: string;
 };
 
 export default function SidePanelData({
   status,
-  dtUltimoSincronismo,
+  assetId,
   nome,
   email,
+  dtUltimoSincronismo,
 }: SidePanelDataProps) {
-
+  const { setFormContextData } = useContext(FormContext);
   const [openModal, setOpenModal] = useState(false);
 
   return (
     <Wapper>
-      <Container>
+      <HeaderContainer>
         <DateContainer>
           <Field className="mb-2">
             <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
             <Input
               id="ultmSinc"
-              onChange={e => {}}
+              onChange={(e) => {}}
               value={dtUltimoSincronismo ? toDateTime(dtUltimoSincronismo) : ''}
             />
           </Field>
         </DateContainer>
-        <div>
-          <Title>Status</Title>
+
+        <Box>
+          <Typography fontSize={13} variant="subtitle2">
+            Status
+          </Typography>
           <Status>
             <Text>{status}</Text>
-            <IconButton onClick={(e) => {
-              
-              setOpenModal(true)
-
-            }} aria-label="delete" size="small">
-              <EditIcon fontSize="inherit" />
+            <IconButton
+              onClick={(e) => {
+                setOpenModal(true);
+                setFormContextData({
+                  isEditing: true,
+                });
+              }}
+              aria-label="delete"
+              size="small"
+            >
+              <EditIcon color="action" fontSize="inherit" />
             </IconButton>
           </Status>
-        </div>
-      </Container>
-      <Box
-        sx={{
-          marginTop: 2,
-          marginBottom: 2,
-          borderBottom: 1,
-          borderColor: 'divider',
-        }}
-      />
-      <UserCard nome={nome ? nome : ' - '} email={email ? email : ' - '} />
+        </Box>
+      </HeaderContainer>
+      <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
+      <Typography marginTop={2} fontSize={13} variant="subtitle2">
+        Usuário
+      </Typography>
+      <Card>
+        <Box
+          display={'flex'}
+          justifyContent={'space-around'}
+          alignItems={'center'}
+        >
+          <AccountCircleIcon
+            color="action"
+            fontSize="medium"
+            sx={{ marginRight: 1 }}
+          />
+          <Box
+            display={'flex'}
+            flex={1}
+            flexDirection={'column'}
+            justifyContent={'flex-start'}
+          >
+            <Typography color={'primary'} fontSize={14} variant="subtitle2">
+              {toCamelCase(nome ? nome : '')}
+            </Typography>
+            <Typography color={'primary'} fontSize={13} variant="subtitle2">
+              {email ? email : ''}
+            </Typography>
+          </Box>
+          <EditIcon color="action" fontSize="small" />
+        </Box>
+      </Card>
+      <Typography marginTop={2} fontSize={13} variant="subtitle2">
+        Local da Industria
+      </Typography>
+
+      <Card>
+        <Box
+          display={'flex'}
+          justifyContent={'space-around'}
+          alignItems={'center'}
+        >
+          <LocationOnIcon
+            style={{ marginRight: 5 }}
+            color="action"
+            fontSize="medium"
+          />
+          <Typography
+            color={'primary'}
+            flex={1}
+            fontSize={13}
+            marginTop={0.5}
+            variant="subtitle2"
+          >
+            124 - Comercial
+          </Typography>
+          <EditIcon color="action" fontSize="small" />
+        </Box>
+        <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
+        <Box display={'flex'} flexDirection={'column'}>
+          <Typography fontSize={13} variant="subtitle2">
+            Centro de custo
+          </Typography>
+          <Typography color={'primary'} fontSize={12} variant="subtitle2">
+            70 - Tecnologia da informação
+          </Typography>
+        </Box>
+      </Card>
+
+      <Typography marginTop={2} fontSize={13} variant="subtitle2">
+        Nota Fiscal
+      </Typography>
+
+      <Card>
+        <Box display={'flex'} flexDirection={'column'}>
+        <Typography fontSize={13} variant="subtitle2">
+            Centro de custo
+          </Typography>
+
+
+          <Typography  fontSize={13} variant="subtitle2">
+        Nota Fiscal
+      </Typography>
+
+              
+
+
+        </Box>
+      </Card>
+
       {openModal && (
-        <ChangeState 
-          oldState={status}
+        <ChangeStateModal
+          assetId={assetId}
           openForm={openModal}
           closeForm={() => setOpenModal(false)}
         />
@@ -77,7 +172,7 @@ const Wapper = styled(BaseCard)`
   height: 100%;
 `;
 
-const Container = styled.div`
+const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -87,6 +182,12 @@ const Container = styled.div`
     flex-direction: column;
     align-items: flex-start;
   }
+`;
+
+const Card = styled(Box)`
+  border-radius: 8px;
+  border: 1px solid ${theme.colors.primary};
+  padding: 12px;
 `;
 
 const DateContainer = styled.div`
@@ -100,14 +201,6 @@ const Status = styled.div`
   border-radius: 3px;
   background: #65d59f;
   padding: 1.5px;
-`;
-
-const Title = styled.h6`
-  min-width: 150px;
-  font-size: ${theme.size.sm};
-  color: ${theme.colors.secondary};
-  font-weight: bold;
-  margin: 0;
 `;
 
 const Text = styled.p`

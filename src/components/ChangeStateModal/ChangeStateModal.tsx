@@ -1,24 +1,24 @@
+import { BaseCard, Label } from '../../style/GlobalStyles';
+import { theme } from '../../style/Theme';
+import { useContext, useState } from 'react';
+import { Button } from '@mui/material';
+import { requestBackend } from '../../http/requests';
+import { FormContext } from '../../contexts/FormContext';
+import { AxiosRequestConfig } from 'axios';
+import { ButtonContainer, TextButton }  from './ChangeStateModal.style'
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import CustomModal from '../../components/CustomModal/CustomModal';
-import { BaseCard, Label } from '../../style/GlobalStyles';
-import { theme } from '../../style/Theme';
-import { useState } from 'react';
-import { Button } from '@mui/material';
+import Select from '@mui/material/Select';
+import CustomModal from '../CustomModal/CustomModal';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
-import styled from 'styled-components';
-import { requestBackend } from '../../http/requests';
-import { AxiosRequestConfig } from 'axios';
 import Typography from '@material-ui/core/Typography';
 
 type ChangeStateProps = {
-  assetId?: number;
-  oldState?: string;
+  assetId?: string;
   openForm: boolean;
   closeForm: () => void;
 };
@@ -32,12 +32,10 @@ const assetTypes = [
     desc: 'Em reparo',
     value: 'EM_REPARO',
   },
-
   {
     desc: 'Disponível',
     value: 'DISPONIVEL',
   },
-
   {
     desc: 'Inativo',
     value: 'INATIVO',
@@ -48,41 +46,32 @@ const assetTypes = [
   },
 ];
 
-export default function ChangeState({
-  oldState,
-  assetId,
-  openForm,
-  closeForm,
-}: ChangeStateProps) {
+export default function ChangeStateModal({ assetId, openForm, closeForm }: ChangeStateProps) {
+
+  const { setFormContextData } = useContext(FormContext);
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setState(event.target.value as string);
-  };
-
-  const onSave = () => {
+  function handleSave() {
     const data = {
-      statusAtivo: oldState,
+      statusAtivo: state,
       descricao: description,
-      ativo: {
-          id: assetId
-      },
-      usuario: {
-          id: 6566
-      }
-  }
-
+      ativoId: assetId,
+      //deve obter o id do usuário logado
+      usuarioId: 6566,
+    };
 
     const params: AxiosRequestConfig = {
       method: 'POST',
       url: '/movement',
-      data
+      data: data,
+      withCredentials: false,
     };
 
     requestBackend(params)
-      .then((response) => {
+      .then(() => {
         window.alert('Status do ativo foi alterado com sucesso!');
+        setFormContextData({ isEditing: false });
         closeForm();
       })
       .catch((error) => {
@@ -90,15 +79,15 @@ export default function ChangeState({
       });
   };
 
-  const onCancel = () => {
-    console.log('cancelou modal ');
+  function handleCancel() {
+    setFormContextData({ isEditing: false });
     closeForm();
   };
 
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Box padding={2} sx={{ minWidth: 100 }}>
+        <Box sx={{ minWidth: 100, padding: 2 }}>
           <Typography variant="h6">Alterar Status</Typography>
           <FormControl sx={{ marginTop: 3 }}>
             <InputLabel id="demo-simple-select-label">Status</InputLabel>
@@ -109,20 +98,21 @@ export default function ChangeState({
               id="demo-simple-select"
               value={state}
               label="Status"
-              onChange={handleChange}
+              onChange={e => setState(e.target.value as string)}
             >
               {assetTypes.map((type) => (
                 <MenuItem value={type.value}>{type.desc}</MenuItem>
               ))}
             </Select>
 
-            <Label style={{ marginTop: 10 }} htmlFor="descricao">
+            <Label style={{ marginTop: 10 }} htmlFor="observacao">
               Descrição
             </Label>
             <textarea
               rows={8}
               cols={50}
-              value={description}
+              id="observacao"
+              required
               onChange={(e) => setDescription(e.target.value)}
               style={{
                 padding: 5,
@@ -132,32 +122,27 @@ export default function ChangeState({
                 color: `${theme.colors.black}`,
                 border: `1px solid ${theme.colors.secondary}`,
               }}
-              id="descricao"
             />
-
             <ButtonContainer>
-              <div>
-                <Button
-                  color="error"
-                  variant="contained"
-                  startIcon={<CloseIcon />}
-                  onClick={onCancel}
-                >
-                  Cancelar
-                </Button>
-                <LoadingButton
-                  type="submit"
-                  color="success"
-                  loading={false}
-                  loadingPosition="start"
-                  startIcon={<SaveIcon />}
-                  variant="contained"
-                  sx={{marginLeft: 2}}
-                  onClick={onSave}
-                >
-                  <span>Salvar</span>
-                </LoadingButton>
-              </div>
+              <Button
+                variant="contained"
+                color="error"
+                startIcon={<CloseIcon />}
+                onClick={handleCancel}
+              >
+                <TextButton>Cancelar</TextButton>
+              </Button>
+              <LoadingButton
+                color="success"
+                loading={false}
+                loadingPosition="start"
+                startIcon={<SaveIcon />}
+                variant="contained"
+                onClick={handleSave}
+                style={{ marginLeft: 10 }}
+              >
+                <TextButton>Salvar</TextButton>
+              </LoadingButton>
             </ButtonContainer>
           </FormControl>
         </Box>
@@ -165,9 +150,3 @@ export default function ChangeState({
     </CustomModal>
   );
 }
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: end;
-  margin-top: 20px;
-`;
