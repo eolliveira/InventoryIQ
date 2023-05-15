@@ -17,6 +17,30 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import TuneIcon from '@mui/icons-material/Tune';
+import InputLabel from '@mui/material/InputLabel';
+
+const assetTypes = [
+  {
+    desc: 'Em uso',
+    value: 'EM_USO',
+  },
+  {
+    desc: 'Em reparo',
+    value: 'EM_REPARO',
+  },
+  {
+    desc: 'Disponível',
+    value: 'DISPONIVEL',
+  },
+  {
+    desc: 'Inativo',
+    value: 'INATIVO',
+  },
+  {
+    desc: 'Descartado',
+    value: 'DESCARTADO',
+  },
+];
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -29,14 +53,15 @@ const columns: TableColumn<Workstation>[] = [
 export default function WorkstationList() {
   const [numberPage, setNumberPage] = useState(0);
   const [inputFilter, setInputFilter] = useState('');
-  const [fieldFilter, setFieldFilter] = useState('nome');
+  const [status, setStatus] = useState('');
+  const [fieldFilter, setFieldFilter] = useState('');
   const [page, setPage] = useState<SpringPage<Workstation>>();
   const navigate = useNavigate();
 
   const getWorkstatioData = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/workstation?${fieldFilter}=${inputFilter}`,
+      url: `/workstation?${fieldFilter}=${inputFilter}&status=${status}`,
       params: {
         page: numberPage,
         size: 5,
@@ -50,7 +75,7 @@ export default function WorkstationList() {
       .catch((error) => {
         console.log('Erro' + error);
       });
-  }, [numberPage, inputFilter, fieldFilter]);
+  }, [numberPage, inputFilter, fieldFilter, status]);
 
   useEffect(() => {
     getWorkstatioData();
@@ -76,6 +101,7 @@ export default function WorkstationList() {
             <input
               onChange={(e) => {
                 setInputFilter(e.target.value);
+                setNumberPage(0);
               }}
               value={inputFilter}
               style={{
@@ -108,6 +134,29 @@ export default function WorkstationList() {
                 <MenuItem value={'nome'}>Nome</MenuItem>
                 <MenuItem value={'fabricante'}>Fabricante</MenuItem>
                 <MenuItem value={'dominio'}>Dominio</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
+          <Box style={{ width: 150 }}>
+            <FormControl
+              size="small"
+              fullWidth
+              style={{ backgroundColor: '#ffff' }}
+            >
+              <InputLabel id="demo-multiple-chip-label">Status</InputLabel>
+              <Select
+                labelId="demo-multiple-chip-label"
+                id="demo-multiple-chip"
+                label="Status"
+                value={status}
+                onChange={(e) => {
+                  setStatus(e.target.value);
+                }}
+              >
+                {assetTypes.map((e) => (
+                  <MenuItem value={e.value}>{e.desc}</MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Box>
