@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import { requestBackend } from '../../http/requests';
 import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
-import { ButtonContainer, TextButton }  from './ChangeStateModal.style'
+import { ButtonContainer, TextButton } from './ChangeStateModal.style';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,6 +16,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@mui/material/TextField';
 
 type ChangeStateProps = {
   assetId?: string;
@@ -46,8 +47,11 @@ const assetTypes = [
   },
 ];
 
-export default function ChangeStateModal({ assetId, openForm, closeForm }: ChangeStateProps) {
-
+export default function ChangeStateModal({
+  assetId,
+  openForm,
+  closeForm,
+}: ChangeStateProps) {
   const { setFormContextData } = useContext(FormContext);
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');
@@ -74,55 +78,52 @@ export default function ChangeStateModal({ assetId, openForm, closeForm }: Chang
         setFormContextData({ isEditing: false });
         closeForm();
       })
-      .catch(error => {
+      .catch((error) => {
         window.alert(error.response.data.message);
       });
-  };
+  }
 
   function handleCancel() {
     setFormContextData({ isEditing: false });
     closeForm();
-  };
+  }
 
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
         <Box sx={{ minWidth: 100, padding: 2 }}>
           <Typography variant="h6">Alterar Status</Typography>
+
           <FormControl sx={{ marginTop: 3 }}>
             <InputLabel id="demo-simple-select-label">Status</InputLabel>
+
             <Select
-              required
-              size="small"
+              size="medium"
               labelId="demo-simple-select-label"
+              label="status"
               id="demo-simple-select"
               value={state}
-              label="Status"
-              onChange={e => setState(e.target.value as string)}
+              onChange={(e) => setState(e.target.value as string)}
             >
               {assetTypes.map((type) => (
-                <MenuItem key={type.value} value={type.value}>{type.desc}</MenuItem>
+                <MenuItem key={type.value} value={type.value}>
+                  {type.desc}
+                </MenuItem>
               ))}
             </Select>
 
-            <Label style={{ marginTop: 10 }} htmlFor="observacao">
-              Descrição
-            </Label>
-            <textarea
-              rows={8}
-              cols={50}
-              id="observacao"
+            <TextField
+              style={{ width: 350 }}
+              margin={'normal'}
+              id="outlined-multiline-static"
+              label="Descrição"
+              multiline
+              size="small"
+              rows={6}
               required
-              onChange={e => setDescription(e.target.value)}
-              style={{
-                padding: 5,
-                borderRadius: 3,
-                backgroundColor: 'unset',
-                fontSize: `${theme.size.md}`,
-                color: `${theme.colors.black}`,
-                border: `1px solid ${theme.colors.secondary}`,
-              }}
+              onChange={(e) => setDescription(e.target.value)}
             />
+
             <ButtonContainer>
               <Button
                 variant="contained"

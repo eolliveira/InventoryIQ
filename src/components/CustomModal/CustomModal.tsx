@@ -15,9 +15,7 @@ export default function CustomModal({ openModal, children }: CustomModal<any>) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Wapper>
-      {children}
-      </Wapper>
+      <Wapper>{children}</Wapper>
     </Modal>
   );
 }
@@ -27,10 +25,5 @@ const Wapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-
   overflow-y: scroll;
-
-  /* @media (min-width: 992px) {
-    overflow-y: unset;
-  } */
 `;

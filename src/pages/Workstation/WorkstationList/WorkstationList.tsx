@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import { SpringPage } from 'types/vendor/spring';
 import { Workstation } from '../../../types/Workstation/Response/Workstation';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { BaseCard, Input } from '../../../style/GlobalStyles';
 import { AxiosRequestConfig } from 'axios';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -12,10 +12,9 @@ import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 import SearchIcon from '@mui/icons-material/Search';
 
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import TuneIcon from '@mui/icons-material/Tune';
 
@@ -28,25 +27,19 @@ const columns: TableColumn<Workstation>[] = [
 ];
 
 export default function WorkstationList() {
-  // evento botão
-
-  const [age, setAge] = useState('');
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
-  };
-
-  const [page, setPage] = useState<SpringPage<Workstation>>();
   const [numberPage, setNumberPage] = useState(0);
+  const [inputFilter, setInputFilter] = useState('');
+  const [fieldFilter, setFieldFilter] = useState('nome');
+  const [page, setPage] = useState<SpringPage<Workstation>>();
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const getWorkstatioData = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/workstation`,
+      url: `/workstation?${fieldFilter}=${inputFilter}`,
       params: {
         page: numberPage,
-        size: 50,
+        size: 5,
       },
     };
 
@@ -57,7 +50,11 @@ export default function WorkstationList() {
       .catch((error) => {
         console.log('Erro' + error);
       });
-  }, [numberPage]);
+  }, [numberPage, inputFilter, fieldFilter]);
+
+  useEffect(() => {
+    getWorkstatioData();
+  }, [getWorkstatioData]);
 
   const handleRowClicked = (row: Workstation) =>
     navigate(`/workstation/${row.id}`);
@@ -77,6 +74,10 @@ export default function WorkstationList() {
           >
             <SearchIcon color="primary" sx={{ margin: 1 }} fontSize="medium" />
             <input
+              onChange={(e) => {
+                setInputFilter(e.target.value);
+              }}
+              value={inputFilter}
               style={{
                 backgroundColor: 'unset',
                 width: '100%',
@@ -87,22 +88,26 @@ export default function WorkstationList() {
                 outline: 0,
               }}
             />
-            <TuneIcon style={{ marginRight: 10 }} color='primary' />
+            <TuneIcon style={{ marginRight: 10 }} color="primary" />
           </Box>
 
-          <Box style={{ width: 200 }}>
-            <FormControl size="small" fullWidth style={{ backgroundColor: '#ffff' }}>
-              {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+          <Box style={{ width: 150 }}>
+            <FormControl
+              size="small"
+              fullWidth
+              style={{ backgroundColor: '#ffff' }}
+            >
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={age}
-             
-                onChange={handleChange}
+                value={fieldFilter}
+                onChange={(e) => {
+                  setFieldFilter(e.target.value);
+                }}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={'nome'}>Nome</MenuItem>
+                <MenuItem value={'fabricante'}>Fabricante</MenuItem>
+                <MenuItem value={'dominio'}>Dominio</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -146,5 +151,3 @@ const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-
-
