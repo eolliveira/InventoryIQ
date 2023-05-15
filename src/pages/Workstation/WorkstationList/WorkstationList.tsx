@@ -18,29 +18,16 @@ import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import TuneIcon from '@mui/icons-material/Tune';
 import InputLabel from '@mui/material/InputLabel';
+import { assetState } from '../../../constants/AssetState';
 
-const assetTypes = [
-  {
-    desc: 'Em uso',
-    value: 'EM_USO',
-  },
-  {
-    desc: 'Em reparo',
-    value: 'EM_REPARO',
-  },
-  {
-    desc: 'Disponível',
-    value: 'DISPONIVEL',
-  },
-  {
-    desc: 'Inativo',
-    value: 'INATIVO',
-  },
-  {
-    desc: 'Descartado',
-    value: 'DESCARTADO',
-  },
-];
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
+  Popover,
+} from '@mui/material';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -51,6 +38,32 @@ const columns: TableColumn<Workstation>[] = [
 ];
 
 export default function WorkstationList() {
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setCheckedItems((prevItems) => [...prevItems, value]);
+    } else {
+      setCheckedItems((prevItems) =>
+        prevItems.filter((item) => item !== value)
+      );
+    }
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'checkbox-popover' : undefined;
+
+  // ///////
   const [numberPage, setNumberPage] = useState(0);
   const [inputFilter, setInputFilter] = useState('');
   const [status, setStatus] = useState('');
@@ -154,13 +167,72 @@ export default function WorkstationList() {
                   setStatus(e.target.value);
                 }}
               >
-                {assetTypes.map((e) => (
+                {assetState.map((e) => (
                   <MenuItem value={e.value}>{e.desc}</MenuItem>
                 ))}
               </Select>
             </FormControl>
           </Box>
         </Stack>
+
+        {/* 
+        
+        */}
+
+        <div>
+          <Button variant="contained" onClick={handleClick}>
+            Abrir lista de checkboxes
+          </Button>
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
+          >
+            <FormControl component="fieldset">
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={checkedItems.includes('item1')}
+                      onChange={handleCheckboxChange}
+                      value="item1"
+                    />
+                  }
+                  label="Item 1"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={checkedItems.includes('item2')}
+                      onChange={handleCheckboxChange}
+                      value="item2"
+                    />
+                  }
+                  label="Item 2"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={checkedItems.includes('item3')}
+                      onChange={handleCheckboxChange}
+                      value="item3"
+                    />
+                  }
+                  label="Item 3"
+                />
+              </FormGroup>
+            </FormControl>
+          </Popover>
+        </div>
 
         <Pagination
           onChange={(event: ChangeEvent<unknown>, numberPage: number) =>
