@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material';
 export const CustomTheme = createTheme({
   palette: {
     primary: {
-      main: '#4D4D4D',
+      main: '#4d4d4d',
       dark: '#353535',
       light: '#707070',
       contrastText: '#ffffff',
@@ -14,5 +14,25 @@ export const CustomTheme = createTheme({
       light: '#e0e0e0',
       contrastText: '#333333',
     },
+
   },
+  components: {
+    // MuiTab: {
+    //   styleOverrides: {
+    //     root: {
+    //       color: '#424242',
+    //       '&.Mui-selected': {
+    //         color: 'black',
+    //         backgroundColor: 'rgb(103 103 103 / 10%)',
+    //         borderRadius: '5px',
+    //         fontWeight: '500',
+    //         '&:hover': {
+    //           backgroundColor: 'rgb(103 103 103 / 20%)',
+    //         },
+    //       },
+    //     },
+    //   },
+    // },
+  }
+  
 });

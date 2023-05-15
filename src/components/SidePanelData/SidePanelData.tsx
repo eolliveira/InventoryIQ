@@ -20,7 +20,7 @@ type SidePanelDataProps = {
   email?: string;
   status?: string;
   assetId?: string;
-  dtUltimoSincronismo: string;
+  dtUltimoSincronismo?: string;
 };
 
 export default function SidePanelData({

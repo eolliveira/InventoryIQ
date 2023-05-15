@@ -39,6 +39,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import WorkstationForm from './WorkstationForm/WorkstationForm';
+import { red } from '@material-ui/core/colors';
 
 export default function WorkstationData() {
   const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
@@ -196,7 +197,7 @@ export default function WorkstationData() {
                 value={tabValue}
                 onChange={handleTabChange}
                 textColor="primary"
-                indicatorColor="secondary"
+                indicatorColor='primary'
                 aria-label="secondary tabs example"
                 // style={{ color: `${theme.colors.yellow}` }}
               >
