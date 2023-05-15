@@ -6,7 +6,6 @@ import {
   useProSidebar,
   sidebarClasses,
 } from 'react-pro-sidebar';
-import { theme } from '../../style/Theme';
 import { ButtonColapseContainer, SidebarContainer } from './Sidebar.style';
 import MenuIcon from '@mui/icons-material/Menu';
 import DevicesIcon from '@mui/icons-material/Devices';
@@ -18,6 +17,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import { hasAnyHoles } from '../../utils/Auth';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import IconButton from '@mui/material/IconButton';
+import Logo from '../../assets/img/image.png';
 export default function MenuSidebar() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
@@ -34,11 +34,11 @@ export default function MenuSidebar() {
           },
         }}
       >
-        <Menu 
+        <Menu
           menuItemStyles={{
             icon: ({ active, open }) => ({
               scale: active ? '1.1' : '1.0',
-              color: 'black',
+              color: 'black'
             }),
             button: ({ level, active, disabled }) => {
               ///menu interno
@@ -46,7 +46,7 @@ export default function MenuSidebar() {
                 return {
                   color: 'rede',
                   fontWeight: active ? 'bold' : 'normal',
-                  backgroundColor: active ? '#F5DF4E' : 'rgb(255, 255, 255)',
+                  backgroundColor: active ? '#f5df4ea6' : 'rgb(255, 255, 255)',
                   fontSize: '12px',
                   '&:hover': {
                     backgroundColor: '#f5df4ea6',
@@ -58,7 +58,7 @@ export default function MenuSidebar() {
                 return {
                   color: 'black',
                   fontSize: '14px',
-                  backgroundColor: active ? '#F5DF4E' : 'rgb(255, 255, 255)',
+                  backgroundColor: active ? '#f5df4ea6' : 'rgb(255, 255, 255)',
                   fontWeight: active ? 'bold' : 'normal',
                   '&:hover': {
                     backgroundColor: '#f5df4ea6',
@@ -67,16 +67,15 @@ export default function MenuSidebar() {
             },
           }}
         >
-          <ButtonColapseContainer iscollapsed={`${collapsed}`}>
+          <ButtonColapseContainer style={{backgroundColor: '#F5DE41', height: 64}} iscollapsed={`${collapsed}`}>
             {!collapsed ? (
-              <img src="" alt="" />
+              <img
+                style={{ marginRight: '15px' }}
+                width={'150px'}
+                src={Logo}
+                alt="Logo"
+              />
             ) : (
-              // <img
-              //   style={{ marginLeft: '10px' }}
-              //   width={'150px'}
-              //   src={Image}
-              //   alt="Logo"
-              // />
               ''
             )}
 
@@ -85,8 +84,8 @@ export default function MenuSidebar() {
                 size="large"
                 edge="end"
                 aria-label="menu"
-                sx={{ mr: 2}}
-                color='primary'
+                sx={{ mr: 2 }}
+                color="primary"
                 onClick={() => collapseSidebar()}
               >
                 <MenuIcon />
@@ -96,87 +95,88 @@ export default function MenuSidebar() {
                 disableFocusRipple
                 aria-label="delete"
                 size="large"
-                sx={{ mr: 2}}
-                color='primary'
+                sx={{ mr: 2 }}
+                color="primary"
                 onClick={() => collapseSidebar()}
               >
                 <ArrowBackIosNewIcon fontSize="small" />
               </IconButton>
             )}
           </ButtonColapseContainer>
-          {/* <Divider color="#161616" /> */}
           <MenuItem
-          style={{
-            margin: !collapsed ? '2px 10px' : '0px',
-            borderRadius:8            
-          }}
-            active={location.pathname === '/dashboard'}
+            style={{
+              margin:'10px 4px 4px 4px',
+              borderRadius: 10,
+            }}
+            active={location.pathname.startsWith('/dashboard')}
             component={<Link to={'/dashboard'} />}
             icon={<SpeedIcon />}
           >
             Dashboard
-          </MenuItem> 
-          <SubMenu 
-          style={{
-            margin: !collapsed ? '2px 10px' : '0px',
-            borderRadius:8            
-          }}
-          icon={<DevicesIcon />} label="Ativos">
-            <MenuItem
-            style={{  
-              margin: !collapsed ? '2px 10px' : '0px',
-              borderRadius:8            
+          </MenuItem>
+          <SubMenu
+            style={{
+              margin:'4px',
+              borderRadius: 10,
             }}
-              active={location.pathname === '/workstation'}
+            icon={<DevicesIcon />}
+            label="Ativos"
+          >
+            <MenuItem
+              style={{
+                margin:'4px',
+                borderRadius: 10,
+              }}
+              active={location.pathname.startsWith('/workstation')}
               component={<NavLink to={'/workstation'} />}
             >
               Estação de trabalho
             </MenuItem>
             <MenuItem
-             style={{
-              margin: !collapsed ? '2px 10px' : '0px',
-              borderRadius:8            
-            }}
-              active={location.pathname === '/mobile'}
+              style={{
+                margin: '4px',
+                borderRadius: 10,
+              }}
+              active={location.pathname.startsWith('/mobile')}
               component={<NavLink to={'/mobile'} />}
             >
               Mobile
             </MenuItem>
             <MenuItem
-            style={{  
-              margin: !collapsed ? '2px 10px' : '0px',
-              borderRadius:8            
-            }}
-              active={location.pathname === '/nobreak'}
+              style={{
+                margin: '4px',
+                borderRadius: 10,
+              }}
+              active={location.pathname.startsWith('/nobreak')}
               component={<NavLink to={'/nobreak'} />}
             >
               Nobreak
             </MenuItem>
             <MenuItem
-            style={{  
-              margin: !collapsed ? '2px 10px' : '0px',
-              borderRadius:8            
-            }}
-              active={location.pathname === '/printer'}
+              style={{
+                margin: '4px',
+                borderRadius: 10,
+              }}
+              active={location.pathname.startsWith('/printer')}
               component={<NavLink to={'/printer'} />}
             >
               Impressora
             </MenuItem>
           </SubMenu>
           <MenuItem
-          style={{
-            margin: !collapsed ? '2px 10px' : '0px',
-            borderRadius:8            
-          }}
+            style={{
+              margin: '4px',
+              borderRadius: 10,
+            }}
             icon={<DescriptionIcon />}
-            active={location.pathname === '/license'}
+            active={location.pathname.startsWith('/license')}
             component={<Link to={'/license'} />}
           >
             Licenças
           </MenuItem>
           {hasAnyHoles(['ROLE_ADMIN']) && (
             <MenuItem
-              active={location.pathname === '/user'}
+              active={location.pathname.startsWith('/user')}
               icon={<PeopleIcon />}
               component={<Link to={'/user'} />}
             >

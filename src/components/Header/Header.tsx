@@ -67,13 +67,12 @@ export default function Header() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
-        sx={{ backgroundColor: `${theme.colors.white}`, boxShadow: 'none' }}
         position="static"
       >
         <Toolbar
           sx={{
             // backgroundColor: `${theme.colors.yellow}`,
-            backgroundColor: '#F5DF4E'
+            backgroundColor: '#F5DE41'
           }}
         >
           <Typography
