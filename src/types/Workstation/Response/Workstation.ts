@@ -1,3 +1,4 @@
+import { localIndustria } from "types/LocalIndustria";
 import { Usuario } from "../../Usuario";
 
 export type Workstation = {
@@ -18,11 +19,12 @@ export type Workstation = {
   dtUltimoSincronismo: string;
   vlrAquisicao: number;
   observacao: string;
-  usuario: Usuario;
   sistemaOperacional: string;
   processador: string;
   arquiteturaSo: string;
   memoriaRam: string;
   ultimoUsuarioLogado: string;
   dns: string;
+  usuario: Usuario;
+  localIndustria: localIndustria
 };

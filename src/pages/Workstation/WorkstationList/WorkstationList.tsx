@@ -3,89 +3,67 @@ import { requestBackend } from '../../../http/requests';
 import { SpringPage } from 'types/vendor/spring';
 import { Workstation } from '../../../types/Workstation/Response/Workstation';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { BaseCard, Input } from '../../../style/GlobalStyles';
+import { BaseCard } from '../../../style/GlobalStyles';
 import { AxiosRequestConfig } from 'axios';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import styled from 'styled-components';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 import SearchIcon from '@mui/icons-material/Search';
-
 import TuneIcon from '@mui/icons-material/Tune';
 import { assetState } from '../../../constants/AssetState';
-
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material';
-
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Menu,
-  MenuItem,
-} from '@mui/material';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import styled from 'styled-components';
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Typography from '@mui/material/Typography';
+import { toCamelCase } from '../../../utils/Converter';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
+  { name: 'Dominio', selector: (row) => row.dominio, sortable: true },
   { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
   { name: 'Modelo', selector: (row) => row.modelo, sortable: true },
+  {
+    name: 'Atribuido a',
+    selector: (row) =>
+      row.usuario.nome ? toCamelCase(row.usuario.nome) : ' - ',
+    sortable: true,
+  },
+  {
+    name: 'Local',
+    selector: (row) =>
+      row.localIndustria ? row.localIndustria.dsLocalIndustria : ' - ',
+    sortable: true,
+  },
   { name: 'Status', selector: (row) => row.status, sortable: true },
-  { name: 'Dt.Aquisição', selector: (row) => row.dtAquisicao, sortable: true },
+  {
+    name: 'Dt.Aquisição',
+    selector: (row) => row.dtAquisicao,
+    sortable: true,
+  },
 ];
 
-interface Filter {
-  name: string;
-  checked: boolean;
-}
 export default function WorkstationList() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [filters, setFilters] = useState<Filter[]>([
-    { name: 'Filter 1', checked: false },
-    { name: 'Filter 2', checked: false },
-    { name: 'Filter 3', checked: false },
-  ]);
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-  const [showFilterDiv, setShowFilterDiv] = useState<boolean>(false);
-
-  const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuItemClick = (filterName: string) => {
-    const updatedFilters = [...selectedFilters];
-    const index = updatedFilters.indexOf(filterName);
-    if (index === -1) {
-      updatedFilters.push(filterName);
-    } else {
-      updatedFilters.splice(index, 1);
-    }
-    setSelectedFilters(updatedFilters);
-    setAnchorEl(null);
-    setShowFilterDiv(updatedFilters.length > 0);
-  };
-
-  const handleCheckboxChange = (index: number) => {
-    const updatedFilters = [...filters];
-    updatedFilters[index].checked = !updatedFilters[index].checked;
-    setFilters(updatedFilters);
-  };
+  const open = Boolean(anchorEl);
 
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const [filterStatechecked, setFilterStatechecked] = useState(false);
+
   // ///////
   const [numberPage, setNumberPage] = useState(0);
   const [inputFilter, setInputFilter] = useState('');
   const [status, setStatus] = useState('');
-  const [fieldFilter, setFieldFilter] = useState('');
+  const [fieldFilter, setFieldFilter] = useState('nome');
   const [page, setPage] = useState<SpringPage<Workstation>>();
   const navigate = useNavigate();
 
@@ -146,8 +124,8 @@ export default function WorkstationList() {
               }}
             />
 
-            <IconButton onClick={handleButtonClick}>
-              <TuneIcon style={{ marginRight: 10 }} color="primary" />
+            <IconButton onClick={(event) => setAnchorEl(event.currentTarget)}>
+              <TuneIcon fontSize="small" color="primary" />
             </IconButton>
           </Box>
 
@@ -172,70 +150,60 @@ export default function WorkstationList() {
             </FormControl>
           </Box>
 
-          <Box style={{ width: 150 }}>
-            <FormControl
-              size="small"
-              fullWidth
-              style={{ backgroundColor: '#ffff' }}
-            >
-              <InputLabel id="demo-multiple-chip-label">Status</InputLabel>
-              <Select
-                labelId="demo-multiple-chip-label"
-                id="demo-multiple-chip"
-                label="Status"
-                value={status}
-                onChange={(e) => {
-                  setStatus(e.target.value);
-                }}
+          {filterStatechecked && (
+            <Box style={{ width: 150 }}>
+              <FormControl
+                fullWidth
+                size="small"
+                style={{ backgroundColor: '#ffff' }}
               >
-                {assetState.map((e) => (
-                  <MenuItem value={e.value}>{e.desc}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
+                <InputLabel id="demo-multiple-chip-label">Status</InputLabel>
+                <Select
+                  labelId="demo-multiple-chip-label"
+                  id="demo-multiple-chip"
+                  label="Status"
+                  value={status}
+                  onChange={(e) => {
+                    setStatus(e.target.value);
+                  }}
+                >
+                  {assetState.map((e) => (
+                    <MenuItem value={e.value}>{e.desc}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+          )}
         </Stack>
 
         {/* ///   */}
 
-        <>
+        <div>
           <Menu
-            id="filter-menu"
+            style={{ flexDirection: 'column' }}
+            id="basic-menu"
             anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
+            open={open}
             onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
           >
-            {filters.map((filter, index) => (
-              <MenuItem
-                key={index}
-                onClick={() => handleMenuItemClick(filter.name)}
-                sx={{ flexDirection: 'column' }}
-              >
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={filter.checked}
-                      onChange={() => handleCheckboxChange(index)}
-                    />
-                  }
-                  label={filter.name}
-                />
-              </MenuItem>
-            ))}
+            <MenuItem onClick={handleClose}>
+              <Checkbox
+                size="small"
+                checked={filterStatechecked}
+                onChange={(event) =>
+                  setFilterStatechecked(event.target.checked)
+                }
+                inputProps={{
+                  'aria-label': 'controlled',
+                }}
+              />
+              <Typography variant="subtitle2">Status do ativo</Typography>
+            </MenuItem>
           </Menu>
-          {showFilterDiv && (
-            <div>
-              <Typography variant="h4" component="div">
-                Selected Filters:
-              </Typography>
-              {selectedFilters.map((filter, index) => (
-                <Typography key={index} variant="h5" component="div">
-                  {filter}
-                </Typography>
-              ))}
-            </div>
-          )}
-        </>
+        </div>
 
         <Pagination
           onChange={(event: ChangeEvent<unknown>, numberPage: number) =>

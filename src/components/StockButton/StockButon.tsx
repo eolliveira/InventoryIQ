@@ -46,7 +46,7 @@ export default function StockButton({
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
         disabled={isDisabled}
-        color='primary'
+        color="primary"
       >
         <Text>Ações</Text>
       </Button>
@@ -116,10 +116,6 @@ export default function StockButton({
     </div>
   );
 }
-
-const ContainerIcon = styled.span`
-  margin-right: 0.5px;
-`;
 
 const CustomMenu = styled(Menu)`
   display: flex;
