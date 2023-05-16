@@ -59,7 +59,7 @@ export default function WorkstationList() {
 
   const [filterStatechecked, setFilterStatechecked] = useState(false);
 
-  // ///////
+  /////////
   const [numberPage, setNumberPage] = useState(0);
   const [inputFilter, setInputFilter] = useState('');
   const [status, setStatus] = useState('');

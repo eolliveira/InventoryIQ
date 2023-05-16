@@ -1,6 +1,6 @@
 import Modal from '@mui/material/Modal';
-import { ReactNode } from 'react';
 import styled from 'styled-components';
+import { ReactNode } from 'react';
 
 type CustomModal<T extends ReactNode> = {
   openModal: boolean;

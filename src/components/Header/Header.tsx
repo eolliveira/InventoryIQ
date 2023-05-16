@@ -7,14 +7,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-
 import Badge from '@mui/material/Badge';
-
 import NotificationsIcon from '@mui/icons-material/Notifications';
-
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { theme } from '../../style/Theme';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -66,13 +62,11 @@ export default function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-      >
+      <AppBar position="static">
         <Toolbar
           sx={{
             // backgroundColor: `${theme.colors.yellow}`,
-            backgroundColor: '#F5DE41'
+            backgroundColor: '#F5DE41',
           }}
         >
           <Typography

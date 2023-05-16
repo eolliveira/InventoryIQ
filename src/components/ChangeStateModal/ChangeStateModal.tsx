@@ -17,35 +17,13 @@ import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@mui/material/TextField';
+import { assetState } from '../../constants/AssetState';
 
 type ChangeStateProps = {
   assetId?: string;
   openForm: boolean;
   closeForm: () => void;
 };
-
-const assetTypes = [
-  {
-    desc: 'Em uso',
-    value: 'EM_USO',
-  },
-  {
-    desc: 'Em reparo',
-    value: 'EM_REPARO',
-  },
-  {
-    desc: 'Disponível',
-    value: 'DISPONIVEL',
-  },
-  {
-    desc: 'Inativo',
-    value: 'INATIVO',
-  },
-  {
-    desc: 'Descartado',
-    value: 'DESCARTADO',
-  },
-];
 
 export default function ChangeStateModal({
   assetId,
@@ -105,7 +83,7 @@ export default function ChangeStateModal({
               value={state}
               onChange={(e) => setState(e.target.value as string)}
             >
-              {assetTypes.map((type) => (
+              {assetState.map((type) => (
                 <MenuItem key={type.value} value={type.value}>
                   {type.desc}
                 </MenuItem>

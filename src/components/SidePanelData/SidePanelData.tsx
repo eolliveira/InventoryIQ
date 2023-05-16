@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ChangeStateModal from '../ChangeStateModal/ChangeStateModal';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ChangeUserModal from '../../components/ChangeUserModal/ChangeUserModal';
 
 type SidePanelDataProps = {
   nome?: string;
@@ -31,7 +32,8 @@ export default function SidePanelData({
   dtUltimoSincronismo,
 }: SidePanelDataProps) {
   const { setFormContextData } = useContext(FormContext);
-  const [openModal, setOpenModal] = useState(false);
+  const [openChangeStateModal, setOpenChangeStateModal] = useState(false);
+  const [openChangeUserModal, setOpenChangeUserModal] = useState(false);
 
   return (
     <Wapper>
@@ -41,7 +43,7 @@ export default function SidePanelData({
             <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
             <Input
               id="ultmSinc"
-              onChange={e => {}}
+              onChange={(e) => {}}
               value={dtUltimoSincronismo ? toDateTime(dtUltimoSincronismo) : ''}
             />
           </Field>
@@ -53,8 +55,8 @@ export default function SidePanelData({
           <Status>
             <Text>{status}</Text>
             <IconButton
-              onClick={e => {
-                setOpenModal(true);
+              onClick={(e) => {
+                setOpenChangeStateModal(true);
                 setFormContextData({
                   isEditing: true,
                 });
@@ -95,7 +97,19 @@ export default function SidePanelData({
               {email ? email : ' - '}
             </Typography>
           </Box>
-          <EditIcon color="action" fontSize="small" />
+
+          <IconButton
+            onClick={(e) => {
+              setOpenChangeUserModal(true);
+              setFormContextData({
+                isEditing: true,
+              });
+            }}
+            aria-label="delete"
+            size="small"
+          >
+            <EditIcon color="action" fontSize="small" />
+          </IconButton>
         </Box>
       </Card>
       <Typography marginTop={1} fontSize={13} variant="subtitle2">
@@ -167,11 +181,20 @@ export default function SidePanelData({
           </Typography>
         </Box>
       </Card>
-      {openModal && (
+      {openChangeStateModal && (
         <ChangeStateModal
           assetId={assetId}
-          openForm={openModal}
-          closeForm={() => setOpenModal(false)}
+          openForm={openChangeStateModal}
+          closeForm={() => setOpenChangeStateModal(false)}
+        />
+      )}
+
+      {/* //usuario */}
+      {openChangeUserModal && (
+        <ChangeUserModal
+          assetId={assetId}
+          openForm={openChangeUserModal}
+          closeForm={() => setOpenChangeUserModal(false)}
         />
       )}
     </Wapper>
