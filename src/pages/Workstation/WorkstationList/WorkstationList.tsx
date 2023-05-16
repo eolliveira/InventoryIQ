@@ -12,22 +12,26 @@ import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 import SearchIcon from '@mui/icons-material/Search';
 
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Box from '@mui/material/Box';
 import TuneIcon from '@mui/icons-material/Tune';
-import InputLabel from '@mui/material/InputLabel';
 import { assetState } from '../../../constants/AssetState';
+
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
 
 import {
   Button,
   Checkbox,
   FormControlLabel,
-  FormGroup,
-  FormLabel,
-  Popover,
+  Menu,
+  MenuItem,
 } from '@mui/material';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -37,32 +41,46 @@ const columns: TableColumn<Workstation>[] = [
   { name: 'Dt.Aquisição', selector: (row) => row.dtAquisicao, sortable: true },
 ];
 
+interface Filter {
+  name: string;
+  checked: boolean;
+}
 export default function WorkstationList() {
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [checkedItems, setCheckedItems] = useState<string[]>([]);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [filters, setFilters] = useState<Filter[]>([
+    { name: 'Filter 1', checked: false },
+    { name: 'Filter 2', checked: false },
+    { name: 'Filter 3', checked: false },
+  ]);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [showFilterDiv, setShowFilterDiv] = useState<boolean>(false);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuItemClick = (filterName: string) => {
+    const updatedFilters = [...selectedFilters];
+    const index = updatedFilters.indexOf(filterName);
+    if (index === -1) {
+      updatedFilters.push(filterName);
+    } else {
+      updatedFilters.splice(index, 1);
+    }
+    setSelectedFilters(updatedFilters);
+    setAnchorEl(null);
+    setShowFilterDiv(updatedFilters.length > 0);
+  };
+
+  const handleCheckboxChange = (index: number) => {
+    const updatedFilters = [...filters];
+    updatedFilters[index].checked = !updatedFilters[index].checked;
+    setFilters(updatedFilters);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = event.target;
-    if (checked) {
-      setCheckedItems((prevItems) => [...prevItems, value]);
-    } else {
-      setCheckedItems((prevItems) =>
-        prevItems.filter((item) => item !== value)
-      );
-    }
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'checkbox-popover' : undefined;
-
   // ///////
   const [numberPage, setNumberPage] = useState(0);
   const [inputFilter, setInputFilter] = useState('');
@@ -127,7 +145,10 @@ export default function WorkstationList() {
                 outline: 0,
               }}
             />
-            <TuneIcon style={{ marginRight: 10 }} color="primary" />
+
+            <IconButton onClick={handleButtonClick}>
+              <TuneIcon style={{ marginRight: 10 }} color="primary" />
+            </IconButton>
           </Box>
 
           <Box style={{ width: 150 }}>
@@ -175,64 +196,46 @@ export default function WorkstationList() {
           </Box>
         </Stack>
 
-        {/* 
-        
-        */}
+        {/* ///   */}
 
-        <div>
-          <Button variant="contained" onClick={handleClick}>
-            Abrir lista de checkboxes
-          </Button>
-          <Popover
-            id={id}
-            open={open}
+        <>
+          <Menu
+            id="filter-menu"
             anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
             onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }}
           >
-            <FormControl component="fieldset">
-              <FormGroup>
+            {filters.map((filter, index) => (
+              <MenuItem
+                key={index}
+                onClick={() => handleMenuItemClick(filter.name)}
+                sx={{ flexDirection: 'column' }}
+              >
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={checkedItems.includes('item1')}
-                      onChange={handleCheckboxChange}
-                      value="item1"
+                      checked={filter.checked}
+                      onChange={() => handleCheckboxChange(index)}
                     />
                   }
-                  label="Item 1"
+                  label={filter.name}
                 />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={checkedItems.includes('item2')}
-                      onChange={handleCheckboxChange}
-                      value="item2"
-                    />
-                  }
-                  label="Item 2"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={checkedItems.includes('item3')}
-                      onChange={handleCheckboxChange}
-                      value="item3"
-                    />
-                  }
-                  label="Item 3"
-                />
-              </FormGroup>
-            </FormControl>
-          </Popover>
-        </div>
+              </MenuItem>
+            ))}
+          </Menu>
+          {showFilterDiv && (
+            <div>
+              <Typography variant="h4" component="div">
+                Selected Filters:
+              </Typography>
+              {selectedFilters.map((filter, index) => (
+                <Typography key={index} variant="h5" component="div">
+                  {filter}
+                </Typography>
+              ))}
+            </div>
+          )}
+        </>
 
         <Pagination
           onChange={(event: ChangeEvent<unknown>, numberPage: number) =>
