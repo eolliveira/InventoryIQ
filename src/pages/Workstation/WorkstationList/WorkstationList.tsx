@@ -176,8 +176,6 @@ export default function WorkstationList() {
           )}
         </Stack>
 
-        {/* ///   */}
-
         <div>
           <Menu
             style={{ flexDirection: 'column' }}

@@ -13,7 +13,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@material-ui/core/Typography';
 import DataTable, { TableColumn } from 'react-data-table-component';
-
 import SearchIcon from '@mui/icons-material/Search';
 import { Usuario } from 'types/Usuario';
 
@@ -97,8 +96,9 @@ export default function ChangeUserModal({
             <Stack direction={'row'}>
               <Box
                 maxWidth={'100%'}
+                height={35}
                 borderRadius={2}
-                border={'1px solid blue'}
+                border={'1px solid red'}
                 alignItems={'center'}
                 display={'flex'}
                 marginBottom={1}
