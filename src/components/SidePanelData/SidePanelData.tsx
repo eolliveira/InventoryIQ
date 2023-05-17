@@ -71,7 +71,7 @@ export default function SidePanelData({
       </HeaderContainer>
       <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
       <Typography marginTop={1} fontSize={13} variant="subtitle2">
-        Usuário
+        Atribuido a
       </Typography>
       <Card>
         <Box

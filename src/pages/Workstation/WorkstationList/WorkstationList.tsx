@@ -221,6 +221,7 @@ export default function WorkstationList() {
         <div>
           <DataTable
             dense
+            striped
             columns={columns}
             data={page ? page?.content : []}
             sortIcon={<ExpandMoreIcon />}
