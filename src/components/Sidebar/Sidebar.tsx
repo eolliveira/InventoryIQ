@@ -30,7 +30,7 @@ export default function MenuSidebar() {
         rootStyles={{
           [`.${sidebarClasses.container}`]: {
             //backgroundColor: `${theme.colors.primary}`,
-            backgroundColor: 'rgb(255, 255, 255)'
+            backgroundColor: 'rgb(255, 255, 255)',
           },
         }}
       >
@@ -38,13 +38,13 @@ export default function MenuSidebar() {
           menuItemStyles={{
             icon: ({ active, open }) => ({
               scale: active ? '1.1' : '1.0',
-              color: 'black'
+              color: 'black',
             }),
             button: ({ level, active, disabled }) => {
               ///menu interno
               if (level === 1)
                 return {
-                  color: 'rede',
+                  color: 'primary',
                   fontWeight: active ? 'bold' : 'normal',
                   backgroundColor: active ? '#f5df4ea6' : 'rgb(255, 255, 255)',
                   fontSize: '12px',
@@ -67,7 +67,10 @@ export default function MenuSidebar() {
             },
           }}
         >
-          <ButtonColapseContainer style={{backgroundColor: '#F5DE41', height: 64}} iscollapsed={`${collapsed}`}>
+          <ButtonColapseContainer
+            style={{ backgroundColor: '#F5DE41', height: 64 }}
+            iscollapsed={`${collapsed}`}
+          >
             {!collapsed ? (
               <img
                 style={{ marginRight: '15px' }}
@@ -105,7 +108,8 @@ export default function MenuSidebar() {
           </ButtonColapseContainer>
           <MenuItem
             style={{
-              margin:'10px 4px 4px 4px',
+              margin: '10px 10px 0px 10px',
+              padding: 12,
               borderRadius: 10,
             }}
             active={location.pathname.startsWith('/dashboard')}
@@ -116,7 +120,8 @@ export default function MenuSidebar() {
           </MenuItem>
           <SubMenu
             style={{
-              margin:'4px',
+              margin: '10px 10px 0px 10px',
+              padding: 12,
               borderRadius: 10,
             }}
             icon={<DevicesIcon />}
@@ -124,7 +129,7 @@ export default function MenuSidebar() {
           >
             <MenuItem
               style={{
-                margin:'4px',
+                margin: '10px 10px 0px 10px',
                 borderRadius: 10,
               }}
               active={location.pathname.startsWith('/workstation')}
@@ -134,7 +139,7 @@ export default function MenuSidebar() {
             </MenuItem>
             <MenuItem
               style={{
-                margin: '4px',
+                margin: '10px 10px 0px 10px',
                 borderRadius: 10,
               }}
               active={location.pathname.startsWith('/mobile')}
@@ -144,7 +149,7 @@ export default function MenuSidebar() {
             </MenuItem>
             <MenuItem
               style={{
-                margin: '4px',
+                margin: '10px 10px 0px 10px',
                 borderRadius: 10,
               }}
               active={location.pathname.startsWith('/nobreak')}
@@ -154,7 +159,7 @@ export default function MenuSidebar() {
             </MenuItem>
             <MenuItem
               style={{
-                margin: '4px',
+                margin: '10px 10px 0px 10px',
                 borderRadius: 10,
               }}
               active={location.pathname.startsWith('/printer')}
@@ -165,7 +170,8 @@ export default function MenuSidebar() {
           </SubMenu>
           <MenuItem
             style={{
-              margin: '4px',
+              margin: '10px 10px 0px 10px',
+              padding: 12,
               borderRadius: 10,
             }}
             icon={<DescriptionIcon />}
