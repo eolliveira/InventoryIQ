@@ -23,6 +23,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import { toCamelCase } from '../../../utils/Converter';
+import CloseIcon from '@mui/icons-material/Close';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -93,6 +94,13 @@ export default function WorkstationList() {
   const handleRowClicked = (row: Workstation) =>
     navigate(`/workstation/${row.id}`);
 
+  function handleClearFilters() {
+    setFilterStatechecked(false);
+    setInputFilter('');
+    setStatus('');
+    setFieldFilter('nome');
+  }
+
   return (
     <>
       <h1>Teste</h1>
@@ -123,6 +131,10 @@ export default function WorkstationList() {
                 outline: 0,
               }}
             />
+
+            <IconButton onClick={handleClearFilters}>
+              <CloseIcon fontSize="small" color="primary" />
+            </IconButton>
 
             <IconButton onClick={(event) => setAnchorEl(event.currentTarget)}>
               <TuneIcon fontSize="small" color="primary" />

@@ -142,6 +142,16 @@ export default function MenuSidebar() {
                 margin: '10px 10px 0px 10px',
                 borderRadius: 10,
               }}
+              active={location.pathname.startsWith('/printer')}
+              component={<NavLink to={'/printer'} />}
+            >
+              Impressora
+            </MenuItem>
+            <MenuItem
+              style={{
+                margin: '10px 10px 0px 10px',
+                borderRadius: 10,
+              }}
               active={location.pathname.startsWith('/mobile')}
               component={<NavLink to={'/mobile'} />}
             >
@@ -156,16 +166,6 @@ export default function MenuSidebar() {
               component={<NavLink to={'/nobreak'} />}
             >
               Nobreak
-            </MenuItem>
-            <MenuItem
-              style={{
-                margin: '10px 10px 0px 10px',
-                borderRadius: 10,
-              }}
-              active={location.pathname.startsWith('/printer')}
-              component={<NavLink to={'/printer'} />}
-            >
-              Impressora
             </MenuItem>
           </SubMenu>
           <MenuItem
