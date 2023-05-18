@@ -1,5 +1,7 @@
-export type localIndustria = {
+import { CentroCusto } from "./CentroCusto";
+
+export type LocalIndustria = {
     id: string;
     dsLocalIndustria: string;
-    centroCusto: string;
+    centroCusto: CentroCusto;
   };

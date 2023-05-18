@@ -4,7 +4,7 @@ import { Button, Stack } from '@mui/material';
 import { requestBackend } from '../../http/requests';
 import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
-import { ButtonContainer, TextButton } from './ChangeUserModal.style';
+import { ButtonContainer, TextButton } from './ChangeLocationModal.style';
 import Box from '@mui/material/Box';
 import CustomModal from '../CustomModal/CustomModal';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -14,38 +14,38 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@material-ui/core/Typography';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import SearchIcon from '@mui/icons-material/Search';
-import { Usuario } from 'types/Usuario';
+import { LocalIndustria } from 'types/LocalIndustria';
 
-type ChangeUserModalProps = {
+type ChangeLocationModalProps = {
   assetId?: string;
   openForm: boolean;
   closeForm: () => void;
 };
 
-const columns: TableColumn<Usuario>[] = [
+const columns: TableColumn<LocalIndustria>[] = [
   { name: 'Id', selector: (row) => row.id, sortable: true },
-  { name: 'Nome', selector: (row) => row.nome, sortable: true },
-  { name: 'Email', selector: (row) => row.email, sortable: true },
+  { name: 'Nome', selector: (row) => row.dsLocalIndustria, sortable: true },
+  // { name: 'Email', selector: (row) => row., sortable: true },
 ];
 
-export default function ChangeUserModal({
+export default function ChangeLocationModal({
   assetId,
   openForm,
   closeForm,
-}: ChangeUserModalProps) {
+}: ChangeLocationModalProps) {
   const { setFormContextData } = useContext(FormContext);
-  const [users, setUsers] = useState<Usuario[]>();
+  const [locations, setLocations] = useState<LocalIndustria[]>();
   const [inputFilter, setInputFilter] = useState('');
-  const [selectedUser, setSelectedUser] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('');
 
   useEffect(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/users?nome=${inputFilter}`,
+      url: `/IndustrySite?dsLocalIndustria=${inputFilter}`,
     };
     requestBackend(params)
       .then((response) => {
-        setUsers(response.data.content);
+        setLocations(response.data);
       })
       .catch((error) => {
         window.alert(error.response.data.message);
@@ -54,26 +54,24 @@ export default function ChangeUserModal({
 
   const handleSelectedRowsChange = (selectedRows: any) => {
     if (selectedRows.selectedCount != 0) {
-      setSelectedUser(selectedRows.selectedRows[0].id);
+      setSelectedLocation(selectedRows.selectedRows[0].id);
     }
   };
 
   function handleConfirm() {
-    if (selectedUser == '') {
-      window.alert('Selecione um usuario');
+    if (selectedLocation == '') {
+      window.alert('Selecione um local da Industria');
       return;
     }
-
-    const data = { usuarioId: selectedUser };
-
+    const data = { localIndustriaId: selectedLocation };
     const params: AxiosRequestConfig = {
       method: 'PUT',
-      url: `/active/${assetId}/user/update`,
+      url: `/active/${assetId}/location/update`,
       data: data,
     };
     requestBackend(params)
       .then(() => {
-        window.alert('Status do ativo foi alterado com sucesso!');
+        window.alert('Local do ativo foi alterado com sucesso!');
         setFormContextData({ isEditing: false });
         closeForm();
       })
@@ -91,7 +89,7 @@ export default function ChangeUserModal({
     <CustomModal openModal={openForm}>
       <BaseCard>
         <Stack padding={2}>
-          <Typography variant="h6"> Atribuir usuário </Typography>
+          <Typography variant="h6"> Atribuir Local </Typography>
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
               <Box
@@ -130,7 +128,7 @@ export default function ChangeUserModal({
 
             <DataTable
               columns={columns}
-              data={users ? users : []}
+              data={locations ? locations : []}
               dense
               striped
               responsive

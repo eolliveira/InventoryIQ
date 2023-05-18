@@ -1,4 +1,4 @@
-import { localIndustria } from "types/LocalIndustria";
+import { LocalIndustria } from "types/LocalIndustria";
 import { Usuario } from "../../Usuario";
 
 export type Workstation = {
@@ -26,5 +26,5 @@ export type Workstation = {
   ultimoUsuarioLogado: string;
   dns: string;
   usuario: Usuario;
-  localIndustria: localIndustria
+  localIndustria: LocalIndustria
 };

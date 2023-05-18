@@ -28,7 +28,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 import SidePanelData from '../../../components/SidePanelData/SidePanelData';
-import localeData from '../../../mocks/wokstation.json';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
 import { AxiosRequestConfig } from 'axios';
@@ -58,6 +57,9 @@ export default function WorkstationData() {
   const getWorkstationData = useCallback(() => {
     requestBackend({ url: `/workstation/${workstationId}` })
       .then((response) => {
+        console.log('testeee');
+        console.log(response.data);
+
         setActive(response.data);
       })
       .catch((error) => {
@@ -133,6 +135,7 @@ export default function WorkstationData() {
     <Wapper className="row">
       <ContainerSidePanel className="col-lg-3">
         <SidePanelData
+          data={active ?? ({} as Workstation)}
           assetId={active?.id}
           nome={active?.usuario.nome}
           email={active?.usuario.email}
@@ -197,7 +200,7 @@ export default function WorkstationData() {
                 value={tabValue}
                 onChange={handleTabChange}
                 textColor="primary"
-                indicatorColor='primary'
+                indicatorColor="primary"
                 aria-label="secondary tabs example"
                 // style={{ color: `${theme.colors.yellow}` }}
               >
@@ -252,22 +255,22 @@ export default function WorkstationData() {
               </CustomTabs>
             </Box>
           </AppBar>
-          <Panel value="1" >
+          <Panel value="1">
             <WorkstationDetails data={active} />
           </Panel>
-          <Panel value="2" >
+          <Panel value="2">
             <WorkstationHardware teste={10} />
           </Panel>
           <Panel value="3">
             <WorkstationInterfaces workstationId={active?.id} />
           </Panel>
-          <Panel value="4" >
+          <Panel value="4">
             <WorkstationMovements teste={10} />
           </Panel>
-          <Panel value="5" >
+          <Panel value="5">
             <WorkstationLicenses teste={10} />
           </Panel>
-          <Panel value="6" >
+          <Panel value="6">
             <WorkstationMaintenance teste={10} />
           </Panel>
         </TabContext>

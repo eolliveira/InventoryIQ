@@ -15,8 +15,11 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ChangeStateModal from '../ChangeStateModal/ChangeStateModal';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ChangeUserModal from '../../components/ChangeUserModal/ChangeUserModal';
+import ChangeLocationModal from '../../components/ChangeLocationModal/ChangeLocationModal';
+import { Workstation } from 'types/Workstation/Response/Workstation';
 
 type SidePanelDataProps = {
+  data: Workstation;
   nome?: string;
   email?: string;
   status?: string;
@@ -25,6 +28,7 @@ type SidePanelDataProps = {
 };
 
 export default function SidePanelData({
+  data,
   status,
   assetId,
   nome,
@@ -34,6 +38,7 @@ export default function SidePanelData({
   const { setFormContextData } = useContext(FormContext);
   const [openChangeStateModal, setOpenChangeStateModal] = useState(false);
   const [openChangeUserModal, setOpenChangeUserModal] = useState(false);
+  const [openChangeLocationModal, setOpenChangeLocationModal] = useState(false);
 
   return (
     <Wapper>
@@ -44,7 +49,11 @@ export default function SidePanelData({
             <Input
               id="ultmSinc"
               onChange={(e) => {}}
-              value={dtUltimoSincronismo ? toDateTime(dtUltimoSincronismo) : ''}
+              value={
+                data.dtUltimoSincronismo
+                  ? toDateTime(data.dtUltimoSincronismo)
+                  : ''
+              }
             />
           </Field>
         </DateContainer>
@@ -53,7 +62,7 @@ export default function SidePanelData({
             Status
           </Typography>
           <Status>
-            <Text>{status}</Text>
+            <Text>{data.status}</Text>
             <IconButton
               onClick={(e) => {
                 setOpenChangeStateModal(true);
@@ -91,10 +100,10 @@ export default function SidePanelData({
             justifyContent={'flex-start'}
           >
             <Typography color={'primary'} fontSize={14} variant="subtitle2">
-              {toCamelCase(nome ? nome : ' - ')}
+              {data.usuario ? data.usuario.nome : ' - '}
             </Typography>
             <Typography color={'primary'} fontSize={12} variant="subtitle2">
-              {email ? email : ' - '}
+              {data.usuario ? data.usuario.email : ' - '}
             </Typography>
           </Box>
 
@@ -133,9 +142,25 @@ export default function SidePanelData({
             marginTop={0.5}
             variant="subtitle2"
           >
-            124 - Comercial
+            {data.localIndustria
+              ? (data.localIndustria.id ? data.localIndustria.id : '') +
+                ' - ' +
+                (data.localIndustria.dsLocalIndustria
+                  ? data.localIndustria.dsLocalIndustria
+                  : '')
+              : ' - '}
           </Typography>
-          <EditIcon color="action" fontSize="small" />
+
+          <IconButton
+            onClick={(e) => {
+              setOpenChangeLocationModal(true);
+              setFormContextData({
+                isEditing: true,
+              });
+            }}
+          >
+            <EditIcon color="action" fontSize="small" />
+          </IconButton>
         </Box>
         <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
         <Box display={'flex'} flexDirection={'column'}>
@@ -143,6 +168,7 @@ export default function SidePanelData({
             Centro de custo
           </Typography>
           <Typography color={'primary'} fontSize={12} variant="subtitle2">
+            {/* CONTINUAR DAQUI */}
             70 - Tecnologia da informação
           </Typography>
         </Box>
@@ -195,6 +221,14 @@ export default function SidePanelData({
           assetId={assetId}
           openForm={openChangeUserModal}
           closeForm={() => setOpenChangeUserModal(false)}
+        />
+      )}
+
+      {openChangeLocationModal && (
+        <ChangeLocationModal
+          assetId={assetId}
+          openForm={openChangeLocationModal}
+          closeForm={() => setOpenChangeLocationModal(false)}
         />
       )}
     </Wapper>
