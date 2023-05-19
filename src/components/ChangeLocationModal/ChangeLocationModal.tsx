@@ -5,6 +5,7 @@ import { requestBackend } from '../../http/requests';
 import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
 import { ButtonContainer, TextButton } from './ChangeLocationModal.style';
+import { LocalIndustria } from 'types/LocalIndustria';
 import Box from '@mui/material/Box';
 import CustomModal from '../CustomModal/CustomModal';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -14,7 +15,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@material-ui/core/Typography';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import SearchIcon from '@mui/icons-material/Search';
-import { LocalIndustria } from 'types/LocalIndustria';
 
 type ChangeLocationModalProps = {
   assetId?: string;
@@ -25,7 +25,6 @@ type ChangeLocationModalProps = {
 const columns: TableColumn<LocalIndustria>[] = [
   { name: 'Id', selector: (row) => row.id, sortable: true },
   { name: 'Nome', selector: (row) => row.dsLocalIndustria, sortable: true },
-  // { name: 'Email', selector: (row) => row., sortable: true },
 ];
 
 export default function ChangeLocationModal({
@@ -43,6 +42,7 @@ export default function ChangeLocationModal({
       method: 'GET',
       url: `/IndustrySite?dsLocalIndustria=${inputFilter}`,
     };
+
     requestBackend(params)
       .then((response) => {
         setLocations(response.data);
@@ -125,7 +125,6 @@ export default function ChangeLocationModal({
                 />
               </Box>
             </Stack>
-
             <DataTable
               columns={columns}
               data={locations ? locations : []}
@@ -142,7 +141,6 @@ export default function ChangeLocationModal({
               onSelectedRowsChange={handleSelectedRowsChange}
             />
           </Stack>
-
           <ButtonContainer>
             <Button
               variant="contained"
