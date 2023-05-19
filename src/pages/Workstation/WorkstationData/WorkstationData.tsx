@@ -135,7 +135,6 @@ export default function WorkstationData() {
           >
             <ArrowBackIcon />
           </IconButton>
-
           <Typography
             fontWeight={'bold'}
             fontSize={16}

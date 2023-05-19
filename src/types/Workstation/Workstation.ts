@@ -25,6 +25,7 @@ export type Workstation = {
   memoriaRam: string;
   ultimoUsuarioLogado: string;
   dns: string;
+  idNfEntrada: string;
   usuario: Usuario;
   localIndustria: LocalIndustria
 };

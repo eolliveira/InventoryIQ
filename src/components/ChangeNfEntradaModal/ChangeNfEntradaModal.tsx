@@ -4,7 +4,7 @@ import { Button, Stack } from '@mui/material';
 import { requestBackend } from '../../http/requests';
 import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
-import { ButtonContainer, TextButton } from './ChangeLocationModal.style';
+import { ButtonContainer, TextButton } from './ChangeNfEntradaModal.style';
 import { LocalIndustria } from 'types/LocalIndustria';
 
 import Box from '@mui/material/Box';
@@ -16,37 +16,54 @@ import CustomModal from '../CustomModal/CustomModal';
 import LoadingButton from '@mui/lab/LoadingButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
+import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 
-type ChangeLocationModalProps = {
+type ChangeNfEntradaModalProps = {
   assetId?: string;
   openForm: boolean;
   closeForm: () => void;
 };
 
-const columns: TableColumn<LocalIndustria>[] = [
-  { name: 'Id', selector: (row) => row.id, sortable: true },
-  { name: 'Nome', selector: (row) => row.dsLocalIndustria, sortable: true },
+const columns: TableColumn<NotaFiscalEntrada>[] = [
+  { name: 'Cod. Pessoa', selector: (row) => row.pessoa.id, sortable: true },
+  {
+    name: 'Razão Social',
+    selector: (row) => row.pessoa.razaoSocial,
+    sortable: true,
+    width: '30%',
+  },
+  {
+    name: 'Numero da Nota',
+    selector: (row) => row.nrNotaFiscal,
+    sortable: true,
+  },
+  { name: 'Data de Emissão', selector: (row) => row.dtEmissao, sortable: true },
+  { name: 'Data de Entrada', selector: (row) => row.dtEntrada, sortable: true },
+  {
+    name: 'Valor da Nota',
+    selector: (row) => row.valorNotaFiscal,
+    sortable: true,
+  },
 ];
 
-export default function ChangeLocationModal({
+export default function ChangeNfEntradaModal({
   assetId,
   openForm,
   closeForm,
-}: ChangeLocationModalProps) {
+}: ChangeNfEntradaModalProps) {
   const { setFormContextData } = useContext(FormContext);
-  const [locations, setLocations] = useState<LocalIndustria[]>();
+  const [notes, setNotes] = useState<NotaFiscalEntrada[]>();
   const [inputFilter, setInputFilter] = useState('');
-  const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedNfEntrada, setSelectedNfEntrada] = useState('');
 
   useEffect(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/IndustrySite?dsLocalIndustria=${inputFilter}`,
+      url: `/nfEntrada?NrNotaFiscal=${inputFilter}`,
     };
-
     requestBackend(params)
       .then((response) => {
-        setLocations(response.data);
+        setNotes(response.data);
       })
       .catch((error) => {
         window.alert(error.response.data.message);
@@ -55,24 +72,24 @@ export default function ChangeLocationModal({
 
   const handleSelectedRowsChange = (selectedRows: any) => {
     if (selectedRows.selectedCount != 0) {
-      setSelectedLocation(selectedRows.selectedRows[0].id);
+      setSelectedNfEntrada(selectedRows.selectedRows[0].idNfEntrada);
     }
   };
 
   function handleConfirm() {
-    if (selectedLocation == '') {
-      window.alert('Selecione um local da Industria');
+    if (selectedNfEntrada == '') {
+      window.alert('Selecione uma Nota');
       return;
     }
-    const data = { localIndustriaId: selectedLocation };
+    const data = { idNfEntrada: selectedNfEntrada };
     const params: AxiosRequestConfig = {
       method: 'PUT',
-      url: `/active/${assetId}/location/update`,
+      url: `/active/${assetId}/nfEntrada/update`,
       data: data,
     };
     requestBackend(params)
       .then(() => {
-        window.alert('Local do ativo foi alterado com sucesso!');
+        window.alert('Nota Fiscal de Entrada foi atribuida com sucesso!');
         setFormContextData({ isEditing: false });
         closeForm();
       })
@@ -90,7 +107,7 @@ export default function ChangeLocationModal({
     <CustomModal openModal={openForm}>
       <BaseCard>
         <Stack padding={2}>
-          <Typography variant="h6"> Atribuir Local </Typography>
+          <Typography variant="h6">Atribuir Nota Fiscal de entrada </Typography>
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
               <Box
@@ -128,7 +145,7 @@ export default function ChangeLocationModal({
             </Stack>
             <DataTable
               columns={columns}
-              data={locations ? locations : []}
+              data={notes ? notes : []}
               dense
               striped
               responsive

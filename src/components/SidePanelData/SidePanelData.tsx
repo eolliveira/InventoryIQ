@@ -1,5 +1,5 @@
 import { theme } from '../../style/Theme';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { toDateTime } from '../../utils/Date';
 import { toCamelCase } from '../../utils/Converter';
 import { FormContext } from '../../contexts/FormContext';
@@ -17,6 +17,10 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ChangeUserModal from '../../components/ChangeUserModal/ChangeUserModal';
 import ChangeLocationModal from '../../components/ChangeLocationModal/ChangeLocationModal';
 import { Workstation } from 'types/Workstation/Workstation';
+import ChangeNfEntradaModal from '../../components/ChangeNfEntradaModal/ChangeNfEntradaModal';
+import { AxiosRequestConfig } from 'axios';
+import { requestBackend } from '../../http/requests';
+import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 
 type SidePanelDataProps = {
   data: Workstation;
@@ -24,9 +28,26 @@ type SidePanelDataProps = {
 
 export default function SidePanelData({ data }: SidePanelDataProps) {
   const { setFormContextData } = useContext(FormContext);
+  const [nfEntrada, setNfEntrada] = useState<NotaFiscalEntrada>();
   const [openChangeStateModal, setOpenChangeStateModal] = useState(false);
   const [openChangeUserModal, setOpenChangeUserModal] = useState(false);
   const [openChangeLocationModal, setOpenChangeLocationModal] = useState(false);
+  const [openChangeNfEntradaModal, setOpenChangeNfEntradaModal] =
+    useState(false);
+
+  useEffect(() => {
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: `/nfEntrada/${data.idNfEntrada}`,
+    };
+    requestBackend(params)
+      .then((response) => {
+        setNfEntrada(response.data);
+      })
+      .catch((error) => {
+        window.alert(error.response.data.message);
+      });
+  }, []);
 
   return (
     <Wapper>
@@ -179,10 +200,22 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
               Numero nota fiscal
             </Typography>
             <Typography color={'primary'} fontSize={12} variant="subtitle2">
-              521865
+              {nfEntrada?.nrNotaFiscal}
             </Typography>
           </Box>
-          <EditIcon color="action" fontSize="small" />
+
+          <IconButton
+            onClick={(e) => {
+              setOpenChangeNfEntradaModal(true);
+              setFormContextData({
+                isEditing: true,
+              });
+            }}
+            aria-label="delete"
+            size="small"
+          >
+            <EditIcon color="action" fontSize="small" />
+          </IconButton>
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
         <Box display={'flex'} flexDirection={'column'}>
@@ -190,7 +223,8 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
             Fornecedor
           </Typography>
           <Typography color={'primary'} fontSize={12} variant="subtitle2">
-            70524 - KABUM TECNOLOGIA LTDA
+            {nfEntrada?.pessoa &&
+              nfEntrada?.pessoa.id + ' - ' + nfEntrada?.pessoa.razaoSocial}
           </Typography>
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
@@ -224,6 +258,14 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
           assetId={data.id}
           openForm={openChangeLocationModal}
           closeForm={() => setOpenChangeLocationModal(false)}
+        />
+      )}
+
+      {openChangeNfEntradaModal && (
+        <ChangeNfEntradaModal
+          assetId={data.id}
+          openForm={openChangeNfEntradaModal}
+          closeForm={() => setOpenChangeNfEntradaModal(false)}
         />
       )}
     </Wapper>

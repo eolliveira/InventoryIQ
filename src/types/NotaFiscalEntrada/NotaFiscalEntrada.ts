@@ -1,6 +1,6 @@
 import { Pessoa } from "types/Pessoa";
 
-export type CentroCusto = {
+export type NotaFiscalEntrada = {
   idNfEntrada: string;
   nrNotaFiscal: string;
   chaveNfe: string;
