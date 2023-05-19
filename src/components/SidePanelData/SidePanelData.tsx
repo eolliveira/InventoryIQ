@@ -20,21 +20,9 @@ import { Workstation } from 'types/Workstation/Response/Workstation';
 
 type SidePanelDataProps = {
   data: Workstation;
-  nome?: string;
-  email?: string;
-  status?: string;
-  assetId?: string;
-  dtUltimoSincronismo?: string;
 };
 
-export default function SidePanelData({
-  data,
-  status,
-  assetId,
-  nome,
-  email,
-  dtUltimoSincronismo,
-}: SidePanelDataProps) {
+export default function SidePanelData({ data }: SidePanelDataProps) {
   const { setFormContextData } = useContext(FormContext);
   const [openChangeStateModal, setOpenChangeStateModal] = useState(false);
   const [openChangeUserModal, setOpenChangeUserModal] = useState(false);
@@ -100,7 +88,10 @@ export default function SidePanelData({
             justifyContent={'flex-start'}
           >
             <Typography color={'primary'} fontSize={14} variant="subtitle2">
-              {data.usuario ? data.usuario.nome : ' - '}
+              {(data.usuario &&
+                data.usuario.nome &&
+                toCamelCase(data.usuario.nome)) ||
+                ' - '}
             </Typography>
             <Typography color={'primary'} fontSize={12} variant="subtitle2">
               {data.usuario ? data.usuario.email : ' - '}
@@ -146,7 +137,7 @@ export default function SidePanelData({
               ? (data.localIndustria.id ? data.localIndustria.id : '') +
                 ' - ' +
                 (data.localIndustria.dsLocalIndustria
-                  ? data.localIndustria.dsLocalIndustria
+                  ? toCamelCase(data.localIndustria.dsLocalIndustria)
                   : '')
               : ' - '}
           </Typography>
@@ -162,14 +153,19 @@ export default function SidePanelData({
             <EditIcon color="action" fontSize="small" />
           </IconButton>
         </Box>
-        <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
+        <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
         <Box display={'flex'} flexDirection={'column'}>
           <Typography fontSize={13} variant="subtitle2">
             Centro de custo
           </Typography>
           <Typography color={'primary'} fontSize={12} variant="subtitle2">
-            {/* CONTINUAR DAQUI */}
-            70 - Tecnologia da informação
+            {data.localIndustria &&
+              data.localIndustria.centroCusto &&
+              data.localIndustria.centroCusto.id +
+                ' - ' +
+                toCamelCase(
+                  data.localIndustria.centroCusto.descricaoCentroCusto
+                )}
           </Typography>
         </Box>
       </Card>
@@ -209,16 +205,15 @@ export default function SidePanelData({
       </Card>
       {openChangeStateModal && (
         <ChangeStateModal
-          assetId={assetId}
+          assetId={data.id}
           openForm={openChangeStateModal}
           closeForm={() => setOpenChangeStateModal(false)}
         />
       )}
 
-      {/* //usuario */}
       {openChangeUserModal && (
         <ChangeUserModal
-          assetId={assetId}
+          assetId={data.id}
           openForm={openChangeUserModal}
           closeForm={() => setOpenChangeUserModal(false)}
         />
@@ -226,7 +221,7 @@ export default function SidePanelData({
 
       {openChangeLocationModal && (
         <ChangeLocationModal
-          assetId={assetId}
+          assetId={data.id}
           openForm={openChangeLocationModal}
           closeForm={() => setOpenChangeLocationModal(false)}
         />

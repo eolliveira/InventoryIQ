@@ -34,11 +34,8 @@ import { AxiosRequestConfig } from 'axios';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 import WorkstationForm from './WorkstationForm/WorkstationForm';
-import { red } from '@material-ui/core/colors';
 
 export default function WorkstationData() {
   const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
@@ -134,14 +131,7 @@ export default function WorkstationData() {
   return (
     <Wapper className="row">
       <ContainerSidePanel className="col-lg-3">
-        <SidePanelData
-          data={active ?? ({} as Workstation)}
-          assetId={active?.id}
-          nome={active?.usuario.nome}
-          email={active?.usuario.email}
-          status={active?.status}
-          dtUltimoSincronismo={active?.dtUltimoSincronismo}
-        />
+        <SidePanelData data={active ?? ({} as Workstation)} />
       </ContainerSidePanel>
       <BaseCard className="col-lg-9">
         <HeaderWorkstation>
