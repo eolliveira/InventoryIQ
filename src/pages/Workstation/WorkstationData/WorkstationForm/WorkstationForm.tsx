@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import { BaseCard } from '../../../../style/GlobalStyles';
 import { Button } from '@mui/material';
 
-import { Workstation } from '../../../../types/Workstation/Response/Workstation';
+import { Workstation } from '../../../../types/Workstation/Workstation';
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect, useState } from 'react';
@@ -19,18 +19,16 @@ import CustomModal from '../../../../components/CustomModal/CustomModal';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { WorkstationSync } from 'types/Workstation/Response/WorkstationSync';
+import { WorkstationSync } from 'types/Workstation/WorkstationSync';
 import { Interface } from 'types/Interface';
 import { Disco } from 'types/Workstation/Disco';
 import { Particao } from 'types/Workstation/Particao';
-
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 import { Controller } from 'react-hook-form';
-
 
 type WorkstationFormProps = {
   data?: Workstation;
@@ -43,19 +41,14 @@ export default function WorkstationForm({
   openForm,
   closeForm,
 }: WorkstationFormProps) {
-
-
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
-
 
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [synchronizing, setSynchronizing] = useState(false);
   const [ipAddress, setIpAddress] = useState('');
 
-
-  const [ interfaces, setInterfaces ] = useState<Interface[]>()
-  const [ discos , setDiscos ] = useState<Disco[]>()
-
+  const [interfaces, setInterfaces] = useState<Interface[]>();
+  const [discos, setDiscos] = useState<Disco[]>();
 
   const {
     register,
@@ -131,7 +124,7 @@ export default function WorkstationForm({
         setValue('modelo', response.data.modelo);
 
         response.data.interfaces.forEach((i: Interface) => interfaces.push(i));
-        setInterfaces(response.data.interfaces)
+        setInterfaces(response.data.interfaces);
 
         response.data.discos.forEach((disco: Disco) => {
           disco.particoes.forEach((particao: Particao) => {
@@ -145,7 +138,7 @@ export default function WorkstationForm({
           discos.push(disco);
         });
 
-        setDiscos(response.data.discos)
+        setDiscos(response.data.discos);
 
         setValue('interfaces', interfaces);
         setValue('discos', discos);
@@ -502,81 +495,53 @@ export default function WorkstationForm({
                   </div>
                 </div>
 
-                
-
-
-
-
-
-
-
-
-
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <Controller
+                    name="dtAquisicao"
+                    control={control}
+                    defaultValue=""
+                    render={({ field: { value, onChange } }) => (
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                          label="Data"
+                          format="DD/MM/YYYY"
+                          value={value ? dayjs(value) : null}
+                          onChange={(newValue) => {
+                            const dateFormat = dayjs
+                              .utc(newValue)
+                              .local()
+                              .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+                            onChange(dateFormat);
+                          }}
+                        />
+                      </LocalizationProvider>
+                    )}
+                  />
 
-
-                          <Controller
-                  name="dtAquisicao"
-                  control={control}
-                  defaultValue=""
-                  render={({ field: { value, onChange } }) => (
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker
-                        label="Data"
-                        format="DD/MM/YYYY"
-                        value={value ? dayjs(value) : null}
-                        onChange={(newValue) => {
-                          const dateFormat = dayjs.utc(newValue).local().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-                          onChange(dateFormat);
-                        }}
-                      />
-                    </LocalizationProvider>
-                  )}
-                />
-
-
-
-
-
-
-
-
-
-                  <DatePicker 
-                    format="DD/MM/YYYY" 
-                    value={dateValue} 
+                  <DatePicker
+                    format="DD/MM/YYYY"
+                    value={dateValue}
                     onChange={(newValue) => {
-                      const dataFormatada = dayjs.utc(newValue).local().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+                      const dataFormatada = dayjs
+                        .utc(newValue)
+                        .local()
+                        .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
                       console.log(dataFormatada);
-                      }} />
+                    }}
+                  />
                 </LocalizationProvider>
 
-                {
-                  
-                  <h1>{String(dateValue)}</h1>
-                }
-
-
-
-
-
-
-
-
+                {<h1>{String(dateValue)}</h1>}
 
                 <h3>Rede(interfaces)</h3>
-                {
-                  interfaces?.map((e) => <h6>{e.enderecoMac}</h6>)
-                }
-
+                {interfaces?.map((e) => (
+                  <h6>{e.enderecoMac}</h6>
+                ))}
 
                 <h3>Armazenamento</h3>
-                {
-                  discos?.map((d) => <h6>{d.modelo}</h6>)
-                }
-
-
-
+                {discos?.map((d) => (
+                  <h6>{d.modelo}</h6>
+                ))}
               </div>
             </div>
 

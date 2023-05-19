@@ -16,7 +16,7 @@ import ChangeStateModal from '../ChangeStateModal/ChangeStateModal';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ChangeUserModal from '../../components/ChangeUserModal/ChangeUserModal';
 import ChangeLocationModal from '../../components/ChangeLocationModal/ChangeLocationModal';
-import { Workstation } from 'types/Workstation/Response/Workstation';
+import { Workstation } from 'types/Workstation/Workstation';
 
 type SidePanelDataProps = {
   data: Workstation;

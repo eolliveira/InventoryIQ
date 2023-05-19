@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import { getAuthData } from './LocalStorage';
-import { TokenData } from 'types/TokenData';
-import { Role } from 'types/Role';
+import { TokenData } from 'types/Authentication/TokenData';
+import { Role } from 'types/Authentication/Role';
 
 export const getTokenData = (): TokenData | undefined => {
   try {

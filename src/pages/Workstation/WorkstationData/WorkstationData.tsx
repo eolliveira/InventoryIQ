@@ -17,12 +17,9 @@ import StockButton from '../../../components/StockButton/StockButon';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
-import { Workstation } from '../../../types/Workstation/Response/Workstation';
-
+import { Workstation } from '../../../types/Workstation/Workstation';
 import TabPanel from '@material-ui/lab/TabPanel';
-
 import Stack from '@mui/material/Stack';
-
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -32,7 +29,6 @@ import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
 import { AxiosRequestConfig } from 'axios';
 import LoadingButton from '@mui/lab/LoadingButton';
-
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import WorkstationForm from './WorkstationForm/WorkstationForm';
@@ -54,9 +50,6 @@ export default function WorkstationData() {
   const getWorkstationData = useCallback(() => {
     requestBackend({ url: `/workstation/${workstationId}` })
       .then((response) => {
-        console.log('testeee');
-        console.log(response.data);
-
         setActive(response.data);
       })
       .catch((error) => {

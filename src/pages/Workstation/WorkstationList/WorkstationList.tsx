@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import { SpringPage } from 'types/vendor/spring';
-import { Workstation } from '../../../types/Workstation/Response/Workstation';
+import { Workstation } from '../../../types/Workstation/Workstation';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { BaseCard } from '../../../style/GlobalStyles';
 import { AxiosRequestConfig } from 'axios';
