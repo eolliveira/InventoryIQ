@@ -130,6 +130,8 @@ export default function ChangeNfEntradaModal({
                     setInputFilter(e.target.value);
                   }}
                   value={inputFilter}
+                  type="number"
+                  className="no-spinner"
                   style={{
                     backgroundColor: 'unset',
                     width: '100%',

@@ -1,5 +1,5 @@
 import { theme } from '../../style/Theme';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { toDateTime } from '../../utils/Date';
 import { toCamelCase } from '../../utils/Converter';
 import { FormContext } from '../../contexts/FormContext';
@@ -21,6 +21,7 @@ import ChangeNfEntradaModal from '../../components/ChangeNfEntradaModal/ChangeNf
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../http/requests';
 import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
+import { formatarMoeda } from '../../utils/CurrencyConverter';
 
 type SidePanelDataProps = {
   data: Workstation;
@@ -35,19 +36,24 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
   const [openChangeNfEntradaModal, setOpenChangeNfEntradaModal] =
     useState(false);
 
-  useEffect(() => {
+  const getNfEntrada = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/nfEntrada/${data.idNfEntrada}`,
     };
+
     requestBackend(params)
       .then((response) => {
         setNfEntrada(response.data);
       })
       .catch((error) => {
-        window.alert(error.response.data.message);
+        window.alert('TESTE' + error.response.data.message);
       });
-  }, []);
+  }, [data]);
+
+  useEffect(() => {
+    if (data.idNfEntrada) getNfEntrada();
+  }, [getNfEntrada]);
 
   return (
     <Wapper>
@@ -233,7 +239,8 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
             Valor da nota
           </Typography>
           <Typography color={'primary'} fontSize={12} variant="subtitle2">
-            R$ 1.500,00
+            {nfEntrada?.valorNotaFiscal &&
+              formatarMoeda(nfEntrada.valorNotaFiscal)}
           </Typography>
         </Box>
       </Card>
