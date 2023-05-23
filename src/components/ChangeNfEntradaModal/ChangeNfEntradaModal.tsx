@@ -6,6 +6,7 @@ import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
 import { ButtonContainer, TextButton } from './ChangeNfEntradaModal.style';
 import { LocalIndustria } from 'types/LocalIndustria';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import Box from '@mui/material/Box';
 import CheckIcon from '@mui/icons-material/Check';
@@ -52,22 +53,25 @@ export default function ChangeNfEntradaModal({
   closeForm,
 }: ChangeNfEntradaModalProps) {
   const { setFormContextData } = useContext(FormContext);
+  const [isLoading, setIsLoading] = useState(false);
   const [notes, setNotes] = useState<NotaFiscalEntrada[]>();
   const [inputFilter, setInputFilter] = useState('');
   const [selectedNfEntrada, setSelectedNfEntrada] = useState('');
 
   useEffect(() => {
+    setIsLoading(true);
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/nfEntrada?NrNotaFiscal=${inputFilter}`,
     };
     requestBackend(params)
       .then((response) => {
-        setNotes(response.data);
+        setNotes(response.data.content);
       })
       .catch((error) => {
         window.alert(error.response.data.message);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
@@ -145,21 +149,33 @@ export default function ChangeNfEntradaModal({
                 />
               </Box>
             </Stack>
-            <DataTable
-              columns={columns}
-              data={notes ? notes : []}
-              dense
-              striped
-              responsive
-              fixedHeader
-              sortIcon={<ExpandMoreIcon />}
-              fixedHeaderScrollHeight={'62vh'}
-              pointerOnHover
-              highlightOnHover
-              selectableRows
-              selectableRowsSingle
-              onSelectedRowsChange={handleSelectedRowsChange}
-            />
+
+            {isLoading ? (
+              <Box
+                height={'100%'}
+                display={'flex'}
+                alignItems={'center'}
+                justifyContent={'center'}
+              >
+                <CircularProgress />
+              </Box>
+            ) : (
+              <DataTable
+                columns={columns}
+                data={notes ? notes : []}
+                dense
+                striped
+                responsive
+                fixedHeader
+                sortIcon={<ExpandMoreIcon />}
+                fixedHeaderScrollHeight={'62vh'}
+                pointerOnHover
+                highlightOnHover
+                selectableRows
+                selectableRowsSingle
+                onSelectedRowsChange={handleSelectedRowsChange}
+              />
+            )}
           </Stack>
           <ButtonContainer>
             <Button

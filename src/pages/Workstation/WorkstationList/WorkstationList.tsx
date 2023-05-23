@@ -22,7 +22,7 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
-import { toCamelCase } from '../../../utils/Converter';
+import { toCamelCase } from '../../../utils/StringConverter';
 import CloseIcon from '@mui/icons-material/Close';
 
 const columns: TableColumn<Workstation>[] = [

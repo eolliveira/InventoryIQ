@@ -1,7 +1,7 @@
 import { theme } from '../../style/Theme';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { toDateTime } from '../../utils/Date';
-import { toCamelCase } from '../../utils/Converter';
+import { toCamelCase } from '../../utils/StringConverter';
 import { FormContext } from '../../contexts/FormContext';
 import { BaseCard, Field, Input, Label } from '../../style/GlobalStyles';
 
@@ -21,7 +21,7 @@ import ChangeNfEntradaModal from '../../components/ChangeNfEntradaModal/ChangeNf
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../http/requests';
 import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
-import { formatarMoeda } from '../../utils/CurrencyConverter';
+import { formatCurrency } from '../../utils/CurrencyConverter';
 
 type SidePanelDataProps = {
   data: Workstation;
@@ -206,7 +206,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
               Numero nota fiscal
             </Typography>
             <Typography color={'primary'} fontSize={12} variant="subtitle2">
-              {nfEntrada?.nrNotaFiscal}
+              {nfEntrada?.nrNotaFiscal ? nfEntrada.nrNotaFiscal : ' - '}
             </Typography>
           </Box>
 
@@ -229,8 +229,9 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
             Fornecedor
           </Typography>
           <Typography color={'primary'} fontSize={12} variant="subtitle2">
-            {nfEntrada?.pessoa &&
-              nfEntrada?.pessoa.id + ' - ' + nfEntrada?.pessoa.razaoSocial}
+            {nfEntrada?.pessoa
+              ? nfEntrada?.pessoa.id + ' - ' + nfEntrada?.pessoa.razaoSocial
+              : ' - '}
           </Typography>
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
@@ -239,8 +240,9 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
             Valor da nota
           </Typography>
           <Typography color={'primary'} fontSize={12} variant="subtitle2">
-            {nfEntrada?.valorNotaFiscal &&
-              formatarMoeda(nfEntrada.valorNotaFiscal)}
+            {nfEntrada?.valorNotaFiscal
+              ? formatCurrency(nfEntrada.valorNotaFiscal)
+              : ' - '}
           </Typography>
         </Box>
       </Card>

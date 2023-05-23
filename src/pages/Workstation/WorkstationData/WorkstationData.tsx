@@ -10,9 +10,9 @@ import IconButton from '@mui/material/IconButton';
 import WorkstationDetails from './WorkstationDetails/WorkstationDetails';
 import WorkstationMovements from './WorkstationMovements/WorkstationMovements';
 import WorkstationLicenses from './WorkstationLicenses/WorkstationLicenses';
-import WorkstationMaintenance from './WorkstationMaintenance/WorkstationMaintenance';
+import WorkstationMaintenance from './WorkstationServices/WorkstationServices';
 import WorkstationHardware from './WorkstationHardware/WorkstationHardware';
-import WorkstationInterfaces from './WorkstationInterfaces/WorkstationInterfaces';
+import WorkstationInterfaces from './AssetInterfaces/AssetInterfaces';
 import StockButton from '../../../components/StockButton/StockButon';
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -184,7 +184,6 @@ export default function WorkstationData() {
                 textColor="primary"
                 indicatorColor="primary"
                 aria-label="secondary tabs example"
-                // style={{ color: `${theme.colors.yellow}` }}
               >
                 <Tab
                   value="1"
@@ -228,7 +227,7 @@ export default function WorkstationData() {
                 />
                 <Tab
                   value="6"
-                  label="Manutenção"
+                  label="Serviços"
                   style={{
                     fontSize: `${theme.size.sm}`,
                     textTransform: 'none',
@@ -247,7 +246,7 @@ export default function WorkstationData() {
             <WorkstationInterfaces workstationId={active?.id} />
           </Panel>
           <Panel value="4">
-            <WorkstationMovements teste={10} />
+            <WorkstationMovements workstationId={active?.id} />
           </Panel>
           <Panel value="5">
             <WorkstationLicenses teste={10} />
