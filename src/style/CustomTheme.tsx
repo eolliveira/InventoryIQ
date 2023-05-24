@@ -14,7 +14,6 @@ export const CustomTheme = createTheme({
       light: '#e0e0e0',
       contrastText: '#333333',
     },
-
   },
   components: {
     // MuiTab: {
@@ -33,6 +32,5 @@ export const CustomTheme = createTheme({
     //     },
     //   },
     // },
-  }
-  
+  },
 });

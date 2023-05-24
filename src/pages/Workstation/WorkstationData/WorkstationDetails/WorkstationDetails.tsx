@@ -199,7 +199,9 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                 <Input
                   onChange={() => {}}
                   value={
-                    data ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY') : ''
+                    data?.dtAquisicao
+                      ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY')
+                      : ''
                   }
                   type="text"
                   id="dtAquisicao"
@@ -212,7 +214,11 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                 <Label htmlFor="dtExpiracao">Data expiração</Label>
                 <Input
                   onChange={() => {}}
-                  value={data?.dtExpiracao || ''}
+                  value={
+                    data?.dtExpiracao
+                      ? dayjs(data?.dtExpiracao).format('DD/MM/YYYY')
+                      : ''
+                  }
                   type="text"
                   id="dtExpiracao"
                   readOnly
@@ -229,7 +235,11 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                 </Label>
                 <Input
                   onChange={() => {}}
-                  value={data?.dtVencimentoGarantia || ''}
+                  value={
+                    data?.dtVencimentoGarantia
+                      ? dayjs(data?.dtVencimentoGarantia).format('DD/MM/YYYY')
+                      : ''
+                  }
                   type="text"
                   id="dtVencimentoGarantia"
                   readOnly

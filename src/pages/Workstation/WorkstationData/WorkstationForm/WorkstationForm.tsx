@@ -29,6 +29,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 import { Controller } from 'react-hook-form';
+import FieldDate from '../../../../components/FieldDate/FieldDate';
+import { validateHeaderValue } from 'http';
+import TextField from '@mui/material/TextField';
+import { error } from 'console';
 
 type WorkstationFormProps = {
   data?: Workstation;
@@ -213,134 +217,190 @@ export default function WorkstationForm({
           <Form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-lg-6">
-                <Field>
-                  <Label htmlFor="nome">Nome</Label>
-                  <Input
-                    {...register('nome', {
-                      required: 'Campo requerido',
-                    })}
-                    className={`form-control base-input mb-2 ${
-                      errors.nome ? 'is-invalid' : ''
-                    }`}
-                    type="text"
-                    name="nome"
-                    id={'nome'}
-                  />
-                </Field>
-                <Field>
-                  <Label htmlFor="fabricante">Fabricante</Label>
-                  <Input
-                    {...register('fabricante')}
-                    className={`form-control base-input mb-2 ${
-                      errors.fabricante ? 'is-invalid' : ''
-                    }`}
-                    type="text"
-                    name="fabricante"
-                    id="fabricante"
-                  />
-                </Field>
+                <TextField
+                  margin="dense"
+                  className={`form-control base-input mb-2 ${
+                    errors.nome ? 'is-invalid' : ''
+                  }`}
+                  type="text"
+                  {...register('nome', {
+                    required: 'Campo requerido',
+                  })}
+                  fullWidth
+                  size="small"
+                  label="Nome"
+                  InputProps={{
+                    style: {
+                      fontSize: '13px',
+                    },
+                  }}
+                />
+
+                <TextField
+                  margin="dense"
+                  className={`form-control base-input mb-2 ${
+                    errors.fabricante ? 'is-invalid' : ''
+                  }`}
+                  type="text"
+                  {...register('fabricante', {
+                    required: 'Campo requerido',
+                  })}
+                  fullWidth
+                  size="small"
+                  label="Fabricante"
+                  InputProps={{
+                    style: {
+                      fontSize: '13px',
+                    },
+                  }}
+                  InputLabelProps={{
+                    shrink: data?.fabricante ? true : false,
+                  }}
+                />
 
                 <div className="row">
                   <div className="col-lg-6">
-                    <Field>
-                      <Label htmlFor="nomeHost">Hostname</Label>
-                      <Input
-                        {...register('nomeHost')}
-                        className={`form-control base-input mb-2 ${
-                          errors.nomeHost ? 'is-invalid' : ''
-                        }`}
-                        type="text"
-                        name="nomeHost"
-                        id="nomeHost"
-                      />
-                    </Field>
+                    <TextField
+                      margin="dense"
+                      className={`form-control base-input mb-2 ${
+                        errors.nomeHost ? 'is-invalid' : ''
+                      }`}
+                      type="text"
+                      {...register('nomeHost', {
+                        required: 'Campo requerido',
+                      })}
+                      fullWidth
+                      size="small"
+                      label="Hostname"
+                      InputProps={{
+                        style: {
+                          fontSize: '13px',
+                        },
+                      }}
+                    />
                   </div>
                   <div className="col-lg-6">
-                    <Field>
-                      <Label htmlFor="memoriaRam">Memória ram(Virtual)</Label>
-                      <Input
-                        {...register('memoriaRam')}
-                        className={`form-control base-input mb-2 ${
-                          errors.memoriaRam ? 'is-invalid' : ''
-                        }`}
-                        type="text"
-                        name="memoriaRam"
-                        id="memoriaRam"
-                      />
-                    </Field>
+                    <TextField
+                      margin="dense"
+                      className={`form-control base-input mb-2 ${
+                        errors.memoriaRam ? 'is-invalid' : ''
+                      }`}
+                      type="text"
+                      {...register('memoriaRam', {
+                        required: 'Campo requerido',
+                      })}
+                      fullWidth
+                      size="small"
+                      label="Memória ram(Virtual)"
+                      InputProps={{
+                        style: {
+                          fontSize: '13px',
+                        },
+                      }}
+                    />
                   </div>
                 </div>
 
-                <Field>
-                  <Label htmlFor="dominio">Dominio</Label>
-                  <Input
-                    {...register('dominio')}
-                    className={`form-control base-input mb-2 ${
-                      errors.dominio ? 'is-invalid' : ''
-                    }`}
-                    type="text"
-                    name="dominio"
-                    id="dominio"
-                  />
-                </Field>
+                <TextField
+                  margin="dense"
+                  className={`form-control base-input mb-2 ${
+                    errors.dominio ? 'is-invalid' : ''
+                  }`}
+                  type="text"
+                  {...register('dominio', {
+                    required: 'Campo requerido',
+                  })}
+                  fullWidth
+                  size="small"
+                  label="Dominio"
+                  InputProps={{
+                    style: {
+                      fontSize: '13px',
+                    },
+                  }}
+                />
 
                 <div className="row">
                   <div className="col-lg-6">
-                    <Field>
-                      <Label htmlFor="dnsList">Dns</Label>
-                      <Input
-                        {...register('dnsList')}
-                        className={`form-control base-input mb-2 ${
-                          errors.dnsList ? 'is-invalid' : ''
-                        }`}
-                        type="text"
-                        name="dnsList"
-                        id="dnsList"
-                      />
-                    </Field>
+                    <TextField
+                      margin="dense"
+                      className={`form-control base-input mb-2 ${
+                        errors.dnsList ? 'is-invalid' : ''
+                      }`}
+                      type="text"
+                      {...register('dnsList', {
+                        required: 'Campo requerido',
+                      })}
+                      fullWidth
+                      size="small"
+                      label="Dns"
+                      InputProps={{
+                        style: {
+                          fontSize: '13px',
+                        },
+                      }}
+                    />
                   </div>
                   <div className="col-lg-6">
-                    <Field>
-                      <Label htmlFor="gateway">Gateway</Label>
-                      <Input
-                        {...register('gateway')}
-                        className={`form-control base-input mb-2 ${
-                          errors.gateway ? 'is-invalid' : ''
-                        }`}
-                        type="text"
-                        name="gateway"
-                        id="gateway"
-                      />
-                    </Field>
+                    <TextField
+                      margin="dense"
+                      className={`form-control base-input mb-2 ${
+                        errors.dnsList ? 'is-invalid' : ''
+                      }`}
+                      type="text"
+                      {...register('gateway', {
+                        required: 'Campo requerido',
+                      })}
+                      fullWidth
+                      size="small"
+                      label="Gateway"
+                      InputProps={{
+                        style: {
+                          fontSize: '13px',
+                        },
+                      }}
+                    />
                   </div>
                 </div>
 
-                <Field>
-                  <Label htmlFor="ultimoUsuarioLogado">
-                    Ultimo usuário logado
-                  </Label>
-                  <Input
-                    {...register('ultimoUsuarioLogado')}
-                    className={`form-control base-input mb-2 ${
-                      errors.ultimoUsuarioLogado ? 'is-invalid' : ''
-                    }`}
-                    type="text"
-                    name="ultimoUsuarioLogado"
-                    id="ultimoUsuarioLogado"
-                  />
-                </Field>
-                <Field>
-                  <Label htmlFor="tempoLigado">Tempo atividade</Label>
-                  <Input
-                    {...register('tempoLigado')}
-                    className={`form-control base-input mb-2 ${
-                      errors.tempoLigado ? 'is-invalid' : ''
-                    }`}
-                    type="text"
-                    name="tempoLigado"
-                    id="tempoLigado"
-                  />
-                </Field>
+                <TextField
+                  margin="dense"
+                  className={`form-control base-input mb-2 ${
+                    errors.ultimoUsuarioLogado ? 'is-invalid' : ''
+                  }`}
+                  type="text"
+                  {...register('ultimoUsuarioLogado', {
+                    required: 'Campo requerido',
+                  })}
+                  fullWidth
+                  size="small"
+                  label="Ultimo usuário logado"
+                  InputProps={{
+                    style: {
+                      fontSize: '13px',
+                    },
+                  }}
+                />
+
+                <TextField
+                  margin="dense"
+                  className={`form-control base-input mb-2 ${
+                    errors.tempoLigado ? 'is-invalid' : ''
+                  }`}
+                  type="text"
+                  {...register('tempoLigado', {
+                    required: 'Campo requerido',
+                  })}
+                  fullWidth
+                  size="small"
+                  label="Tempo atividade"
+                  InputProps={{
+                    style: {
+                      fontSize: '13px',
+                    },
+                  }}
+                />
+
                 <Field>
                   <Label htmlFor="observacao">Observação</Label>
                   <textarea
@@ -435,38 +495,28 @@ export default function WorkstationForm({
 
                 <div className="row">
                   <div className="col-lg-6">
-                    <Field>
-                      <Label htmlFor="dtAquisicao">Data aquisição</Label>
-                      <Input
-                        {...register('dtAquisicao')}
-                        className={`form-control base-input mb-2 ${
-                          errors.dtAquisicao ? 'is-invalid' : ''
-                        }`}
-                        type="text"
-                        name="dtAquisicao"
-                        id="dtAquisicao"
-                      />
-                    </Field>
+                    <FieldDate
+                      label="Data aquisição"
+                      control={control}
+                      name="dtAquisicao"
+                    />
                   </div>
                   <div className="col-lg-6">
-                    <Field>
-                      <Label htmlFor="dtExpiracao">Data expiração</Label>
-                      <Input
-                        {...register('dtExpiracao')}
-                        className={`form-control base-input mb-2 ${
-                          errors.dtExpiracao ? 'is-invalid' : ''
-                        }`}
-                        type="text"
-                        name="dtExpiracao"
-                        id="dtExpiracao"
-                      />
-                    </Field>
+                    <FieldDate
+                      name="dtExpiracao"
+                      label="Data expiração"
+                      control={control}
+                    />
                   </div>
                 </div>
-
                 <div className="row">
                   <div className="col-lg-6">
-                    <Field>
+                    <FieldDate
+                      name="dtVencimentoGarantia"
+                      label="Data vencimento garantia"
+                      control={control}
+                    />
+                    {/* <Field>
                       <Label htmlFor="dtVencimentoGarantia">
                         Data venc. Garantia
                       </Label>
@@ -479,7 +529,7 @@ export default function WorkstationForm({
                         name="dtVencimentoGarantia"
                         id="dtVencimentoGarantia"
                       />
-                    </Field>
+                    </Field> */}
                     <Field>
                       <Label htmlFor="vlrAquisicao">Valor compra</Label>
                       <Input
@@ -495,7 +545,7 @@ export default function WorkstationForm({
                   </div>
                 </div>
 
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <Controller
                     name="dtAquisicao"
                     control={control}
@@ -529,7 +579,7 @@ export default function WorkstationForm({
                       console.log(dataFormatada);
                     }}
                   />
-                </LocalizationProvider>
+                </LocalizationProvider> */}
 
                 {<h1>{String(dateValue)}</h1>}
 
