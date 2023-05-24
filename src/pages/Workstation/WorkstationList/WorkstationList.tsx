@@ -24,6 +24,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import { toCamelCase } from '../../../utils/StringConverter';
 import CloseIcon from '@mui/icons-material/Close';
+import FieldDate from '../../../components/FieldDate/FieldDate';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -104,6 +105,7 @@ export default function WorkstationList() {
   return (
     <>
       <h1>Teste</h1>
+      <FieldDate />
       <HeaderContainer>
         <Stack flexWrap={'wrap'} direction={'row'} spacing={2}>
           <Box
