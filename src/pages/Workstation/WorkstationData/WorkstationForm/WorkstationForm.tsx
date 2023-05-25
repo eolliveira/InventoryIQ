@@ -35,6 +35,7 @@ import TextField from '@mui/material/TextField';
 import { error } from 'console';
 import FieldText from '../../../../components/inputs/FieldText/FieldText';
 import FieldMultiline from '../../../../components/inputs/FieldMultiline/FieldMultiline';
+import FieldCurrency from '../../../../components/inputs/FieldCurrency/FieldCurrency';
 
 type WorkstationFormProps = {
   data?: Workstation;
@@ -315,73 +316,53 @@ export default function WorkstationForm({
                 />
               </div>
               <div className="col-lg-6">
-                <Field>
-                  <Label htmlFor="sistemaOperacional">
-                    Sistema operacional
-                  </Label>
-                  <Input
-                    {...register('sistemaOperacional')}
-                    className={`form-control base-input mb-2 ${
-                      errors.sistemaOperacional ? 'is-invalid' : ''
-                    }`}
-                    type="text"
-                    name="sistemaOperacional"
-                    id="sistemaOperacional"
-                  />
-                </Field>
-                <Field>
-                  <Label htmlFor="processador">Processador</Label>
-                  <Input
-                    {...register('processador')}
-                    className={`form-control base-input mb-2 ${
-                      errors.processador ? 'is-invalid' : ''
-                    }`}
-                    type="text"
-                    name="processador"
-                    id="processador"
-                  />
-                </Field>
-                <Field>
-                  <Label htmlFor="numeroSerie">Numero de série</Label>
-                  <Input
-                    {...register('numeroSerie')}
-                    className={`form-control base-input mb-2 ${
-                      errors.numeroSerie ? 'is-invalid' : ''
-                    }`}
-                    type="text"
-                    name="numeroSerie"
-                    id="numeroSerie"
-                  />
-                </Field>
+                <FieldText
+                  label=" Sistema operacional."
+                  name="sistemaOperacional"
+                  control={control}
+                  register={register}
+                  error={!!errors.sistemaOperacional}
+                  helperText={errors.sistemaOperacional?.message}
+                />
+
+                <FieldText
+                  label="Processador"
+                  name="processador"
+                  control={control}
+                  register={register}
+                  error={!!errors.processador}
+                  helperText={errors.processador?.message}
+                />
+
+                <FieldText
+                  label="Numero de série."
+                  name="numeroSerie"
+                  control={control}
+                  register={register}
+                  error={!!errors.numeroSerie}
+                  helperText={errors.numeroSerie?.message}
+                />
 
                 <div className="row">
                   <div className="col-lg-9">
-                    <Field>
-                      <Label htmlFor="modelo">Modelo</Label>
-                      <Input
-                        {...register('modelo')}
-                        className={`form-control base-input mb-2 ${
-                          errors.modelo ? 'is-invalid' : ''
-                        }`}
-                        type="text"
-                        name="modelo"
-                        id="modelo"
-                      />
-                    </Field>
+                    <FieldText
+                      label="Modelo"
+                      name="numeroSerie"
+                      control={control}
+                      register={register}
+                      error={!!errors.numeroSerie}
+                      helperText={errors.numeroSerie?.message}
+                    />
                   </div>
                   <div className="col-lg-3">
-                    <Field>
-                      <Label htmlFor="arquiteturaSo">Arquitetura</Label>
-                      <Input
-                        {...register('arquiteturaSo')}
-                        className={`form-control base-input mb-2 ${
-                          errors.arquiteturaSo ? 'is-invalid' : ''
-                        }`}
-                        type="text"
-                        name="arquiteturaSo"
-                        id="arquiteturaSo"
-                      />
-                    </Field>
+                    <FieldText
+                      label="Arquitetura"
+                      name="arquiteturaSo"
+                      control={control}
+                      register={register}
+                      error={!!errors.arquiteturaSo}
+                      helperText={errors.arquiteturaSo?.message}
+                    />
                   </div>
                 </div>
 
@@ -408,22 +389,18 @@ export default function WorkstationForm({
                     <FieldDate
                       register={register}
                       name="dtVencimentoGarantia"
-                      label="Data vencimento garantia"
+                      label="Data venc.Garantia"
                       control={control}
                     />
 
-                    <Field>
-                      <Label htmlFor="vlrAquisicao">Valor compra</Label>
-                      <Input
-                        {...register('vlrAquisicao')}
-                        className={`form-control base-input mb-2 ${
-                          errors.vlrAquisicao ? 'is-invalid' : ''
-                        }`}
-                        type="number"
-                        name="vlrAquisicao"
-                        id="vlrAquisicao"
-                      />
-                    </Field>
+                    <FieldCurrency
+                      label="Valor compra"
+                      name="vlrAquisicao"
+                      control={control}
+                      register={register}
+                      error={!!errors.vlrAquisicao}
+                      helperText={errors.vlrAquisicao?.message}
+                    />
                   </div>
                 </div>
 
@@ -467,7 +444,7 @@ export default function WorkstationForm({
 
                 <h3>Rede(interfaces)</h3>
                 {interfaces?.map((e) => (
-                  <h6>{e.enderecoMac}</h6>
+                  <h6 key={e.id}>{e.enderecoMac}</h6>
                 ))}
 
                 <h3>Armazenamento</h3>

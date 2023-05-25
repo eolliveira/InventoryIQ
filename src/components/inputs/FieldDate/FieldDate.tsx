@@ -37,7 +37,12 @@ export default function FieldDate({
             format="DD/MM/YYYY"
             label={label}
             slotProps={{
-              textField: { size: 'small', variant: 'outlined' },
+              textField: {
+                defaultValue: defaultValue,
+                margin: 'dense',
+                size: 'small',
+                variant: 'outlined',
+              },
             }}
             value={value ? dayjs(value) : undefined}
             onChange={(newValue) => {
