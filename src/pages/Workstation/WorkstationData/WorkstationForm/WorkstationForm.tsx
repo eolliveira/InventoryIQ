@@ -11,7 +11,6 @@ import { FormContext } from '../../../../contexts/FormContext';
 import { useNavigate } from 'react-router-dom';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../../http/requests';
-import { theme } from '../../../../style/Theme';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
@@ -24,18 +23,15 @@ import { Interface } from 'types/Interface';
 import { Disco } from 'types/Workstation/Disco';
 import { Particao } from 'types/Workstation/Particao';
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs, { Dayjs } from 'dayjs';
-import { Controller } from 'react-hook-form';
+import { Dayjs } from 'dayjs';
 import FieldDate from '../../../../components/inputs/FieldDate/FieldDate';
-import { validateHeaderValue } from 'http';
-import TextField from '@mui/material/TextField';
-import { error } from 'console';
 import FieldText from '../../../../components/inputs/FieldText/FieldText';
 import FieldMultiline from '../../../../components/inputs/FieldMultiline/FieldMultiline';
 import FieldCurrency from '../../../../components/inputs/FieldCurrency/FieldCurrency';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import IconButton from '@mui/material/IconButton';
 
 type WorkstationFormProps = {
   data?: Workstation;
@@ -184,7 +180,19 @@ export default function WorkstationForm({
     <CustomModal openModal={openForm}>
       <Card>
         <Container>
-          <h1>Adicionando Estação de Trabalho</h1>
+          <Box
+            display={'flex'}
+            alignItems={'center'}
+            justifyContent={'space-between'}
+          >
+            <Typography variant="h6">
+              Adicionando Estação de Trabalho
+            </Typography>
+            <IconButton size="medium" onClick={onCancelForm}>
+              <CloseRoundedIcon color="primary" />
+            </IconButton>
+          </Box>
+
           {formContextData.isAdding && (
             <SearchAddressContainer>
               <Field>
@@ -310,7 +318,7 @@ export default function WorkstationForm({
                   name="observacao"
                   register={register}
                   label="Observação"
-                  rows={10}
+                  rows={6}
                   error={!!errors.observacao}
                   helperText={errors.observacao?.message}
                 />
@@ -403,42 +411,6 @@ export default function WorkstationForm({
                     />
                   </div>
                 </div>
-
-                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <Controller
-                    name="dtAquisicao"
-                    control={control}
-                    defaultValue=""
-                    render={({ field: { value, onChange } }) => (
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                          label="Data"
-                          format="DD/MM/YYYY"
-                          value={value ? dayjs(value) : null}
-                          onChange={(newValue) => {
-                            const dateFormat = dayjs
-                              .utc(newValue)
-                              .local()
-                              .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-                            onChange(dateFormat);
-                          }}
-                        />
-                      </LocalizationProvider>
-                    )}
-                  />
-
-                  <DatePicker
-                    format="DD/MM/YYYY"
-                    value={dateValue}
-                    onChange={(newValue) => {
-                      const dataFormatada = dayjs
-                        .utc(newValue)
-                        .local()
-                        .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-                      console.log(dataFormatada);
-                    }}
-                  />
-                </LocalizationProvider> */}
 
                 {<h1>{String(dateValue)}</h1>}
 

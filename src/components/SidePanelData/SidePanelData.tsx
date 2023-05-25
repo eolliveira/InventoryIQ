@@ -100,6 +100,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
       <Card>
         <Box
           display={'flex'}
+          flexWrap={'wrap'}
           justifyContent={'space-around'}
           alignItems={'center'}
         >
@@ -146,6 +147,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
         <Box
           display={'flex'}
           justifyContent={'space-around'}
+          flexWrap={'wrap'}
           alignItems={'center'}
         >
           <LocationOnIcon
