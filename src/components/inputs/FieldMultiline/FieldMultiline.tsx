@@ -1,7 +1,7 @@
 import { Control, Controller, UseFormRegister } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 
-type InputTextProps = {
+type FieldMultilineProps = {
   name: string;
   control: Control<any, any>;
   defaultValue?: string;
@@ -10,9 +10,10 @@ type InputTextProps = {
   helperText?: string;
   register: UseFormRegister<any>;
   required?: boolean;
+  rows: number;
 };
 
-export default function FieldText({
+export default function FieldMultiline({
   name,
   control,
   defaultValue,
@@ -21,7 +22,8 @@ export default function FieldText({
   helperText,
   register,
   required,
-}: InputTextProps) {
+  rows,
+}: FieldMultilineProps) {
   return (
     <Controller
       name={name}
@@ -32,6 +34,8 @@ export default function FieldText({
           {...register(name, {
             required: required ? 'Campo requirido' : undefined,
           })}
+          multiline
+          rows={rows}
           fullWidth
           margin="dense"
           name={name}
