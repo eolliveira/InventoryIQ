@@ -29,10 +29,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 import { Controller } from 'react-hook-form';
-import FieldDate from '../../../../components/FieldDate/FieldDate';
+import FieldDate from '../../../../components/inputs/FieldDate/FieldDate';
 import { validateHeaderValue } from 'http';
 import TextField from '@mui/material/TextField';
 import { error } from 'console';
+import InputText from '../../../../components/inputs/FieldText/FieldText';
 
 type WorkstationFormProps = {
   data?: Workstation;
@@ -217,7 +218,17 @@ export default function WorkstationForm({
           <Form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-lg-6">
-                <TextField
+                <InputText
+                  required
+                  label="Nome"
+                  name="nome"
+                  control={control}
+                  register={register}
+                  error={!!errors.nome}
+                  helperText={errors.nome?.message}
+                />
+
+                {/* <TextField
                   margin="dense"
                   className={`form-control base-input mb-2 ${
                     errors.nome ? 'is-invalid' : ''
@@ -234,7 +245,7 @@ export default function WorkstationForm({
                       fontSize: '13px',
                     },
                   }}
-                />
+                /> */}
 
                 <TextField
                   margin="dense"
@@ -242,9 +253,7 @@ export default function WorkstationForm({
                     errors.fabricante ? 'is-invalid' : ''
                   }`}
                   type="text"
-                  {...register('fabricante', {
-                    required: 'Campo requerido',
-                  })}
+                  {...register('fabricante')}
                   fullWidth
                   size="small"
                   label="Fabricante"
@@ -266,9 +275,7 @@ export default function WorkstationForm({
                         errors.nomeHost ? 'is-invalid' : ''
                       }`}
                       type="text"
-                      {...register('nomeHost', {
-                        required: 'Campo requerido',
-                      })}
+                      {...register('nomeHost')}
                       fullWidth
                       size="small"
                       label="Hostname"
@@ -328,9 +335,7 @@ export default function WorkstationForm({
                         errors.dnsList ? 'is-invalid' : ''
                       }`}
                       type="text"
-                      {...register('dnsList', {
-                        required: 'Campo requerido',
-                      })}
+                      {...register('dnsList')}
                       fullWidth
                       size="small"
                       label="Dns"
@@ -348,9 +353,7 @@ export default function WorkstationForm({
                         errors.dnsList ? 'is-invalid' : ''
                       }`}
                       type="text"
-                      {...register('gateway', {
-                        required: 'Campo requerido',
-                      })}
+                      {...register('gateway')}
                       fullWidth
                       size="small"
                       label="Gateway"
