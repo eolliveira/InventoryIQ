@@ -47,7 +47,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
         setNfEntrada(response.data);
       })
       .catch((error) => {
-        window.alert('TESTE' + error.response.data.message);
+        window.alert(error.response.data.message);
       });
   }, [data]);
 
@@ -79,6 +79,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
           <Status>
             <Text>{data.status}</Text>
             <IconButton
+              sx={{ marginRight: 1 }}
               onClick={(e) => {
                 setOpenChangeStateModal(true);
                 setFormContextData({
@@ -310,9 +311,10 @@ const DateContainer = styled.div`
 `;
 
 const Status = styled.div`
+  min-width: 150px;
   display: flex;
   text-align: center;
-  justify-content: space-around;
+  justify-content: space-between;
   border-radius: 3px;
   background: #65d59f;
   padding: 1.5px;
