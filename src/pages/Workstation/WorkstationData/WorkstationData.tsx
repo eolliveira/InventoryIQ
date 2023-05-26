@@ -203,14 +203,6 @@ export default function WorkstationData() {
                 />
                 <Tab
                   value="3"
-                  label="Interfaces"
-                  style={{
-                    fontSize: `${theme.size.sm}`,
-                    textTransform: 'none',
-                  }}
-                />
-                <Tab
-                  value="4"
                   label="Movimentos"
                   style={{
                     fontSize: `${theme.size.sm}`,
@@ -218,7 +210,7 @@ export default function WorkstationData() {
                   }}
                 />
                 <Tab
-                  value="5"
+                  value="4"
                   label="Licenças"
                   style={{
                     fontSize: `${theme.size.sm}`,
@@ -226,7 +218,7 @@ export default function WorkstationData() {
                   }}
                 />
                 <Tab
-                  value="6"
+                  value="5"
                   label="Serviços"
                   style={{
                     fontSize: `${theme.size.sm}`,
@@ -243,15 +235,12 @@ export default function WorkstationData() {
             <WorkstationHardware teste={10} />
           </Panel>
           <Panel value="3">
-            <WorkstationInterfaces workstationId={active?.id} />
-          </Panel>
-          <Panel value="4">
             <WorkstationMovements workstationId={active?.id} />
           </Panel>
-          <Panel value="5">
+          <Panel value="4">
             <WorkstationLicenses teste={10} />
           </Panel>
-          <Panel value="6">
+          <Panel value="5">
             <WorkstationMaintenance teste={10} />
           </Panel>
         </TabContext>

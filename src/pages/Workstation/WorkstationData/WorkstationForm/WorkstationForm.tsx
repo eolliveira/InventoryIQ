@@ -26,10 +26,9 @@ import { Particao } from 'types/Workstation/Particao';
 import { Dayjs } from 'dayjs';
 import FieldDate from '../../../../components/inputs/FieldDate/FieldDate';
 import FieldText from '../../../../components/inputs/FieldText/FieldText';
-import FieldMultiline from '../../../../components/inputs/FieldMultiline/FieldMultiline';
 import FieldCurrency from '../../../../components/inputs/FieldCurrency/FieldCurrency';
+import FieldMultiline from '../../../../components/inputs/FieldMultiline/FieldMultiline';
 import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import IconButton from '@mui/material/IconButton';
 
@@ -49,7 +48,6 @@ export default function WorkstationForm({
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [synchronizing, setSynchronizing] = useState(false);
   const [ipAddress, setIpAddress] = useState('');
-
   const [interfaces, setInterfaces] = useState<Interface[]>();
   const [discos, setDiscos] = useState<Disco[]>();
 

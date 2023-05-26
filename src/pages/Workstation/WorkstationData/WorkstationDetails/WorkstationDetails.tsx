@@ -1,267 +1,158 @@
 import { Workstation } from '../../../../types/Workstation/Workstation';
-import { Field, Input, Label } from '../../../../style/GlobalStyles';
 
-import { theme } from '../../../../style/Theme';
 import dayjs from 'dayjs';
+import TextInfo from '../../../../components/TextInfo/TextInfo';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+
+import { useCallback, useEffect, useState } from 'react';
+import { AxiosRequestConfig } from 'axios';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import DataTable, { TableColumn } from 'react-data-table-component';
+import { Interface } from '../../../../types/Interface';
+import { requestBackend } from '../../../../http/requests';
+
+const columns: TableColumn<Interface>[] = [
+  {
+    name: 'Nome',
+    width: '90px',
+    selector: (row) => row.nomeLocal,
+    sortable: true,
+  },
+  { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
+  { name: 'Mascara', selector: (row) => row.mascaraSubRede, sortable: true },
+  { name: 'Endereço Ip', selector: (row) => row.enderecoIp, sortable: true },
+  { name: 'Endereço Mac', selector: (row) => row.enderecoMac, sortable: true },
+];
 
 type WorkstationDetailsProps = {
   data?: Workstation;
 };
 
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
+  const [listInterfaces, setListInterfaces] = useState<Interface[]>();
+
+  const getInterfaces = useCallback(() => {
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: `/active/${data?.id}/interfaces`,
+    };
+
+    requestBackend(params)
+      .then((response) => {
+        setListInterfaces(response.data);
+      })
+      .catch((error) => {
+        console.log('Erro' + error);
+      });
+  }, [data]);
+
+  useEffect(() => {
+    getInterfaces();
+  }, [getInterfaces]);
+
   return (
-    <form>
-      <div className="row">
-        <div className="col-lg-6">
-          <Field>
-            <Label htmlFor="nome">Nome</Label>
-            <Input
-              value={data?.nome || ''}
-              onChange={() => {}}
-              type="text"
-              id={'nome'}
-              disabled={true}
-            />
-          </Field>
-          <Field>
-            <Label htmlFor="fabricante">Fabricante</Label>
-            <Input
-              onChange={() => {}}
-              value={data?.fabricante || ''}
-              type="text"
-              id="fabricante"
-              readOnly
-            />
-          </Field>
-          <div className="row">
-            <div className="col-lg-6">
-              <Field>
-                <Label htmlFor="nomeHost">Hostname</Label>
-                <Input
-                  onChange={() => {}}
-                  value={data?.nomeHost || ''}
-                  type="text"
-                  id="nomeHost"
-                  readOnly
-                />
-              </Field>
-            </div>
-            <div className="col-lg-6">
-              <Field>
-                <Label htmlFor="memoriaRam">Memória Virtual</Label>
-                <Input
-                  onChange={() => {}}
-                  value={data?.memoriaRam + ' GB' || ''}
-                  type="text"
-                  id="memoriaRam"
-                  readOnly
-                />
-              </Field>
-            </div>
-          </div>
-          <Field>
-            <Label htmlFor="dominio">Dominio</Label>
-            <Input
-              onChange={() => {}}
-              value={data?.dominio || ''}
-              type="text"
-              id="dominio"
-              readOnly
-            />
-          </Field>
-          <div className="row">
-            <div className="col-lg-6">
-              <Field>
-                <Label htmlFor="dns">Dns</Label>
-                <Input
-                  onChange={() => {}}
-                  value={data?.dns || ''}
-                  type="text"
-                  id="dns"
-                  readOnly
-                />
-              </Field>
-            </div>
-            <div className="col-lg-6">
-              <Field>
-                <Label htmlFor="gateway">Gateway</Label>
-                <Input
-                  onChange={() => {}}
-                  value={data?.gateway || ''}
-                  type="text"
-                  id="gateway"
-                  readOnly
-                />
-              </Field>
-            </div>
-          </div>
-          <Field>
-            <Label htmlFor="ultimoUsuarioLogado">Ultimo usuário logado</Label>
-            <Input
-              onChange={() => {}}
-              value={data?.ultimoUsuarioLogado || ''}
-              type="text"
-              id="ultimoUsuarioLogado"
-              readOnly
-            />
-          </Field>
-          <Field>
-            <Label htmlFor="tempoLigado">Tempo atividade</Label>
-            <Input
-              onChange={() => {}}
-              value={data?.tempoLigado || ''}
-              type="text"
-              id="tempoLigado"
-              readOnly
-            />
-          </Field>
-          <Field>
-            <Label htmlFor="observacao">Observação</Label>
-            <textarea
-              rows={10}
-              value={data?.observacao || ''}
-              style={{
-                padding: 5,
-                borderRadius: 3,
-                backgroundColor: 'unset',
-                fontSize: `${theme.size.sm}`,
-                color: `${theme.colors.black}`,
-                border: `1px solid ${theme.colors.secondary}`,
-              }}
-              id="observacao"
-              readOnly
-            />
-          </Field>
-        </div>
-        <div className="col-lg-6">
-          <Field>
-            <Label htmlFor="sistemaOperacional">Sistema operacional</Label>
-            <Input
-              onChange={() => {}}
-              value={data?.sistemaOperacional || ''}
-              type="text"
-              id="sistemaOperacional"
-              readOnly
-            />
-          </Field>
-          <Field>
-            <Label htmlFor="processador">Processador</Label>
-            <Input
-              onChange={() => {}}
-              value={data?.processador || ''}
-              type="text"
-              id="processador"
-              readOnly
-            />
-          </Field>
-          <Field>
-            <Label htmlFor="numeroSerie">Numero de série</Label>
-            <Input
-              onChange={() => {}}
-              value={data?.numeroSerie || ''}
-              type="text"
-              id="numeroSerie"
-              readOnly
-            />
-          </Field>
+    <Box marginTop={2}>
+      <Card variant="outlined">
+        <div className="row">
+          <div className="col-lg-6">
+            <TextInfo label="Nome" text={data?.nome} />
+            <TextInfo label="Fabricante" text={data?.fabricante} />
+            <TextInfo label="Hostname" text={data?.nomeHost} />
+            <TextInfo label="Memória Virtual" text={data?.memoriaRam} />
+            <TextInfo label="Dominio" text={data?.dominio} />
+            <TextInfo label="Gateway" text={data?.gateway} />
+            <TextInfo label="Dns" text={data?.dns} />
 
-          <div className="row">
-            <div className="col-lg-9">
-              <Field>
-                <Label htmlFor="modelo">Modelo</Label>
-                <Input
-                  onChange={() => {}}
-                  value={data ? data.modelo : ''}
-                  type="text"
-                  id="modelo"
-                  readOnly
-                />
-              </Field>
-            </div>
-            <div className="col-lg-3">
-              <Field>
-                <Label htmlFor="arquiteturaSo">Arquitetura</Label>
-                <Input
-                  onChange={() => {}}
-                  value={data ? data.arquiteturaSo : ''}
-                  type="text"
-                  name="arquiteturaSo"
-                  id="arquiteturaSo"
-                />
-              </Field>
-            </div>
+            <TextInfo
+              label="Ultimo usuário logado"
+              text={data?.ultimoUsuarioLogado}
+            />
+            <TextInfo label="Tempo atividade" text={data?.tempoLigado} />
+            <TextInfo label="Observação" text={data?.observacao} />
           </div>
+          <div className="col-lg-6">
+            <TextInfo
+              label="Sistema operacional"
+              text={data?.sistemaOperacional}
+            />
+            <TextInfo label="Processador" text={data?.processador} />
+            <TextInfo label="Numero de série" text={data?.numeroSerie} />
 
-          <div className="row">
-            <div className="col-lg-6">
-              <Field>
-                <Label htmlFor="dtAquisicao">Data aquisição</Label>
-                <Input
-                  onChange={() => {}}
-                  value={
+            <span style={{ border: 0 }} className="row">
+              <span style={{ border: 0 }} className="col-lg-7">
+                <TextInfo label="Modelo" text={data?.modelo} />
+              </span>
+              <span style={{ border: 0 }} className="col-lg-5">
+                <TextInfo label="Arquitetura" text={data?.arquiteturaSo} />
+              </span>
+            </span>
+
+            <div className="row">
+              <div className="col-lg-7">
+                <TextInfo
+                  label="Data aquisição"
+                  text={
                     data?.dtAquisicao
                       ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY')
                       : ''
                   }
-                  type="text"
-                  id="dtAquisicao"
-                  readOnly
                 />
-              </Field>
-            </div>
-            <div className="col-lg-6">
-              <Field>
-                <Label htmlFor="dtExpiracao">Data expiração</Label>
-                <Input
-                  onChange={() => {}}
-                  value={
+              </div>
+              <div className="col-lg-5">
+                <TextInfo
+                  label="Data expiração"
+                  text={
                     data?.dtExpiracao
                       ? dayjs(data?.dtExpiracao).format('DD/MM/YYYY')
                       : ''
                   }
-                  type="text"
-                  id="dtExpiracao"
-                  readOnly
                 />
-              </Field>
+              </div>
             </div>
-          </div>
-
-          <div className="row">
-            <div className="col-lg-6">
-              <Field>
-                <Label htmlFor="dtVencimentoGarantia">
-                  Data venc. Garantia
-                </Label>
-                <Input
-                  onChange={() => {}}
-                  value={
+            <div className="row">
+              <div className="col-lg-6">
+                <TextInfo
+                  label="Data venc. Garantia"
+                  text={
                     data?.dtVencimentoGarantia
                       ? dayjs(data?.dtVencimentoGarantia).format('DD/MM/YYYY')
                       : ''
                   }
-                  type="text"
-                  id="dtVencimentoGarantia"
-                  readOnly
                 />
-              </Field>
-              <Field>
-                <Label htmlFor="vlrAquisicao">Valor compra</Label>
-                <Input
-                  onChange={() => {}}
-                  value={data?.vlrAquisicao || ''}
-                  type="number"
-                  id="vlrAquisicao"
-                  readOnly
+                <TextInfo
+                  label="Valor compra"
+                  text={String(data?.vlrAquisicao) || ''}
                 />
-              </Field>
-            </div>
-            <div className="col-lg-6">
-              <h1>anexo</h1>
+              </div>
+              <div className="col-lg-6">
+                <h2 style={{ border: '1px solid silver' }}>anexo</h2>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </form>
+      </Card>
+      <Card sx={{ marginTop: 2, marginBottom: 2 }} variant="outlined">
+        <Typography margin={2} fontSize={14} variant="subtitle2">
+          Interfaces
+        </Typography>
+        <Divider color="gray" />
+        <DataTable
+          dense
+          striped
+          data={listInterfaces ? listInterfaces : []}
+          columns={columns}
+          sortIcon={<ExpandMoreIcon />}
+          responsive
+          fixedHeader
+          selectableRows
+          pointerOnHover
+          highlightOnHover
+          fixedHeaderScrollHeight={'82vh'}
+        />
+      </Card>
+    </Box>
   );
 }

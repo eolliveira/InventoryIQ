@@ -290,8 +290,8 @@ const Wapper = styled(BaseCard)`
 
 const HeaderContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
 
   @media (min-width: 992px) {
@@ -321,7 +321,7 @@ const Status = styled.div`
 `;
 
 const Text = styled.p`
-  margin: 0;
+  margin: 0 0 0 5px;
   padding: 0px 5px;
   text-align: center;
   margin-top: 5px;
