@@ -59,35 +59,38 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
       <Card variant="outlined">
         <div className="row">
           <div className="col-lg-6">
-            <TextInfo label="Nome" text={data?.nome} />
-            <TextInfo label="Fabricante" text={data?.fabricante} />
-            <TextInfo label="Hostname" text={data?.nomeHost} />
-            <TextInfo label="Memória Virtual" text={data?.memoriaRam} />
-            <TextInfo label="Dominio" text={data?.dominio} />
-            <TextInfo label="Gateway" text={data?.gateway} />
-            <TextInfo label="Dns" text={data?.dns} />
+            <TextInfo label="Nome" text={data?.nome || '-'} />
+            <TextInfo label="Fabricante" text={data?.fabricante || '-'} />
+            <TextInfo label="Hostname" text={data?.nomeHost || '-'} />
+            <TextInfo label="Memória Virtual" text={data?.memoriaRam || '-'} />
+            <TextInfo label="Dominio" text={data?.dominio || '-'} />
+            <TextInfo label="Gateway" text={data?.gateway || '-'} />
+            <TextInfo label="Dns" text={data?.dns || '-'} />
 
             <TextInfo
               label="Ultimo usuário logado"
-              text={data?.ultimoUsuarioLogado}
+              text={data?.ultimoUsuarioLogado || '-'}
             />
-            <TextInfo label="Tempo atividade" text={data?.tempoLigado} />
-            <TextInfo label="Observação" text={data?.observacao} />
+            <TextInfo label="Tempo atividade" text={data?.tempoLigado || '-'} />
+            <TextInfo label="Observação" text={data?.observacao || '-'} />
           </div>
           <div className="col-lg-6">
             <TextInfo
               label="Sistema operacional"
-              text={data?.sistemaOperacional}
+              text={data?.sistemaOperacional || '-'}
             />
-            <TextInfo label="Processador" text={data?.processador} />
-            <TextInfo label="Numero de série" text={data?.numeroSerie} />
+            <TextInfo label="Processador" text={data?.processador || '-'} />
+            <TextInfo label="Numero de série" text={data?.numeroSerie || '-'} />
 
             <span style={{ border: 0 }} className="row">
               <span style={{ border: 0 }} className="col-lg-7">
-                <TextInfo label="Modelo" text={data?.modelo} />
+                <TextInfo label="Modelo" text={data?.modelo || '-'} />
               </span>
               <span style={{ border: 0 }} className="col-lg-5">
-                <TextInfo label="Arquitetura" text={data?.arquiteturaSo} />
+                <TextInfo
+                  label="Arquitetura"
+                  text={data?.arquiteturaSo || '-'}
+                />
               </span>
             </span>
 
@@ -98,7 +101,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   text={
                     data?.dtAquisicao
                       ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY')
-                      : ''
+                      : '-'
                   }
                 />
               </div>
@@ -108,7 +111,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   text={
                     data?.dtExpiracao
                       ? dayjs(data?.dtExpiracao).format('DD/MM/YYYY')
-                      : ''
+                      : '-'
                   }
                 />
               </div>
@@ -120,12 +123,16 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   text={
                     data?.dtVencimentoGarantia
                       ? dayjs(data?.dtVencimentoGarantia).format('DD/MM/YYYY')
-                      : ''
+                      : '-'
                   }
                 />
                 <TextInfo
                   label="Valor compra"
-                  text={formatCurrency(String(data?.vlrAquisicao)) || ''}
+                  text={
+                    data?.vlrAquisicao
+                      ? formatCurrency(String(data?.vlrAquisicao))
+                      : '-'
+                  }
                 />
               </div>
               <div className="col-lg-6">
@@ -154,6 +161,17 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           columns={columns}
           sortIcon={<ExpandMoreIcon />}
           responsive
+          noDataComponent={
+            <Typography
+              margin={2}
+              fontSize={16}
+              fontWeight={'normal'}
+              color={'primary'}
+              variant="h2"
+            >
+              Não há dados para mostrar.
+            </Typography>
+          }
           fixedHeader
           selectableRows
           pointerOnHover

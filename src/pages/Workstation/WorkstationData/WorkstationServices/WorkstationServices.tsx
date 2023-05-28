@@ -1,11 +1,15 @@
+import Card from '@mui/material/Card';
+
 type WorkstationMaintenanceProps = {
   teste: number;
 };
 
-export default function WorkstationMaintenance({ teste } : WorkstationMaintenanceProps) {
+export default function WorkstationMaintenance({
+  teste,
+}: WorkstationMaintenanceProps) {
   return (
-    <div>
-      <h1>WorkstationMaintenance {teste}</h1>
-    </div>
+    <Card sx={{ marginTop: 2, marginBottom: 2 }} variant="outlined">
+      <h1>dadso</h1>
+    </Card>
   );
 }

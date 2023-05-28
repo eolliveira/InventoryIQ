@@ -5,6 +5,8 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 import { requestBackend } from '../../../../http/requests';
 import { Movimento } from '../../../../types/Movimento';
 import { toCamelCase } from '../../../../utils/StringConverter';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
 
 const columns: TableColumn<Movimento>[] = [
   {
@@ -57,18 +59,31 @@ export default function WorkstationMovements({
   const handleRowClicked = () => {};
 
   return (
-    <DataTable
-      dense
-      data={movements ? movements : []}
-      columns={columns}
-      sortIcon={<ExpandMoreIcon />}
-      responsive
-      fixedHeader
-      selectableRows
-      pointerOnHover
-      highlightOnHover
-      fixedHeaderScrollHeight={'82vh'}
-      onRowClicked={handleRowClicked}
-    />
+    <Card sx={{ marginTop: 2, marginBottom: 2 }} variant="outlined">
+      <DataTable
+        dense
+        data={movements ? movements : []}
+        columns={columns}
+        sortIcon={<ExpandMoreIcon />}
+        noDataComponent={
+          <Typography
+            margin={2}
+            fontSize={16}
+            fontWeight={'normal'}
+            color={'primary'}
+            variant="h2"
+          >
+            Não há dados para mostrar.
+          </Typography>
+        }
+        responsive
+        fixedHeader
+        selectableRows
+        pointerOnHover
+        highlightOnHover
+        fixedHeaderScrollHeight={'82vh'}
+        onRowClicked={handleRowClicked}
+      />
+    </Card>
   );
 }

@@ -243,7 +243,17 @@ export default function WorkstationList() {
             columns={columns}
             data={page ? page?.content : []}
             sortIcon={<ExpandMoreIcon />}
-            noDataComponent={'Não há dados para mostrar.'}
+            noDataComponent={
+              <Typography
+                margin={2}
+                fontSize={16}
+                fontWeight={'normal'}
+                color={'primary'}
+                variant="h2"
+              >
+                Não há dados para mostrar.
+              </Typography>
+            }
             responsive
             fixedHeader
             selectableRows
