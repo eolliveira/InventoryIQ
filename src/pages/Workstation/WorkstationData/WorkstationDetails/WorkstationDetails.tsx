@@ -13,6 +13,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { Interface } from '../../../../types/Interface';
 import { requestBackend } from '../../../../http/requests';
+import { formatCurrency } from '../../../../utils/CurrencyConverter';
 
 const columns: TableColumn<Interface>[] = [
   {
@@ -124,7 +125,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                 />
                 <TextInfo
                   label="Valor compra"
-                  text={String(data?.vlrAquisicao) || ''}
+                  text={formatCurrency(String(data?.vlrAquisicao)) || ''}
                 />
               </div>
               <div className="col-lg-6">
@@ -135,7 +136,14 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
         </div>
       </Card>
       <Card sx={{ marginTop: 2, marginBottom: 2 }} variant="outlined">
-        <Typography margin={2} fontSize={14} variant="subtitle2">
+        <Typography
+          margin={2}
+          fontSize={16}
+          fontWeight={'bold'}
+          letterSpacing={1}
+          color={'primary'}
+          variant="h2"
+        >
           Interfaces
         </Typography>
         <Divider color="gray" />

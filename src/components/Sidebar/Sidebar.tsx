@@ -38,13 +38,13 @@ export default function MenuSidebar() {
           menuItemStyles={{
             icon: ({ active, open }) => ({
               scale: active ? '1.1' : '1.0',
-              color: 'black',
+              color: 'GrayText',
             }),
             button: ({ level, active, disabled }) => {
               ///menu interno
               if (level === 1)
                 return {
-                  color: 'primary',
+                  color: 'GrayText',
                   fontWeight: active ? 'bold' : 'normal',
                   backgroundColor: active ? '#f5df4ea6' : 'rgb(255, 255, 255)',
                   fontSize: '12px',
@@ -56,7 +56,7 @@ export default function MenuSidebar() {
               //menu externo
               if (level === 0)
                 return {
-                  color: 'black',
+                  color: 'GrayText',
                   fontSize: '14px',
                   backgroundColor: active ? '#f5df4ea6' : 'rgb(255, 255, 255)',
                   fontWeight: active ? 'bold' : 'normal',

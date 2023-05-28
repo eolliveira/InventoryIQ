@@ -25,6 +25,7 @@ import Typography from '@mui/material/Typography';
 import { toCamelCase } from '../../../utils/StringConverter';
 import CloseIcon from '@mui/icons-material/Close';
 import FieldDate from '../../../components/inputs/FieldDate/FieldDate';
+import AssetStatusStyle from '../../../components/AssetStatusStyle/AssetStatusStyle';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -43,7 +44,13 @@ const columns: TableColumn<Workstation>[] = [
       row.localIndustria ? row.localIndustria.dsLocalIndustria : ' - ',
     sortable: true,
   },
-  { name: 'Status', selector: (row) => row.status, sortable: true },
+  {
+    name: 'Status',
+    sortable: true,
+    cell: (row) => (
+      <AssetStatusStyle key={row.id} size="small" status={row.status} />
+    ),
+  },
   {
     name: 'Dt.Aquisição',
     selector: (row) => row.dtAquisicao,
@@ -236,6 +243,7 @@ export default function WorkstationList() {
             columns={columns}
             data={page ? page?.content : []}
             sortIcon={<ExpandMoreIcon />}
+            noDataComponent={'Não há dados para mostrar.'}
             responsive
             fixedHeader
             selectableRows

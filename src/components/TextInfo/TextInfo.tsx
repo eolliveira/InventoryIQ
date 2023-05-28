@@ -9,14 +9,15 @@ type TextInfoProps = {
 export default function TextInfo({ label, text }: TextInfoProps) {
   return (
     <Box margin={'20px  20px'}>
-      <Typography fontSize={14} margin={0} fontWeight={'normal'}>
+      <Typography
+        color={'primary'}
+        fontSize={14}
+        margin={0}
+        fontWeight={'bold'}
+      >
         {label}
       </Typography>
-      <Typography
-        fontWeight={'unset'}
-        fontSize={14}
-        color={'rgb(102, 112, 133)'}
-      >
+      <Typography marginTop={0.5} fontSize={14} color={'rgb(145, 145, 145)'}>
         {text}
       </Typography>
     </Box>
