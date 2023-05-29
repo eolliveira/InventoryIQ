@@ -1,7 +1,7 @@
 import { theme } from '../../style/Theme';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { toDateTime } from '../../utils/Date';
-import { toCamelCase } from '../../utils/StringConverter';
+import { removerUnderline, toCamelCase } from '../../utils/StringConverter';
 import { FormContext } from '../../contexts/FormContext';
 import { BaseCard, Field, Input, Label } from '../../style/GlobalStyles';
 
@@ -16,12 +16,14 @@ import ChangeStateModal from '../ChangeStateModal/ChangeStateModal';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ChangeUserModal from '../../components/ChangeUserModal/ChangeUserModal';
 import ChangeLocationModal from '../../components/ChangeLocationModal/ChangeLocationModal';
-import { Workstation } from 'types/Workstation/Workstation';
 import ChangeNfEntradaModal from '../../components/ChangeNfEntradaModal/ChangeNfEntradaModal';
+import { Workstation } from 'types/Workstation/Workstation';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../http/requests';
 import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 import { formatCurrency } from '../../utils/CurrencyConverter';
+import EventRepeatIcon from '@mui/icons-material/EventRepeat';
+import Stack from '@mui/material/Stack';
 
 type SidePanelDataProps = {
   data: Workstation;
@@ -58,22 +60,27 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
   return (
     <Wapper>
       <HeaderContainer>
-        <DateContainer>
-          <Field className="mb-2">
-            <Label htmlFor="ultmSinc">Ultimo Sincronismo</Label>
-            <Input
-              id="ultmSinc"
-              onChange={(e) => {}}
-              value={
-                data.dtUltimoSincronismo
-                  ? toDateTime(data.dtUltimoSincronismo)
-                  : ''
-              }
-            />
-          </Field>
-        </DateContainer>
         <Box>
-          <Typography fontSize={13} variant="subtitle2">
+          <Typography variant="subtitle2" fontSize={14}>
+            Ultimo Sincronismo
+          </Typography>
+          <Stack
+            marginBottom={1.5}
+            marginTop={0.2}
+            direction={'row'}
+            spacing={1}
+          >
+            <EventRepeatIcon fontSize="small" color="secondary" />
+            <Typography style={{ marginTop: 2 }} fontSize={13}>
+              {data.dtUltimoSincronismo
+                ? toDateTime(data.dtUltimoSincronismo)
+                : ''}
+            </Typography>
+          </Stack>
+        </Box>
+
+        <Box>
+          <Typography color={'primary'} fontSize={13} variant="subtitle2">
             Status
           </Typography>
           <Status>
@@ -95,7 +102,12 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
         </Box>
       </HeaderContainer>
       <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
-      <Typography marginTop={1} fontSize={13} variant="subtitle2">
+      <Typography
+        color={'primary'}
+        marginTop={1}
+        fontSize={13}
+        variant="subtitle2"
+      >
         Atribuido a
       </Typography>
       <Card>
@@ -106,7 +118,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
           alignItems={'center'}
         >
           <AccountCircleIcon
-            color="action"
+            color="secondary"
             fontSize="medium"
             sx={{ marginRight: 1 }}
           />
@@ -122,7 +134,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
                 toCamelCase(data.usuario.nome)) ||
                 ' - '}
             </Typography>
-            <Typography color={'primary'} fontSize={12} variant="subtitle2">
+            <Typography color={'secondary'} fontSize={12} variant="subtitle2">
               {data.usuario ? data.usuario.email : ' - '}
             </Typography>
           </Box>
@@ -137,7 +149,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
             aria-label="delete"
             size="small"
           >
-            <EditIcon color="action" fontSize="small" />
+            <EditIcon color="primary" fontSize="small" />
           </IconButton>
         </Box>
       </Card>
@@ -153,7 +165,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
         >
           <LocationOnIcon
             style={{ marginRight: 5 }}
-            color="action"
+            color="secondary"
             fontSize="medium"
           />
           <Typography
@@ -180,7 +192,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
               });
             }}
           >
-            <EditIcon color="action" fontSize="small" />
+            <EditIcon color="primary" fontSize="small" />
           </IconButton>
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
@@ -188,7 +200,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
           <Typography fontSize={13} variant="subtitle2">
             Centro de custo
           </Typography>
-          <Typography color={'primary'} fontSize={12} variant="subtitle2">
+          <Typography color={'secondary'} fontSize={12} variant="subtitle2">
             {data.localIndustria &&
               data.localIndustria.centroCusto &&
               data.localIndustria.centroCusto.id +
@@ -208,7 +220,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
             <Typography fontSize={13} variant="subtitle2">
               Numero nota fiscal
             </Typography>
-            <Typography color={'primary'} fontSize={12} variant="subtitle2">
+            <Typography color={'secondary'} fontSize={12} variant="subtitle2">
               {nfEntrada?.nrNotaFiscal ? nfEntrada.nrNotaFiscal : ' - '}
             </Typography>
           </Box>
@@ -223,7 +235,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
             aria-label="delete"
             size="small"
           >
-            <EditIcon color="action" fontSize="small" />
+            <EditIcon color="primary" fontSize="small" />
           </IconButton>
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
@@ -231,7 +243,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
           <Typography fontSize={13} variant="subtitle2">
             Fornecedor
           </Typography>
-          <Typography color={'primary'} fontSize={12} variant="subtitle2">
+          <Typography color={'secondary'} fontSize={12} variant="subtitle2">
             {nfEntrada?.pessoa
               ? nfEntrada?.pessoa.id + ' - ' + nfEntrada?.pessoa.razaoSocial
               : ' - '}
@@ -242,7 +254,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
           <Typography fontSize={13} variant="subtitle2">
             Valor da nota
           </Typography>
-          <Typography color={'primary'} fontSize={12} variant="subtitle2">
+          <Typography color={'secondary'} fontSize={12} variant="subtitle2">
             {nfEntrada?.valorNotaFiscal
               ? formatCurrency(nfEntrada.valorNotaFiscal)
               : ' - '}
@@ -304,10 +316,6 @@ const Card = styled(Box)`
   border-radius: 8px;
   border: 1px solid ${theme.colors.primary};
   padding: 12px;
-`;
-
-const DateContainer = styled.div`
-  max-width: 150px;
 `;
 
 const Status = styled.div`

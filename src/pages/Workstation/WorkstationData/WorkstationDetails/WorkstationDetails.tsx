@@ -82,17 +82,10 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             <TextInfo label="Processador" text={data?.processador || '-'} />
             <TextInfo label="Numero de série" text={data?.numeroSerie || '-'} />
 
-            <span style={{ border: 0 }} className="row">
-              <span style={{ border: 0 }} className="col-lg-7">
-                <TextInfo label="Modelo" text={data?.modelo || '-'} />
-              </span>
-              <span style={{ border: 0 }} className="col-lg-5">
-                <TextInfo
-                  label="Arquitetura"
-                  text={data?.arquiteturaSo || '-'}
-                />
-              </span>
-            </span>
+            <Box display={'flex'} justifyContent={'space-between'}>
+              <TextInfo label="Modelo" text={data?.modelo || '-'} />
+              <TextInfo label="Arquitetura" text={data?.arquiteturaSo || '-'} />
+            </Box>
 
             <div className="row">
               <div className="col-lg-7">

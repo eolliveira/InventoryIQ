@@ -18,6 +18,7 @@ import { hasAnyHoles } from '../../utils/Auth';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import IconButton from '@mui/material/IconButton';
 import Logo from '../../assets/img/image.png';
+import { customTheme } from '../../style/CustomTheme';
 export default function MenuSidebar() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();

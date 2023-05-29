@@ -10,9 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import WorkstationDetails from './WorkstationDetails/WorkstationDetails';
 import WorkstationMovements from './WorkstationMovements/WorkstationMovements';
 import WorkstationLicenses from './WorkstationLicenses/WorkstationLicenses';
-import WorkstationMaintenance from './WorkstationServices/WorkstationServices';
+import WorkstationService from './WorkstationServices/WorkstationServices';
 import WorkstationHardware from './WorkstationHardware/WorkstationHardware';
-import WorkstationInterfaces from './AssetInterfaces/AssetInterfaces';
 import StockButton from '../../../components/StockButton/StockButon';
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -130,10 +129,10 @@ export default function WorkstationData() {
         <HeaderWorkstation>
           <IconButton
             aria-label="back"
-            size="large"
+            size="medium"
             onClick={() => navigate('/workstation')}
           >
-            <ArrowBackIcon />
+            <ArrowBackIcon color="primary" />
           </IconButton>
           <Typography
             fontWeight={'bold'}
@@ -142,11 +141,11 @@ export default function WorkstationData() {
             variant="h5"
             flex={1}
           >
-            <Text>
+            <Typography variant="subtitle1" color={'primary'}>
               {(active ? active?.id : '') +
                 ' - ' +
                 (active ? active?.nome : '')}
-            </Text>
+            </Typography>
           </Typography>
           <Stack spacing={2} direction="row">
             <StockButton
@@ -241,7 +240,7 @@ export default function WorkstationData() {
             <WorkstationLicenses teste={10} />
           </Panel>
           <Panel value="5">
-            <WorkstationMaintenance teste={10} />
+            <WorkstationService workstationId={active?.id} />
           </Panel>
         </TabContext>
       </BaseCard>
@@ -290,13 +289,6 @@ const ContainerSidePanel = styled.div`
     margin-bottom: 0px;
     padding: 0px 0px 0px 4px;
   }
-`;
-
-const Text = styled.p`
-  font-size: ${theme.size.lg};
-  color: ${theme.colors.secondary};
-  font-weight: bold;
-  margin: 0;
 `;
 
 const Panel = styled(TabPanel)`

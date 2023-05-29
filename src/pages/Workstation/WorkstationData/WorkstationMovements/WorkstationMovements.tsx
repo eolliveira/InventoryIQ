@@ -7,6 +7,8 @@ import { Movimento } from '../../../../types/Movimento';
 import { toCamelCase } from '../../../../utils/StringConverter';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
+import AssetStatusStyle from '../../../../components/AssetStatusStyle/AssetStatusStyle';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 const columns: TableColumn<Movimento>[] = [
   {
@@ -18,11 +20,25 @@ const columns: TableColumn<Movimento>[] = [
   { name: 'Descrição', selector: (row) => row.descricao, sortable: true },
   {
     name: 'Status',
-    selector: (row) => row.statusAtivoAnterior + ' -> ' + row.statusAtivo,
     sortable: true,
+    cell: (row) => (
+      <>
+        <AssetStatusStyle
+          key={row.id}
+          size="small"
+          status={row.statusAtivoAnterior}
+        />
+        <ArrowRightAltIcon fontSize="small" color="primary" />
+        <AssetStatusStyle
+          key={row.id}
+          size="small"
+          status={row.statusAtivo}
+        />{' '}
+      </>
+    ),
   },
   {
-    name: 'Usuário',
+    name: 'Usuário alterou',
     selector: (row) => toCamelCase(row.usuario.nome),
     sortable: true,
   },

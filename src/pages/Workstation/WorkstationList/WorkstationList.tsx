@@ -111,7 +111,6 @@ export default function WorkstationList() {
 
   return (
     <>
-      <h1>Teste</h1>
       <HeaderContainer>
         <Stack flexWrap={'wrap'} direction={'row'} spacing={2}>
           <Box

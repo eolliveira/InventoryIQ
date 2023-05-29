@@ -1,6 +1,5 @@
 import Chip from '@mui/material/Chip';
-import { stat } from 'fs/promises';
-import { toCamelCase } from '../../utils/StringConverter';
+import { removerUnderline, toCamelCase } from '../../utils/StringConverter';
 
 type AssetStatusStyleProps = {
   size?: 'small' | 'medium';
@@ -15,18 +14,20 @@ export default function AssetStatusStyle({
     status === 'DISPONIVEL'
       ? 'success'
       : status === 'EM_USO'
-      ? 'yellow'
+      ? 'info'
       : status === 'EM_REPARO'
       ? 'warning'
       : status === 'INATIVO'
-      ? 'gray'
-      : status === 'DESCARTADO';
+      ? 'secondary'
+      : status === 'DESCARTADO'
+      ? 'error'
+      : 'default';
 
   return (
     <Chip
       size={size}
-      label={status && toCamelCase(status)}
-      color={color === 'success' ? color : undefined}
+      label={status && removerUnderline(toCamelCase(status))}
+      color={color ?? 'warning'}
     />
   );
 }
