@@ -80,8 +80,6 @@ export default function WorkstationForm({
           isAdding: false,
           isEditing: false,
         });
-
-        Swal.fire('Salvou!', '', 'success');
         navigate(`/workstation/${response.data.id}`);
         closeForm();
       })

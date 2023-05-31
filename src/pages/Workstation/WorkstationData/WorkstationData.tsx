@@ -119,11 +119,14 @@ export default function WorkstationData() {
 
     requestBackend(params)
       .then(() => {
-        console.log('sucesso no sincronismo');
-        window.alert('Sucesso ao sincronizar dados do ativo!');
+        Swal.fire('Sucesso', 'Dados do ativo foram sincronizados!', 'success');
       })
       .catch((error) => {
-        console.log('sucesso no sincronismo' + error);
+        Swal.fire(
+          'Falha!',
+          'Não foi possivel sincronizar os dados do ativo!',
+          'error'
+        );
       })
       .finally(() => {
         setSynchronizing(false);

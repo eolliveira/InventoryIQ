@@ -35,7 +35,7 @@ type WorkstationDetailsProps = {
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   const [listInterfaces, setListInterfaces] = useState<Interface[]>();
 
-  const getInterfaces = useCallback(() => {
+  useEffect(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/active/${data?.id}/interfaces`,
@@ -49,10 +49,6 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
         console.log('Erro' + error);
       });
   }, [data]);
-
-  useEffect(() => {
-    getInterfaces();
-  }, [getInterfaces]);
 
   return (
     <Box marginTop={2}>
