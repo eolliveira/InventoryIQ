@@ -1,7 +1,6 @@
-import React from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import 'bootstrap/dist/css/bootstrap.css';
 import { ProSidebarProvider } from 'react-pro-sidebar';
 import { GlobalStyles } from './style/GlobalStyles';
 import { BrowserRouter } from 'react-router-dom';

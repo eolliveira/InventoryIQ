@@ -31,6 +31,7 @@ import FieldMultiline from '../../../../components/inputs/FieldMultiline/FieldMu
 import Typography from '@mui/material/Typography';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import IconButton from '@mui/material/IconButton';
+import Swal from 'sweetalert2';
 
 type WorkstationFormProps = {
   data?: Workstation;
@@ -80,7 +81,7 @@ export default function WorkstationForm({
           isEditing: false,
         });
 
-        window.alert('Ativo foi salvo com sucesso!');
+        Swal.fire('Salvou!', '', 'success');
         navigate(`/workstation/${response.data.id}`);
         closeForm();
       })

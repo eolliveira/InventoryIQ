@@ -31,6 +31,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import WorkstationForm from './WorkstationForm/WorkstationForm';
+import Swal from 'sweetalert2';
 
 export default function WorkstationData() {
   const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
@@ -79,23 +80,32 @@ export default function WorkstationData() {
   };
 
   const handleRemove = () => {
-    if (!window.confirm('Deseja remover o ativo?')) {
-      return;
-    }
+    Swal.fire({
+      icon: 'warning',
+      title: `Deseja remover o ativo?`,
+      text: 'Todas as informações e histórico de movimentos serão perdidas! ',
+      showDenyButton: true,
+      confirmButtonText: 'Salvar',
+      confirmButtonColor: 'primary',
+      denyButtonText: `Cancelar`,
+      denyButtonColor: '#dc3545',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const params: AxiosRequestConfig = {
+          method: 'DELETE',
+          url: `/active/${active?.id}`,
+        };
 
-    const params: AxiosRequestConfig = {
-      method: 'DELETE',
-      url: `/active/${active?.id}`,
-    };
-
-    requestBackend(params)
-      .then(() => {
-        window.alert('ativo removido com sucesso!');
-        navigate('/workstation');
-      })
-      .catch((error) => {
-        console.log('erro a remover ativo' + error);
-      });
+        requestBackend(params)
+          .then(() => {
+            Swal.fire('Salvou!', 'ativo removido com sucesso!', 'success');
+            navigate('/workstation');
+          })
+          .catch((error) => {
+            console.log('erro a remover ativo' + error);
+          });
+      }
+    });
   };
 
   const handleDuplicate = () => {};
