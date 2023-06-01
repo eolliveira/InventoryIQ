@@ -24,10 +24,10 @@ import { Disco } from 'types/Workstation/Disco';
 import { Particao } from 'types/Workstation/Particao';
 
 import { Dayjs } from 'dayjs';
-import FieldDate from '../../../../components/inputs/FieldDate/FieldDate';
-import FieldText from '../../../../components/inputs/FieldText/FieldText';
-import FieldCurrency from '../../../../components/inputs/FieldCurrency/FieldCurrency';
-import FieldMultiline from '../../../../components/inputs/FieldMultiline/FieldMultiline';
+import InputDate from '../../../../components/inputs/InputDate/InputDate';
+import InputText from '../../../../components/inputs/InputText/InputText';
+import InputCurrency from '../../../../components/inputs/InputCurrency/InputCurrency';
+import InputMultiline from '../../../../components/inputs/InputMultiline/InputMultiline';
 import Typography from '@mui/material/Typography';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import IconButton from '@mui/material/IconButton';
@@ -225,7 +225,7 @@ export default function WorkstationForm({
           <Form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-lg-6">
-                <FieldText
+                <InputText
                   required
                   label="Nome"
                   name="nome"
@@ -234,7 +234,7 @@ export default function WorkstationForm({
                   error={!!errors.nome}
                   helperText={errors.nome?.message}
                 />
-                <FieldText
+                <InputText
                   label="Fabricante"
                   name="fabricante"
                   control={control}
@@ -244,7 +244,7 @@ export default function WorkstationForm({
                 />
                 <div className="row">
                   <div className="col-lg-6">
-                    <FieldText
+                    <InputText
                       label="Hostname"
                       name="nomeHost"
                       control={control}
@@ -254,7 +254,7 @@ export default function WorkstationForm({
                     />
                   </div>
                   <div className="col-lg-6">
-                    <FieldText
+                    <InputText
                       label="Memória ram(Virtual)"
                       name="memoriaRam"
                       control={control}
@@ -264,7 +264,7 @@ export default function WorkstationForm({
                     />
                   </div>
                 </div>
-                <FieldText
+                <InputText
                   label="Dominio"
                   name="dominio"
                   control={control}
@@ -274,7 +274,7 @@ export default function WorkstationForm({
                 />
                 <div className="row">
                   <div className="col-lg-6">
-                    <FieldText
+                    <InputText
                       label="Dns"
                       name="dnsList"
                       control={control}
@@ -284,7 +284,7 @@ export default function WorkstationForm({
                     />
                   </div>
                   <div className="col-lg-6">
-                    <FieldText
+                    <InputText
                       label="Gateway"
                       name="gateway"
                       control={control}
@@ -294,7 +294,7 @@ export default function WorkstationForm({
                     />
                   </div>
                 </div>
-                <FieldText
+                <InputText
                   label="Ultimo usuário logado."
                   name="ultimoUsuarioLogado"
                   control={control}
@@ -302,7 +302,7 @@ export default function WorkstationForm({
                   error={!!errors.ultimoUsuarioLogado}
                   helperText={errors.ultimoUsuarioLogado?.message}
                 />
-                <FieldText
+                <InputText
                   label="Tempo de atividade."
                   name="tempoLigado"
                   control={control}
@@ -310,7 +310,7 @@ export default function WorkstationForm({
                   error={!!errors.tempoLigado}
                   helperText={errors.tempoLigado?.message}
                 />
-                <FieldMultiline
+                <InputMultiline
                   control={control}
                   name="observacao"
                   register={register}
@@ -321,7 +321,7 @@ export default function WorkstationForm({
                 />
               </div>
               <div className="col-lg-6">
-                <FieldText
+                <InputText
                   label=" Sistema operacional."
                   name="sistemaOperacional"
                   control={control}
@@ -330,7 +330,7 @@ export default function WorkstationForm({
                   helperText={errors.sistemaOperacional?.message}
                 />
 
-                <FieldText
+                <InputText
                   label="Processador"
                   name="processador"
                   control={control}
@@ -339,7 +339,7 @@ export default function WorkstationForm({
                   helperText={errors.processador?.message}
                 />
 
-                <FieldText
+                <InputText
                   label="Numero de série."
                   name="numeroSerie"
                   control={control}
@@ -350,7 +350,7 @@ export default function WorkstationForm({
 
                 <div className="row">
                   <div className="col-lg-9">
-                    <FieldText
+                    <InputText
                       label="Modelo"
                       name="numeroSerie"
                       control={control}
@@ -360,7 +360,7 @@ export default function WorkstationForm({
                     />
                   </div>
                   <div className="col-lg-3">
-                    <FieldText
+                    <InputText
                       label="Arquitetura"
                       name="arquiteturaSo"
                       control={control}
@@ -373,7 +373,7 @@ export default function WorkstationForm({
 
                 <div className="row">
                   <div className="col-lg-6">
-                    <FieldDate
+                    <InputDate
                       register={register}
                       label="Data aquisição"
                       control={control}
@@ -381,7 +381,7 @@ export default function WorkstationForm({
                     />
                   </div>
                   <div className="col-lg-6">
-                    <FieldDate
+                    <InputDate
                       register={register}
                       name="dtExpiracao"
                       label="Data expiração"
@@ -391,14 +391,14 @@ export default function WorkstationForm({
                 </div>
                 <div className="row">
                   <div className="col-lg-6">
-                    <FieldDate
+                    <InputDate
                       register={register}
                       name="dtVencimentoGarantia"
                       label="Data venc.Garantia"
                       control={control}
                     />
 
-                    <FieldCurrency
+                    <InputCurrency
                       label="Valor compra"
                       name="vlrAquisicao"
                       control={control}

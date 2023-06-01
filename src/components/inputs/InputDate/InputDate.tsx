@@ -5,7 +5,7 @@ import { Control, Controller, UseFormRegister } from 'react-hook-form';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 
-interface FieldDateProps {
+interface InputDateProps {
   control: Control<any, any>;
   defaultValue?: string;
   name: string;
@@ -15,7 +15,7 @@ interface FieldDateProps {
   required?: boolean;
 }
 
-export default function FieldDate({
+export default function InputDate({
   control,
   name,
   label,
@@ -23,7 +23,7 @@ export default function FieldDate({
   helperText,
   register,
   required,
-}: FieldDateProps) {
+}: InputDateProps) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'pt-br'}>
       <Controller

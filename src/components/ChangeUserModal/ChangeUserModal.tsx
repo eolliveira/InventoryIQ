@@ -11,7 +11,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CheckIcon from '@mui/icons-material/Check';
 import LoadingButton from '@mui/lab/LoadingButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import SearchIcon from '@mui/icons-material/Search';
 import { Usuario } from 'types/Usuario';

@@ -1,7 +1,7 @@
 import { Control, Controller, UseFormRegister } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 
-type InputTextProps = {
+type InputCurrencyProps = {
   name: string;
   control: Control<any, any>;
   defaultValue?: string;
@@ -12,7 +12,7 @@ type InputTextProps = {
   required?: boolean;
 };
 
-export default function FieldText({
+export default function InputCurrency({
   name,
   control,
   defaultValue,
@@ -21,7 +21,7 @@ export default function FieldText({
   helperText,
   register,
   required,
-}: InputTextProps) {
+}: InputCurrencyProps) {
   return (
     <Controller
       name={name}
@@ -38,7 +38,7 @@ export default function FieldText({
           error={error}
           helperText={helperText}
           label={label}
-          type="text"
+          type="number"
           id={name}
           value={value ?? ''}
           onChange={onChange}

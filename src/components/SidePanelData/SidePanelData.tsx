@@ -87,12 +87,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
             <Text>{data.status}</Text>
             <IconButton
               sx={{ marginRight: 1 }}
-              onClick={(e) => {
-                setOpenChangeStateModal(true);
-                setFormContextData({
-                  isEditing: true,
-                });
-              }}
+              onClick={(e) => setOpenChangeStateModal(true)}
               aria-label="delete"
               size="small"
             >

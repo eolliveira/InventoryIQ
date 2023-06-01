@@ -3,11 +3,10 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import Box from '@material-ui/core/Box';
 import SpeedIcon from '@mui/icons-material/Speed';
 import Workstation from '../Workstation/WorkstationList/WorkstationList';
-
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -60,8 +59,12 @@ export default function SimpleTabs() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="Item One" icon={<SpeedIcon />}  {...a11yProps(0)} />
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="simple tabs example"
+        >
+          <Tab label="Item One" icon={<SpeedIcon />} {...a11yProps(0)} />
           <Tab label="Item Two" {...a11yProps(1)} />
           <Tab label="Item Three" {...a11yProps(2)} />
         </Tabs>
@@ -78,7 +81,3 @@ export default function SimpleTabs() {
     </div>
   );
 }
-
-
-
-

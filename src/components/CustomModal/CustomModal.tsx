@@ -10,7 +10,7 @@ const style = {
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 2,
-  borderRadius: 5,
+  borderRadius: 3,
 };
 
 type CustomModal<T extends ReactNode> = {

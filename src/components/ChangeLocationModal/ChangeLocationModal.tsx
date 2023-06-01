@@ -6,11 +6,10 @@ import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
 import { ButtonContainer, TextButton } from './ChangeLocationModal.style';
 import { LocalIndustria } from 'types/LocalIndustria';
-
 import Box from '@mui/material/Box';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import SearchIcon from '@mui/icons-material/Search';
 import CustomModal from '../CustomModal/CustomModal';
 import LoadingButton from '@mui/lab/LoadingButton';

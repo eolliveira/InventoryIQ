@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import Card from '@mui/material/Card';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Typography from '@mui/material/Typography';
@@ -7,10 +7,12 @@ import { toCamelCase } from '../../../../utils/StringConverter';
 import { Servico } from '../../../../types/Servico';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../../http/requests';
+import { FormContext } from '../../../../contexts/FormContext';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
+import AddService from '../../../../components/AddService/AddService';
 
 const columns: TableColumn<Servico>[] = [
   {
@@ -39,7 +41,9 @@ type WorkstationServiceProps = {
 export default function WorkstationService({
   workstationId,
 }: WorkstationServiceProps) {
+  const { formContextData } = useContext(FormContext);
   const [services, setServices] = useState<Servico[]>();
+  const [openAddService, setOpenAddService] = useState(false);
 
   const getServices = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -54,7 +58,7 @@ export default function WorkstationService({
       .catch((error) => {
         console.log('Erro' + error);
       });
-  }, [workstationId]);
+  }, [workstationId, formContextData]);
 
   useEffect(() => {
     getServices();
@@ -75,7 +79,7 @@ export default function WorkstationService({
           color={'primary'}
           variant="h2"
         >
-          Serviços da estação de trabalho
+          Serviços realizados no ativo
         </Typography>
         <Button
           variant="contained"
@@ -83,6 +87,7 @@ export default function WorkstationService({
           color="primary"
           sx={{ height: 36.5, marginRight: 1 }}
           startIcon={<AddIcon />}
+          onClick={() => setOpenAddService(true)}
         >
           <Typography textTransform={'none'} fontSize={14}>
             Novo
@@ -113,6 +118,14 @@ export default function WorkstationService({
         highlightOnHover
         fixedHeaderScrollHeight={'82vh'}
       />
+
+      {openAddService && (
+        <AddService
+          assetId={workstationId}
+          openForm={openAddService}
+          closeForm={() => setOpenAddService(false)}
+        />
+      )}
     </Card>
   );
 }

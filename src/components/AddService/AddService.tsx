@@ -4,7 +4,6 @@ import { Button } from '@mui/material';
 import { requestBackend } from '../../http/requests';
 import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
-import { ButtonContainer, TextButton } from './ChangeStateModal.style';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -14,9 +13,9 @@ import CustomModal from '../CustomModal/CustomModal';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { assetState } from '../../constants/AssetState';
+import Typography from '@mui/material/Typography';
+import { typeOfService } from '../../constants/TypeOfService';
 
 type ChangeStateProps = {
   assetId?: string;
@@ -24,7 +23,7 @@ type ChangeStateProps = {
   closeForm: () => void;
 };
 
-export default function ChangeStateModal({
+export default function AddService({
   assetId,
   openForm,
   closeForm,
@@ -32,18 +31,20 @@ export default function ChangeStateModal({
   const { setFormContextData } = useContext(FormContext);
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');
+  const [value, setValue] = useState(0);
 
   function handleSave() {
     const data = {
-      statusAtivo: state,
+      tipoServico: state,
       descricao: description,
+      vlServico: value,
       ativoId: assetId,
       usuarioId: 6566,
     };
 
     const params: AxiosRequestConfig = {
       method: 'POST',
-      url: '/movement',
+      url: '/services',
       data: data,
       withCredentials: false,
     };
@@ -51,7 +52,7 @@ export default function ChangeStateModal({
     requestBackend(params)
       .then(() => {
         window.alert('Status do ativo foi alterado com sucesso!');
-        setFormContextData({ isEditing: false });
+        setFormContextData({ isAdding: false });
         closeForm();
       })
       .catch((error) => {
@@ -67,10 +68,10 @@ export default function ChangeStateModal({
     <CustomModal openModal={openForm}>
       <BaseCard>
         <Box sx={{ minWidth: 100, padding: 2 }}>
-          <Typography variant="h6">Alterar Status</Typography>
+          <Typography variant="h6">Tipo Serviço</Typography>
 
           <FormControl sx={{ marginTop: 3 }}>
-            <InputLabel id="demo-simple-select-label">Status</InputLabel>
+            <InputLabel id="demo-simple-select-label">Tipo serviço</InputLabel>
 
             <Select
               size="medium"
@@ -80,7 +81,7 @@ export default function ChangeStateModal({
               value={state}
               onChange={(e) => setState(e.target.value as string)}
             >
-              {assetState.map((type) => (
+              {typeOfService.map((type) => (
                 <MenuItem key={type.value} value={type.value}>
                   {type.desc}
                 </MenuItem>
@@ -99,14 +100,25 @@ export default function ChangeStateModal({
               onChange={(e) => setDescription(e.target.value)}
             />
 
-            <ButtonContainer>
+            <TextField
+              style={{ width: 350 }}
+              type="number"
+              margin={'normal'}
+              id="outlined-multiline-staticc"
+              label="Valor do serviço"
+              multiline
+              size="small"
+              onChange={(e) => setValue(Number(e.target.value))}
+            />
+
+            <Box>
               <Button
                 variant="contained"
                 color="error"
                 startIcon={<CloseIcon />}
                 onClick={handleCancel}
               >
-                <TextButton>Cancelar</TextButton>
+                <Typography>Cancelar</Typography>
               </Button>
               <LoadingButton
                 color="success"
@@ -117,9 +129,9 @@ export default function ChangeStateModal({
                 onClick={handleSave}
                 style={{ marginLeft: 10 }}
               >
-                <TextButton>Salvar</TextButton>
+                <span>Salvar</span>
               </LoadingButton>
-            </ButtonContainer>
+            </Box>
           </FormControl>
         </Box>
       </BaseCard>

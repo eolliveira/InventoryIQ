@@ -24,7 +24,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import { toCamelCase } from '../../../utils/StringConverter';
 import CloseIcon from '@mui/icons-material/Close';
-import FieldDate from '../../../components/inputs/FieldDate/FieldDate';
+import InputDate from '../../../components/inputs/InputDate/InputDate';
 import AssetStatusStyle from '../../../components/AssetStatusStyle/AssetStatusStyle';
 
 const columns: TableColumn<Workstation>[] = [
