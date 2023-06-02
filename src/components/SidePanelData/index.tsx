@@ -1,9 +1,10 @@
 import { theme } from '../../style/Theme';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { toDateTime } from '../../utils/Date';
+import { AxiosRequestConfig } from 'axios';
 import { toCamelCase } from '../../utils/StringConverter';
 import { FormContext } from '../../contexts/FormContext';
-import { BaseCard, Field, Input, Label } from '../../style/GlobalStyles';
+import { BaseCard } from '../../style/GlobalStyles';
 
 import Box from '@mui/material/Box';
 import styled from 'styled-components';
@@ -12,13 +13,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import ChangeStateModal from '../ChangeStateModal';
+import ChangeStateModal from '../ChangeAssetStateModal';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ChangeUserModal from '../ChangeUserModal';
 import ChangeLocationModal from '../ChangeLocationModal';
 import ChangeNfEntradaModal from '../ChangeNfEntradaModal';
 import { Workstation } from 'types/Workstation/Workstation';
-import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../http/requests';
 import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 import { formatCurrency } from '../../utils/CurrencyConverter';

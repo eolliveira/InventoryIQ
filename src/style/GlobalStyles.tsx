@@ -33,15 +33,13 @@ export const Label = styled.label`
   color: ${theme.colors.black};
 `;
 
-
 export const Field = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-
 export const BaseCard = styled.div`
-background-color: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
   padding: 10px;
   border-radius: 8px;
   /* border: 1px solid ${theme.colors.primary};  */

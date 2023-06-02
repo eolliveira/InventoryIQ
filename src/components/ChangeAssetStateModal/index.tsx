@@ -16,6 +16,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { assetState } from '../../constants/AssetState';
+import Divider from '@mui/material/Divider';
+import InputMultiline from '../../components/inputs/InputMultiline';
 
 type ChangeStateProps = {
   assetId?: string;
@@ -65,14 +67,15 @@ export default function ChangeStateModal({
   return (
     <CustomModal openModal={openModal}>
       <BaseCard>
-        <Box sx={{ minWidth: 100, padding: 2 }}>
-          <Typography variant="h6">Alterar Status</Typography>
+        <Box>
+          <Typography variant="subtitle1">Alterar Status</Typography>
+          <Divider color="gray" />
 
           <FormControl sx={{ marginTop: 3 }}>
             <InputLabel id="demo-simple-select-label">Status</InputLabel>
 
             <Select
-              size="medium"
+              size="small"
               labelId="demo-simple-select-label"
               label="status"
               id="demo-simple-select"
