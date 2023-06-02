@@ -17,17 +17,17 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { typeOfService } from '../../constants/TypeOfService';
 
-type ChangeStateProps = {
+type AddServiceModalProps = {
   assetId?: string;
   openForm: boolean;
   closeForm: () => void;
 };
 
-export default function AddService({
+export default function AddServiceModal({
   assetId,
   openForm,
   closeForm,
-}: ChangeStateProps) {
+}: AddServiceModalProps) {
   const { setFormContextData } = useContext(FormContext);
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');

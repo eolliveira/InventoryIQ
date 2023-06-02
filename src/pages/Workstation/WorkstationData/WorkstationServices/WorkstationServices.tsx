@@ -12,7 +12,7 @@ import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import AddService from '../../../../components/AddService/AddService';
+import AddServiceModal from '../../../../components/AddServiceModal/AddServiceModal';
 
 const columns: TableColumn<Servico>[] = [
   {
@@ -120,7 +120,7 @@ export default function WorkstationService({
       />
 
       {openAddService && (
-        <AddService
+        <AddServiceModal
           assetId={workstationId}
           openForm={openAddService}
           closeForm={() => setOpenAddService(false)}

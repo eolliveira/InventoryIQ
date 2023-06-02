@@ -12,7 +12,7 @@ import WorkstationMovements from './WorkstationMovements/WorkstationMovements';
 import WorkstationLicenses from './WorkstationLicenses/WorkstationLicenses';
 import WorkstationService from './WorkstationServices/WorkstationServices';
 import WorkstationHardware from './WorkstationHardware/WorkstationHardware';
-import StockButton from '../../../components/StockButton/StockButon';
+import StockButton from '../../../components/buttons/StockButton/StockButon';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';

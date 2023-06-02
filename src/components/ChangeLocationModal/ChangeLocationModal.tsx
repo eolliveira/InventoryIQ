@@ -4,7 +4,6 @@ import { Button, Stack } from '@mui/material';
 import { requestBackend } from '../../http/requests';
 import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
-import { ButtonContainer, TextButton } from './ChangeLocationModal.style';
 import { LocalIndustria } from 'types/LocalIndustria';
 import Box from '@mui/material/Box';
 import CheckIcon from '@mui/icons-material/Check';
@@ -18,8 +17,8 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 
 type ChangeLocationModalProps = {
   assetId?: string;
-  openForm: boolean;
-  closeForm: () => void;
+  openModal: boolean;
+  closeModal: () => void;
 };
 
 const columns: TableColumn<LocalIndustria>[] = [
@@ -29,8 +28,8 @@ const columns: TableColumn<LocalIndustria>[] = [
 
 export default function ChangeLocationModal({
   assetId,
-  openForm,
-  closeForm,
+  openModal,
+  closeModal: closeForm,
 }: ChangeLocationModalProps) {
   const { setFormContextData } = useContext(FormContext);
   const [locations, setLocations] = useState<LocalIndustria[]>();
@@ -53,6 +52,8 @@ export default function ChangeLocationModal({
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
+    console.log(selectedRows);
+
     if (selectedRows.selectedCount != 0) {
       setSelectedLocation(selectedRows.selectedRows[0].id);
     }
@@ -86,7 +87,7 @@ export default function ChangeLocationModal({
   }
 
   return (
-    <CustomModal openModal={openForm}>
+    <CustomModal openModal={openModal}>
       <BaseCard>
         <Stack padding={2}>
           <Typography variant="h6"> Atribuir Local </Typography>
@@ -134,6 +135,17 @@ export default function ChangeLocationModal({
               fixedHeader
               sortIcon={<ExpandMoreIcon />}
               fixedHeaderScrollHeight={'62vh'}
+              noDataComponent={
+                <Typography
+                  margin={2}
+                  fontSize={16}
+                  fontWeight={'normal'}
+                  color={'primary'}
+                  variant="h2"
+                >
+                  Não há dados para mostrar.
+                </Typography>
+              }
               pointerOnHover
               highlightOnHover
               selectableRows
@@ -141,14 +153,14 @@ export default function ChangeLocationModal({
               onSelectedRowsChange={handleSelectedRowsChange}
             />
           </Stack>
-          <ButtonContainer>
+          <Box display={'flex'} justifyContent={'end'}>
             <Button
               variant="contained"
               color="error"
               startIcon={<CloseIcon />}
               onClick={handleCancel}
             >
-              <TextButton>Cancelar</TextButton>
+              <Typography textTransform={'none'}>Cancelar</Typography>
             </Button>
             <LoadingButton
               color="success"
@@ -159,9 +171,9 @@ export default function ChangeLocationModal({
               onClick={handleConfirm}
               style={{ marginLeft: 10 }}
             >
-              <TextButton>Confirmar</TextButton>
+              <Typography textTransform={'none'}>Confirmar</Typography>
             </LoadingButton>
-          </ButtonContainer>
+          </Box>
         </Stack>
       </BaseCard>
     </CustomModal>

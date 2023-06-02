@@ -275,8 +275,8 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
       {openChangeLocationModal && (
         <ChangeLocationModal
           assetId={data.id}
-          openForm={openChangeLocationModal}
-          closeForm={() => setOpenChangeLocationModal(false)}
+          openModal={openChangeLocationModal}
+          closeModal={() => setOpenChangeLocationModal(false)}
         />
       )}
 
