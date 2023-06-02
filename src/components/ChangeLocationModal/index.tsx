@@ -4,96 +4,75 @@ import { Button, Stack } from '@mui/material';
 import { requestBackend } from '../../http/requests';
 import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
-import { ButtonContainer, TextButton } from './ChangeNfEntradaModal.style';
 import { LocalIndustria } from 'types/LocalIndustria';
-import CircularProgress from '@mui/material/CircularProgress';
-
 import Box from '@mui/material/Box';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import SearchIcon from '@mui/icons-material/Search';
-import CustomModal from '../CustomModal/CustomModal';
+import CustomModal from '../CustomModal';
 import LoadingButton from '@mui/lab/LoadingButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 
-type ChangeNfEntradaModalProps = {
+type ChangeLocationModalProps = {
   assetId?: string;
-  openForm: boolean;
-  closeForm: () => void;
+  openModal: boolean;
+  closeModal: () => void;
 };
 
-const columns: TableColumn<NotaFiscalEntrada>[] = [
-  { name: 'Cod. Pessoa', selector: (row) => row.pessoa.id, sortable: true },
-  {
-    name: 'Razão Social',
-    selector: (row) => row.pessoa.razaoSocial,
-    sortable: true,
-    width: '30%',
-  },
-  {
-    name: 'Numero da Nota',
-    selector: (row) => row.nrNotaFiscal,
-    sortable: true,
-  },
-  { name: 'Data de Emissão', selector: (row) => row.dtEmissao, sortable: true },
-  { name: 'Data de Entrada', selector: (row) => row.dtEntrada, sortable: true },
-  {
-    name: 'Valor da Nota',
-    selector: (row) => row.valorNotaFiscal,
-    sortable: true,
-  },
+const columns: TableColumn<LocalIndustria>[] = [
+  { name: 'Id', selector: (row) => row.id, sortable: true },
+  { name: 'Nome', selector: (row) => row.dsLocalIndustria, sortable: true },
 ];
 
-export default function ChangeNfEntradaModal({
+export default function ChangeLocationModal({
   assetId,
-  openForm,
-  closeForm,
-}: ChangeNfEntradaModalProps) {
+  openModal,
+  closeModal: closeForm,
+}: ChangeLocationModalProps) {
   const { setFormContextData } = useContext(FormContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [notes, setNotes] = useState<NotaFiscalEntrada[]>();
+  const [locations, setLocations] = useState<LocalIndustria[]>();
   const [inputFilter, setInputFilter] = useState('');
-  const [selectedNfEntrada, setSelectedNfEntrada] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('');
 
   useEffect(() => {
-    setIsLoading(true);
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/nfEntrada?NrNotaFiscal=${inputFilter}`,
+      url: `/IndustrySite?dsLocalIndustria=${inputFilter}`,
     };
+
     requestBackend(params)
       .then((response) => {
-        setNotes(response.data.content);
+        setLocations(response.data);
       })
       .catch((error) => {
         window.alert(error.response.data.message);
-      })
-      .finally(() => setIsLoading(false));
+      });
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
+    console.log(selectedRows);
+
     if (selectedRows.selectedCount != 0) {
-      setSelectedNfEntrada(selectedRows.selectedRows[0].idNfEntrada);
+      setSelectedLocation(selectedRows.selectedRows[0].id);
     }
   };
 
   function handleConfirm() {
-    if (selectedNfEntrada == '') {
-      window.alert('Selecione uma Nota');
+    if (selectedLocation == '') {
+      window.alert('Selecione um local da Industria');
       return;
     }
-    const data = { idNfEntrada: selectedNfEntrada };
+    const data = { localIndustriaId: selectedLocation };
     const params: AxiosRequestConfig = {
       method: 'PUT',
-      url: `/active/${assetId}/nfEntrada/update`,
+      url: `/active/${assetId}/location/update`,
       data: data,
     };
     requestBackend(params)
       .then(() => {
-        window.alert('Nota Fiscal de Entrada foi atribuida com sucesso!');
+        window.alert('Local do ativo foi alterado com sucesso!');
         setFormContextData({ isEditing: false });
         closeForm();
       })
@@ -108,10 +87,10 @@ export default function ChangeNfEntradaModal({
   }
 
   return (
-    <CustomModal openModal={openForm}>
+    <CustomModal openModal={openModal}>
       <BaseCard>
         <Stack padding={2}>
-          <Typography variant="h6">Atribuir Nota Fiscal de entrada </Typography>
+          <Typography variant="h6"> Atribuir Local </Typography>
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
               <Box
@@ -134,8 +113,6 @@ export default function ChangeNfEntradaModal({
                     setInputFilter(e.target.value);
                   }}
                   value={inputFilter}
-                  type="number"
-                  className="no-spinner"
                   style={{
                     backgroundColor: 'unset',
                     width: '100%',
@@ -149,42 +126,41 @@ export default function ChangeNfEntradaModal({
                 />
               </Box>
             </Stack>
-
-            {isLoading ? (
-              <Box
-                height={'100%'}
-                display={'flex'}
-                alignItems={'center'}
-                justifyContent={'center'}
-              >
-                <CircularProgress />
-              </Box>
-            ) : (
-              <DataTable
-                columns={columns}
-                data={notes ? notes : []}
-                dense
-                striped
-                responsive
-                fixedHeader
-                sortIcon={<ExpandMoreIcon />}
-                fixedHeaderScrollHeight={'62vh'}
-                pointerOnHover
-                highlightOnHover
-                selectableRows
-                selectableRowsSingle
-                onSelectedRowsChange={handleSelectedRowsChange}
-              />
-            )}
+            <DataTable
+              columns={columns}
+              data={locations ? locations : []}
+              dense
+              striped
+              responsive
+              fixedHeader
+              sortIcon={<ExpandMoreIcon />}
+              fixedHeaderScrollHeight={'62vh'}
+              noDataComponent={
+                <Typography
+                  margin={2}
+                  fontSize={16}
+                  fontWeight={'normal'}
+                  color={'primary'}
+                  variant="h2"
+                >
+                  Não há dados para mostrar.
+                </Typography>
+              }
+              pointerOnHover
+              highlightOnHover
+              selectableRows
+              selectableRowsSingle
+              onSelectedRowsChange={handleSelectedRowsChange}
+            />
           </Stack>
-          <ButtonContainer>
+          <Box display={'flex'} justifyContent={'end'}>
             <Button
               variant="contained"
               color="error"
               startIcon={<CloseIcon />}
               onClick={handleCancel}
             >
-              <TextButton>Cancelar</TextButton>
+              <Typography textTransform={'none'}>Cancelar</Typography>
             </Button>
             <LoadingButton
               color="success"
@@ -195,9 +171,9 @@ export default function ChangeNfEntradaModal({
               onClick={handleConfirm}
               style={{ marginLeft: 10 }}
             >
-              <TextButton>Confirmar</TextButton>
+              <Typography textTransform={'none'}>Confirmar</Typography>
             </LoadingButton>
-          </ButtonContainer>
+          </Box>
         </Stack>
       </BaseCard>
     </CustomModal>

@@ -7,12 +7,12 @@ import styled from 'styled-components';
 import SyncIcon from '@mui/icons-material/Sync';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
-import WorkstationDetails from './WorkstationDetails/WorkstationDetails';
-import WorkstationMovements from './WorkstationMovements/WorkstationMovements';
-import WorkstationLicenses from './WorkstationLicenses/WorkstationLicenses';
-import WorkstationService from './WorkstationServices/WorkstationServices';
-import WorkstationHardware from './WorkstationHardware/WorkstationHardware';
-import StockButton from '../../../components/buttons/StockButton/StockButon';
+import WorkstationDetails from './WorkstationDetails';
+import WorkstationMovements from './WorkstationMovements';
+import WorkstationLicenses from './WorkstationLicenses';
+import WorkstationService from './WorkstationServices';
+import WorkstationHardware from './WorkstationHardware';
+import StockButton from '../../../components/buttons/StockButton';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
@@ -23,14 +23,14 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
-import SidePanelData from '../../../components/SidePanelData/SidePanelData';
+import SidePanelData from '../../../components/SidePanelData';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
 import { AxiosRequestConfig } from 'axios';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import WorkstationForm from './WorkstationForm/WorkstationForm';
+import WorkstationForm from './WorkstationForm';
 import Swal from 'sweetalert2';
 
 export default function WorkstationData() {

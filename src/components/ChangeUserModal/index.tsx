@@ -4,9 +4,8 @@ import { Button, Stack } from '@mui/material';
 import { requestBackend } from '../../http/requests';
 import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
-import { ButtonContainer, TextButton } from './ChangeUserModal.style';
 import Box from '@mui/material/Box';
-import CustomModal from '../CustomModal/CustomModal';
+import CustomModal from '../CustomModal';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CheckIcon from '@mui/icons-material/Check';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -145,14 +144,14 @@ export default function ChangeUserModal({
             />
           </Stack>
 
-          <ButtonContainer>
+          <Box display={'flex'} justifyContent={'end'}>
             <Button
               variant="contained"
               color="error"
               startIcon={<CloseIcon />}
               onClick={handleCancel}
             >
-              <TextButton>Cancelar</TextButton>
+              <Typography textTransform={'none'}>Cancelar</Typography>
             </Button>
             <LoadingButton
               color="success"
@@ -163,9 +162,9 @@ export default function ChangeUserModal({
               onClick={handleConfirm}
               style={{ marginLeft: 10 }}
             >
-              <TextButton>Confirmar</TextButton>
+              <Typography textTransform={'none'}>Confirmar</Typography>
             </LoadingButton>
-          </ButtonContainer>
+          </Box>
         </Stack>
       </BaseCard>
     </CustomModal>

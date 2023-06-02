@@ -7,7 +7,7 @@ import { Movimento } from '../../../../types/Movimento';
 import { toCamelCase } from '../../../../utils/StringConverter';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import AssetStatusStyle from '../../../../components/AssetStatusStyle/AssetStatusStyle';
+import AssetStatusStyle from '../../../../components/AssetStatusStyle';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 const columns: TableColumn<Movimento>[] = [

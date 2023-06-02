@@ -1,7 +1,7 @@
 import { theme } from '../../style/Theme';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { toDateTime } from '../../utils/Date';
-import { removerUnderline, toCamelCase } from '../../utils/StringConverter';
+import { toCamelCase } from '../../utils/StringConverter';
 import { FormContext } from '../../contexts/FormContext';
 import { BaseCard, Field, Input, Label } from '../../style/GlobalStyles';
 
@@ -12,11 +12,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import ChangeStateModal from '../ChangeStateModal/ChangeStateModal';
+import ChangeStateModal from '../ChangeStateModal';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ChangeUserModal from '../../components/ChangeUserModal/ChangeUserModal';
-import ChangeLocationModal from '../../components/ChangeLocationModal/ChangeLocationModal';
-import ChangeNfEntradaModal from '../../components/ChangeNfEntradaModal/ChangeNfEntradaModal';
+import ChangeUserModal from '../ChangeUserModal';
+import ChangeLocationModal from '../ChangeLocationModal';
+import ChangeNfEntradaModal from '../ChangeNfEntradaModal';
 import { Workstation } from 'types/Workstation/Workstation';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../http/requests';
@@ -259,8 +259,8 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
       {openChangeStateModal && (
         <ChangeStateModal
           assetId={data.id}
-          openForm={openChangeStateModal}
-          closeForm={() => setOpenChangeStateModal(false)}
+          openModal={openChangeStateModal}
+          closeModal={() => setOpenChangeStateModal(false)}
         />
       )}
 
@@ -283,8 +283,8 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
       {openChangeNfEntradaModal && (
         <ChangeNfEntradaModal
           assetId={data.id}
-          openForm={openChangeNfEntradaModal}
-          closeForm={() => setOpenChangeNfEntradaModal(false)}
+          openModal={openChangeNfEntradaModal}
+          closeModal={() => setOpenChangeNfEntradaModal(false)}
         />
       )}
     </Wapper>

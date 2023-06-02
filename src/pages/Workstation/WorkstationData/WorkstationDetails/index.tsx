@@ -1,7 +1,7 @@
 import { Workstation } from '../../../../types/Workstation/Workstation';
 
 import dayjs from 'dayjs';
-import TextInfo from '../../../../components/TextInfo/TextInfo';
+import TextInfo from '../../../../components/TextInfo';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';

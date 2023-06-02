@@ -14,7 +14,7 @@ import { requestBackend } from '../../../../http/requests';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
-import CustomModal from '../../../../components/CustomModal/CustomModal';
+import CustomModal from '../../../../components/CustomModal';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -24,10 +24,10 @@ import { Disco } from 'types/Workstation/Disco';
 import { Particao } from 'types/Workstation/Particao';
 
 import { Dayjs } from 'dayjs';
-import InputDate from '../../../../components/inputs/InputDate/InputDate';
-import InputText from '../../../../components/inputs/InputText/InputText';
-import InputCurrency from '../../../../components/inputs/InputCurrency/InputCurrency';
-import InputMultiline from '../../../../components/inputs/InputMultiline/InputMultiline';
+import InputDate from '../../../../components/inputs/InputDate';
+import InputText from '../../../../components/inputs/InputText';
+import InputCurrency from '../../../../components/inputs/InputCurrency';
+import InputMultiline from '../../../../components/inputs/InputMultiline';
 import Typography from '@mui/material/Typography';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import IconButton from '@mui/material/IconButton';

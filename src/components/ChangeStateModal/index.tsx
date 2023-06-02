@@ -9,42 +9,40 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import CustomModal from '../CustomModal/CustomModal';
+import CustomModal from '../CustomModal';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { typeOfService } from '../../constants/TypeOfService';
+import TextField from '@mui/material/TextField';
+import { assetState } from '../../constants/AssetState';
 
-type AddServiceModalProps = {
+type ChangeStateProps = {
   assetId?: string;
-  openForm: boolean;
-  closeForm: () => void;
+  openModal: boolean;
+  closeModal: () => void;
 };
 
-export default function AddServiceModal({
+export default function ChangeStateModal({
   assetId,
-  openForm,
-  closeForm,
-}: AddServiceModalProps) {
+  openModal,
+  closeModal,
+}: ChangeStateProps) {
   const { setFormContextData } = useContext(FormContext);
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');
-  const [value, setValue] = useState(0);
 
   function handleSave() {
     const data = {
-      tipoServico: state,
+      statusAtivo: state,
       descricao: description,
-      vlServico: value,
       ativoId: assetId,
       usuarioId: 6566,
     };
 
     const params: AxiosRequestConfig = {
       method: 'POST',
-      url: '/services',
+      url: '/movement',
       data: data,
       withCredentials: false,
     };
@@ -52,8 +50,8 @@ export default function AddServiceModal({
     requestBackend(params)
       .then(() => {
         window.alert('Status do ativo foi alterado com sucesso!');
-        setFormContextData({ isAdding: false });
-        closeForm();
+        setFormContextData({ isEditing: false });
+        closeModal();
       })
       .catch((error) => {
         window.alert(error.response.data.message);
@@ -61,17 +59,17 @@ export default function AddServiceModal({
   }
 
   function handleCancel() {
-    closeForm();
+    closeModal();
   }
 
   return (
-    <CustomModal openModal={openForm}>
+    <CustomModal openModal={openModal}>
       <BaseCard>
         <Box sx={{ minWidth: 100, padding: 2 }}>
-          <Typography variant="h6">Tipo Serviço</Typography>
+          <Typography variant="h6">Alterar Status</Typography>
 
           <FormControl sx={{ marginTop: 3 }}>
-            <InputLabel id="demo-simple-select-label">Tipo serviço</InputLabel>
+            <InputLabel id="demo-simple-select-label">Status</InputLabel>
 
             <Select
               size="medium"
@@ -81,7 +79,7 @@ export default function AddServiceModal({
               value={state}
               onChange={(e) => setState(e.target.value as string)}
             >
-              {typeOfService.map((type) => (
+              {assetState.map((type) => (
                 <MenuItem key={type.value} value={type.value}>
                   {type.desc}
                 </MenuItem>
@@ -100,25 +98,14 @@ export default function AddServiceModal({
               onChange={(e) => setDescription(e.target.value)}
             />
 
-            <TextField
-              style={{ width: 350 }}
-              type="number"
-              margin={'normal'}
-              id="outlined-multiline-staticc"
-              label="Valor do serviço"
-              multiline
-              size="small"
-              onChange={(e) => setValue(Number(e.target.value))}
-            />
-
-            <Box>
+            <Box display={'flex'} justifyContent={'end'}>
               <Button
                 variant="contained"
                 color="error"
                 startIcon={<CloseIcon />}
                 onClick={handleCancel}
               >
-                <Typography>Cancelar</Typography>
+                <Typography textTransform={'none'}>Cancelar</Typography>
               </Button>
               <LoadingButton
                 color="success"
@@ -129,7 +116,7 @@ export default function AddServiceModal({
                 onClick={handleSave}
                 style={{ marginLeft: 10 }}
               >
-                <span>Salvar</span>
+                <Typography textTransform={'none'}>Salvar</Typography>
               </LoadingButton>
             </Box>
           </FormControl>

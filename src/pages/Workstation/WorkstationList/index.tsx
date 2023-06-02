@@ -24,8 +24,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import { toCamelCase } from '../../../utils/StringConverter';
 import CloseIcon from '@mui/icons-material/Close';
-import InputDate from '../../../components/inputs/InputDate/InputDate';
-import AssetStatusStyle from '../../../components/AssetStatusStyle/AssetStatusStyle';
+import AssetStatusStyle from '../../../components/AssetStatusStyle';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
