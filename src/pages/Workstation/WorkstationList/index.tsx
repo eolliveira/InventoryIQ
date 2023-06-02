@@ -25,6 +25,7 @@ import Typography from '@mui/material/Typography';
 import { toCamelCase } from '../../../utils/StringConverter';
 import CloseIcon from '@mui/icons-material/Close';
 import AssetStatusStyle from '../../../components/AssetStatusStyle';
+import NoData from '../../../components/NoData';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -115,6 +116,7 @@ export default function WorkstationList() {
           <Box
             minWidth={300}
             borderRadius={2}
+            border={' 1px solid silver'}
             alignItems={'center'}
             display={'flex'}
             marginBottom={1}
@@ -241,17 +243,7 @@ export default function WorkstationList() {
             columns={columns}
             data={page ? page?.content : []}
             sortIcon={<ExpandMoreIcon />}
-            noDataComponent={
-              <Typography
-                margin={2}
-                fontSize={16}
-                fontWeight={'normal'}
-                color={'primary'}
-                variant="h2"
-              >
-                Não há dados para mostrar.
-              </Typography>
-            }
+            noDataComponent={<NoData />}
             responsive
             fixedHeader
             selectableRows

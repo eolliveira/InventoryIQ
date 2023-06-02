@@ -1,14 +1,26 @@
 export const typeOfService = [
     {
-      desc: 'Manutenção',
-      value: 'MANUTENCAO',
+      desc: 'Manutenção corretiva',
+      value: 'MANUTENCAO_CORRETIVA',
     },
     {
-      desc: 'Melhoria',
-      value: 'MELHORIA',
+      desc: 'Mnautenção preventiva',
+      value: 'MANUTENCAO_PREVENTIVA',
     },
     {
-      desc: ' Manutenção Preventiva',
-      value: 'MENUTENCAO_PREVENTIVA',
+      desc: 'Instalação',
+      value: 'INSTALACAO',
+    },
+    {
+      desc: 'Configuração',
+      value: 'CONFIGURACAO',
+    },
+    {
+      desc: 'Atualização/Upgrade',
+      value: 'ATUALIZACAO_UPGRADE',
+    },
+    {
+      desc: 'Monitoramento',
+      value: 'MONITORAMENTO',
     }
   ];

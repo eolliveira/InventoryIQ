@@ -14,6 +14,7 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 import { Interface } from '../../../../types/Interface';
 import { requestBackend } from '../../../../http/requests';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
+import NoData from '../../../../components/NoData';
 
 const columns: TableColumn<Interface>[] = [
   {
@@ -150,17 +151,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           columns={columns}
           sortIcon={<ExpandMoreIcon />}
           responsive
-          noDataComponent={
-            <Typography
-              margin={2}
-              fontSize={16}
-              fontWeight={'normal'}
-              color={'primary'}
-              variant="h2"
-            >
-              Não há dados para mostrar.
-            </Typography>
-          }
+          noDataComponent={<NoData />}
           fixedHeader
           selectableRows
           pointerOnHover

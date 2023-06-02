@@ -9,6 +9,7 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import AssetStatusStyle from '../../../../components/AssetStatusStyle';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import NoData from '../../../../components/NoData';
 
 const columns: TableColumn<Movimento>[] = [
   {
@@ -81,17 +82,7 @@ export default function WorkstationMovements({
         data={movements ? movements : []}
         columns={columns}
         sortIcon={<ExpandMoreIcon />}
-        noDataComponent={
-          <Typography
-            margin={2}
-            fontSize={16}
-            fontWeight={'normal'}
-            color={'primary'}
-            variant="h2"
-          >
-            Não há dados para mostrar.
-          </Typography>
-        }
+        noDataComponent={<NoData />}
         responsive
         fixedHeader
         selectableRows

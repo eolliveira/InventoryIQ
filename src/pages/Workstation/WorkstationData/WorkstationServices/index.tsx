@@ -13,18 +13,23 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import AddServiceModal from '../../../../components/AddServiceModal';
+import NoData from '../../../../components/NoData';
 
 const columns: TableColumn<Servico>[] = [
   {
-    name: 'Data servico',
+    name: 'Data serviço',
     selector: (row) => row.dhGerou,
     sortable: true,
     grow: 0.6,
   },
-  { name: 'Descrição', selector: (row) => row.descricao, sortable: true },
   {
-    name: 'Usuário alterou',
-    selector: (row) => toCamelCase(row.descricao),
+    name: 'Tipo',
+    selector: (row) => row.tipoServico,
+    sortable: true,
+  },
+  {
+    name: 'Usuário realizou',
+    selector: (row) => toCamelCase(row.usuario.nome),
     sortable: true,
   },
   {
@@ -100,17 +105,7 @@ export default function WorkstationService({
         data={services ? services : []}
         columns={columns}
         sortIcon={<ExpandMoreIcon />}
-        noDataComponent={
-          <Typography
-            margin={2}
-            fontSize={16}
-            fontWeight={'normal'}
-            color={'primary'}
-            variant="h2"
-          >
-            Não há dados para mostrar.
-          </Typography>
-        }
+        noDataComponent={<NoData />}
         responsive
         fixedHeader
         selectableRows

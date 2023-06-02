@@ -72,12 +72,11 @@ export default function ChangeUserModal({
     };
     requestBackend(params)
       .then(() => {
-        window.alert('Status do ativo foi alterado com sucesso!');
         setFormContextData({ isEditing: false });
         closeForm();
       })
       .catch((error) => {
-        window.alert(error.response.data.message);
+        console.log(error);
       });
   }
 

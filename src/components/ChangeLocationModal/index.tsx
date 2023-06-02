@@ -14,6 +14,7 @@ import CustomModal from '../CustomModal';
 import LoadingButton from '@mui/lab/LoadingButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
+import NoData from '../../components/NoData';
 
 type ChangeLocationModalProps = {
   assetId?: string;
@@ -72,12 +73,11 @@ export default function ChangeLocationModal({
     };
     requestBackend(params)
       .then(() => {
-        window.alert('Local do ativo foi alterado com sucesso!');
         setFormContextData({ isEditing: false });
         closeForm();
       })
       .catch((error) => {
-        window.alert(error.response.data.message);
+        console.log(error);
       });
   }
 
@@ -135,17 +135,7 @@ export default function ChangeLocationModal({
               fixedHeader
               sortIcon={<ExpandMoreIcon />}
               fixedHeaderScrollHeight={'62vh'}
-              noDataComponent={
-                <Typography
-                  margin={2}
-                  fontSize={16}
-                  fontWeight={'normal'}
-                  color={'primary'}
-                  variant="h2"
-                >
-                  Não há dados para mostrar.
-                </Typography>
-              }
+              noDataComponent={<NoData />}
               pointerOnHover
               highlightOnHover
               selectableRows
