@@ -93,6 +93,7 @@ export default function WorkstationService({
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
@@ -155,7 +156,6 @@ export default function WorkstationService({
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        selectableRows
         pointerOnHover
         highlightOnHover
         fixedHeaderScrollHeight={'82vh'}

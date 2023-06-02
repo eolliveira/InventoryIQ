@@ -57,8 +57,8 @@ export default function AddServiceModal({
         closeForm();
       })
       .catch((error) => {
-        window.alert(error.response.data.message);
         Swal.fire('Erro!', `${error.response.data.message}`, 'error');
+        closeForm();
       });
   }
 

@@ -4,7 +4,7 @@ export const typeOfService = [
       value: 'MANUTENCAO_CORRETIVA',
     },
     {
-      desc: 'Mnautenção preventiva',
+      desc: 'Manutenção preventiva',
       value: 'MANUTENCAO_PREVENTIVA',
     },
     {
