@@ -1,17 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import { requestBackend } from '../../../http/requests';
 import { SpringPage } from 'types/vendor/spring';
+import { AxiosRequestConfig } from 'axios';
+import { BaseCard } from '../../../style/GlobalStyles';
+import { requestBackend } from '../../../http/requests';
+import { assetState } from '../../../constants/AssetState';
 import { Workstation } from '../../../types/Workstation/Workstation';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { BaseCard } from '../../../style/GlobalStyles';
-import { AxiosRequestConfig } from 'axios';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
-import { assetState } from '../../../constants/AssetState';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import styled from 'styled-components';
@@ -207,7 +207,10 @@ export default function WorkstationList() {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleClose}>
+            <MenuItem
+              style={{ margin: 0, padding: '0px 6px' }}
+              onClick={handleClose}
+            >
               <Checkbox
                 size="small"
                 checked={filterStatechecked}
