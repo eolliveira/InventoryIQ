@@ -1,20 +1,19 @@
 import { Workstation } from '../../../../types/Workstation/Workstation';
 
 import dayjs from 'dayjs';
-import TextInfo from '../../../../components/TextInfo';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-
-import { useCallback, useEffect, useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
+import Divider from '@mui/material/Divider';
+import { useEffect, useState } from 'react';
+import Typography from '@mui/material/Typography';
+import { Interface } from '../../../../types/Interface';
+import NoData from '../../../../components/NoData';
+import TextInfo from '../../../../components/TextInfo';
+import { requestBackend } from '../../../../http/requests';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import { Interface } from '../../../../types/Interface';
-import { requestBackend } from '../../../../http/requests';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
-import NoData from '../../../../components/NoData';
 
 const columns: TableColumn<Interface>[] = [
   {

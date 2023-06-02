@@ -14,7 +14,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import styled from 'styled-components';
+import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
@@ -23,7 +23,6 @@ import InputLabel from '@mui/material/InputLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import { toCamelCase } from '../../../utils/StringConverter';
-import CloseIcon from '@mui/icons-material/Close';
 import AssetStatusStyle from '../../../components/AssetStatusStyle';
 import NoData from '../../../components/NoData';
 
@@ -111,7 +110,11 @@ export default function WorkstationList() {
 
   return (
     <>
-      <HeaderContainer>
+      <Box
+        display={'flex'}
+        alignItems={'center'}
+        justifyContent={'space-between'}
+      >
         <Stack flexWrap={'wrap'} direction={'row'} spacing={2}>
           <Box
             minWidth={300}
@@ -236,7 +239,7 @@ export default function WorkstationList() {
           shape="rounded"
           size="small"
         />
-      </HeaderContainer>
+      </Box>
 
       <BaseCard>
         <div>
@@ -260,9 +263,3 @@ export default function WorkstationList() {
     </>
   );
 }
-
-const HeaderContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;

@@ -16,6 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { typeOfService } from '../../constants/TypeOfService';
+import Swal from 'sweetalert2';
 
 type AddServiceModalProps = {
   assetId?: string;
@@ -51,12 +52,13 @@ export default function AddServiceModal({
 
     requestBackend(params)
       .then(() => {
-        window.alert('Status do ativo foi alterado com sucesso!');
+        Swal.fire('Sucesso!', 'Registro foi salv com sucesso!.', 'success');
         setFormContextData({ isAdding: false });
         closeForm();
       })
       .catch((error) => {
         window.alert(error.response.data.message);
+        Swal.fire('Erro!', `${error.response.data.message}`, 'error');
       });
   }
 
@@ -74,9 +76,9 @@ export default function AddServiceModal({
             <InputLabel id="demo-simple-select-label">Tipo serviço</InputLabel>
 
             <Select
-              size="medium"
+              size="small"
               labelId="demo-simple-select-label"
-              label="status"
+              label="Tipo serviço"
               id="demo-simple-select"
               value={state}
               onChange={(e) => setState(e.target.value as string)}

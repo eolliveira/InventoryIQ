@@ -14,30 +14,9 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import AddServiceModal from '../../../../components/AddServiceModal';
 import NoData from '../../../../components/NoData';
-
-const columns: TableColumn<Servico>[] = [
-  {
-    name: 'Data serviço',
-    selector: (row) => row.dhGerou,
-    sortable: true,
-    grow: 0.6,
-  },
-  {
-    name: 'Tipo',
-    selector: (row) => row.tipoServico,
-    sortable: true,
-  },
-  {
-    name: 'Usuário realizou',
-    selector: (row) => toCamelCase(row.usuario.nome),
-    sortable: true,
-  },
-  {
-    name: 'Valor',
-    selector: (row) => row.vlServico,
-    sortable: true,
-  },
-];
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Swal from 'sweetalert2';
 
 type WorkstationServiceProps = {
   workstationId?: string;
@@ -46,7 +25,45 @@ type WorkstationServiceProps = {
 export default function WorkstationService({
   workstationId,
 }: WorkstationServiceProps) {
-  const { formContextData } = useContext(FormContext);
+  const columns: TableColumn<Servico>[] = [
+    {
+      name: 'Data serviço',
+      selector: (row) => row.dhGerou,
+      sortable: true,
+      grow: 0.6,
+    },
+    {
+      name: 'Tipo',
+      selector: (row) => row.tipoServico,
+      sortable: true,
+    },
+    {
+      name: 'Usuário realizou',
+      selector: (row) => toCamelCase(row.usuario.nome),
+      sortable: true,
+    },
+    {
+      name: 'Valor',
+      selector: (row) => row.vlServico,
+      sortable: true,
+    },
+    {
+      name: 'Poster Button',
+      button: true,
+      cell: (row) => (
+        <IconButton
+          sx={{ marginRight: 1 }}
+          onClick={() => onDeleteService(row.id)}
+          aria-label="delete"
+          size="small"
+        >
+          <DeleteIcon color="primary" fontSize="inherit" />
+        </IconButton>
+      ),
+    },
+  ];
+
+  const { formContextData, setFormContextData } = useContext(FormContext);
   const [services, setServices] = useState<Servico[]>();
   const [openAddService, setOpenAddService] = useState(false);
 
@@ -65,9 +82,39 @@ export default function WorkstationService({
       });
   }, [workstationId, formContextData]);
 
-  useEffect(() => {
-    getServices();
-  }, [getServices]);
+  useEffect(() => getServices(), [getServices]);
+
+  function onDeleteService(serviceId: string) {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você não será capaz de reverter isso!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const params: AxiosRequestConfig = {
+          method: 'DELETE',
+          url: `/services/${serviceId}`,
+        };
+
+        requestBackend(params)
+          .then(() => {
+            Swal.fire(
+              'Removido!',
+              'Registro foi removido com sucesso!.',
+              'success'
+            );
+            setFormContextData({ isAdding: false });
+          })
+          .catch((error) => {
+            Swal.fire('Erro!', `${error.response.data.message}`, 'success');
+          });
+      }
+    });
+  }
 
   return (
     <Card sx={{ marginTop: 2, marginBottom: 2 }} variant="outlined">
