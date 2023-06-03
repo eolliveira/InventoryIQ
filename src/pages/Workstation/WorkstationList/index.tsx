@@ -10,12 +10,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
-import SearchIcon from '@mui/icons-material/Search';
-import TuneIcon from '@mui/icons-material/Tune';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -25,6 +21,7 @@ import Typography from '@mui/material/Typography';
 import { toCamelCase } from '../../../utils/StringConverter';
 import AssetStatusStyle from '../../../components/AssetStatusStyle';
 import NoData from '../../../components/NoData';
+import SerchBar from '../../../components/SearchBar';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -58,22 +55,22 @@ const columns: TableColumn<Workstation>[] = [
 ];
 
 export default function WorkstationList() {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const [openCustomFilters, setOpenCustomFilters] =
+    useState<null | HTMLElement>(null);
+  const open = Boolean(openCustomFilters);
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpenCustomFilters(null);
   };
 
-  const [filterStatechecked, setFilterStatechecked] = useState(false);
-
-  /////////
   const [numberPage, setNumberPage] = useState(0);
   const [inputFilter, setInputFilter] = useState('');
   const [status, setStatus] = useState('');
   const [fieldFilter, setFieldFilter] = useState('nome');
   const [page, setPage] = useState<SpringPage<Workstation>>();
   const navigate = useNavigate();
+
+  const [filterStatechecked, setFilterStatechecked] = useState(false);
 
   const getWorkstatioData = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -116,41 +113,13 @@ export default function WorkstationList() {
         justifyContent={'space-between'}
       >
         <Stack flexWrap={'wrap'} direction={'row'} spacing={2}>
-          <Box
-            minWidth={300}
-            borderRadius={2}
-            border={' 1px solid silver'}
-            alignItems={'center'}
-            display={'flex'}
-            marginBottom={1}
-            bgcolor={'#ffff'}
-          >
-            <SearchIcon color="primary" sx={{ margin: 1 }} fontSize="medium" />
-            <input
-              onChange={(e) => {
-                setInputFilter(e.target.value);
-                setNumberPage(0);
-              }}
-              value={inputFilter}
-              style={{
-                backgroundColor: 'unset',
-                width: '100%',
-                height: '100%',
-                border: 'none',
-                textDecoration: 'none',
-                boxShadow: 'none',
-                outline: 0,
-              }}
-            />
-
-            <IconButton onClick={handleClearFilters}>
-              <CloseIcon fontSize="small" color="primary" />
-            </IconButton>
-
-            <IconButton onClick={(event) => setAnchorEl(event.currentTarget)}>
-              <TuneIcon fontSize="small" color="primary" />
-            </IconButton>
-          </Box>
+          <SerchBar
+            inputFilter={inputFilter}
+            setInputFilter={setInputFilter}
+            setNumberPage={setNumberPage}
+            onClearFilters={handleClearFilters}
+            setOpenCustomFilters={setOpenCustomFilters}
+          />
 
           <Box style={{ width: 150 }}>
             <FormControl
@@ -203,7 +172,7 @@ export default function WorkstationList() {
           <Menu
             style={{ flexDirection: 'column' }}
             id="basic-menu"
-            anchorEl={anchorEl}
+            anchorEl={openCustomFilters}
             open={open}
             onClose={handleClose}
             MenuListProps={{
