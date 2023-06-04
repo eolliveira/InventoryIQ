@@ -1,5 +1,5 @@
 import Chip from '@mui/material/Chip';
-import { removerUnderline, toCamelCase } from '../../utils/StringConverter';
+import { removeUnderline, toCamelCase } from '../../utils/StringConverter';
 
 type AssetStatusStyleProps = {
   size?: 'small' | 'medium';
@@ -26,7 +26,7 @@ export default function AssetStatusStyle({
   return (
     <Chip
       size={size}
-      label={status && removerUnderline(toCamelCase(status))}
+      label={status && removeUnderline(toCamelCase(status))}
       color={color ?? 'warning'}
     />
   );

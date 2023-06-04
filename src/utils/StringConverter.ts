@@ -9,7 +9,7 @@ export function toCamelCase(text: string) {
 }
 
 
-export function removerUnderline(texto: string): string {
+export function removeUnderline(texto: string): string {
   return texto.replace('_', ' ');
 }
 

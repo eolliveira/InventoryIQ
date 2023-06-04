@@ -13,15 +13,13 @@ import Pagination from '@mui/material/Pagination';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import { toCamelCase } from '../../../utils/StringConverter';
 import AssetStatusStyle from '../../../components/AssetStatusStyle';
 import NoData from '../../../components/NoData';
 import SerchBar from '../../../components/SearchBar';
+import SelectFilter from '../../../components/SearchBar/Filters/SelectFilter';
 
 const columns: TableColumn<Workstation>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -112,7 +110,7 @@ export default function WorkstationList() {
         alignItems={'center'}
         justifyContent={'space-between'}
       >
-        <Stack flexWrap={'wrap'} direction={'row'} spacing={2}>
+        <Stack flexWrap={'wrap'} direction={'row'} spacing={1}>
           <SerchBar
             inputFilter={inputFilter}
             setInputFilter={setInputFilter}
@@ -121,82 +119,48 @@ export default function WorkstationList() {
             setOpenCustomFilters={setOpenCustomFilters}
           />
 
-          <Box style={{ width: 150 }}>
-            <FormControl
-              size="small"
-              fullWidth
-              style={{ backgroundColor: '#ffff' }}
-            >
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={fieldFilter}
-                onChange={(e) => {
-                  setFieldFilter(e.target.value);
-                }}
-              >
-                <MenuItem value={'nome'}>Nome</MenuItem>
-                <MenuItem value={'fabricante'}>Fabricante</MenuItem>
-                <MenuItem value={'dominio'}>Dominio</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
+          <SelectFilter
+            fieldFilter={fieldFilter}
+            setFieldFilter={setFieldFilter}
+            selectedItems={['nome', 'fabricante', 'dominio']}
+          />
 
           {filterStatechecked && (
-            <Box style={{ width: 150 }}>
-              <FormControl
-                fullWidth
-                size="small"
-                style={{ backgroundColor: '#ffff' }}
-              >
-                <InputLabel id="demo-multiple-chip-label">Status</InputLabel>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
-                  label="Status"
-                  value={status}
-                  onChange={(e) => {
-                    setStatus(e.target.value);
-                  }}
-                >
-                  {assetState.map((e) => (
-                    <MenuItem value={e.value}>{e.desc}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
+            <SelectFilter
+              fieldFilter={status}
+              setFieldFilter={setStatus}
+              selectedItems={assetState.map((e) => e.value)}
+            />
           )}
         </Stack>
 
-        <div>
-          <Menu
-            style={{ flexDirection: 'column' }}
-            id="basic-menu"
-            anchorEl={openCustomFilters}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
-            }}
+        <Menu
+          sx={{ flexDirection: 'column' }}
+          id="basic-menu"
+          anchorEl={openCustomFilters}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem
+            style={{ margin: 0, padding: '0px 6px' }}
+            onClick={handleClose}
           >
-            <MenuItem
-              style={{ margin: 0, padding: '0px 6px' }}
-              onClick={handleClose}
-            >
-              <Checkbox
-                size="small"
-                checked={filterStatechecked}
-                onChange={(event) =>
-                  setFilterStatechecked(event.target.checked)
-                }
-                inputProps={{
-                  'aria-label': 'controlled',
-                }}
-              />
-              <Typography variant="subtitle2">Status do ativo</Typography>
-            </MenuItem>
-          </Menu>
-        </div>
+            <Checkbox
+              size="small"
+              checked={filterStatechecked}
+              onChange={(event) => setFilterStatechecked(event.target.checked)}
+              inputProps={{
+                'aria-label': 'controlled',
+              }}
+            />
+            <Typography fontSize={13} variant="subtitle2">
+              Status do ativo
+            </Typography>
+          </MenuItem>
+        </Menu>
 
         <Pagination
           onChange={(event: ChangeEvent<unknown>, numberPage: number) =>
