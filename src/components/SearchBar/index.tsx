@@ -29,7 +29,7 @@ export default function SerchBar({
       alignItems={'center'}
       display={'flex'}
       marginBottom={1}
-      bgcolor={'#ffff'}
+      bgcolor={'rgb(248, 250, 252);'}
     >
       <SearchIcon color="primary" sx={{ margin: 1 }} fontSize="small" />
 
@@ -54,7 +54,13 @@ export default function SerchBar({
 
       {onClearFilters && (
         <IconButton size="small" onClick={onClearFilters}>
-          <CloseIcon fontSize="small" color="primary" />
+          <CloseIcon
+            sx={{
+              color: 'primary',
+            }}
+            fontSize="small"
+            color="primary"
+          />
         </IconButton>
       )}
 

@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { SpringPage } from 'types/vendor/spring';
 import { AxiosRequestConfig } from 'axios';
-import { BaseCard } from '../../../style/GlobalStyles';
 import { requestBackend } from '../../../http/requests';
 import { assetState } from '../../../constants/AssetState';
 import { Workstation } from '../../../types/Workstation/Workstation';
@@ -12,7 +11,6 @@ import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import { toCamelCase } from '../../../utils/StringConverter';
@@ -20,9 +18,14 @@ import AssetStatusStyle from '../../../components/AssetStatusStyle';
 import NoData from '../../../components/NoData';
 import SerchBar from '../../../components/SearchBar';
 import SelectFilter from '../../../components/SearchBar/Filters/SelectFilter';
+import Panel from '../../../components/Panel';
 
 const columns: TableColumn<Workstation>[] = [
-  { name: 'Nome', selector: (row) => row.nome, sortable: true },
+  {
+    name: 'Nome',
+    selector: (row) => row.nome,
+    sortable: true,
+  },
   { name: 'Dominio', selector: (row) => row.dominio, sortable: true },
   { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
   { name: 'Modelo', selector: (row) => row.modelo, sortable: true },
@@ -53,6 +56,15 @@ const columns: TableColumn<Workstation>[] = [
 ];
 
 export default function WorkstationList() {
+  const [page, setPage] = useState<SpringPage<Workstation>>();
+  const [inputFilter, setInputFilter] = useState('');
+  const [numberPage, setNumberPage] = useState(0);
+  const navigate = useNavigate();
+
+  const [filterField, setFilterField] = useState('nome');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+
   const [openCustomFilters, setOpenCustomFilters] =
     useState<null | HTMLElement>(null);
   const open = Boolean(openCustomFilters);
@@ -61,22 +73,13 @@ export default function WorkstationList() {
     setOpenCustomFilters(null);
   };
 
-  const [numberPage, setNumberPage] = useState(0);
-  const [inputFilter, setInputFilter] = useState('');
-  const [status, setStatus] = useState('');
-  const [fieldFilter, setFieldFilter] = useState('nome');
-  const [page, setPage] = useState<SpringPage<Workstation>>();
-  const navigate = useNavigate();
-
-  const [filterStatechecked, setFilterStatechecked] = useState(false);
-
   const getWorkstatioData = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/workstation?${fieldFilter}=${inputFilter}&status=${status}`,
+      url: `/workstation?${filterField}=${inputFilter}&status=${statusFilter}`,
       params: {
         page: numberPage,
-        size: 5,
+        size: 50,
       },
     };
 
@@ -87,7 +90,7 @@ export default function WorkstationList() {
       .catch((error) => {
         console.log('Erro' + error);
       });
-  }, [numberPage, inputFilter, fieldFilter, status]);
+  }, [numberPage, inputFilter, filterField, statusFilter]);
 
   useEffect(() => {
     getWorkstatioData();
@@ -97,71 +100,57 @@ export default function WorkstationList() {
     navigate(`/workstation/${row.id}`);
 
   function handleClearFilters() {
-    setFilterStatechecked(false);
+    setStatusFilterchecked(false);
     setInputFilter('');
-    setStatus('');
-    setFieldFilter('nome');
+    setStatusFilter('');
+    setFilterField('nome');
   }
 
   return (
-    <>
-      <Box
-        display={'flex'}
-        alignItems={'center'}
-        justifyContent={'space-between'}
+    <Panel title="Estação de Trabalho ">
+      <Stack
+        flexWrap={'wrap'}
+        marginBottom={2}
+        marginLeft={1}
+        direction={'row'}
+        spacing={1}
       >
-        <Stack flexWrap={'wrap'} direction={'row'} spacing={1}>
-          <SerchBar
-            inputFilter={inputFilter}
-            setInputFilter={setInputFilter}
-            setNumberPage={setNumberPage}
-            onClearFilters={handleClearFilters}
-            setOpenCustomFilters={setOpenCustomFilters}
-          />
-
+        <SerchBar
+          inputFilter={inputFilter}
+          setInputFilter={setInputFilter}
+          setNumberPage={setNumberPage}
+          onClearFilters={handleClearFilters}
+          setOpenCustomFilters={setOpenCustomFilters}
+        />
+        <SelectFilter
+          filterField={filterField}
+          setFieldFilter={setFilterField}
+          selectedItems={['nome', 'fabricante', 'dominio']}
+        />
+        {statusFilterChecked && (
           <SelectFilter
-            fieldFilter={fieldFilter}
-            setFieldFilter={setFieldFilter}
-            selectedItems={['nome', 'fabricante', 'dominio']}
+            filterField={statusFilter}
+            setFieldFilter={setStatusFilter}
+            selectedItems={assetState.map((e) => e.value)}
           />
-
-          {filterStatechecked && (
-            <SelectFilter
-              fieldFilter={status}
-              setFieldFilter={setStatus}
-              selectedItems={assetState.map((e) => e.value)}
-            />
-          )}
-        </Stack>
-
-        <Menu
-          sx={{ flexDirection: 'column' }}
-          id="basic-menu"
-          anchorEl={openCustomFilters}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            'aria-labelledby': 'basic-button',
-          }}
-        >
-          <MenuItem
-            style={{ margin: 0, padding: '0px 6px' }}
-            onClick={handleClose}
-          >
-            <Checkbox
-              size="small"
-              checked={filterStatechecked}
-              onChange={(event) => setFilterStatechecked(event.target.checked)}
-              inputProps={{
-                'aria-label': 'controlled',
-              }}
-            />
-            <Typography fontSize={13} variant="subtitle2">
-              Status do ativo
-            </Typography>
-          </MenuItem>
-        </Menu>
-
+        )}
+      </Stack>
+      <DataTable
+        dense
+        striped
+        columns={columns}
+        data={page ? page?.content : []}
+        sortIcon={<ExpandMoreIcon />}
+        noDataComponent={<NoData />}
+        responsive
+        fixedHeader
+        fixedHeaderScrollHeight={'70vh'}
+        selectableRows
+        pointerOnHover
+        highlightOnHover
+        onRowClicked={handleRowClicked}
+      />
+      <Stack direction={'row'} justifyContent={'end'} marginY={2}>
         <Pagination
           onChange={(event: ChangeEvent<unknown>, numberPage: number) =>
             setNumberPage(numberPage - 1)
@@ -172,27 +161,27 @@ export default function WorkstationList() {
           shape="rounded"
           size="small"
         />
-      </Box>
-
-      <BaseCard>
-        <div>
-          <DataTable
-            dense
-            striped
-            columns={columns}
-            data={page ? page?.content : []}
-            sortIcon={<ExpandMoreIcon />}
-            noDataComponent={<NoData />}
-            responsive
-            fixedHeader
-            selectableRows
-            pointerOnHover
-            highlightOnHover
-            onRowClicked={handleRowClicked}
-            fixedHeaderScrollHeight={'82vh'}
+      </Stack>
+      <Menu
+        sx={{ flexDirection: 'column' }}
+        anchorEl={openCustomFilters}
+        open={open}
+        onClose={handleClose}
+      >
+        <MenuItem
+          sx={{ marginRight: 2, padding: '0px 6px' }}
+          onClick={handleClose}
+        >
+          <Checkbox
+            size="small"
+            checked={statusFilterChecked}
+            onChange={(event) => setStatusFilterchecked(event.target.checked)}
           />
-        </div>
-      </BaseCard>
-    </>
+          <Typography fontSize={13} variant="subtitle2">
+            Status
+          </Typography>
+        </MenuItem>
+      </Menu>
+    </Panel>
   );
 }

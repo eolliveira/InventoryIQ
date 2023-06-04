@@ -40,7 +40,6 @@ export const Field = styled.div`
 
 export const BaseCard = styled.div`
   background-color: rgb(255, 255, 255);
-  padding: 10px;
   border-radius: 8px;
   /* border: 1px solid ${theme.colors.primary};  */
   /* background-color: #f8f8f8; */

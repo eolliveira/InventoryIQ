@@ -5,13 +5,13 @@ import {
 } from '../../../../utils/StringConverter';
 
 type SelectFilterProps = {
-  fieldFilter: string;
+  filterField: string;
   setFieldFilter: React.Dispatch<React.SetStateAction<string>>;
   selectedItems: string[];
 };
 
 export default function SelectFilter({
-  fieldFilter,
+  filterField,
   setFieldFilter,
   selectedItems,
 }: SelectFilterProps) {
@@ -19,7 +19,7 @@ export default function SelectFilter({
     <FormControl
       size="small"
       sx={{
-        backgroundColor: '#ffff',
+        backgroundColor: 'rgb(248, 250, 252)',
         height: 35,
         borderRadius: 2,
         fontSize: '14px',
@@ -35,7 +35,7 @@ export default function SelectFilter({
         }}
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={fieldFilter}
+        value={filterField}
         onChange={(e) => {
           setFieldFilter(e.target.value);
         }}
