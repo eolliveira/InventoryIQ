@@ -28,7 +28,6 @@ export default function SerchBar({
       border={'1px solid silver'}
       alignItems={'center'}
       display={'flex'}
-      marginBottom={1}
       bgcolor={'rgb(248, 250, 252);'}
     >
       <SearchIcon color="primary" sx={{ margin: 1 }} fontSize="small" />

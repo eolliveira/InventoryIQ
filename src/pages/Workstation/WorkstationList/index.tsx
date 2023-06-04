@@ -18,7 +18,10 @@ import AssetStatusStyle from '../../../components/AssetStatusStyle';
 import NoData from '../../../components/NoData';
 import SerchBar from '../../../components/SearchBar';
 import SelectFilter from '../../../components/SearchBar/Filters/SelectFilter';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Panel from '../../../components/Panel';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 const columns: TableColumn<Workstation>[] = [
   {
@@ -108,35 +111,44 @@ export default function WorkstationList() {
 
   return (
     <Panel title="Estação de Trabalho ">
-      <Stack
-        flexWrap={'wrap'}
+      <Box
+        display={'flex'}
+        alignItems={'center'}
+        justifyContent={'space-between'}
         marginBottom={2}
-        marginLeft={1}
-        direction={'row'}
-        spacing={1}
       >
-        <SerchBar
-          inputFilter={inputFilter}
-          setInputFilter={setInputFilter}
-          setNumberPage={setNumberPage}
-          onClearFilters={handleClearFilters}
-          setOpenCustomFilters={setOpenCustomFilters}
-        />
-        <SelectFilter
-          filterField={filterField}
-          setFieldFilter={setFilterField}
-          selectedItems={['nome', 'fabricante', 'dominio']}
-        />
-        {statusFilterChecked && (
-          <SelectFilter
-            filterField={statusFilter}
-            setFieldFilter={setStatusFilter}
-            selectedItems={assetState.map((e) => e.value)}
+        <Stack flexWrap={'wrap'} marginLeft={1} direction={'row'} spacing={1}>
+          <SerchBar
+            inputFilter={inputFilter}
+            setInputFilter={setInputFilter}
+            setNumberPage={setNumberPage}
+            onClearFilters={handleClearFilters}
+            setOpenCustomFilters={setOpenCustomFilters}
           />
-        )}
-      </Stack>
+          <SelectFilter
+            filterField={filterField}
+            setFieldFilter={setFilterField}
+            selectedItems={['nome', 'fabricante', 'dominio']}
+          />
+          {statusFilterChecked && (
+            <SelectFilter
+              filterField={statusFilter}
+              setFieldFilter={setStatusFilter}
+              selectedItems={assetState.map((e) => e.value)}
+            />
+          )}
+        </Stack>
+        <Button
+          variant="contained"
+          startIcon={<AddCircleOutlineIcon />}
+          color="primary"
+        >
+          <Typography fontSize={14} textTransform={'none'}>
+            Novo
+          </Typography>
+        </Button>
+      </Box>
       <DataTable
-        dense
         striped
         columns={columns}
         data={page ? page?.content : []}
@@ -149,6 +161,16 @@ export default function WorkstationList() {
         pointerOnHover
         highlightOnHover
         onRowClicked={handleRowClicked}
+        customStyles={{
+          headCells: {
+            style: {
+              fontWeight: 'bold', // Define a fonte em negrito
+              height: 40,
+              fontSize: 13,
+              letterSpacing: 0.5,
+            },
+          },
+        }}
       />
       <Stack direction={'row'} justifyContent={'end'} marginY={2}>
         <Pagination
