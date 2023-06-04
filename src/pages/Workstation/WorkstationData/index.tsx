@@ -154,7 +154,13 @@ export default function WorkstationData() {
             variant="h5"
             flex={1}
           >
-            <Typography variant="subtitle1" color={'primary'}>
+            <Typography
+              fontSize={16}
+              fontWeight={'bold'}
+              letterSpacing={0.7}
+              color={'primary'}
+              variant="h2"
+            >
               {(active ? active?.id : '') +
                 ' - ' +
                 (active ? active?.nome : '')}
@@ -271,8 +277,7 @@ export default function WorkstationData() {
 const Wapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 5px;
-  //border: 1px solid green;
+  margin: 0px;
   height: calc(100vh - 110px);
 
   @media (min-width: 991px) {

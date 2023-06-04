@@ -31,7 +31,7 @@ export const Main = styled.main`
   background-color: rgb(238, 242, 246);
   height: calc(100% - 60px);
   overflow-y: auto;
-  padding: 10px;
+  padding: 15px;
 `;
 
 const ContentWrapper = styled.div`

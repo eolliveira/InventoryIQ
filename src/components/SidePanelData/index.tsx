@@ -39,18 +39,9 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
     useState(false);
 
   const getNfEntrada = useCallback(() => {
-    const params: AxiosRequestConfig = {
-      method: 'GET',
-      url: `/nfEntrada/${data.idNfEntrada}`,
-    };
-
-    requestBackend(params)
-      .then((response) => {
-        setNfEntrada(response.data);
-      })
-      .catch((error) => {
-        window.alert(error.response.data.message);
-      });
+    requestBackend({ url: `/nfEntrada/${data.idNfEntrada}` })
+      .then((response) => setNfEntrada(response.data))
+      .catch((error) => window.alert(error.response.data.message));
   }, [data]);
 
   useEffect(() => {
@@ -61,7 +52,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
     <Wapper>
       <HeaderContainer>
         <Box>
-          <Typography variant="subtitle2" fontSize={14}>
+          <Typography color={'primary'} fontWeight={'bold'} fontSize={14}>
             Ultimo Sincronismo
           </Typography>
           <Stack
@@ -74,13 +65,13 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
             <Typography style={{ marginTop: 2 }} fontSize={13}>
               {data.dtUltimoSincronismo
                 ? toDateTime(data.dtUltimoSincronismo)
-                : ''}
+                : ' - '}
             </Typography>
           </Stack>
         </Box>
 
         <Box>
-          <Typography color={'primary'} fontSize={13} variant="subtitle2">
+          <Typography color={'primary'} fontWeight={'bold'} fontSize={14}>
             Status
           </Typography>
           <Status>
@@ -97,12 +88,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
         </Box>
       </HeaderContainer>
       <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
-      <Typography
-        color={'primary'}
-        marginTop={1}
-        fontSize={13}
-        variant="subtitle2"
-      >
+      <Typography color={'primary'} fontWeight={'bold'} fontSize={14}>
         Atribuido a
       </Typography>
       <Card>
@@ -148,7 +134,12 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
           </IconButton>
         </Box>
       </Card>
-      <Typography marginTop={1} fontSize={13} variant="subtitle2">
+      <Typography
+        marginTop={1}
+        color={'primary'}
+        fontWeight={'bold'}
+        fontSize={14}
+      >
         Local da Industria
       </Typography>
       <Card>
@@ -192,7 +183,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
         <Box display={'flex'} flexDirection={'column'}>
-          <Typography fontSize={13} variant="subtitle2">
+          <Typography fontWeight={'bold'} fontSize={13} variant="subtitle2">
             Centro de custo
           </Typography>
           <Typography color={'secondary'} fontSize={12} variant="subtitle2">
@@ -206,13 +197,18 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
           </Typography>
         </Box>
       </Card>
-      <Typography marginTop={1} fontSize={13} variant="subtitle2">
+      <Typography
+        marginTop={1}
+        color={'primary'}
+        fontWeight={'bold'}
+        fontSize={14}
+      >
         Nota Fiscal
       </Typography>
       <Card>
         <Box display={'flex'} justifyContent={'space-between'}>
           <Box display={'flex'} flexDirection={'column'}>
-            <Typography fontSize={13} variant="subtitle2">
+            <Typography fontWeight={'bold'} fontSize={13} variant="subtitle2">
               Numero nota fiscal
             </Typography>
             <Typography color={'secondary'} fontSize={12} variant="subtitle2">
@@ -235,7 +231,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
         <Box display={'flex'} flexDirection={'column'}>
-          <Typography fontSize={13} variant="subtitle2">
+          <Typography fontWeight={'bold'} fontSize={13} variant="subtitle2">
             Fornecedor
           </Typography>
           <Typography color={'secondary'} fontSize={12} variant="subtitle2">
@@ -246,7 +242,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
         <Box display={'flex'} flexDirection={'column'}>
-          <Typography fontSize={13} variant="subtitle2">
+          <Typography fontWeight={'bold'} fontSize={13} variant="subtitle2">
             Valor da nota
           </Typography>
           <Typography color={'secondary'} fontSize={12} variant="subtitle2">
@@ -293,6 +289,7 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
 
 const Wapper = styled(BaseCard)`
   height: 100%;
+  padding: 12px;
 `;
 
 const HeaderContainer = styled.div`
