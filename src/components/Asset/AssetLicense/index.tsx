@@ -7,60 +7,116 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Licenca } from 'types/Licenca/Licenca';
 import NoData from '../../NoData';
 import { requestBackend } from '../../../http/requests';
 import { toDate } from '../../../utils/Date';
+import AssetLinkLicense from '../AssetLinkLicense';
+import { FormContext } from '../../../contexts/FormContext';
+import IconButton from '@mui/material/IconButton';
+import IosShareIcon from '@mui/icons-material/IosShare';
+import Swal from 'sweetalert2';
+import { AxiosRequestConfig } from 'axios';
 
 type AssetLicenseProps = {
   assetId?: string;
 };
 
-const columns: TableColumn<Licenca>[] = [
-  {
-    name: '#',
-    selector: (row) => row.id,
-    sortable: true,
-    grow: 0.6,
-  },
-  { name: 'Software', selector: (row) => row.software, sortable: true },
-  { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
-  {
-    name: 'Chave',
-    selector: (row) => row.chave,
-    sortable: true,
-    grow: 2,
-  },
-  {
-    name: 'Tipo',
-    selector: (row) => row.tpLicenca,
-    sortable: true,
-  },
-  {
-    name: 'Data expiração',
-    selector: (row) => toDate(row.dtExpiracao),
-    sortable: true,
-  },
-  {
-    name: 'Data aquisição',
-    selector: (row) => toDate(row.dtAquisicao),
-    sortable: true,
-  },
-];
-
 export default function AssetLicense({ assetId }: AssetLicenseProps) {
+  const columns: TableColumn<Licenca>[] = [
+    {
+      name: '#',
+      selector: (row) => row.id,
+      sortable: true,
+      grow: 0.6,
+    },
+    { name: 'Software', selector: (row) => row.software, sortable: true },
+    { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
+    {
+      name: 'Chave',
+      selector: (row) => row.chave,
+      sortable: true,
+      grow: 2,
+    },
+    {
+      name: 'Tipo',
+      selector: (row) => row.tpLicenca,
+      sortable: true,
+    },
+    {
+      name: 'Data expiração',
+      selector: (row) => toDate(row.dtExpiracao),
+      sortable: true,
+    },
+    {
+      name: 'Data aquisição',
+      selector: (row) => toDate(row.dtAquisicao),
+      sortable: true,
+    },
+    {
+      button: true,
+      cell: (row) => (
+        <IconButton
+          sx={{ marginRight: 1 }}
+          onClick={() => onReleaseLicense(row.id)}
+          aria-label="delete"
+          size="small"
+        >
+          <IosShareIcon color="primary" fontSize="inherit" />
+        </IconButton>
+      ),
+    },
+  ];
+
+  const { formContextData, setFormContextData } = useContext(FormContext);
   const [licenses, setLicenses] = useState<Licenca[]>();
+  const [openAssetLinkLicense, setAssetLinkLicense] = useState(false);
 
   const getLicenses = useCallback(() => {
     requestBackend({ url: `/active/${assetId}/licenses` }).then((response) =>
       setLicenses(response.data)
     );
-  }, [assetId]);
+  }, [assetId, formContextData]);
 
   useEffect(() => {
     getLicenses();
   }, [getLicenses]);
+
+  const onReleaseLicense = (licenseId: string) => {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Deseja liberar a licença?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: 'secondary',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const data = {
+          ativoId: assetId,
+          licencaId: licenseId,
+        };
+
+        const params: AxiosRequestConfig = {
+          method: 'PUT',
+          url: `/licenses/unlinkActive`,
+          data,
+        };
+
+        requestBackend(params)
+          .then(() => {
+            Swal.fire('Sucesso!', 'Licença foi liberada!', 'success');
+            setFormContextData({ isEditing: false });
+          })
+          .catch((error) => {
+            Swal.fire('Erro!', `${error.response.data.message}`, 'error');
+          });
+      }
+    });
+  };
 
   return (
     <Card
@@ -80,7 +136,7 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
           color={'primary'}
           variant="h2"
         >
-          Licenças de software vinculadas ao ativo
+          Licenças vinculadas
         </Typography>
 
         <Button
@@ -89,7 +145,7 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
           color="primary"
           sx={{ marginRight: 1 }}
           startIcon={<AddIcon />}
-          onClick={() => {}}
+          onClick={() => setAssetLinkLicense(true)}
         >
           <Typography textTransform={'none'} fontSize={14}>
             Adicionar
@@ -111,6 +167,13 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
         highlightOnHover
         fixedHeaderScrollHeight={'82vh'}
       />
+      {openAssetLinkLicense && (
+        <AssetLinkLicense
+          assetId={assetId}
+          openModal={openAssetLinkLicense}
+          closeModal={() => setAssetLinkLicense(false)}
+        />
+      )}
     </Card>
   );
 }

@@ -20,14 +20,14 @@ import Swal from 'sweetalert2';
 
 type AddServiceModalProps = {
   assetId?: string;
-  openForm: boolean;
-  closeForm: () => void;
+  openModal: boolean;
+  closeModal: () => void;
 };
 
 export default function AddServiceModal({
   assetId,
-  openForm,
-  closeForm,
+  openModal,
+  closeModal,
 }: AddServiceModalProps) {
   const { setFormContextData } = useContext(FormContext);
   const [state, setState] = useState('');
@@ -52,22 +52,22 @@ export default function AddServiceModal({
 
     requestBackend(params)
       .then(() => {
-        Swal.fire('Sucesso!', 'Registro foi salv com sucesso!.', 'success');
+        Swal.fire('Sucesso!', 'Registro foi salvo com sucesso!.', 'success');
         setFormContextData({ isAdding: false });
-        closeForm();
+        closeModal();
       })
       .catch((error) => {
         Swal.fire('Erro!', `${error.response.data.message}`, 'error');
-        closeForm();
+        closeModal();
       });
   }
 
   function handleCancel() {
-    closeForm();
+    closeModal();
   }
 
   return (
-    <CustomModal openModal={openForm}>
+    <CustomModal openModal={openModal}>
       <BaseCard>
         <Box sx={{ minWidth: 100, padding: 2 }}>
           <Typography variant="h6">Tipo Serviço</Typography>
