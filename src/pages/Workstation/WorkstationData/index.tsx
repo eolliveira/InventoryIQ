@@ -2,18 +2,16 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import TabContext from '@material-ui/lab/TabContext';
 import { theme } from '../../../style/Theme';
-
 import styled from 'styled-components';
 import SyncIcon from '@mui/icons-material/Sync';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
 import WorkstationDetails from './WorkstationDetails';
-import WorkstationMovements from './WorkstationMovements';
-import WorkstationLicenses from './WorkstationLicenses';
-import WorkstationService from './WorkstationServices';
+import AssetMovements from '../../../components/Asset/AssetMovements';
+import AssetLicense from '../../../components/Asset/AssetLicense';
+import AssetService from '../../../components/Asset/AssetService';
 import WorkstationHardware from './WorkstationHardware';
 import StockButton from '../../../components/buttons/StockButton';
-
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import { Workstation } from '../../../types/Workstation/Workstation';
@@ -22,7 +20,6 @@ import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-
 import SidePanelData from '../../../components/SidePanelData';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
@@ -85,7 +82,7 @@ export default function WorkstationData() {
       title: `Deseja remover o ativo?`,
       text: 'Todas as informações e histórico de movimentos serão perdidas! ',
       showDenyButton: true,
-      confirmButtonText: 'Salvar',
+      confirmButtonText: 'Confirmar',
       confirmButtonColor: 'primary',
       denyButtonText: `Cancelar`,
       denyButtonColor: '#dc3545',
@@ -98,12 +95,12 @@ export default function WorkstationData() {
 
         requestBackend(params)
           .then(() => {
-            Swal.fire('Salvou!', 'ativo removido com sucesso!', 'success');
+            Swal.fire('Removido!', 'ativo removido com sucesso!', 'success');
             navigate('/workstation');
           })
-          .catch((error) => {
-            console.log('erro a remover ativo' + error);
-          });
+          .catch((error) =>
+            Swal.fire('Falha!', 'Não foi possivel remover o ativo!', 'error')
+          );
       }
     });
   };
@@ -121,7 +118,7 @@ export default function WorkstationData() {
       .then(() => {
         Swal.fire('Sucesso', 'Dados do ativo foram sincronizados!', 'success');
       })
-      .catch((error) => {
+      .catch(() => {
         Swal.fire(
           'Falha!',
           'Não foi possivel sincronizar os dados do ativo!',
@@ -208,7 +205,7 @@ export default function WorkstationData() {
                   value="1"
                   label="Detalhes"
                   style={{
-                    fontSize: `${theme.size.sm}`,
+                    fontSize: '13px',
                     textTransform: 'none',
                   }}
                 />
@@ -216,7 +213,7 @@ export default function WorkstationData() {
                   value="2"
                   label="Hardware"
                   style={{
-                    fontSize: `${theme.size.sm}`,
+                    fontSize: '13px',
                     textTransform: 'none',
                   }}
                 />
@@ -224,7 +221,7 @@ export default function WorkstationData() {
                   value="3"
                   label="Movimentos"
                   style={{
-                    fontSize: `${theme.size.sm}`,
+                    fontSize: '13px',
                     textTransform: 'none',
                   }}
                 />
@@ -232,7 +229,7 @@ export default function WorkstationData() {
                   value="4"
                   label="Licenças"
                   style={{
-                    fontSize: `${theme.size.sm}`,
+                    fontSize: '13px',
                     textTransform: 'none',
                   }}
                 />
@@ -240,7 +237,7 @@ export default function WorkstationData() {
                   value="5"
                   label="Serviços"
                   style={{
-                    fontSize: `${theme.size.sm}`,
+                    fontSize: '13px',
                     textTransform: 'none',
                   }}
                 />
@@ -254,13 +251,13 @@ export default function WorkstationData() {
             <WorkstationHardware teste={10} />
           </Panel>
           <Panel value="3">
-            <WorkstationMovements workstationId={active?.id} />
+            <AssetMovements assetId={active?.id} />
           </Panel>
           <Panel value="4">
-            <WorkstationLicenses teste={10} />
+            <AssetLicense assetId={active?.id} />
           </Panel>
           <Panel value="5">
-            <WorkstationService workstationId={active?.id} />
+            <AssetService assetId={active?.id} />
           </Panel>
         </TabContext>
       </BaseCard>
@@ -295,8 +292,6 @@ const HeaderWorkstation = styled.div`
 `;
 
 const ContainerSidePanel = styled.div`
-  //border: 1px solid blue;
-
   padding: 0px;
   margin-bottom: 4px;
 

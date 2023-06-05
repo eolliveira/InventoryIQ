@@ -1,11 +1,11 @@
-import { BaseCard } from '../../style/GlobalStyles';
+import { BaseCard } from '../../../style/GlobalStyles';
 import { useContext, useEffect, useState } from 'react';
 import { Button, Stack } from '@mui/material';
-import { requestBackend } from '../../http/requests';
-import { FormContext } from '../../contexts/FormContext';
+import { requestBackend } from '../../../http/requests';
+import { FormContext } from '../../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
 import Box from '@mui/material/Box';
-import CustomModal from '../CustomModal';
+import CustomModal from '../../CustomModal';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CheckIcon from '@mui/icons-material/Check';
 import LoadingButton from '@mui/lab/LoadingButton';

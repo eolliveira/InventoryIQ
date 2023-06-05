@@ -11,7 +11,6 @@ export const SidebarContainer = styled.div`
 `;
 
 export const ButtonColapseContainer = styled.div<Props>`
-  /* background-color: ${theme.colors.yellow}; */
   background-color: 'rgb(255, 255, 255)';
   justify-content: ${(props) =>
     props.iscollapsed ? 'flex-end' : 'space-between'};

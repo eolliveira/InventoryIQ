@@ -3,28 +3,26 @@ import Card from '@mui/material/Card';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { toCamelCase } from '../../../../utils/StringConverter';
-import { Servico } from '../../../../types/Servico';
+import { toCamelCase } from '../../../utils/StringConverter';
+import { Servico } from '../../../types/Servico';
 import { AxiosRequestConfig } from 'axios';
-import { requestBackend } from '../../../../http/requests';
-import { FormContext } from '../../../../contexts/FormContext';
+import { requestBackend } from '../../../http/requests';
+import { FormContext } from '../../../contexts/FormContext';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import AddServiceModal from '../../../../components/AddServiceModal';
-import NoData from '../../../../components/NoData';
+import AddServiceModal from '../../AddServiceModal';
+import NoData from '../../NoData';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
 
-type WorkstationServiceProps = {
-  workstationId?: string;
+type AssetServiceProps = {
+  assetId?: string;
 };
 
-export default function WorkstationService({
-  workstationId,
-}: WorkstationServiceProps) {
+export default function AssetService({ assetId }: AssetServiceProps) {
   const columns: TableColumn<Servico>[] = [
     {
       name: 'Data serviço',
@@ -48,8 +46,8 @@ export default function WorkstationService({
       sortable: true,
     },
     {
-      name: 'Poster Button',
       button: true,
+      width: '80px',
       cell: (row) => (
         <IconButton
           sx={{ marginRight: 1 }}
@@ -70,7 +68,7 @@ export default function WorkstationService({
   const getServices = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/active/${workstationId}/services`,
+      url: `/active/${assetId}/services`,
     };
 
     requestBackend(params)
@@ -80,7 +78,7 @@ export default function WorkstationService({
       .catch((error) => {
         console.log('Erro' + error);
       });
-  }, [workstationId, formContextData]);
+  }, [assetId, formContextData]);
 
   useEffect(() => getServices(), [getServices]);
 
@@ -90,8 +88,8 @@ export default function WorkstationService({
       text: 'Você não será capaz de reverter isso!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: 'secondary',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
     }).then((result) => {
@@ -167,7 +165,7 @@ export default function WorkstationService({
 
       {openAddService && (
         <AddServiceModal
-          assetId={workstationId}
+          assetId={assetId}
           openForm={openAddService}
           closeForm={() => setOpenAddService(false)}
         />

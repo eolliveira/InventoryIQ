@@ -1,23 +1,23 @@
-import { BaseCard, Label } from '../../style/GlobalStyles';
+import { BaseCard, Label } from '../../../style/GlobalStyles';
 import { useContext, useState } from 'react';
 import { Button } from '@mui/material';
-import { requestBackend } from '../../http/requests';
-import { FormContext } from '../../contexts/FormContext';
+import { requestBackend } from '../../../http/requests';
+import { FormContext } from '../../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import CustomModal from '../CustomModal';
+import CustomModal from '../../CustomModal';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { assetState } from '../../constants/AssetState';
+import { assetState } from '../../../constants/AssetState';
 import Divider from '@mui/material/Divider';
-import InputMultiline from '../../components/inputs/InputMultiline';
+import InputMultiline from '../../inputs/InputMultiline';
 
 type ChangeStateProps = {
   assetId?: string;

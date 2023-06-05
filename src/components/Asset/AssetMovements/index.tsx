@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
+import { requestBackend } from '../../../http/requests';
+import { Movimento } from '../../../types/Movimento';
+import { toCamelCase } from '../../../utils/StringConverter';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import { requestBackend } from '../../../../http/requests';
-import { Movimento } from '../../../../types/Movimento';
-import { toCamelCase } from '../../../../utils/StringConverter';
 import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
-import AssetStatusStyle from '../../../../components/AssetStatusStyle';
+import AssetStatusStyle from '../../AssetStatusStyle';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import NoData from '../../../../components/NoData';
+import NoData from '../../NoData';
 
 const columns: TableColumn<Movimento>[] = [
   {
@@ -45,19 +44,17 @@ const columns: TableColumn<Movimento>[] = [
   },
 ];
 
-type WorkstationMovementsProps = {
-  workstationId?: string;
+type AssetMovementsProps = {
+  assetId?: string;
 };
 
-export default function WorkstationMovements({
-  workstationId,
-}: WorkstationMovementsProps) {
+export default function AssetMovements({ assetId }: AssetMovementsProps) {
   const [movements, setMovements] = useState<Movimento[]>();
 
   const getMovements = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/active/${workstationId}/movements`,
+      url: `/active/${assetId}/movements`,
     };
 
     requestBackend(params)
@@ -67,7 +64,7 @@ export default function WorkstationMovements({
       .catch((error) => {
         console.log('Erro' + error);
       });
-  }, [workstationId]);
+  }, [assetId]);
 
   useEffect(() => {
     getMovements();

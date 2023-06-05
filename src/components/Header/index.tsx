@@ -65,7 +65,6 @@ export default function Header() {
       <AppBar position="static">
         <Toolbar
           sx={{
-            // backgroundColor: `${theme.colors.yellow}`,
             backgroundColor: '#F5DE41',
           }}
         >

@@ -12,10 +12,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import ChangeStateModal from '../ChangeAssetStateModal';
+import ChangeStateModal from '../Asset/ChangeAssetStateModal';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ChangeUserModal from '../ChangeUserModal';
-import ChangeLocationModal from '../ChangeLocationModal';
+import ChangeUserModal from '../Asset/ChangeUserModal';
+import ChangeLocationModal from '../Asset/ChangeLocationModal';
 import ChangeNfEntradaModal from '../ChangeNfEntradaModal';
 import { Workstation } from 'types/Workstation/Workstation';
 import { requestBackend } from '../../http/requests';
@@ -329,12 +329,6 @@ const HeaderContainer = styled.div`
     align-items: flex-start;
   }
 `;
-
-// const Card = styled(Box)`
-//   border-radius: 8px;
-//   border: 1px solid ${theme.colors.primary};
-//   padding: 12px;
-// `;
 
 const Status = styled.div`
   min-width: 150px;

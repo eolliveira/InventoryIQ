@@ -1,8 +1,8 @@
-import { BaseCard } from '../../style/GlobalStyles';
+import { BaseCard } from '../../../style/GlobalStyles';
 import { useContext, useEffect, useState } from 'react';
 import { Button, Stack } from '@mui/material';
-import { requestBackend } from '../../http/requests';
-import { FormContext } from '../../contexts/FormContext';
+import { requestBackend } from '../../../http/requests';
+import { FormContext } from '../../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
 import { LocalIndustria } from 'types/LocalIndustria';
 import Box from '@mui/material/Box';
@@ -10,11 +10,11 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import SearchIcon from '@mui/icons-material/Search';
-import CustomModal from '../CustomModal';
+import CustomModal from '../../CustomModal';
 import LoadingButton from '@mui/lab/LoadingButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import NoData from '../../components/NoData';
+import NoData from '../../NoData';
 
 type ChangeLocationModalProps = {
   assetId?: string;
@@ -38,23 +38,12 @@ export default function ChangeLocationModal({
   const [selectedLocation, setSelectedLocation] = useState('');
 
   useEffect(() => {
-    const params: AxiosRequestConfig = {
-      method: 'GET',
-      url: `/IndustrySite?dsLocalIndustria=${inputFilter}`,
-    };
-
-    requestBackend(params)
-      .then((response) => {
-        setLocations(response.data);
-      })
-      .catch((error) => {
-        window.alert(error.response.data.message);
-      });
+    requestBackend({ url: `/IndustrySite?dsLocalIndustria=${inputFilter}` })
+      .then((response) => setLocations(response.data))
+      .catch((error) => window.alert(error.response.data.message));
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
-    console.log(selectedRows);
-
     if (selectedRows.selectedCount != 0) {
       setSelectedLocation(selectedRows.selectedRows[0].id);
     }
