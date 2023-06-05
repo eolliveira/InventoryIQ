@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import { AxiosRequestConfig } from 'axios';
 import Divider from '@mui/material/Divider';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import { Interface } from '../../../../types/Interface';
 import NoData from '../../../../components/NoData';
@@ -35,20 +35,19 @@ type WorkstationDetailsProps = {
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   const [listInterfaces, setListInterfaces] = useState<Interface[]>();
 
-  useEffect(() => {
-    const params: AxiosRequestConfig = {
-      method: 'GET',
-      url: `/active/${data?.id}/interfaces`,
-    };
-
-    requestBackend(params)
+  const getInterfaces = useCallback(() => {
+    requestBackend({ url: `/active/${data?.id}/interfaces` })
       .then((response) => {
         setListInterfaces(response.data);
       })
       .catch((error) => {
-        console.log('Erro' + error);
+        console.log('Erro: ' + error);
       });
   }, [data]);
+
+  useEffect(() => {
+    getInterfaces;
+  }, [getInterfaces]);
 
   return (
     <Box marginTop={2}>

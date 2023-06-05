@@ -17,6 +17,7 @@ import NoData from '../../NoData';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
+import { toDate } from '../../../utils/Date';
 
 type AssetServiceProps = {
   assetId?: string;
@@ -26,7 +27,7 @@ export default function AssetService({ assetId }: AssetServiceProps) {
   const columns: TableColumn<Servico>[] = [
     {
       name: 'Data serviço',
-      selector: (row) => row.dhGerou,
+      selector: (row) => toDate(row.dhGerou),
       sortable: true,
       grow: 0.6,
     },

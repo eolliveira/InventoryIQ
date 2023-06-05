@@ -8,11 +8,10 @@ import WorkstationData from './pages/Workstation/WorkstationData';
 import Login from './pages/Login';
 import Layout from './pages/Layout';
 import Dashboard from './pages/Dashboard';
-import License from './pages/License';
+import LicenseList from './pages/License/LicenseList';
 import Mobile from './pages/Mobile';
 import Nobreak from './pages/Nobreak';
 import Printer from './pages/Printer';
-import User from './pages/User';
 
 export default function App() {
   const [authContextData, setAuthContextData] = useState<AuthContextData>({
@@ -36,11 +35,10 @@ export default function App() {
               path="workstation/:workstationId"
               element={<WorkstationData />}
             />
-            <Route path="license" element={<License />} />
+            <Route path="license" element={<LicenseList />} />
             <Route path="mobile" element={<Mobile />} />
             <Route path="nobreak" element={<Nobreak />} />
             <Route path="printer" element={<Printer />} />
-            <Route path="user" element={<User />} />
           </Route>
         </Routes>
       </FormContext.Provider>

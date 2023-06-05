@@ -9,11 +9,12 @@ import Card from '@mui/material/Card';
 import AssetStatusStyle from '../../AssetStatusStyle';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import NoData from '../../NoData';
+import { toDate } from '../../../utils/Date';
 
 const columns: TableColumn<Movimento>[] = [
   {
     name: 'Data movimento',
-    selector: (row) => row.dtMovimento,
+    selector: (row) => toDate(row.dtMovimento),
     sortable: true,
     grow: 0.6,
   },
@@ -24,13 +25,13 @@ const columns: TableColumn<Movimento>[] = [
     cell: (row) => (
       <>
         <AssetStatusStyle
-          key={row.id}
+          // key={row.id}
           size="small"
           status={row.statusAtivoAnterior}
         />
         <ArrowRightAltIcon fontSize="small" color="primary" />
         <AssetStatusStyle
-          key={row.id}
+          //key={row.id}
           size="small"
           status={row.statusAtivo}
         />{' '}

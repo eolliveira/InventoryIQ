@@ -30,6 +30,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import WorkstationForm from '../WorkstationData/WorkstationForm';
 import { FormContext } from '../../../contexts/FormContext';
+import { toDate } from '../../../utils/Date';
 
 const columns: TableColumn<Workstation>[] = [
   {
@@ -61,7 +62,7 @@ const columns: TableColumn<Workstation>[] = [
   },
   {
     name: 'Dt.Aquisição',
-    selector: (row) => row.dtAquisicao,
+    selector: (row) => toDate(row.dtAquisicao),
     sortable: true,
   },
 ];

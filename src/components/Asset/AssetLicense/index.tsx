@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Licenca } from 'types/Licenca/Licenca';
 import NoData from '../../NoData';
 import { requestBackend } from '../../../http/requests';
+import { toDate } from '../../../utils/Date';
 
 type AssetLicenseProps = {
   assetId?: string;
@@ -38,12 +39,12 @@ const columns: TableColumn<Licenca>[] = [
   },
   {
     name: 'Data expiração',
-    selector: (row) => row.dtExpiracao,
+    selector: (row) => toDate(row.dtExpiracao),
     sortable: true,
   },
   {
     name: 'Data aquisição',
-    selector: (row) => row.dtAquisicao,
+    selector: (row) => toDate(row.dtAquisicao),
     sortable: true,
   },
 ];

@@ -1,30 +1,30 @@
 import React, { useState } from 'react';
-import { theme } from '../../../style/Theme';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import Menu from '@mui/material/Menu';
-import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
+import Typography from '@mui/material/Typography';
 
 type StockButtonProps = {
+  fontSize?: number;
+  isDisabled?: boolean;
   onClickAdd?: Function;
   onClickEdit?: Function;
   onClickRemove?: Function;
   onClickDuplicate?: Function;
-  isDisabled?: boolean;
 };
 
 export default function StockButton({
+  fontSize,
+  isDisabled,
   onClickAdd,
   onClickEdit,
   onClickRemove,
   onClickDuplicate,
-  isDisabled,
 }: StockButtonProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -37,7 +37,7 @@ export default function StockButton({
   return (
     <div>
       <Button
-        id="demo-customized-button"
+        id="customized-button"
         aria-controls={open ? 'demo-customized-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
@@ -49,10 +49,18 @@ export default function StockButton({
         color="primary"
         size="small"
       >
-        <Text>Ações</Text>
+        <Typography fontSize={fontSize ?? 13} textTransform={'none'}>
+          Ações
+        </Typography>
       </Button>
-      <CustomMenu
-        id="demo-customized-menu"
+      <Menu
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          alignItems: 'normal',
+        }}
+        id="customized-menu"
         MenuListProps={{
           'aria-labelledby': 'demo-customized-button',
         }}
@@ -70,7 +78,9 @@ export default function StockButton({
             disableRipple
           >
             <AddIcon fontSize="small" color="primary" sx={{ mr: 0.5 }} />
-            <TextItem>Adicionar</TextItem>
+            <Typography textTransform={'none'} color={'primary'} fontSize={13}>
+              Adicionar
+            </Typography>
           </MenuItem>
         )}
         {onClickEdit && (
@@ -83,7 +93,9 @@ export default function StockButton({
             sx={{ mb: 0.5 }}
           >
             <EditIcon fontSize="small" color="primary" sx={{ mr: 0.5 }} />
-            <TextItem>Editar</TextItem>
+            <Typography textTransform={'none'} color={'primary'} fontSize={13}>
+              Editar
+            </Typography>
           </MenuItem>
         )}
         {onClickDuplicate && (
@@ -97,7 +109,9 @@ export default function StockButton({
           >
             <FileCopyIcon fontSize="small" color="primary" sx={{ mr: 0.5 }} />
 
-            <TextItem>Duplicar</TextItem>
+            <Typography textTransform={'none'} color={'primary'} fontSize={13}>
+              Duplicar
+            </Typography>
           </MenuItem>
         )}
         {onClickRemove && (
@@ -110,29 +124,12 @@ export default function StockButton({
             sx={{ mb: 0.5 }}
           >
             <DeleteIcon fontSize="small" color="primary" sx={{ mr: 0.5 }} />
-            <TextItem>Excluir</TextItem>
+            <Typography textTransform={'none'} color={'primary'} fontSize={13}>
+              Excluir
+            </Typography>
           </MenuItem>
         )}
-      </CustomMenu>
+      </Menu>
     </div>
   );
 }
-
-const CustomMenu = styled(Menu)`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: normal;
-`;
-
-const Text = styled.p`
-  text-transform: none;
-  margin: 0;
-`;
-
-const TextItem = styled.p`
-  color: 'red';
-  text-transform: none;
-  font-size: 13px;
-  margin: 0;
-`;

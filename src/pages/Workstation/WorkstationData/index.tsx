@@ -98,7 +98,7 @@ export default function WorkstationData() {
             Swal.fire('Removido!', 'ativo removido com sucesso!', 'success');
             navigate('/workstation');
           })
-          .catch((error) =>
+          .catch(() =>
             Swal.fire('Falha!', 'Não foi possivel remover o ativo!', 'error')
           );
       }
@@ -144,32 +144,25 @@ export default function WorkstationData() {
           >
             <ArrowBackIcon color="primary" />
           </IconButton>
+
           <Typography
-            fontWeight={'bold'}
             fontSize={16}
+            fontWeight={'bold'}
+            letterSpacing={0.7}
+            color={'primary'}
             marginLeft={2}
-            variant="h5"
             flex={1}
           >
-            <Typography
-              fontSize={16}
-              fontWeight={'bold'}
-              letterSpacing={0.7}
-              color={'primary'}
-              variant="h2"
-            >
-              {(active ? active?.id : '') +
-                ' - ' +
-                (active ? active?.nome : '')}
-            </Typography>
+            {(active ? active?.id : '') + ' - ' + (active ? active?.nome : '')}
           </Typography>
           <Stack spacing={2} direction="row">
             <StockButton
-              isDisabled={formContextData.isAdding || formContextData.isEditing}
+              fontSize={14}
               onClickAdd={handleAdd}
               onClickDuplicate={handleDuplicate}
               onClickEdit={handleEdit}
               onClickRemove={handleRemove}
+              isDisabled={formContextData.isAdding || formContextData.isEditing}
             />
             <LoadingButton
               disabled={formContextData.isAdding || formContextData.isEditing}
@@ -181,7 +174,9 @@ export default function WorkstationData() {
               variant="contained"
               size="small"
             >
-              <span style={{ textTransform: 'none' }}>Sincronizar</span>
+              <Typography fontSize={14} textTransform={'none'}>
+                Sincronizar
+              </Typography>
             </LoadingButton>
           </Stack>
         </HeaderWorkstation>
