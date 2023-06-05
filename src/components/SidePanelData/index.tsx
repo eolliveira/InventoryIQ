@@ -25,7 +25,6 @@ import { formatCurrency } from '../../utils/CurrencyConverter';
 import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 import Stack from '@mui/material/Stack';
 import AssetStatusStyle from '../../components/AssetStatusStyle';
-import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 
 type SidePanelDataProps = {
   data: Workstation;
