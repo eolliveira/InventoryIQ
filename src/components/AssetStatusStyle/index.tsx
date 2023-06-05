@@ -20,9 +20,9 @@ export default function AssetStatusStyle({
       : status === 'EM_USO'
       ? '#2196F3'
       : status === 'EM_REPARO'
-      ? 'warning'
+      ? '#ffc107'
       : status === 'INATIVO'
-      ? 'secondary'
+      ? '#979797'
       : status === 'DESCARTADO'
       ? '#D84315'
       : 'default';
@@ -33,9 +33,9 @@ export default function AssetStatusStyle({
       : status === 'EM_USO'
       ? '#2195f318'
       : status === 'EM_REPARO'
-      ? 'warning'
+      ? '#ffc1071a'
       : status === 'INATIVO'
-      ? 'secondary'
+      ? '#9c9c9c2f'
       : status === 'DESCARTADO'
       ? '#d8421516'
       : 'default';
