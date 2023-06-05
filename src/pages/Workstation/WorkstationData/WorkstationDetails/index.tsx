@@ -131,7 +131,10 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           </div>
         </div>
       </Card>
-      <Card sx={{ marginTop: 2, marginBottom: 2 }} variant="outlined">
+      <Card
+        sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
+        variant="outlined"
+      >
         <Typography
           margin={2}
           fontSize={16}

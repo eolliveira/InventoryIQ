@@ -118,7 +118,10 @@ export default function WorkstationService({
   }
 
   return (
-    <Card sx={{ marginTop: 2, marginBottom: 2 }} variant="outlined">
+    <Card
+      sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
+      variant="outlined"
+    >
       <Box
         display={'flex'}
         justifyContent={'space-between'}
@@ -138,7 +141,7 @@ export default function WorkstationService({
           variant="contained"
           size="small"
           color="primary"
-          sx={{ height: 36.5, marginRight: 1 }}
+          sx={{ marginRight: 1 }}
           startIcon={<AddIcon />}
           onClick={() => setOpenAddService(true)}
         >
@@ -150,6 +153,7 @@ export default function WorkstationService({
       <Divider color="gray" />
       <DataTable
         dense
+        striped
         data={services ? services : []}
         columns={columns}
         sortIcon={<ExpandMoreIcon />}

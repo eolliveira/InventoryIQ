@@ -1,7 +1,6 @@
 import { theme } from '../../style/Theme';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { toDateTime } from '../../utils/Date';
-import { AxiosRequestConfig } from 'axios';
 import { toCamelCase } from '../../utils/StringConverter';
 import { FormContext } from '../../contexts/FormContext';
 import { BaseCard } from '../../style/GlobalStyles';
@@ -25,6 +24,7 @@ import { formatCurrency } from '../../utils/CurrencyConverter';
 import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 import Stack from '@mui/material/Stack';
 import AssetStatusStyle from '../../components/AssetStatusStyle';
+import Card from '@mui/material/Card';
 
 type SidePanelDataProps = {
   data: Workstation;
@@ -93,7 +93,15 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
       <Typography color={'primary'} fontWeight={'bold'} fontSize={14}>
         Atribuido a
       </Typography>
-      <Card>
+      <Card
+        variant="outlined"
+        sx={{
+          backgroundColor: '#F8FAFC',
+          border: '1px solid #e9e9e9',
+          borderRadius: 2,
+          padding: 1.5,
+        }}
+      >
         <Box
           display={'flex'}
           flexWrap={'wrap'}
@@ -144,7 +152,15 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
       >
         Local da Industria
       </Typography>
-      <Card>
+      <Card
+        variant="outlined"
+        sx={{
+          backgroundColor: '#F8FAFC',
+          border: '1px solid #e9e9e9',
+          borderRadius: 2,
+          padding: 1.5,
+        }}
+      >
         <Box
           display={'flex'}
           justifyContent={'space-around'}
@@ -207,7 +223,15 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
       >
         Nota Fiscal
       </Typography>
-      <Card>
+      <Card
+        variant="outlined"
+        sx={{
+          backgroundColor: '#F8FAFC',
+          border: '1px solid #e9e9e9',
+          borderRadius: 2,
+          padding: 1.5,
+        }}
+      >
         <Box display={'flex'} justifyContent={'space-between'}>
           <Box display={'flex'} flexDirection={'column'}>
             <Typography fontWeight={'bold'} fontSize={13} variant="subtitle2">
@@ -306,11 +330,11 @@ const HeaderContainer = styled.div`
   }
 `;
 
-const Card = styled(Box)`
-  border-radius: 8px;
-  border: 1px solid ${theme.colors.primary};
-  padding: 12px;
-`;
+// const Card = styled(Box)`
+//   border-radius: 8px;
+//   border: 1px solid ${theme.colors.primary};
+//   padding: 12px;
+// `;
 
 const Status = styled.div`
   min-width: 150px;

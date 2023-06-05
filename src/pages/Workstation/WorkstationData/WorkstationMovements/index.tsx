@@ -79,6 +79,7 @@ export default function WorkstationMovements({
     <Card sx={{ marginTop: 2, marginBottom: 2 }} variant="outlined">
       <DataTable
         dense
+        striped
         data={movements ? movements : []}
         columns={columns}
         sortIcon={<ExpandMoreIcon />}
