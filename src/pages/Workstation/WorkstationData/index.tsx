@@ -182,6 +182,7 @@ export default function WorkstationData() {
               loadingPosition="start"
               startIcon={<SyncIcon />}
               variant="contained"
+              size="small"
             >
               <span style={{ textTransform: 'none' }}>Sincronizar</span>
             </LoadingButton>

@@ -4,11 +4,15 @@ import { removeUnderline, toCamelCase } from '../../utils/StringConverter';
 type AssetStatusStyleProps = {
   size?: 'small' | 'medium';
   status: string;
+  clickable?: boolean;
+  handleClick?: () => void;
 };
 
 export default function AssetStatusStyle({
   status,
   size,
+  clickable,
+  handleClick,
 }: AssetStatusStyleProps) {
   const color =
     status === 'DISPONIVEL'
@@ -38,9 +42,17 @@ export default function AssetStatusStyle({
 
   return (
     <Chip
+      clickable={clickable}
+      onClick={handleClick}
       size={size}
       label={status && removeUnderline(toCamelCase(status))}
-      sx={{ color: color ?? undefined, backgroundColor: bgColor ?? undefined }}
+      sx={{
+        color: color ?? undefined,
+        backgroundColor: bgColor ?? undefined,
+        '&:hover': {
+          backgroundColor: bgColor,
+        },
+      }}
     />
   );
 }

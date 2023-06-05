@@ -4,7 +4,13 @@ import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
 import { assetState } from '../../../constants/AssetState';
 import { Workstation } from '../../../types/Workstation/Workstation';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Stack from '@mui/material/Stack';
@@ -22,6 +28,8 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Panel from '../../../components/Panel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import WorkstationForm from '../WorkstationData/WorkstationForm';
+import { FormContext } from '../../../contexts/FormContext';
 
 const columns: TableColumn<Workstation>[] = [
   {
@@ -59,6 +67,7 @@ const columns: TableColumn<Workstation>[] = [
 ];
 
 export default function WorkstationList() {
+  const { formContextData, setFormContextData } = useContext(FormContext);
   const [page, setPage] = useState<SpringPage<Workstation>>();
   const [inputFilter, setInputFilter] = useState('');
   const [numberPage, setNumberPage] = useState(0);
@@ -71,6 +80,8 @@ export default function WorkstationList() {
   const [openCustomFilters, setOpenCustomFilters] =
     useState<null | HTMLElement>(null);
   const open = Boolean(openCustomFilters);
+
+  const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
 
   const handleClose = () => {
     setOpenCustomFilters(null);
@@ -109,6 +120,11 @@ export default function WorkstationList() {
     setFilterField('nome');
   }
 
+  const handleAdd = () => {
+    setFormContextData({ isAdding: true });
+    setOpenWorkstationForm(true);
+  };
+
   return (
     <Panel title="Estação de Trabalho ">
       <Box
@@ -142,6 +158,7 @@ export default function WorkstationList() {
           variant="contained"
           startIcon={<AddCircleOutlineIcon />}
           color="primary"
+          onClick={handleAdd}
         >
           <Typography fontSize={14} textTransform={'none'}>
             Novo
@@ -204,6 +221,12 @@ export default function WorkstationList() {
           </Typography>
         </MenuItem>
       </Menu>
+      {openWorkstationForm && (
+        <WorkstationForm
+          openForm={openWorkstationForm}
+          closeForm={() => setOpenWorkstationForm(false)}
+        />
+      )}
     </Panel>
   );
 }

@@ -24,6 +24,8 @@ import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 import { formatCurrency } from '../../utils/CurrencyConverter';
 import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 import Stack from '@mui/material/Stack';
+import AssetStatusStyle from '../../components/AssetStatusStyle';
+import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 
 type SidePanelDataProps = {
   data: Workstation;
@@ -71,20 +73,21 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
         </Box>
 
         <Box>
-          <Typography color={'primary'} fontWeight={'bold'} fontSize={14}>
+          <Typography
+            marginBottom={0.5}
+            color={'primary'}
+            fontWeight={'bold'}
+            fontSize={14}
+          >
             Status
           </Typography>
-          <Status>
-            <Text>{data.status}</Text>
-            <IconButton
-              sx={{ marginRight: 1 }}
-              onClick={(e) => setOpenChangeStateModal(true)}
-              aria-label="delete"
-              size="small"
-            >
-              <EditIcon color="action" fontSize="inherit" />
-            </IconButton>
-          </Status>
+          <AssetStatusStyle
+            key={data.id}
+            clickable
+            handleClick={() => setOpenChangeStateModal(true)}
+            size="medium"
+            status={data.status}
+          />
         </Box>
       </HeaderContainer>
       <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
