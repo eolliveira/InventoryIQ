@@ -16,6 +16,7 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 import SerchBar from '../../components/SearchBar';
 import CircularLoading from '../Loaders/Progress';
+import Panel from '../../components/Panel';
 
 type ChangeNfEntradaModalProps = {
   assetId?: string;
@@ -108,8 +109,7 @@ export default function ChangeNfEntradaModal({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Stack padding={2}>
-          <Typography variant="h6">Atribuir Nota Fiscal de entrada </Typography>
+        <Panel title="Vincular Licença">
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
               <SerchBar
@@ -156,7 +156,7 @@ export default function ChangeNfEntradaModal({
               <Typography textTransform={'none'}>Confirmar</Typography>
             </LoadingButton>
           </Box>
-        </Stack>
+        </Panel>
       </BaseCard>
     </CustomModal>
   );

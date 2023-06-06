@@ -30,7 +30,6 @@ export default function MenuSidebar() {
       <Sidebar
         rootStyles={{
           [`.${sidebarClasses.container}`]: {
-            //backgroundColor: `${theme.colors.primary}`,
             backgroundColor: 'rgb(255, 255, 255)',
           },
         }}

@@ -4,11 +4,11 @@ export type Licenca = {
     qtdAdquirida: number,
     qtdAlocada: number,
     chave: string,
+    status: string,
     fabricante: string,
     numeroSerie: string,
     dtAquisicao: string,
     dtExpiracao: string,
     vlrAquisicao: number,
-    status: string,
     tpLicenca: string
   };

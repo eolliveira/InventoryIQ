@@ -17,6 +17,7 @@ import NoData from '../../NoData';
 import { Licenca } from '../../../types/Licenca/Licenca';
 import Swal from 'sweetalert2';
 import SerchBar from '../../../components/SearchBar';
+import Panel from '../../../components/Panel';
 
 type AssetLinkLicenseProps = {
   assetId?: string;
@@ -65,7 +66,6 @@ export default function AssetLinkLicense({
 
   function handleConfirm() {
     if (selectedLicense == '') {
-      //fazer essa mensagem ter prioridade
       Swal.fire({
         title: 'Atenção!',
         text: 'Selecione uma lincença',
@@ -102,8 +102,7 @@ export default function AssetLinkLicense({
   return (
     <CustomModal openModal={openModal}>
       <BaseCard>
-        <Stack padding={2}>
-          <Typography variant="h6"> Vincular Licença</Typography>
+        <Panel title=" Vincular Licença">
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
               <SerchBar
@@ -149,7 +148,7 @@ export default function AssetLinkLicense({
               <Typography textTransform={'none'}>Confirmar</Typography>
             </LoadingButton>
           </Box>
-        </Stack>
+        </Panel>
       </BaseCard>
     </CustomModal>
   );

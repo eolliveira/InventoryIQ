@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import SerchBar from '../../../components/SearchBar';
 import NoData from '../../../components/NoData';
+import Panel from '../../../components/Panel';
 
 type ChangeUserModalProps = {
   assetId?: string;
@@ -86,8 +87,7 @@ export default function ChangeUserModal({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Stack padding={2}>
-          <Typography variant="h6"> Atribuir usuário </Typography>
+        <Panel title="Atribuir usuário">
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
               <SerchBar
@@ -133,7 +133,7 @@ export default function ChangeUserModal({
               <Typography textTransform={'none'}>Confirmar</Typography>
             </LoadingButton>
           </Box>
-        </Stack>
+        </Panel>
       </BaseCard>
     </CustomModal>
   );

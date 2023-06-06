@@ -15,6 +15,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import NoData from '../../NoData';
 import SerchBar from '../../../components/SearchBar';
+import Panel from '../../../components/Panel';
 
 type ChangeLocationModalProps = {
   assetId?: string;
@@ -78,8 +79,7 @@ export default function ChangeLocationModal({
   return (
     <CustomModal openModal={openModal}>
       <BaseCard>
-        <Stack padding={2}>
-          <Typography variant="h6"> Atribuir Local </Typography>
+        <Panel title=" Vincular Licença">
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
               <SerchBar
@@ -125,7 +125,7 @@ export default function ChangeLocationModal({
               <Typography textTransform={'none'}>Confirmar</Typography>
             </LoadingButton>
           </Box>
-        </Stack>
+        </Panel>
       </BaseCard>
     </CustomModal>
   );

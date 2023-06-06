@@ -182,7 +182,7 @@ export default function WorkstationList() {
         customStyles={{
           headCells: {
             style: {
-              fontWeight: 'bold', // Define a fonte em negrito
+              fontWeight: 'bold',
               height: 40,
               fontSize: 13,
               letterSpacing: 0.5,

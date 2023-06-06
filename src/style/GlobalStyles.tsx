@@ -18,7 +18,7 @@ export const GlobalStyles = createGlobalStyle`
 
 `;
 
-//estilo base para inputs
+//remover
 export const Input = styled.input`
   padding: 5px;
   border-radius: 3px;

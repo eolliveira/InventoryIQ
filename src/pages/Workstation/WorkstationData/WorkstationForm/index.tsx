@@ -1,12 +1,10 @@
 import Box from '@mui/material/Box';
 import { BaseCard } from '../../../../style/GlobalStyles';
 import { Button } from '@mui/material';
-
 import { Workstation } from '../../../../types/Workstation/Workstation';
 import { Field, Input, Label } from '../../../../style/GlobalStyles';
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect, useState } from 'react';
-
 import { FormContext } from '../../../../contexts/FormContext';
 import { useNavigate } from 'react-router-dom';
 import { AxiosRequestConfig } from 'axios';
@@ -17,7 +15,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import CustomModal from '../../../../components/CustomModal';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
-
 import { WorkstationSync } from 'types/Workstation/WorkstationSync';
 import { Interface } from 'types/Interface';
 import { Disco } from 'types/Workstation/Disco';
@@ -28,10 +25,8 @@ import InputDate from '../../../../components/inputs/InputDate';
 import InputText from '../../../../components/inputs/InputText';
 import InputCurrency from '../../../../components/inputs/InputCurrency';
 import InputMultiline from '../../../../components/inputs/InputMultiline';
-import Typography from '@mui/material/Typography';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import IconButton from '@mui/material/IconButton';
 import Swal from 'sweetalert2';
+import Panel from '../../../../components/Panel';
 
 type WorkstationFormProps = {
   data?: Workstation;
@@ -66,26 +61,39 @@ export default function WorkstationForm({
   }, []);
 
   const onSubmit = (formData: WorkstationSync) => {
-    const params: AxiosRequestConfig = {
-      method: formContextData.isAdding ? 'POST' : 'PUT',
-      url: formContextData.isAdding
-        ? '/workstation'
-        : `/workstation/${data?.id}/update`,
-      data: formData,
-    };
+    Swal.fire({
+      title: 'Salvar dados?',
+      text: 'Deseja salvar os dados do ativo?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: 'secondary',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const params: AxiosRequestConfig = {
+          method: formContextData.isAdding ? 'POST' : 'PUT',
+          url: formContextData.isAdding
+            ? '/workstation'
+            : `/workstation/${data?.id}/update`,
+          data: formData,
+        };
 
-    requestBackend(params)
-      .then((response) => {
-        setFormContextData({
-          isAdding: false,
-          isEditing: false,
-        });
-        navigate(`/workstation/${response.data.id}`);
-        closeForm();
-      })
-      .catch((error) => {
-        window.alert(error.response.data.message);
-      });
+        requestBackend(params)
+          .then((response) => {
+            setFormContextData({
+              isAdding: false,
+              isEditing: false,
+            });
+            navigate(`/workstation/${response.data.id}`);
+            closeForm();
+          })
+          .catch((error) => {
+            window.alert(error.response.data.message);
+          });
+      }
+    });
   };
 
   const onCancelForm = () => {
@@ -175,9 +183,9 @@ export default function WorkstationForm({
 
   return (
     <CustomModal openModal={openForm}>
-      <Card>
-        <Container>
-          <Box
+      <BaseCard>
+        <Panel title="Adicionando Estação de Trabalho">
+          {/* <Box
             display={'flex'}
             alignItems={'center'}
             justifyContent={'space-between'}
@@ -188,7 +196,7 @@ export default function WorkstationForm({
             <IconButton size="medium" onClick={onCancelForm}>
               <CloseRoundedIcon color="primary" />
             </IconButton>
-          </Box>
+          </Box> */}
 
           {formContextData.isAdding && (
             <SearchAddressContainer>
@@ -452,8 +460,8 @@ export default function WorkstationForm({
               </div>
             </ButtonContainer>
           </Form>
-        </Container>
-      </Card>
+        </Panel>
+      </BaseCard>
     </CustomModal>
   );
 }
