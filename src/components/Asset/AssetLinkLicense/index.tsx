@@ -110,39 +110,6 @@ export default function AssetLinkLicense({
                 inputFilter={inputFilter}
                 setInputFilter={setInputFilter}
               />
-
-              {/* <Box
-                maxWidth={'100%'}
-                height={35}
-                borderRadius={2}
-                border={'1px solid red'}
-                alignItems={'center'}
-                display={'flex'}
-                marginBottom={1}
-                bgcolor={'#ffff'}
-              >
-                <SearchIcon
-                  color="primary"
-                  sx={{ margin: 1 }}
-                  fontSize="medium"
-                />
-                <input
-                  onChange={(e) => {
-                    setInputFilter(e.target.value);
-                  }}
-                  value={inputFilter}
-                  style={{
-                    backgroundColor: 'unset',
-                    width: '100%',
-                    height: '100%',
-                    fontSize: '13px',
-                    border: 'none',
-                    textDecoration: 'none',
-                    boxShadow: 'none',
-                    outline: 0,
-                  }}
-                />
-              </Box> */}
             </Stack>
             <DataTable
               columns={columns}

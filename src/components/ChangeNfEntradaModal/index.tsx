@@ -4,19 +4,18 @@ import { Button, Stack } from '@mui/material';
 import { requestBackend } from '../../http/requests';
 import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
-import CircularProgress from '@mui/material/CircularProgress';
 
 import Box from '@mui/material/Box';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import SearchIcon from '@mui/icons-material/Search';
 import CustomModal from '../CustomModal';
 import LoadingButton from '@mui/lab/LoadingButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 import SerchBar from '../../components/SearchBar';
+import CircularLoading from '../Loaders/Progress';
 
 type ChangeNfEntradaModalProps = {
   assetId?: string;
@@ -117,69 +116,24 @@ export default function ChangeNfEntradaModal({
                 inputFilter={inputFilter}
                 setInputFilter={setInputFilter}
               />
-
-              {/* <Box
-                maxWidth={'100%'}
-                height={35}
-                borderRadius={2}
-                border={'1px solid red'}
-                alignItems={'center'}
-                display={'flex'}
-                marginBottom={1}
-                bgcolor={'#ffff'}
-              >
-                <SearchIcon
-                  color="primary"
-                  sx={{ margin: 1 }}
-                  fontSize="medium"
-                />
-                <input
-                  onChange={(e) => {
-                    setInputFilter(e.target.value);
-                  }}
-                  value={inputFilter}
-                  type="number"
-                  className="no-spinner"
-                  style={{
-                    backgroundColor: 'unset',
-                    width: '100%',
-                    height: '100%',
-                    fontSize: '13px',
-                    border: 'none',
-                    textDecoration: 'none',
-                    boxShadow: 'none',
-                    outline: 0,
-                  }}
-                />
-              </Box> */}
             </Stack>
-
-            {isLoading ? (
-              <Box
-                height={'100%'}
-                display={'flex'}
-                alignItems={'center'}
-                justifyContent={'center'}
-              >
-                <CircularProgress />
-              </Box>
-            ) : (
-              <DataTable
-                columns={columns}
-                data={notes ? notes : []}
-                dense
-                striped
-                responsive
-                fixedHeader
-                sortIcon={<ExpandMoreIcon />}
-                fixedHeaderScrollHeight={'62vh'}
-                pointerOnHover
-                highlightOnHover
-                selectableRows
-                selectableRowsSingle
-                onSelectedRowsChange={handleSelectedRowsChange}
-              />
-            )}
+            <DataTable
+              columns={columns}
+              data={notes ? notes : []}
+              dense
+              striped
+              responsive
+              fixedHeader
+              sortIcon={<ExpandMoreIcon />}
+              fixedHeaderScrollHeight={'62vh'}
+              pointerOnHover
+              highlightOnHover
+              selectableRows
+              selectableRowsSingle
+              onSelectedRowsChange={handleSelectedRowsChange}
+              progressPending={isLoading}
+              progressComponent={<CircularLoading />}
+            />
           </Stack>
           <Box display={'flex'} justifyContent={'end'}>
             <Button

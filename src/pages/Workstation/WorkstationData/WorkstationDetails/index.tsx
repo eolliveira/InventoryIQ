@@ -13,6 +13,7 @@ import { requestBackend } from '../../../../http/requests';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
+import CircularLoading from '../../../../components/Loaders/Progress';
 
 const columns: TableColumn<Interface>[] = [
   {
@@ -32,17 +33,18 @@ type WorkstationDetailsProps = {
 };
 
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [listInterfaces, setListInterfaces] = useState<Interface[]>();
 
   useEffect(() => {
+    setIsLoading(true);
     requestBackend({ url: `/active/${data?.id}/interfaces` })
       .then((response) => {
         console.log('teste');
         setListInterfaces(response.data);
       })
-      .catch((error) => {
-        console.log('Erro: ' + error);
-      });
+      .catch((error) => console.log('Erro ao carregar as interfaces: ' + error))
+      .finally(() => setIsLoading(false));
   }, [data]);
 
   return (
@@ -154,8 +156,8 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           pointerOnHover
           highlightOnHover
           fixedHeaderScrollHeight={'82vh'}
-          progressPending={true}
-          progressComponent={<h1>teste</h1>}
+          progressPending={isLoading}
+          progressComponent={<CircularLoading />}
         />
       </Card>
     </Box>

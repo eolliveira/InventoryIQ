@@ -24,17 +24,9 @@ const columns: TableColumn<Movimento>[] = [
     sortable: true,
     cell: (row) => (
       <>
-        <AssetStatusStyle
-          // key={row.id}
-          size="small"
-          status={row.statusAtivoAnterior}
-        />
+        <AssetStatusStyle size="small" status={row.statusAtivoAnterior} />
         <ArrowRightAltIcon fontSize="small" color="primary" />
-        <AssetStatusStyle
-          //key={row.id}
-          size="small"
-          status={row.statusAtivo}
-        />{' '}
+        <AssetStatusStyle size="small" status={row.statusAtivo} />
       </>
     ),
   },

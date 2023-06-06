@@ -4,6 +4,8 @@ import { Button, Stack } from '@mui/material';
 import { requestBackend } from '../../../http/requests';
 import { FormContext } from '../../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
+import { Usuario } from 'types/Usuario';
+
 import Box from '@mui/material/Box';
 import CustomModal from '../../CustomModal';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -12,7 +14,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import { Usuario } from 'types/Usuario';
 import SerchBar from '../../../components/SearchBar';
 import NoData from '../../../components/NoData';
 
@@ -93,41 +94,7 @@ export default function ChangeUserModal({
                 inputFilter={inputFilter}
                 setInputFilter={setInputFilter}
               />
-
-              {/* <Box
-                maxWidth={'100%'}
-                height={35}
-                borderRadius={2}
-                border={'1px solid red'}
-                alignItems={'center'}
-                display={'flex'}
-                marginBottom={1}
-                bgcolor={'#ffff'}
-              >
-                <SearchIcon
-                  color="primary"
-                  sx={{ margin: 1 }}
-                  fontSize="medium"
-                />
-                <input
-                  onChange={(e) => {
-                    setInputFilter(e.target.value);
-                  }}
-                  value={inputFilter}
-                  style={{
-                    backgroundColor: 'unset',
-                    width: '100%',
-                    height: '100%',
-                    fontSize: '13px',
-                    border: 'none',
-                    textDecoration: 'none',
-                    boxShadow: 'none',
-                    outline: 0,
-                  }}
-                />
-              </Box> */}
             </Stack>
-
             <DataTable
               columns={columns}
               data={users ? users : []}
@@ -145,7 +112,6 @@ export default function ChangeUserModal({
               onSelectedRowsChange={handleSelectedRowsChange}
             />
           </Stack>
-
           <Box display={'flex'} justifyContent={'end'}>
             <Button
               variant="contained"
