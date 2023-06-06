@@ -16,6 +16,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
+import SerchBar from '../../components/SearchBar';
 
 type ChangeNfEntradaModalProps = {
   assetId?: string;
@@ -112,7 +113,12 @@ export default function ChangeNfEntradaModal({
           <Typography variant="h6">Atribuir Nota Fiscal de entrada </Typography>
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
-              <Box
+              <SerchBar
+                inputFilter={inputFilter}
+                setInputFilter={setInputFilter}
+              />
+
+              {/* <Box
                 maxWidth={'100%'}
                 height={35}
                 borderRadius={2}
@@ -145,7 +151,7 @@ export default function ChangeNfEntradaModal({
                     outline: 0,
                   }}
                 />
-              </Box>
+              </Box> */}
             </Stack>
 
             {isLoading ? (

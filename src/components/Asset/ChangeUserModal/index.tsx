@@ -12,8 +12,9 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import SearchIcon from '@mui/icons-material/Search';
 import { Usuario } from 'types/Usuario';
+import SerchBar from '../../../components/SearchBar';
+import NoData from '../../../components/NoData';
 
 type ChangeUserModalProps = {
   assetId?: string;
@@ -38,11 +39,7 @@ export default function ChangeUserModal({
   const [selectedUser, setSelectedUser] = useState('');
 
   useEffect(() => {
-    const params: AxiosRequestConfig = {
-      method: 'GET',
-      url: `/users?nome=${inputFilter}`,
-    };
-    requestBackend(params)
+    requestBackend({ url: `/users?nome=${inputFilter}` })
       .then((response) => {
         setUsers(response.data.content);
       })
@@ -92,7 +89,12 @@ export default function ChangeUserModal({
           <Typography variant="h6"> Atribuir usuário </Typography>
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
-              <Box
+              <SerchBar
+                inputFilter={inputFilter}
+                setInputFilter={setInputFilter}
+              />
+
+              {/* <Box
                 maxWidth={'100%'}
                 height={35}
                 borderRadius={2}
@@ -123,7 +125,7 @@ export default function ChangeUserModal({
                     outline: 0,
                   }}
                 />
-              </Box>
+              </Box> */}
             </Stack>
 
             <DataTable
@@ -133,6 +135,7 @@ export default function ChangeUserModal({
               striped
               responsive
               fixedHeader
+              noDataComponent={<NoData />}
               sortIcon={<ExpandMoreIcon />}
               fixedHeaderScrollHeight={'62vh'}
               pointerOnHover

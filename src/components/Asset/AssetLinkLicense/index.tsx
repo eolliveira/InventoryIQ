@@ -16,6 +16,7 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 import NoData from '../../NoData';
 import { Licenca } from '../../../types/Licenca/Licenca';
 import Swal from 'sweetalert2';
+import SerchBar from '../../../components/SearchBar';
 
 type AssetLinkLicenseProps = {
   assetId?: string;
@@ -101,7 +102,12 @@ export default function AssetLinkLicense({
           <Typography variant="h6"> Vincular Licença</Typography>
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
-              <Box
+              <SerchBar
+                inputFilter={inputFilter}
+                setInputFilter={setInputFilter}
+              />
+
+              {/* <Box
                 maxWidth={'100%'}
                 height={35}
                 borderRadius={2}
@@ -132,7 +138,7 @@ export default function AssetLinkLicense({
                     outline: 0,
                   }}
                 />
-              </Box>
+              </Box> */}
             </Stack>
             <DataTable
               columns={columns}

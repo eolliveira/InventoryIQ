@@ -15,6 +15,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import NoData from '../../NoData';
+import SerchBar from '../../../components/SearchBar';
 
 type ChangeLocationModalProps = {
   assetId?: string;
@@ -82,7 +83,12 @@ export default function ChangeLocationModal({
           <Typography variant="h6"> Atribuir Local </Typography>
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
-              <Box
+              <SerchBar
+                inputFilter={inputFilter}
+                setInputFilter={setInputFilter}
+              />
+
+              {/* <Box
                 maxWidth={'100%'}
                 height={35}
                 borderRadius={2}
@@ -113,7 +119,7 @@ export default function ChangeLocationModal({
                     outline: 0,
                   }}
                 />
-              </Box>
+              </Box> */}
             </Stack>
             <DataTable
               columns={columns}
