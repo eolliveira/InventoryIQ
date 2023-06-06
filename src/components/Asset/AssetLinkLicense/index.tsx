@@ -66,7 +66,11 @@ export default function AssetLinkLicense({
   function handleConfirm() {
     if (selectedLicense == '') {
       //fazer essa mensagem ter prioridade
-      Swal.fire('Falha!', `Selecione uma lincença`, 'warning');
+      Swal.fire({
+        title: 'Atenção!',
+        text: 'Selecione uma lincença',
+        icon: 'warning',
+      });
       return;
     }
     const data = {

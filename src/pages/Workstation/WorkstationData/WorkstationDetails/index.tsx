@@ -3,13 +3,12 @@ import { Workstation } from '../../../../types/Workstation/Workstation';
 import dayjs from 'dayjs';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import { AxiosRequestConfig } from 'axios';
 import Divider from '@mui/material/Divider';
-import { useCallback, useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
-import { Interface } from '../../../../types/Interface';
 import NoData from '../../../../components/NoData';
 import TextInfo from '../../../../components/TextInfo';
+import { Interface } from '../../../../types/Interface';
+import { useCallback, useEffect, useState } from 'react';
 import { requestBackend } from '../../../../http/requests';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
@@ -35,19 +34,16 @@ type WorkstationDetailsProps = {
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   const [listInterfaces, setListInterfaces] = useState<Interface[]>();
 
-  const getInterfaces = useCallback(() => {
+  useEffect(() => {
     requestBackend({ url: `/active/${data?.id}/interfaces` })
       .then((response) => {
+        console.log('teste');
         setListInterfaces(response.data);
       })
       .catch((error) => {
         console.log('Erro: ' + error);
       });
   }, [data]);
-
-  useEffect(() => {
-    getInterfaces;
-  }, [getInterfaces]);
 
   return (
     <Box marginTop={2}>
@@ -158,6 +154,8 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           pointerOnHover
           highlightOnHover
           fixedHeaderScrollHeight={'82vh'}
+          progressPending={true}
+          progressComponent={<h1>teste</h1>}
         />
       </Card>
     </Box>

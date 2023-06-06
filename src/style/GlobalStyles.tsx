@@ -14,6 +14,8 @@ export const GlobalStyles = createGlobalStyle`
       font-family: 'Roboto', sans-serif;
     }
     
+    .swal2-container { z-index: 9999 } 
+
 `;
 
 //estilo base para inputs

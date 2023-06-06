@@ -26,20 +26,6 @@ type AssetServiceProps = {
 export default function AssetService({ assetId }: AssetServiceProps) {
   const columns: TableColumn<Servico>[] = [
     {
-      button: true,
-      width: '80px',
-      cell: (row) => (
-        <IconButton
-          sx={{ marginRight: 1 }}
-          onClick={() => onDeleteService(row.id)}
-          aria-label="delete"
-          size="small"
-        >
-          <DeleteIcon color="primary" fontSize="inherit" />
-        </IconButton>
-      ),
-    },
-    {
       name: 'Data serviço',
       selector: (row) => toDate(row.dhGerou),
       sortable: true,
@@ -59,6 +45,20 @@ export default function AssetService({ assetId }: AssetServiceProps) {
       name: 'Valor',
       selector: (row) => row.vlServico,
       sortable: true,
+    },
+    {
+      button: true,
+      width: '80px',
+      cell: (row) => (
+        <IconButton
+          sx={{ marginRight: 1 }}
+          onClick={() => onDeleteService(row.id)}
+          aria-label="delete"
+          size="small"
+        >
+          <DeleteIcon color="primary" fontSize="inherit" />
+        </IconButton>
+      ),
     },
   ];
 

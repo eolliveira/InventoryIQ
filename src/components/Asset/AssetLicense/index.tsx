@@ -26,10 +26,18 @@ type AssetLicenseProps = {
 export default function AssetLicense({ assetId }: AssetLicenseProps) {
   const columns: TableColumn<Licenca>[] = [
     {
-      name: '#',
-      selector: (row) => row.id,
-      sortable: true,
-      grow: 0.6,
+      button: true,
+      width: '70px',
+      cell: (row) => (
+        <IconButton
+          sx={{ marginRight: 1 }}
+          onClick={() => onReleaseLicense(row.id)}
+          aria-label="delete"
+          size="small"
+        >
+          <IosShareIcon color="primary" fontSize="inherit" />
+        </IconButton>
+      ),
     },
     { name: 'Software', selector: (row) => row.software, sortable: true },
     { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
@@ -53,19 +61,6 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
       name: 'Data aquisição',
       selector: (row) => toDate(row.dtAquisicao),
       sortable: true,
-    },
-    {
-      button: true,
-      cell: (row) => (
-        <IconButton
-          sx={{ marginRight: 1 }}
-          onClick={() => onReleaseLicense(row.id)}
-          aria-label="delete"
-          size="small"
-        >
-          <IosShareIcon color="primary" fontSize="inherit" />
-        </IconButton>
-      ),
     },
   ];
 
