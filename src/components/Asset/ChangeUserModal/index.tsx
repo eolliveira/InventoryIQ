@@ -17,6 +17,7 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 import SerchBar from '../../../components/SearchBar';
 import NoData from '../../../components/NoData';
 import Panel from '../../../components/Panel';
+import Swal from 'sweetalert2';
 
 type ChangeUserModalProps = {
   assetId?: string;
@@ -58,7 +59,11 @@ export default function ChangeUserModal({
 
   function handleConfirm() {
     if (selectedUser == '') {
-      window.alert('Selecione um usuario');
+      Swal.fire({
+        title: 'Atenção!',
+        text: 'Selecione um usuario!',
+        icon: 'warning',
+      });
       return;
     }
 

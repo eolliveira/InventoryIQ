@@ -68,7 +68,7 @@ export default function AssetLinkLicense({
     if (selectedLicense == '') {
       Swal.fire({
         title: 'Atenção!',
-        text: 'Selecione uma lincença',
+        text: 'Selecione uma Lincença!',
         icon: 'warning',
       });
       return;

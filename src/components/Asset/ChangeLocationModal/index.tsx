@@ -16,6 +16,7 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 import NoData from '../../NoData';
 import SerchBar from '../../../components/SearchBar';
 import Panel from '../../../components/Panel';
+import Swal from 'sweetalert2';
 
 type ChangeLocationModalProps = {
   assetId?: string;
@@ -52,7 +53,11 @@ export default function ChangeLocationModal({
 
   function handleConfirm() {
     if (selectedLocation == '') {
-      window.alert('Selecione um local da Industria');
+      Swal.fire({
+        title: 'Atenção!',
+        text: 'Selecione um Local da Industria!',
+        icon: 'warning',
+      });
       return;
     }
     const data = { localIndustriaId: selectedLocation };

@@ -17,6 +17,7 @@ import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 import SerchBar from '../../components/SearchBar';
 import CircularLoading from '../Loaders/Progress';
 import Panel from '../../components/Panel';
+import Swal from 'sweetalert2';
 
 type ChangeNfEntradaModalProps = {
   assetId?: string;
@@ -81,7 +82,11 @@ export default function ChangeNfEntradaModal({
 
   function handleConfirm() {
     if (selectedNfEntrada == '') {
-      window.alert('Selecione uma Nota');
+      Swal.fire({
+        title: 'Atenção!',
+        text: 'Selecione uma Nota Fiscal!',
+        icon: 'warning',
+      });
       return;
     }
     const data = { idNfEntrada: selectedNfEntrada };

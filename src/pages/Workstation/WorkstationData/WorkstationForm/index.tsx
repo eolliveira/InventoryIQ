@@ -82,6 +82,7 @@ export default function WorkstationForm({
 
         requestBackend(params)
           .then((response) => {
+            Swal.fire('Concluido!', 'Dados foram salvos!', 'success');
             setFormContextData({
               isAdding: false,
               isEditing: false,
