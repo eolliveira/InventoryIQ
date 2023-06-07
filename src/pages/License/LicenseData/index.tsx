@@ -6,11 +6,9 @@ import styled from 'styled-components';
 import SyncIcon from '@mui/icons-material/Sync';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
-import WorkstationDetails from './WorkstationDetails';
 import AssetMovements from '../../../components/Asset/AssetMovements';
 import AssetLicense from '../../../components/Asset/AssetLicense';
 import AssetService from '../../../components/Asset/AssetService';
-import WorkstationHardware from './WorkstationHardware';
 import StockButton from '../../../components/buttons/StockButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
@@ -27,18 +25,16 @@ import { AxiosRequestConfig } from 'axios';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import WorkstationForm from './WorkstationForm';
 import Swal from 'sweetalert2';
-import { customTheme } from '../../../style/CustomTheme';
 
-export default function WorkstationData() {
+export default function LicenseData() {
   const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
 
   type urlParams = {
-    workstationId: string;
+    licenseId: string;
   };
 
-  const { workstationId } = useParams<urlParams>();
+  const { licenseId } = useParams<urlParams>();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [active, setActive] = useState<Workstation>();
   const [isSincronized, setSynchronizing] = useState(false);
@@ -46,14 +42,14 @@ export default function WorkstationData() {
   const navigate = useNavigate();
 
   const getWorkstationData = useCallback(() => {
-    requestBackend({ url: `/workstation/${workstationId}` })
+    requestBackend({ url: `/workstation/${licenseId}` })
       .then((response) => {
         setActive(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [workstationId, isSincronized, formContextData]);
+  }, [licenseId, isSincronized, formContextData]);
 
   useEffect(() => {
     getWorkstationData();
@@ -209,10 +205,12 @@ export default function WorkstationData() {
             </Box>
           </AppBar>
           <TabPanel style={{ padding: 0 }} value="1">
-            <WorkstationDetails data={active} />
+            {/* <WorkstationDetails data={active} /> */}
+            <h1>teste</h1>
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="2">
-            <WorkstationHardware teste={10} />
+            {/* <WorkstationHardware teste={10} /> */}
+            <h1>teste</h1>
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="3">
             <AssetMovements assetId={active?.id} />
@@ -225,13 +223,13 @@ export default function WorkstationData() {
           </TabPanel>
         </TabContext>
       </BaseCard>
-      {openWorkstationForm && (
+      {/* {openWorkstationForm && (
         <WorkstationForm
           data={active}
           openForm={openWorkstationForm}
           closeForm={() => setOpenWorkstationForm(false)}
         />
-      )}
+      )} */}
     </Wapper>
   );
 }

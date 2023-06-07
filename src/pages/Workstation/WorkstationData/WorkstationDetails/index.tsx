@@ -158,6 +158,16 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           fixedHeaderScrollHeight={'82vh'}
           progressPending={isLoading}
           progressComponent={<CircularLoading />}
+          customStyles={{
+            headCells: {
+              style: {
+                fontWeight: 'bold',
+                height: 40,
+                fontSize: 13,
+                letterSpacing: 0.5,
+              },
+            },
+          }}
         />
       </Card>
     </Box>

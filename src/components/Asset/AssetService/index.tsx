@@ -162,6 +162,16 @@ export default function AssetService({ assetId }: AssetServiceProps) {
         pointerOnHover
         highlightOnHover
         fixedHeaderScrollHeight={'82vh'}
+        customStyles={{
+          headCells: {
+            style: {
+              fontWeight: 'bold',
+              height: 40,
+              fontSize: 13,
+              letterSpacing: 0.5,
+            },
+          },
+        }}
       />
 
       {openAddService && (

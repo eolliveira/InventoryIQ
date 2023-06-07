@@ -81,6 +81,16 @@ export default function AssetMovements({ assetId }: AssetMovementsProps) {
         highlightOnHover
         fixedHeaderScrollHeight={'82vh'}
         onRowClicked={handleRowClicked}
+        customStyles={{
+          headCells: {
+            style: {
+              fontWeight: 'bold',
+              height: 40,
+              fontSize: 13,
+              letterSpacing: 0.5,
+            },
+          },
+        }}
       />
     </Card>
   );

@@ -12,6 +12,7 @@ import LicenseList from './pages/License/LicenseList';
 import Mobile from './pages/Mobile';
 import Nobreak from './pages/Nobreak';
 import Printer from './pages/Printer';
+import LicenseData from './pages/License/LicenseData';
 
 export default function App() {
   const [authContextData, setAuthContextData] = useState<AuthContextData>({
@@ -36,6 +37,7 @@ export default function App() {
               element={<WorkstationData />}
             />
             <Route path="license" element={<LicenseList />} />
+            <Route path="license/:licenseId" element={<LicenseData />} />
             <Route path="mobile" element={<Mobile />} />
             <Route path="nobreak" element={<Nobreak />} />
             <Route path="printer" element={<Printer />} />

@@ -16,6 +16,15 @@ export const GlobalStyles = createGlobalStyle`
     
     .swal2-container { z-index: 9999 } 
 
+    //tabs menu
+    /* .Mui-selected {
+    color: ${theme.colors.secondary};
+    }
+
+    .MuiTabs-indicator {
+      background-color: ${theme.colors.yellow};
+    } */
+
 `;
 
 //remover

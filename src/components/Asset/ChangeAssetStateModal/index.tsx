@@ -1,14 +1,11 @@
-import { BaseCard, Label } from '../../../style/GlobalStyles';
+import { BaseCard } from '../../../style/GlobalStyles';
 import { useContext, useState } from 'react';
 import { Button } from '@mui/material';
 import { requestBackend } from '../../../http/requests';
 import { FormContext } from '../../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import CustomModal from '../../CustomModal';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
@@ -16,9 +13,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { assetState } from '../../../constants/AssetState';
-import Divider from '@mui/material/Divider';
 import Panel from '../../../components/Panel';
 import InputSelect from '../../../components/inputs/InputSelect';
+import Swal from 'sweetalert2';
 
 type ChangeStateProps = {
   assetId?: string;
@@ -40,6 +37,7 @@ export default function ChangeStateModal({
       statusAtivo: state,
       descricao: description,
       ativoId: assetId,
+      //alterar para usuçário logado
       usuarioId: 6566,
     };
 
@@ -52,13 +50,17 @@ export default function ChangeStateModal({
 
     requestBackend(params)
       .then(() => {
-        window.alert('Status do ativo foi alterado com sucesso!');
+        Swal.fire(
+          'Sucesso!',
+          'Status do ativo foi alterado com sucesso!',
+          'success'
+        );
         setFormContextData({ isEditing: false });
         closeModal();
       })
-      .catch((error) => {
-        window.alert(error.response.data.message);
-      });
+      .catch((error) =>
+        Swal.fire('Atenção!', error.response.data.message, 'warning')
+      );
   }
 
   function handleCancel() {
@@ -75,23 +77,6 @@ export default function ChangeStateModal({
               setInputField={setState}
               selectedItems={assetState.map((status) => status.value)}
             />
-
-            {/* <InputLabel id="demo-simple-select-label">Status</InputLabel>
-            <Select
-              size="small"
-              labelId="demo-simple-select-label"
-              label="status"
-              id="demo-simple-select"
-              value={state}
-              onChange={(e) => setState(e.target.value as string)}
-            >
-              {assetState.map((type) => (
-                <MenuItem key={type.value} value={type.value}>
-                  {type.desc}
-                </MenuItem>
-              ))}
-            </Select> */}
-
             <TextField
               style={{ width: 350 }}
               margin={'normal'}

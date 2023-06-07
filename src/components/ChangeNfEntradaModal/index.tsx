@@ -138,6 +138,16 @@ export default function ChangeNfEntradaModal({
               onSelectedRowsChange={handleSelectedRowsChange}
               progressPending={isLoading}
               progressComponent={<CircularLoading />}
+              customStyles={{
+                headCells: {
+                  style: {
+                    fontWeight: 'bold',
+                    height: 40,
+                    fontSize: 13,
+                    letterSpacing: 0.5,
+                  },
+                },
+              }}
             />
           </Stack>
           <Box display={'flex'} justifyContent={'end'}>

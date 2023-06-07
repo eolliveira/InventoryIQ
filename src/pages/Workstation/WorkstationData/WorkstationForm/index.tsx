@@ -361,11 +361,11 @@ export default function WorkstationForm({
                   <div className="col-lg-9">
                     <InputText
                       label="Modelo"
-                      name="numeroSerie"
+                      name="modelo"
                       control={control}
                       register={register}
-                      error={!!errors.numeroSerie}
-                      helperText={errors.numeroSerie?.message}
+                      error={!!errors.modelo}
+                      helperText={errors.modelo?.message}
                     />
                   </div>
                   <div className="col-lg-3">

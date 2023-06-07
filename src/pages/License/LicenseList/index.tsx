@@ -90,6 +90,8 @@ export default function LicenseList() {
       });
   }, [numberPage, inputFilter, filterField, statusFilter]);
 
+  const handleRowClicked = (row: Licenca) => navigate(`/license/${row.id}`);
+
   useEffect(() => {
     getLicenses();
   }, [getLicenses]);
@@ -111,7 +113,7 @@ export default function LicenseList() {
             inputFilter={inputFilter}
             setInputFilter={setInputFilter}
             setNumberPage={setNumberPage}
-            setOpenCustomFilters={setOpenCustomFilters}
+            //setOpenCustomFilters={setOpenCustomFilters}
           />
           <SelectFilter
             filterField={filterField}
@@ -150,7 +152,7 @@ export default function LicenseList() {
         selectableRows
         pointerOnHover
         highlightOnHover
-        onRowClicked={() => {}}
+        onRowClicked={handleRowClicked}
         customStyles={{
           headCells: {
             style: {
