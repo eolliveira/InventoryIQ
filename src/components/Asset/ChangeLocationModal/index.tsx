@@ -84,7 +84,7 @@ export default function ChangeLocationModal({
   return (
     <CustomModal openModal={openModal}>
       <BaseCard>
-        <Panel title=" Vincular Licença">
+        <Panel title="Atribuir local">
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
               <SerchBar

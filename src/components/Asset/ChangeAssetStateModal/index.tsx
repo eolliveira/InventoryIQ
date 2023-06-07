@@ -17,7 +17,8 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { assetState } from '../../../constants/AssetState';
 import Divider from '@mui/material/Divider';
-import InputMultiline from '../../inputs/InputMultiline';
+import Panel from '../../../components/Panel';
+import InputSelect from '../../../components/inputs/InputSelect';
 
 type ChangeStateProps = {
   assetId?: string;
@@ -67,13 +68,15 @@ export default function ChangeStateModal({
   return (
     <CustomModal openModal={openModal}>
       <BaseCard>
-        <Box>
-          <Typography variant="subtitle1">Alterar Status</Typography>
-          <Divider color="gray" />
-
+        <Panel title="Alterar Status">
           <FormControl sx={{ marginTop: 3 }}>
-            <InputLabel id="demo-simple-select-label">Status</InputLabel>
+            <InputSelect
+              inputField={state}
+              setInputField={setState}
+              selectedItems={assetState.map((status) => status.value)}
+            />
 
+            {/* <InputLabel id="demo-simple-select-label">Status</InputLabel>
             <Select
               size="small"
               labelId="demo-simple-select-label"
@@ -87,7 +90,7 @@ export default function ChangeStateModal({
                   {type.desc}
                 </MenuItem>
               ))}
-            </Select>
+            </Select> */}
 
             <TextField
               style={{ width: 350 }}
@@ -123,7 +126,7 @@ export default function ChangeStateModal({
               </LoadingButton>
             </Box>
           </FormControl>
-        </Box>
+        </Panel>
       </BaseCard>
     </CustomModal>
   );

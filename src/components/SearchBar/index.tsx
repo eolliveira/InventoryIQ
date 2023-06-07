@@ -3,7 +3,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import TuneIcon from '@mui/icons-material/Tune';
-import Divider from '@mui/material/Divider';
 
 type SerchBarProps = {
   inputFilter: string;

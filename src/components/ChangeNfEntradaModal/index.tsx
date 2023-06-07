@@ -114,7 +114,7 @@ export default function ChangeNfEntradaModal({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel title="Vincular Licença">
+        <Panel title="Atribuir Nota Fiscal">
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
               <SerchBar
