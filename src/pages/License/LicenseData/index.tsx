@@ -3,7 +3,6 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import TabContext from '@material-ui/lab/TabContext';
 import { theme } from '../../../style/Theme';
 import styled from 'styled-components';
-import SyncIcon from '@mui/icons-material/Sync';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
 import AssetMovements from '../../../components/Asset/AssetMovements';
@@ -22,10 +21,10 @@ import SidePanelData from '../../../components/SidePanelData';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
 import { AxiosRequestConfig } from 'axios';
-import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2';
+import { Licenca } from '../../../types/Licenca/Licenca';
 
 export default function LicenseData() {
   const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
@@ -36,24 +35,23 @@ export default function LicenseData() {
 
   const { licenseId } = useParams<urlParams>();
   const { formContextData, setFormContextData } = useContext(FormContext);
-  const [active, setActive] = useState<Workstation>();
-  const [isSincronized, setSynchronizing] = useState(false);
+  const [license, setLicense] = useState<Licenca>();
   const [tabValue, setTabValue] = useState('1');
   const navigate = useNavigate();
 
-  const getWorkstationData = useCallback(() => {
-    requestBackend({ url: `/workstation/${licenseId}` })
+  const getLicenseData = useCallback(() => {
+    requestBackend({ url: `/licenses/${licenseId}` })
       .then((response) => {
-        setActive(response.data);
+        setLicense(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [licenseId, isSincronized, formContextData]);
+  }, [licenseId, formContextData]);
 
   useEffect(() => {
-    getWorkstationData();
-  }, [getWorkstationData]);
+    getLicenseData();
+  }, [getLicenseData]);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setTabValue(newValue);
@@ -87,7 +85,7 @@ export default function LicenseData() {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
-          url: `/active/${active?.id}`,
+          url: `/active/${license?.id}`,
         };
 
         requestBackend(params)
@@ -104,31 +102,11 @@ export default function LicenseData() {
 
   const handleDuplicate = () => {};
 
-  const handleSync = () => {
-    setSynchronizing(true);
-    const params: AxiosRequestConfig = {
-      method: 'PUT',
-      url: `/workstation/${active?.id}/synchronize`,
-    };
-
-    requestBackend(params)
-      .then(() =>
-        Swal.fire('Sucesso', 'Dados do ativo foram sincronizados!', 'success')
-      )
-      .catch(() => {
-        Swal.fire(
-          'Falha!',
-          'Não foi possivel sincronizar os dados do ativo!',
-          'error'
-        );
-      })
-      .finally(() => setSynchronizing(false));
-  };
-
   return (
     <Wapper className="row">
       <ContainerSidePanel className="col-lg-3">
-        <SidePanelData data={active ?? ({} as Workstation)} />
+        <h2>teste</h2>
+        {/* <SidePanelData data={license ?? ({} as Workstation)} /> */}
       </ContainerSidePanel>
       <BaseCard className="col-lg-9">
         <Box
@@ -141,7 +119,7 @@ export default function LicenseData() {
           <IconButton
             aria-label="back"
             size="medium"
-            onClick={() => navigate('/workstation')}
+            onClick={() => navigate('/license')}
           >
             <ArrowBackIcon color="primary" />
           </IconButton>
@@ -154,7 +132,9 @@ export default function LicenseData() {
             marginLeft={2}
             flex={1}
           >
-            {(active ? active?.id : '') + ' - ' + (active ? active?.nome : '')}
+            {(license ? license?.id : '') +
+              ' - ' +
+              (license ? license?.software : '')}
           </Typography>
           <Stack spacing={2} direction="row">
             <StockButton
@@ -165,20 +145,6 @@ export default function LicenseData() {
               onClickRemove={handleRemove}
               isDisabled={formContextData.isAdding || formContextData.isEditing}
             />
-            <LoadingButton
-              disabled={formContextData.isAdding || formContextData.isEditing}
-              color="primary"
-              onClick={handleSync}
-              loading={isSincronized}
-              loadingPosition="start"
-              startIcon={<SyncIcon />}
-              variant="contained"
-              size="small"
-            >
-              <Typography fontSize={14} textTransform={'none'}>
-                Sincronizar
-              </Typography>
-            </LoadingButton>
           </Stack>
         </Box>
         <TabContext value={tabValue}>
@@ -201,6 +167,7 @@ export default function LicenseData() {
                 <CustomTab value="3" label="Movimentos" />
                 <CustomTab value="4" label="Licenças" />
                 <CustomTab value="5" label="Serviços" />
+                <CustomTab value="6" label="Ativos(Alocado a)" />
               </Tabs>
             </Box>
           </AppBar>
@@ -213,13 +180,17 @@ export default function LicenseData() {
             <h1>teste</h1>
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="3">
-            <AssetMovements assetId={active?.id} />
+            <AssetMovements assetId={license?.id} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="4">
-            <AssetLicense assetId={active?.id} />
+            <AssetLicense assetId={license?.id} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="5">
-            <AssetService assetId={active?.id} />
+            <AssetService assetId={license?.id} />
+          </TabPanel>
+          <TabPanel style={{ padding: 0 }} value="6">
+            {/* <AssetService assetId={license?.id} /> */}
+            <h1>teste</h1>
           </TabPanel>
         </TabContext>
       </BaseCard>
