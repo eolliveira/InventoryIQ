@@ -66,10 +66,10 @@ export default function WorkstationForm({
       text: 'Deseja salvar os dados do ativo?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#dc3545',
-      cancelButtonColor: 'secondary',
       confirmButtonText: 'Confirmar',
+      confirmButtonColor: '#43a047',
       cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#dc3545',
     }).then((result) => {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {

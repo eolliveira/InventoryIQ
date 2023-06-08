@@ -1,0 +1,1 @@
+export const licenseStatus = ['ATIVA','EM_USO','DESATIVADA','EXPIRADA'];

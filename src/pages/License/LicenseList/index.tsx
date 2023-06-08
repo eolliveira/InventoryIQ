@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { SpringPage } from 'types/vendor/spring';
-import { assetState } from '../../../constants/AssetState';
+import { assetStatus } from '../../../constants/AssetStatus';
 import {
   ChangeEvent,
   useCallback,
@@ -124,7 +124,7 @@ export default function LicenseList() {
             <SelectFilter
               filterField={statusFilter}
               setFieldFilter={setStatusFilter}
-              selectedItems={assetState.map((e) => e.value)}
+              selectedItems={assetStatus.map((status) => status)}
             />
           )}
         </Stack>

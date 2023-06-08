@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { SpringPage } from 'types/vendor/spring';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
-import { assetState } from '../../../constants/AssetState';
+import { assetStatus } from '../../../constants/AssetStatus';
 import { Workstation } from '../../../types/Workstation/Workstation';
 import {
   ChangeEvent,
@@ -31,6 +31,7 @@ import Button from '@mui/material/Button';
 import WorkstationForm from '../WorkstationData/WorkstationForm';
 import { FormContext } from '../../../contexts/FormContext';
 import { toDate } from '../../../utils/Date';
+import { stat } from 'fs/promises';
 
 const columns: TableColumn<Workstation>[] = [
   {
@@ -151,7 +152,7 @@ export default function WorkstationList() {
             <SelectFilter
               filterField={statusFilter}
               setFieldFilter={setStatusFilter}
-              selectedItems={assetState.map((e) => e.value)}
+              selectedItems={assetStatus.map((status) => status)}
             />
           )}
         </Stack>

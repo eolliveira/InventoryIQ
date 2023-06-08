@@ -12,7 +12,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { assetState } from '../../../constants/AssetState';
+import { assetStatus } from '../../../constants/AssetStatus';
 import Panel from '../../../components/Panel';
 import InputSelect from '../../../components/inputs/InputSelect';
 import Swal from 'sweetalert2';
@@ -75,7 +75,7 @@ export default function ChangeStateModal({
             <InputSelect
               inputField={state}
               setInputField={setState}
-              selectedItems={assetState.map((status) => status.value)}
+              selectedItems={assetStatus.map((status) => status)}
             />
             <TextField
               style={{ width: 350 }}
