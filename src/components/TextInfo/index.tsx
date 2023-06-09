@@ -8,7 +8,7 @@ type TextInfoProps = {
 
 export default function TextInfo({ label, text }: TextInfoProps) {
   return (
-    <Stack margin={'0px 0px 10px 0px'} direction={'row'} spacing={1}>
+    <Stack margin={'0px 0px 15px 0px'} direction={'row'} spacing={1}>
       <Typography color={'primary'} fontSize={14} fontWeight={'bold'}>
         {label + ':'}
       </Typography>

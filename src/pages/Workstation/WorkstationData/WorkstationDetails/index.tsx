@@ -59,7 +59,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               borderRadius: 2,
               padding: 1.5,
               marginBottom: 1,
-              minHeight: 355,
+              minHeight: 386,
             }}
           >
             <TextInfo label="Nome" text={data?.nome || '-'} />
@@ -85,7 +85,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               border: '1px solid #e9e9e9',
               borderRadius: 2,
               padding: 1.5,
-              minHeight: 355,
+              minHeight: 386,
             }}
           >
             <TextInfo
@@ -95,9 +95,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             <TextInfo label="Processador" text={data?.processador || '-'} />
             <TextInfo label="Arquitetura" text={data?.arquiteturaSo || '-'} />
             <TextInfo label="Numero de série" text={data?.numeroSerie || '-'} />
-
             <TextInfo label="Modelo" text={data?.modelo || '-'} />
-
             <TextInfo
               label="Data aquisição"
               text={

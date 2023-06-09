@@ -31,7 +31,7 @@ import Button from '@mui/material/Button';
 import WorkstationForm from '../WorkstationData/WorkstationForm';
 import { FormContext } from '../../../contexts/FormContext';
 import { toDate } from '../../../utils/Date';
-import { stat } from 'fs/promises';
+import CircularLoading from '../../../components/Loaders/Progress';
 
 const columns: TableColumn<Workstation>[] = [
   {
@@ -180,6 +180,7 @@ export default function WorkstationList() {
         pointerOnHover
         highlightOnHover
         onRowClicked={handleRowClicked}
+        progressComponent={<CircularLoading />}
         customStyles={{
           headCells: {
             style: {
