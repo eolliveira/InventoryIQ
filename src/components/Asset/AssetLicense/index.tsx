@@ -40,7 +40,6 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
       ),
     },
     { name: 'Software', selector: (row) => row.software, sortable: true },
-    { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
     {
       name: 'Chave',
       selector: (row) => row.chave,
@@ -49,7 +48,7 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
     },
     {
       name: 'Tipo',
-      selector: (row) => row.tpLicenca,
+      selector: (row) => row.tpLicenca.nome,
       sortable: true,
     },
     {

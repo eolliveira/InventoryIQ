@@ -28,7 +28,6 @@ type AssetLinkLicenseProps = {
 const columns: TableColumn<Licenca>[] = [
   { name: 'Id', selector: (row) => row.id, sortable: true },
   { name: 'Software', selector: (row) => row.software, sortable: true },
-  { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
   {
     name: 'Qtd. adquirida',
     selector: (row) => row.qtdAdquirida,

@@ -1,3 +1,5 @@
+import { TipoLicenca } from "./TipoLicenca";
+
 export type Licenca = {
     id: string,
     software: string,
@@ -5,10 +7,9 @@ export type Licenca = {
     qtdAlocada: number,
     chave: string,
     status: string,
-    fabricante: string,
     numeroSerie: string,
     dtAquisicao: string,
     dtExpiracao: string,
     vlrAquisicao: number,
-    tpLicenca: string
+    tpLicenca: TipoLicenca
   };

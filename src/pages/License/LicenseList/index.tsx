@@ -35,7 +35,11 @@ const columns: TableColumn<Licenca>[] = [
     sortable: true,
   },
   { name: 'Chave', selector: (row) => row.chave, sortable: true },
-  { name: 'Tipo Licença', selector: (row) => row.tpLicenca, sortable: true },
+  {
+    name: 'Tipo Licença',
+    selector: (row) => row.tpLicenca.nome,
+    sortable: true,
+  },
   { name: 'Status', selector: (row) => row.status, sortable: true },
   {
     name: 'Qtd. Adquirida',
@@ -118,7 +122,7 @@ export default function LicenseList() {
           <SelectFilter
             filterField={filterField}
             setFieldFilter={setFilterField}
-            selectedItems={['nome', 'fabricante', 'dominio']}
+            selectedItems={['nome', 'dominio']}
           />
           {statusFilterChecked && (
             <SelectFilter

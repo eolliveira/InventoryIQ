@@ -131,6 +131,7 @@ export default function WorkstationList() {
     <Panel title="Estação de Trabalho ">
       <Box
         display={'flex'}
+        flexWrap={'wrap'}
         alignItems={'center'}
         justifyContent={'space-between'}
         marginBottom={2}
@@ -150,6 +151,7 @@ export default function WorkstationList() {
           />
           {statusFilterChecked && (
             <SelectFilter
+              label="Status"
               filterField={statusFilter}
               setFieldFilter={setStatusFilter}
               selectedItems={assetStatus.map((status) => status)}
