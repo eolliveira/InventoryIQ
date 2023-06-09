@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 type TextInfoProps = {
@@ -8,18 +8,17 @@ type TextInfoProps = {
 
 export default function TextInfo({ label, text }: TextInfoProps) {
   return (
-    <Box margin={'20px  20px'}>
-      <Typography
-        color={'primary'}
-        fontSize={14}
-        margin={0}
-        fontWeight={'bold'}
-      >
-        {label}
+    <Stack margin={'0px 0px 10px 0px'} direction={'row'} spacing={1}>
+      <Typography color={'primary'} fontSize={14} fontWeight={'bold'}>
+        {label + ':'}
       </Typography>
-      <Typography marginTop={0.5} fontSize={14} color={'rgb(145, 145, 145)'}>
+      <Typography
+        fontSize={14}
+        color={'primary'}
+        style={{ wordBreak: 'break-word' }}
+      >
         {text}
       </Typography>
-    </Box>
+    </Stack>
   );
 }

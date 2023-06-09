@@ -64,16 +64,12 @@ export default function WorkstationData() {
   };
 
   const handleAdd = () => {
-    setFormContextData({
-      isAdding: true,
-    });
+    setFormContextData({ isAdding: true });
     setOpenWorkstationForm(true);
   };
 
   const handleEdit = () => {
-    setFormContextData({
-      isEditing: true,
-    });
+    setFormContextData({ isEditing: true });
     setOpenWorkstationForm(true);
   };
 

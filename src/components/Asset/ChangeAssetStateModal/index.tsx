@@ -71,8 +71,9 @@ export default function ChangeStateModal({
     <CustomModal openModal={openModal}>
       <BaseCard>
         <Panel title="Alterar Status">
-          <FormControl sx={{ marginTop: 3 }}>
+          <FormControl>
             <InputSelect
+              label="Status"
               inputField={state}
               setInputField={setState}
               selectedItems={assetStatus.map((status) => status)}

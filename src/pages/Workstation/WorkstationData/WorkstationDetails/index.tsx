@@ -49,9 +49,19 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
 
   return (
     <Box marginTop={2}>
-      <Card variant="outlined">
-        <div className="row">
-          <div className="col-lg-6">
+      <div className="row">
+        <div className="col-lg-6">
+          <Card
+            variant="outlined"
+            sx={{
+              backgroundColor: '#F8FAFC',
+              border: '1px solid #e9e9e9',
+              borderRadius: 2,
+              padding: 1.5,
+              marginBottom: 1,
+              minHeight: 355,
+            }}
+          >
             <TextInfo label="Nome" text={data?.nome || '-'} />
             <TextInfo label="Fabricante" text={data?.fabricante || '-'} />
             <TextInfo label="Hostname" text={data?.nomeHost || '-'} />
@@ -59,51 +69,53 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             <TextInfo label="Dominio" text={data?.dominio || '-'} />
             <TextInfo label="Gateway" text={data?.gateway || '-'} />
             <TextInfo label="Dns" text={data?.dns || '-'} />
-
             <TextInfo
               label="Ultimo usuário logado"
               text={data?.ultimoUsuarioLogado || '-'}
             />
             <TextInfo label="Tempo atividade" text={data?.tempoLigado || '-'} />
             <TextInfo label="Observação" text={data?.observacao || '-'} />
-          </div>
-          <div className="col-lg-6">
+          </Card>
+        </div>
+        <div className="col-lg-6">
+          <Card
+            variant="outlined"
+            sx={{
+              backgroundColor: '#F8FAFC',
+              border: '1px solid #e9e9e9',
+              borderRadius: 2,
+              padding: 1.5,
+              minHeight: 355,
+            }}
+          >
             <TextInfo
               label="Sistema operacional"
               text={data?.sistemaOperacional || '-'}
             />
             <TextInfo label="Processador" text={data?.processador || '-'} />
+            <TextInfo label="Arquitetura" text={data?.arquiteturaSo || '-'} />
             <TextInfo label="Numero de série" text={data?.numeroSerie || '-'} />
 
-            <Box display={'flex'} justifyContent={'space-between'}>
-              <TextInfo label="Modelo" text={data?.modelo || '-'} />
-              <TextInfo label="Arquitetura" text={data?.arquiteturaSo || '-'} />
-            </Box>
+            <TextInfo label="Modelo" text={data?.modelo || '-'} />
 
+            <TextInfo
+              label="Data aquisição"
+              text={
+                data?.dtAquisicao
+                  ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY')
+                  : '-'
+              }
+            />
+            <TextInfo
+              label="Data expiração"
+              text={
+                data?.dtExpiracao
+                  ? dayjs(data?.dtExpiracao).format('DD/MM/YYYY')
+                  : '-'
+              }
+            />
             <div className="row">
               <div className="col-lg-7">
-                <TextInfo
-                  label="Data aquisição"
-                  text={
-                    data?.dtAquisicao
-                      ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY')
-                      : '-'
-                  }
-                />
-              </div>
-              <div className="col-lg-5">
-                <TextInfo
-                  label="Data expiração"
-                  text={
-                    data?.dtExpiracao
-                      ? dayjs(data?.dtExpiracao).format('DD/MM/YYYY')
-                      : '-'
-                  }
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-6">
                 <TextInfo
                   label="Data venc. Garantia"
                   text={
@@ -121,13 +133,13 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   }
                 />
               </div>
-              <div className="col-lg-6">
+              <div className="col-lg-5">
                 <h2 style={{ border: '1px solid silver' }}>anexo</h2>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
-      </Card>
+      </div>
       <Card
         sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
         variant="outlined"

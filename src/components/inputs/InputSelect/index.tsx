@@ -1,13 +1,16 @@
 import { FormControl, Select, MenuItem } from '@mui/material';
 import { removeUnderline, toCamelCase } from '../../../utils/StringConverter';
+import InputLabel from '@mui/material/InputLabel';
 
 type InputSelectProps = {
+  label: string;
   inputField: string;
   setInputField: React.Dispatch<React.SetStateAction<string>>;
   selectedItems: string[];
 };
 
 export default function InputSelect({
+  label,
   inputField,
   setInputField,
   selectedItems,
@@ -23,6 +26,7 @@ export default function InputSelect({
         color: 'primary',
       }}
     >
+      <InputLabel id="demo-simple-select-label">{label}</InputLabel>
       <Select
         sx={{
           height: 35,
@@ -31,7 +35,8 @@ export default function InputSelect({
           color: 'primary',
         }}
         labelId="demo-simple-select-label"
-        id="demo-simple-select"
+        id="demo-simple-select-label"
+        label={label}
         value={inputField}
         onChange={(e) => {
           setInputField(e.target.value);

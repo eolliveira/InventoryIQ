@@ -11,13 +11,11 @@ import AssetService from '../../../components/Asset/AssetService';
 import StockButton from '../../../components/buttons/StockButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
-import { Workstation } from '../../../types/Workstation/Workstation';
 import TabPanel from '@material-ui/lab/TabPanel';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import SidePanelData from '../../../components/SidePanelData';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
 import { AxiosRequestConfig } from 'axios';
@@ -57,19 +55,9 @@ export default function LicenseData() {
     setTabValue(newValue);
   };
 
-  const handleAdd = () => {
-    setFormContextData({
-      isAdding: true,
-    });
-    setOpenWorkstationForm(true);
-  };
+  const handleAdd = () => setOpenWorkstationForm(true);
 
-  const handleEdit = () => {
-    setFormContextData({
-      isEditing: true,
-    });
-    setOpenWorkstationForm(true);
-  };
+  const handleEdit = () => setOpenWorkstationForm(true);
 
   const handleRemove = () => {
     Swal.fire({
