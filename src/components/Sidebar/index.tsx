@@ -49,7 +49,7 @@ export default function MenuSidebar() {
                   backgroundColor: active ? '#f5df4ea6' : 'rgb(255, 255, 255)',
                   fontSize: '12px',
                   '&:hover': {
-                    backgroundColor: '#f5df4ea6',
+                    backgroundColor: '#f5df4e57',
                   },
                 };
 
@@ -61,7 +61,7 @@ export default function MenuSidebar() {
                   backgroundColor: active ? '#f5df4ea6' : 'rgb(255, 255, 255)',
                   fontWeight: active ? 'bold' : 'normal',
                   '&:hover': {
-                    backgroundColor: '#f5df4ea6',
+                    backgroundColor: '#f5df4e57',
                   },
                 };
             },
