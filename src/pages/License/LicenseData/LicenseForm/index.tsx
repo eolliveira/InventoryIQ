@@ -31,17 +31,17 @@ import Panel from '../../../../components/Panel';
 import SearchBar from '../../../../components/SearchBar';
 import Stack from '@mui/material/Stack';
 
-type WorkstationFormProps = {
+type LicenseFormProps = {
   data?: Workstation;
   openForm: boolean;
   closeForm: () => void;
 };
 
-export default function WorkstationForm({
+export default function LicenseForm({
   data,
   openForm,
   closeForm,
-}: WorkstationFormProps) {
+}: LicenseFormProps) {
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
 
   const { formContextData, setFormContextData } = useContext(FormContext);
@@ -188,33 +188,7 @@ export default function WorkstationForm({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel title="Adicionando Estação de Trabalho">
-          {formContextData.isAdding && (
-            <Box display={'flex'}>
-              <SearchBar
-                inputFilter={ipAddress}
-                setInputFilter={setIpAddress}
-              />
-
-              <LoadingButton
-                size="small"
-                color="primary"
-                onClick={handleSync}
-                loading={synchronizing}
-                variant="text"
-              >
-                <SearchIcon fontSize="medium" />
-              </LoadingButton>
-            </Box>
-          )}
-          <Box
-            sx={{
-              marginTop: 2,
-              marginBottom: 2,
-              borderBottom: 1,
-              borderColor: 'divider',
-            }}
-          />
+        <Panel title="Adicionando Licença">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-lg-6">
@@ -401,18 +375,6 @@ export default function WorkstationForm({
                     />
                   </div>
                 </div>
-
-                {<h1>{String(dateValue)}</h1>}
-
-                <h3>Rede(interfaces)</h3>
-                {interfaces?.map((e) => (
-                  <h6 key={e.id}>{e.enderecoMac}</h6>
-                ))}
-
-                <h3>Armazenamento</h3>
-                {discos?.map((d) => (
-                  <h6>{d.modelo}</h6>
-                ))}
               </div>
             </div>
 

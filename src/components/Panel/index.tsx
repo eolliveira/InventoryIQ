@@ -13,7 +13,7 @@ type PanelProps<T extends ReactNode> = {
 export default function Panel({ title, children }: PanelProps<any>) {
   return (
     <BaseCard>
-      <Stack>
+      <Stack sx={{ bgcolor: '#F8FAFC', borderRadius: '8px 8px 0px 0px' }}>
         <Typography
           margin={2}
           fontSize={16}

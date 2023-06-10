@@ -27,6 +27,7 @@ import { FormContext } from '../../../contexts/FormContext';
 import { Licenca } from '../../../types/Licenca/Licenca';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
+import LicenseForm from '../LicenseData/LicenseForm';
 
 const columns: TableColumn<Licenca>[] = [
   {
@@ -73,7 +74,7 @@ export default function LicenseList() {
     useState<null | HTMLElement>(null);
   const open = Boolean(openCustomFilters);
 
-  const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
+  const [openLicenseForm, setOpenLicenseForm] = useState(false);
 
   const getLicenses = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -99,6 +100,11 @@ export default function LicenseList() {
   useEffect(() => {
     getLicenses();
   }, [getLicenses]);
+
+  const handleAdd = () => {
+    setFormContextData({ isAdding: true });
+    setOpenLicenseForm(true);
+  };
 
   const handleClose = () => {
     setOpenCustomFilters(null);
@@ -136,7 +142,7 @@ export default function LicenseList() {
           variant="contained"
           startIcon={<AddCircleOutlineIcon />}
           color="primary"
-          onClick={() => {}}
+          onClick={handleAdd}
         >
           <Typography fontSize={14} textTransform={'none'}>
             Novo
@@ -200,12 +206,12 @@ export default function LicenseList() {
           </Typography>
         </MenuItem>
       </Menu>
-      {/* {openWorkstationForm && (
-        <WorkstationForm
-          openForm={openWorkstationForm}
-          closeForm={() => setOpenWorkstationForm(false)}
+      {openLicenseForm && (
+        <LicenseForm
+          openForm={openLicenseForm}
+          closeForm={() => setOpenLicenseForm(false)}
         />
-      )} */}
+      )}
     </Panel>
   );
 }
