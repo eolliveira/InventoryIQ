@@ -45,7 +45,7 @@ export default function WorkstationForm({
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
 
   const { formContextData, setFormContextData } = useContext(FormContext);
-  const [synchronizing, setSynchronizing] = useState(false);
+  const [sweeping, setSweeping] = useState(false);
   const [ipAddress, setIpAddress] = useState('');
   const [interfaces, setInterfaces] = useState<Interface[]>();
   const [discos, setDiscos] = useState<Disco[]>();
@@ -109,8 +109,8 @@ export default function WorkstationForm({
     closeForm();
   };
 
-  const handleSync = () => {
-    setSynchronizing(true);
+  const handleToSweep = () => {
+    setSweeping(true);
 
     const params: AxiosRequestConfig = {
       method: 'GET',
@@ -159,7 +159,7 @@ export default function WorkstationForm({
         console.log('Erro ao buscar dados do ativo: ' + error);
       })
       .finally(() => {
-        setSynchronizing(false);
+        setSweeping(false);
       });
   };
 
@@ -198,8 +198,8 @@ export default function WorkstationForm({
               <LoadingButton
                 size="small"
                 color="primary"
-                onClick={handleSync}
-                loading={synchronizing}
+                onClick={handleToSweep}
+                loading={sweeping}
                 variant="text"
               >
                 <SearchIcon fontSize="medium" />
