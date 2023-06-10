@@ -2,7 +2,8 @@ import axios, { AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 import { getAuthData } from '../utils/LocalStorage';
 
-export const BASE_URL = 'http://localhost:8080';
+//export const BASE_URL = 'http://localhost:8080';
+export const BASE_URL = 'http://192.168.0.104:8080';
 export const CLIENT_ID = 'snmpmanager';
 export const CLIENT_ID_SECRET = 'snmpmanager123';
 
