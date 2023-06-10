@@ -104,14 +104,6 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   : '-'
               }
             />
-            <TextInfo
-              label="Data expiração"
-              text={
-                data?.dtExpiracao
-                  ? dayjs(data?.dtExpiracao).format('DD/MM/YYYY')
-                  : '-'
-              }
-            />
             <div className="row">
               <div className="col-lg-7">
                 <TextInfo

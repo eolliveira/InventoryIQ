@@ -18,7 +18,6 @@ export type WorkstationSync = {
   ultimoUsuarioLogado: string;
   dtAquisicao: string;
   dtVencimentoGarantia: string;
-  dtExpiracao: string;
   vlrAquisicao: number;
   observacao: string;
   interfaces: Interface[];

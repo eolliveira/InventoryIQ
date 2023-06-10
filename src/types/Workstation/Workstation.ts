@@ -15,8 +15,7 @@ export type Workstation = {
   gateway: string;
   dtAquisicao: string;
   dtVencimentoGarantia: string;
-  dtExpiracao: string;
-  dtUltimoSincronismo: string;
+  dhUltimaVarredura: string;
   vlrAquisicao: number;
   observacao: string;
   sistemaOperacional: string;

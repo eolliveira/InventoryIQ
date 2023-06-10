@@ -64,8 +64,8 @@ export default function SidePanelData({ data }: SidePanelDataProps) {
           >
             <EventRepeatIcon fontSize="small" color="secondary" />
             <Typography style={{ marginTop: 2 }} fontSize={13}>
-              {data.dtUltimoSincronismo
-                ? toDateTime(data.dtUltimoSincronismo)
+              {data.dhUltimaVarredura
+                ? toDateTime(data.dhUltimaVarredura)
                 : ' - '}
             </Typography>
           </Stack>

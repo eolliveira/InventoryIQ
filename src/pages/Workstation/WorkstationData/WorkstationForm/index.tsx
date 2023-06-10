@@ -179,7 +179,6 @@ export default function WorkstationForm({
     setValue('numeroSerie', data.numeroSerie);
     setValue('modelo', data.modelo);
     setValue('dtAquisicao', data.dtAquisicao);
-    setValue('dtExpiracao', data.dtExpiracao);
     setValue('dtVencimentoGarantia', data.dtVencimentoGarantia);
     setValue('vlrAquisicao', data.vlrAquisicao);
     setValue('observacao', data.observacao);
@@ -371,14 +370,6 @@ export default function WorkstationForm({
                       label="Data aquisição"
                       control={control}
                       name="dtAquisicao"
-                    />
-                  </div>
-                  <div className="col-lg-6">
-                    <InputDate
-                      register={register}
-                      name="dtExpiracao"
-                      label="Data expiração"
-                      control={control}
                     />
                   </div>
                 </div>

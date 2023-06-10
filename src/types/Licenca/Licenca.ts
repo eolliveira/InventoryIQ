@@ -1,8 +1,9 @@
+import { Software } from "./Software";
 import { TipoLicenca } from "./TipoLicenca";
 
 export type Licenca = {
     id: string,
-    software: string,
+    nome: string,
     qtdAdquirida: number,
     qtdAlocada: number,
     chave: string,
@@ -11,5 +12,6 @@ export type Licenca = {
     dtAquisicao: string,
     dtExpiracao: string,
     vlrAquisicao: number,
-    tpLicenca: TipoLicenca
+    tpLicenca: TipoLicenca,
+    software: Software
   };

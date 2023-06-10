@@ -179,7 +179,6 @@ export default function LicenseForm({
     setValue('numeroSerie', data.numeroSerie);
     setValue('modelo', data.modelo);
     setValue('dtAquisicao', data.dtAquisicao);
-    setValue('dtExpiracao', data.dtExpiracao);
     setValue('dtVencimentoGarantia', data.dtVencimentoGarantia);
     setValue('vlrAquisicao', data.vlrAquisicao);
     setValue('observacao', data.observacao);
