@@ -4,7 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 
 type InputSelectProps = {
   label: string;
-  inputField: string;
+  inputField?: string;
   setInputField: React.Dispatch<React.SetStateAction<string>>;
   selectedItems: string[];
 };

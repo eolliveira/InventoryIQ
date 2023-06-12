@@ -1,10 +1,8 @@
 import Box from '@mui/material/Box';
 import { BaseCard } from '../../../../style/GlobalStyles';
 import { Button } from '@mui/material';
-import { Workstation } from '../../../../types/Workstation/Workstation';
-import { Field, Input, Label } from '../../../../style/GlobalStyles';
 import { useForm } from 'react-hook-form';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { FormContext } from '../../../../contexts/FormContext';
 import { useNavigate } from 'react-router-dom';
 import { AxiosRequestConfig } from 'axios';
@@ -14,11 +12,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomModal from '../../../../components/CustomModal';
 import styled from 'styled-components';
-import SearchIcon from '@mui/icons-material/Search';
-import { WorkstationSync } from 'types/Workstation/WorkstationSync';
-import { Interface } from 'types/Interface';
-import { Disco } from 'types/Workstation/Disco';
-import { Particao } from 'types/Workstation/Particao';
 import Typography from '@mui/material/Typography';
 
 import { Dayjs } from 'dayjs';
@@ -28,27 +21,33 @@ import InputCurrency from '../../../../components/inputs/InputCurrency';
 import InputMultiline from '../../../../components/inputs/InputMultiline';
 import Swal from 'sweetalert2';
 import Panel from '../../../../components/Panel';
-import SearchBar from '../../../../components/SearchBar';
 import Stack from '@mui/material/Stack';
+import { Licenca } from '../../../../types/Licenca/Licenca';
+import InputSelect from '../../../../components/inputs/InputSelect';
+import { Software } from '../../../../types/Licenca/Software';
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { TipoLicenca } from '../../../../types/Licenca/TipoLicenca';
 
 type LicenseFormProps = {
-  data?: Workstation;
+  licenseData?: Licenca;
   openForm: boolean;
   closeForm: () => void;
 };
 
 export default function LicenseForm({
-  data,
+  licenseData,
   openForm,
   closeForm,
 }: LicenseFormProps) {
-  const [dateValue, setDateValue] = useState<Dayjs | null>(null);
-
   const { formContextData, setFormContextData } = useContext(FormContext);
-  const [synchronizing, setSynchronizing] = useState(false);
-  const [ipAddress, setIpAddress] = useState('');
-  const [interfaces, setInterfaces] = useState<Interface[]>();
-  const [discos, setDiscos] = useState<Disco[]>();
+  const [licenseType, setLicenseType] = useState<TipoLicenca[]>();
+  const [software, setSoftware] = useState<Software[]>();
+  const [licenseTypeId, setLicenseTypeId] = useState<any>();
+  const [softwareId, setSoftwareId] = useState<any>();
 
   const {
     register,
@@ -56,17 +55,41 @@ export default function LicenseForm({
     formState: { errors },
     setValue,
     control,
-  } = useForm<WorkstationSync>();
+  } = useForm<Licenca>();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (data && formContextData.isEditing) setFormData(data);
-  }, []);
+  const getLicenseType = useCallback(() => {
+    requestBackend({ url: '/licenseType' })
+      .then((response) => {
+        setLicenseType(response.data);
+      })
+      .catch((error) => {
+        console.log('falha ao carregar os tipos de software' + error);
+      });
+  }, [formContextData]);
 
-  const onSubmit = (formData: WorkstationSync) => {
+  const getSoftwares = useCallback(() => {
+    requestBackend({ url: '/software' })
+      .then((response) => {
+        setSoftware(response.data);
+      })
+      .catch((error) => {
+        console.log('falha ao carregar softarwares' + error);
+      });
+  }, [formContextData]);
+
+  useEffect(() => {
+    getSoftwares();
+    getLicenseType();
+    if (licenseData && formContextData.isEditing) {
+      setFormData(licenseData);
+    }
+  }, [getSoftwares, getLicenseType]);
+
+  const onSubmit = (formData: Licenca) => {
     Swal.fire({
       title: 'Salvar dados?',
-      text: 'Deseja salvar os dados do ativo?',
+      text: 'Deseja salvar os dados da Licença?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
@@ -75,12 +98,18 @@ export default function LicenseForm({
       cancelButtonColor: '#dc3545',
     }).then((result) => {
       if (result.isConfirmed) {
+        const dataT = {
+          ...formData,
+          softwareId: softwareId,
+          tpLicencaId: licenseTypeId,
+        };
+
         const params: AxiosRequestConfig = {
           method: formContextData.isAdding ? 'POST' : 'PUT',
           url: formContextData.isAdding
-            ? '/workstation'
-            : `/workstation/${data?.id}/update`,
-          data: formData,
+            ? '/licenses'
+            : `/licenses/${licenseData?.id}/update`,
+          data: dataT,
         };
 
         requestBackend(params)
@@ -90,7 +119,7 @@ export default function LicenseForm({
               isAdding: false,
               isEditing: false,
             });
-            navigate(`/workstation/${response.data.id}`);
+            navigate(`/license/${response.data.id}`);
             closeForm();
           })
           .catch((error) => {
@@ -109,79 +138,20 @@ export default function LicenseForm({
     closeForm();
   };
 
-  const handleSync = () => {
-    setSynchronizing(true);
-
-    const params: AxiosRequestConfig = {
-      method: 'GET',
-      url: `/workstation/data/${ipAddress}`,
-    };
-
-    requestBackend(params)
-      .then((response) => {
-        const interfaces: Interface[] = [];
-        const discos: Disco[] = [];
-
-        setValue('fabricante', response.data.fabricante);
-        setValue('nomeHost', response.data.nomeHost);
-        setValue('memoriaRam', response.data.memoriaRam);
-        setValue('gateway', response.data.gateway);
-        setValue('dominio', response.data.dominio);
-        setValue('dnsList', response.data.dnsList);
-        setValue('ultimoUsuarioLogado', response.data.ultimoUsuarioLogado);
-        setValue('tempoLigado', response.data.tempoLigado);
-        setValue('sistemaOperacional', response.data.sistemaOperacional);
-        setValue('processador', response.data.processador);
-        setValue('numeroSerie', response.data.numeroSerie);
-        setValue('modelo', response.data.modelo);
-
-        response.data.interfaces.forEach((i: Interface) => interfaces.push(i));
-        setInterfaces(response.data.interfaces);
-
-        response.data.discos.forEach((disco: Disco) => {
-          disco.particoes.forEach((particao: Particao) => {
-            const p: Particao = {
-              pontoMontagem: particao.pontoMontagem,
-              capacidade: particao.capacidade,
-              usado: particao.usado,
-            };
-            disco.particoes.push(p);
-          });
-          discos.push(disco);
-        });
-
-        setDiscos(response.data.discos);
-
-        setValue('interfaces', interfaces);
-        setValue('discos', discos);
-      })
-      .catch((error) => {
-        console.log('Erro ao buscar dados do ativo: ' + error);
-      })
-      .finally(() => {
-        setSynchronizing(false);
-      });
-  };
-
-  const setFormData = (data: Workstation) => {
+  const setFormData = (data: Licenca) => {
     setValue('nome', data.nome);
-    setValue('fabricante', data.fabricante);
-    setValue('nomeHost', data.nomeHost);
-    setValue('dominio', data.dominio);
-    setValue('dnsList', data.dns);
-    setValue('gateway', data.gateway);
-    setValue('arquiteturaSo', data.arquiteturaSo);
-    setValue('memoriaRam', data.memoriaRam);
-    setValue('ultimoUsuarioLogado', data.ultimoUsuarioLogado);
-    setValue('tempoLigado', data.tempoLigado);
-    setValue('sistemaOperacional', data.sistemaOperacional);
-    setValue('processador', data.processador);
+    setValue('qtdAdquirida', data.qtdAdquirida);
+    setValue('qtdAlocada', data.qtdAlocada);
+    setValue('chave', data.chave);
+    setValue('status', data.status);
     setValue('numeroSerie', data.numeroSerie);
-    setValue('modelo', data.modelo);
     setValue('dtAquisicao', data.dtAquisicao);
-    setValue('dtVencimentoGarantia', data.dtVencimentoGarantia);
+    setValue('dtExpiracao', data.dtExpiracao);
     setValue('vlrAquisicao', data.vlrAquisicao);
-    setValue('observacao', data.observacao);
+    setValue('software', data.software);
+    setValue('tpLicenca', data.tpLicenca);
+    setSoftwareId(data.software.id);
+    setLicenseTypeId(data.tpLicenca.id);
   };
 
   return (
@@ -200,141 +170,88 @@ export default function LicenseForm({
                   error={!!errors.nome}
                   helperText={errors.nome?.message}
                 />
+
+                <FormControl fullWidth size="small">
+                  <InputLabel>Selecione um software</InputLabel>
+                  <Select
+                    label="Selecione um software"
+                    value={softwareId}
+                    onChange={(e: any) => {
+                      setSoftwareId(e.target.value);
+                    }}
+                  >
+                    {software?.map((software) => (
+                      <MenuItem key={software.id} value={software.id}>
+                        {software.nome}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                <FormControl fullWidth size="small">
+                  <InputLabel>Selecione tipo da licença</InputLabel>
+                  <Select
+                    label="Selecione tipo da licença"
+                    value={licenseTypeId}
+                    onChange={(e: any) => {
+                      setLicenseTypeId(e.target.value);
+                    }}
+                  >
+                    {licenseType?.map((licenseType) => (
+                      <MenuItem key={licenseType.id} value={licenseType.id}>
+                        {licenseType.nome}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
                 <InputText
-                  label="Fabricante"
-                  name="fabricante"
+                  label="Chave"
+                  name="chave"
                   control={control}
                   register={register}
-                  error={!!errors.fabricante}
-                  helperText={errors.fabricante?.message}
+                  error={!!errors.chave}
+                  helperText={errors.chave?.message}
                 />
                 <div className="row">
                   <div className="col-lg-6">
                     <InputText
-                      label="Hostname"
-                      name="nomeHost"
+                      label="Quantidade alocada"
+                      name="qtdAlocada"
                       control={control}
                       register={register}
-                      error={!!errors.nomeHost}
-                      helperText={errors.nomeHost?.message}
+                      error={!!errors.qtdAlocada}
+                      helperText={errors.qtdAlocada?.message}
                     />
                   </div>
                   <div className="col-lg-6">
                     <InputText
-                      label="Memória ram(Virtual)"
-                      name="memoriaRam"
+                      label="Qtd.Adquirida"
+                      name="qtdAdquirida"
                       control={control}
                       register={register}
-                      error={!!errors.memoriaRam}
-                      helperText={errors.memoriaRam?.message}
+                      error={!!errors.qtdAdquirida}
+                      helperText={errors.qtdAdquirida?.message}
                     />
                   </div>
                 </div>
                 <InputText
-                  label="Dominio"
-                  name="dominio"
-                  control={control}
-                  register={register}
-                  error={!!errors.dominio}
-                  helperText={errors.dominio?.message}
-                />
-                <div className="row">
-                  <div className="col-lg-6">
-                    <InputText
-                      label="Dns"
-                      name="dnsList"
-                      control={control}
-                      register={register}
-                      error={!!errors.dnsList}
-                      helperText={errors.dnsList?.message}
-                    />
-                  </div>
-                  <div className="col-lg-6">
-                    <InputText
-                      label="Gateway"
-                      name="gateway"
-                      control={control}
-                      register={register}
-                      error={!!errors.gateway}
-                      helperText={errors.gateway?.message}
-                    />
-                  </div>
-                </div>
-                <InputText
-                  label="Ultimo usuário logado."
-                  name="ultimoUsuarioLogado"
-                  control={control}
-                  register={register}
-                  error={!!errors.ultimoUsuarioLogado}
-                  helperText={errors.ultimoUsuarioLogado?.message}
-                />
-                <InputText
-                  label="Tempo de atividade."
-                  name="tempoLigado"
-                  control={control}
-                  register={register}
-                  error={!!errors.tempoLigado}
-                  helperText={errors.tempoLigado?.message}
-                />
-                <InputMultiline
-                  control={control}
-                  name="observacao"
-                  register={register}
-                  label="Observação"
-                  rows={6}
-                  error={!!errors.observacao}
-                  helperText={errors.observacao?.message}
-                />
-              </div>
-              <div className="col-lg-6">
-                <InputText
-                  label=" Sistema operacional"
-                  name="sistemaOperacional"
-                  control={control}
-                  register={register}
-                  error={!!errors.sistemaOperacional}
-                  helperText={errors.sistemaOperacional?.message}
-                />
-
-                <InputText
-                  label="Processador"
-                  name="processador"
-                  control={control}
-                  register={register}
-                  error={!!errors.processador}
-                  helperText={errors.processador?.message}
-                />
-
-                <InputText
-                  label="Numero de série"
+                  label="numeroSerie"
                   name="numeroSerie"
                   control={control}
                   register={register}
                   error={!!errors.numeroSerie}
                   helperText={errors.numeroSerie?.message}
                 />
-
                 <div className="row">
-                  <div className="col-lg-9">
-                    <InputText
-                      label="Modelo"
-                      name="modelo"
-                      control={control}
-                      register={register}
-                      error={!!errors.modelo}
-                      helperText={errors.modelo?.message}
-                    />
-                  </div>
-                  <div className="col-lg-3">
-                    <InputText
-                      label="Arquitetura"
-                      name="arquiteturaSo"
-                      control={control}
-                      register={register}
-                      error={!!errors.arquiteturaSo}
-                      helperText={errors.arquiteturaSo?.message}
-                    />
-                  </div>
+                  <div className="col-lg-6"></div>
+                  <div className="col-lg-6"></div>
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="row">
+                  <div className="col-lg-9"></div>
+                  <div className="col-lg-3"></div>
                 </div>
 
                 <div className="row">
@@ -350,20 +267,13 @@ export default function LicenseForm({
                     <InputDate
                       register={register}
                       name="dtExpiracao"
-                      label="Data expiração"
+                      label="Data Expiracao"
                       control={control}
                     />
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-lg-6">
-                    <InputDate
-                      register={register}
-                      name="dtVencimentoGarantia"
-                      label="Data venc.Garantia"
-                      control={control}
-                    />
-
                     <InputCurrency
                       label="Valor compra"
                       name="vlrAquisicao"

@@ -23,9 +23,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2';
 import { Licenca } from '../../../types/Licenca/Licenca';
+import LicenseForm from './LicenseForm';
 
 export default function LicenseData() {
-  const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
+  const [openLicenseForm, setOpenLicenseForm] = useState(false);
 
   type urlParams = {
     licenseId: string;
@@ -55,9 +56,15 @@ export default function LicenseData() {
     setTabValue(newValue);
   };
 
-  const handleAdd = () => setOpenWorkstationForm(true);
+  const handleAdd = () => {
+    setFormContextData({ isAdding: true });
+    setOpenLicenseForm(true);
+  };
 
-  const handleEdit = () => setOpenWorkstationForm(true);
+  const handleEdit = () => {
+    setFormContextData({ isEditing: true });
+    setOpenLicenseForm(true);
+  };
 
   const handleRemove = () => {
     Swal.fire({
@@ -182,13 +189,13 @@ export default function LicenseData() {
           </TabPanel>
         </TabContext>
       </BaseCard>
-      {/* {openWorkstationForm && (
-        <WorkstationForm
-          data={active}
-          openForm={openWorkstationForm}
-          closeForm={() => setOpenWorkstationForm(false)}
+      {openLicenseForm && (
+        <LicenseForm
+          licenseData={license}
+          openForm={openLicenseForm}
+          closeForm={() => setOpenLicenseForm(false)}
         />
-      )} */}
+      )}
     </Wapper>
   );
 }

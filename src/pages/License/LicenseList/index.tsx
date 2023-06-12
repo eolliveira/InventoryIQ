@@ -32,7 +32,7 @@ import LicenseForm from '../LicenseData/LicenseForm';
 const columns: TableColumn<Licenca>[] = [
   {
     name: 'Software',
-    selector: (row) => row.software,
+    selector: (row) => row.software.nome,
     sortable: true,
   },
   { name: 'Chave', selector: (row) => row.chave, sortable: true },

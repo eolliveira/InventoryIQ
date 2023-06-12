@@ -29,7 +29,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import WorkstationForm from './WorkstationForm';
 import Swal from 'sweetalert2';
-import { customTheme } from '../../../style/CustomTheme';
 
 export default function WorkstationData() {
   const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
@@ -41,7 +40,7 @@ export default function WorkstationData() {
   const { workstationId } = useParams<urlParams>();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [active, setActive] = useState<Workstation>();
-  const [isSincronized, setSynchronizing] = useState(false);
+  const [sweeping, setSweeping] = useState(false);
   const [tabValue, setTabValue] = useState('1');
   const navigate = useNavigate();
 
@@ -53,7 +52,7 @@ export default function WorkstationData() {
       .catch((error) => {
         console.log(error);
       });
-  }, [workstationId, isSincronized, formContextData]);
+  }, [workstationId, sweeping, formContextData]);
 
   useEffect(() => {
     getWorkstationData();
@@ -104,8 +103,8 @@ export default function WorkstationData() {
 
   const handleDuplicate = () => {};
 
-  const handleSync = () => {
-    setSynchronizing(true);
+  const handleToSweep = () => {
+    setSweeping(true);
     const params: AxiosRequestConfig = {
       method: 'PUT',
       url: `/workstation/${active?.id}/synchronize`,
@@ -122,7 +121,7 @@ export default function WorkstationData() {
           'error'
         );
       })
-      .finally(() => setSynchronizing(false));
+      .finally(() => setSweeping(false));
   };
 
   return (
@@ -168,8 +167,8 @@ export default function WorkstationData() {
             <LoadingButton
               disabled={formContextData.isAdding || formContextData.isEditing}
               color="primary"
-              onClick={handleSync}
-              loading={isSincronized}
+              onClick={handleToSweep}
+              loading={sweeping}
               loadingPosition="start"
               startIcon={<SyncIcon />}
               variant="contained"
