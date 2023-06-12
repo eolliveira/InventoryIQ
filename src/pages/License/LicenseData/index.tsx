@@ -129,7 +129,7 @@ export default function LicenseData() {
           >
             {(license ? license?.id : '') +
               ' - ' +
-              (license ? license?.software : '')}
+              (license ? license?.nome : '')}
           </Typography>
           <Stack spacing={2} direction="row">
             <StockButton

@@ -14,22 +14,19 @@ import CustomModal from '../../../../components/CustomModal';
 import styled from 'styled-components';
 import Typography from '@mui/material/Typography';
 
-import { Dayjs } from 'dayjs';
 import InputDate from '../../../../components/inputs/InputDate';
 import InputText from '../../../../components/inputs/InputText';
 import InputCurrency from '../../../../components/inputs/InputCurrency';
-import InputMultiline from '../../../../components/inputs/InputMultiline';
 import Swal from 'sweetalert2';
 import Panel from '../../../../components/Panel';
 import Stack from '@mui/material/Stack';
 import { Licenca } from '../../../../types/Licenca/Licenca';
-import InputSelect from '../../../../components/inputs/InputSelect';
 import { Software } from '../../../../types/Licenca/Software';
 
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import { TipoLicenca } from '../../../../types/Licenca/TipoLicenca';
 
 type LicenseFormProps = {
@@ -46,8 +43,8 @@ export default function LicenseForm({
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [licenseType, setLicenseType] = useState<TipoLicenca[]>();
   const [software, setSoftware] = useState<Software[]>();
-  const [licenseTypeId, setLicenseTypeId] = useState<any>();
-  const [softwareId, setSoftwareId] = useState<any>();
+  const [licenseTypeId, setLicenseTypeId] = useState('');
+  const [softwareId, setSoftwareId] = useState('');
 
   const {
     register,
@@ -63,9 +60,9 @@ export default function LicenseForm({
       .then((response) => {
         setLicenseType(response.data);
       })
-      .catch((error) => {
-        console.log('falha ao carregar os tipos de software' + error);
-      });
+      .catch((error) =>
+        console.log('falha ao carregar os tipos de software' + error)
+      );
   }, [formContextData]);
 
   const getSoftwares = useCallback(() => {
@@ -73,20 +70,33 @@ export default function LicenseForm({
       .then((response) => {
         setSoftware(response.data);
       })
-      .catch((error) => {
-        console.log('falha ao carregar softarwares' + error);
-      });
+      .catch((error) => console.log('falha ao carregar softawares' + error));
   }, [formContextData]);
 
   useEffect(() => {
-    getSoftwares();
     getLicenseType();
+    getSoftwares();
+
     if (licenseData && formContextData.isEditing) {
       setFormData(licenseData);
       setSoftwareId(licenseData.software.id);
       setLicenseTypeId(licenseData.tpLicenca.id);
     }
-  }, [getSoftwares, getLicenseType]);
+  }, [getLicenseType, getSoftwares]);
+
+  const setFormData = (data: Licenca) => {
+    setValue('nome', data.nome);
+    setValue('qtdAdquirida', data.qtdAdquirida);
+    setValue('qtdAlocada', data.qtdAlocada);
+    setValue('chave', data.chave);
+    setValue('status', data.status);
+    setValue('numeroSerie', data.numeroSerie);
+    setValue('dtAquisicao', data.dtAquisicao);
+    setValue('dtExpiracao', data.dtExpiracao);
+    setValue('vlrAquisicao', data.vlrAquisicao);
+    setValue('software', data.software);
+    setValue('tpLicenca', data.tpLicenca);
+  };
 
   const onSubmit = (formData: Licenca) => {
     Swal.fire({
@@ -140,29 +150,13 @@ export default function LicenseForm({
     closeForm();
   };
 
-  const setFormData = (data: Licenca) => {
-    setValue('nome', data.nome);
-    setValue('qtdAdquirida', data.qtdAdquirida);
-    setValue('qtdAlocada', data.qtdAlocada);
-    setValue('chave', data.chave);
-    setValue('status', data.status);
-    setValue('numeroSerie', data.numeroSerie);
-    setValue('dtAquisicao', data.dtAquisicao);
-    setValue('dtExpiracao', data.dtExpiracao);
-    setValue('vlrAquisicao', data.vlrAquisicao);
-    setValue('software', data.software);
-    setValue('tpLicenca', data.tpLicenca);
-    setSoftwareId(data.software.id);
-    setLicenseTypeId(data.tpLicenca.id);
-  };
-
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
         <Panel title="Adicionando Licença">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
-              <div className="col-lg-6">
+              <div className="col-lg-7">
                 <InputText
                   required
                   label="Nome"
@@ -173,11 +167,12 @@ export default function LicenseForm({
                   helperText={errors.nome?.message}
                 />
 
-                <FormControl fullWidth size="small">
+                <FormControl fullWidth size="small" margin="dense">
                   <InputLabel>Selecione um software</InputLabel>
                   <Select
-                    label="Selecione um software"
+                    label="Selecione um software/n/n"
                     value={softwareId}
+                    sx={{ fontSize: 13 }}
                     onChange={(e: any) => {
                       setSoftwareId(e.target.value);
                     }}
@@ -190,11 +185,12 @@ export default function LicenseForm({
                   </Select>
                 </FormControl>
 
-                <FormControl fullWidth size="small">
-                  <InputLabel>Selecione tipo da licença</InputLabel>
+                <FormControl fullWidth size="small" margin={'dense'}>
+                  <InputLabel>Tipo da licença</InputLabel>
                   <Select
-                    label="Selecione tipo da licença"
+                    label="Tipo da licença/n/n"
                     value={licenseTypeId}
+                    sx={{ fontSize: 13 }}
                     onChange={(e: any) => {
                       setLicenseTypeId(e.target.value);
                     }}
@@ -250,7 +246,7 @@ export default function LicenseForm({
                   <div className="col-lg-6"></div>
                 </div>
               </div>
-              <div className="col-lg-6">
+              <div className="col-lg-5">
                 <div className="row">
                   <div className="col-lg-9"></div>
                   <div className="col-lg-3"></div>
