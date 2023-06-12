@@ -83,6 +83,8 @@ export default function LicenseForm({
     getLicenseType();
     if (licenseData && formContextData.isEditing) {
       setFormData(licenseData);
+      setSoftwareId(licenseData.software.id);
+      setLicenseTypeId(licenseData.tpLicenca.id);
     }
   }, [getSoftwares, getLicenseType]);
 
