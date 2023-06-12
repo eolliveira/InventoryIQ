@@ -17,14 +17,14 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import Swal from 'sweetalert2';
 import { AxiosRequestConfig } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Workstation } from 'types/Workstation/Workstation';
+import { Ativo } from '../../../../types/Ativo';
 
 type LicenseAssetProps = {
   licenseId?: string;
 };
 
 export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
-  const columns: TableColumn<any>[] = [
+  const columns: TableColumn<Ativo>[] = [
     {
       button: true,
       width: '70px',
@@ -55,7 +55,7 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
   ];
 
   const { formContextData, setFormContextData } = useContext(FormContext);
-  const [assets, setAssets] = useState<any[]>();
+  const [assets, setAssets] = useState<Ativo[]>();
   const [openAssetLinkLicense, setAssetLinkLicense] = useState(false);
   const navigate = useNavigate();
 
