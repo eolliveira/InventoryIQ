@@ -18,6 +18,7 @@ import IconButton from '@mui/material/IconButton';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import Swal from 'sweetalert2';
 import { AxiosRequestConfig } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 type AssetLicenseProps = {
   assetId?: string;
@@ -39,7 +40,7 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
         </IconButton>
       ),
     },
-    { name: 'Software', selector: (row) => row.software, sortable: true },
+    { name: 'Software', selector: (row) => row.software.nome, sortable: true },
     {
       name: 'Chave',
       selector: (row) => row.chave,
@@ -66,6 +67,7 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [licenses, setLicenses] = useState<Licenca[]>();
   const [openAssetLinkLicense, setAssetLinkLicense] = useState(false);
+  const navigate = useNavigate();
 
   const getLicenses = useCallback(() => {
     requestBackend({ url: `/active/${assetId}/licenses` }).then((response) =>
@@ -111,6 +113,8 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
       }
     });
   };
+
+  const handleRowClicked = (row: Licenca) => navigate(`/license/${row.id}`);
 
   return (
     <Card
@@ -160,6 +164,7 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
         pointerOnHover
         highlightOnHover
         fixedHeaderScrollHeight={'82vh'}
+        onRowClicked={handleRowClicked}
         customStyles={{
           headCells: {
             style: {

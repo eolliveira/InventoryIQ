@@ -28,6 +28,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { TipoLicenca } from '../../../../types/Licenca/TipoLicenca';
+import { licenseStatus } from '../../../../constants/LicenseStatus';
+import {
+  removeUnderline,
+  toCamelCase,
+} from '../../../../utils/StringConverter';
 
 type LicenseFormProps = {
   licenseData?: Licenca;
@@ -41,8 +46,10 @@ export default function LicenseForm({
   closeForm,
 }: LicenseFormProps) {
   const { formContextData, setFormContextData } = useContext(FormContext);
-  const [licenseType, setLicenseType] = useState<TipoLicenca[]>();
-  const [software, setSoftware] = useState<Software[]>();
+  const [licenseTypes, setLicenseType] = useState<TipoLicenca[]>();
+  const [softwares, setSoftware] = useState<Software[]>();
+
+  const [status, setStatus] = useState('');
   const [licenseTypeId, setLicenseTypeId] = useState('');
   const [softwareId, setSoftwareId] = useState('');
 
@@ -79,10 +86,11 @@ export default function LicenseForm({
 
     if (licenseData && formContextData.isEditing) {
       setFormData(licenseData);
+      setStatus(licenseData.status);
       setSoftwareId(licenseData.software.id);
       setLicenseTypeId(licenseData.tpLicenca.id);
     }
-  }, [getLicenseType, getSoftwares]);
+  }, [getLicenseType, getSoftwares, licenseData]);
 
   const setFormData = (data: Licenca) => {
     setValue('nome', data.nome);
@@ -110,8 +118,9 @@ export default function LicenseForm({
       cancelButtonColor: '#dc3545',
     }).then((result) => {
       if (result.isConfirmed) {
-        const dataT = {
+        const data = {
           ...formData,
+          status,
           softwareId: softwareId,
           tpLicencaId: licenseTypeId,
         };
@@ -121,7 +130,7 @@ export default function LicenseForm({
           url: formContextData.isAdding
             ? '/licenses'
             : `/licenses/${licenseData?.id}/update`,
-          data: dataT,
+          data,
         };
 
         requestBackend(params)
@@ -142,18 +151,18 @@ export default function LicenseForm({
   };
 
   const onCancelForm = () => {
-    setFormContextData({
-      isAdding: false,
-      isEditing: false,
-    });
-
+    setFormContextData({ isAdding: false, isEditing: false });
     closeForm();
   };
 
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel title="Adicionando Licença">
+        <Panel
+          title={
+            formContextData.isEditing ? 'Alterar Licença' : 'Adicionar Licença'
+          }
+        >
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-lg-7">
@@ -168,7 +177,9 @@ export default function LicenseForm({
                 />
 
                 <FormControl fullWidth size="small" margin="dense">
-                  <InputLabel>Selecione um software</InputLabel>
+                  <InputLabel sx={{ fontSize: 14 }}>
+                    Selecione um software
+                  </InputLabel>
                   <Select
                     label="Selecione um software/n/n"
                     value={softwareId}
@@ -177,7 +188,7 @@ export default function LicenseForm({
                       setSoftwareId(e.target.value);
                     }}
                   >
-                    {software?.map((software) => (
+                    {softwares?.map((software) => (
                       <MenuItem key={software.id} value={software.id}>
                         {software.nome}
                       </MenuItem>
@@ -186,7 +197,7 @@ export default function LicenseForm({
                 </FormControl>
 
                 <FormControl fullWidth size="small" margin={'dense'}>
-                  <InputLabel>Tipo da licença</InputLabel>
+                  <InputLabel sx={{ fontSize: 14 }}>Tipo da licença</InputLabel>
                   <Select
                     label="Tipo da licença/n/n"
                     value={licenseTypeId}
@@ -195,7 +206,7 @@ export default function LicenseForm({
                       setLicenseTypeId(e.target.value);
                     }}
                   >
-                    {licenseType?.map((licenseType) => (
+                    {licenseTypes?.map((licenseType) => (
                       <MenuItem key={licenseType.id} value={licenseType.id}>
                         {licenseType.nome}
                       </MenuItem>
@@ -253,6 +264,30 @@ export default function LicenseForm({
                 </div>
 
                 <div className="row">
+                  <div className="col-lg-12">
+                    <FormControl fullWidth size="small" margin={'dense'}>
+                      <InputLabel sx={{ fontSize: 14 }}>Status</InputLabel>
+                      <Select
+                        label="Status"
+                        value={status}
+                        sx={{ fontSize: 13 }}
+                        onChange={(e: any) => {
+                          setStatus(e.target.value);
+                        }}
+                      >
+                        {licenseStatus?.map((status) => (
+                          <MenuItem
+                            sx={{ fontSize: 13 }}
+                            key={status}
+                            value={status}
+                          >
+                            {toCamelCase(removeUnderline(status))}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </div>
+
                   <div className="col-lg-6">
                     <InputDate
                       register={register}

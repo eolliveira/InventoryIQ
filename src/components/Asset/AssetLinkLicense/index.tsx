@@ -27,7 +27,7 @@ type AssetLinkLicenseProps = {
 
 const columns: TableColumn<Licenca>[] = [
   { name: 'Id', selector: (row) => row.id, sortable: true },
-  { name: 'Software', selector: (row) => row.software, sortable: true },
+  { name: 'Software', selector: (row) => row.software.nome, sortable: true },
   {
     name: 'Qtd. adquirida',
     selector: (row) => row.qtdAdquirida,
@@ -84,7 +84,7 @@ export default function AssetLinkLicense({
     requestBackend(params)
       .then(() => {
         setFormContextData({ isEditing: false });
-        Swal.fire('Sucesso!', 'Licença foi vinculada ao ativo!.', 'success');
+        Swal.fire('Sucesso!', 'Licença foi vinculada ao ativo!', 'success');
         closeModal();
       })
       .catch((error) => {
