@@ -107,7 +107,7 @@ export default function WorkstationData() {
     setSweeping(true);
     const params: AxiosRequestConfig = {
       method: 'PUT',
-      url: `/workstation/${active?.id}/synchronize`,
+      url: `/workstation/${active?.id}/sweep`,
     };
 
     requestBackend(params)

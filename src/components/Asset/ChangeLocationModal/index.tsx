@@ -25,8 +25,16 @@ type ChangeLocationModalProps = {
 };
 
 const columns: TableColumn<LocalIndustria>[] = [
-  { name: 'Id', selector: (row) => row.id, sortable: true },
+  { name: 'Id', selector: (row) => row.id, sortable: true, width: '125px' },
   { name: 'Nome', selector: (row) => row.dsLocalIndustria, sortable: true },
+  {
+    name: 'Centro de custo',
+    selector: (row) =>
+      row.centroCusto
+        ? row.centroCusto.id + ' - ' + row.centroCusto.descricaoCentroCusto
+        : ' - ',
+    sortable: true,
+  },
 ];
 
 export default function ChangeLocationModal({

@@ -31,6 +31,11 @@ import LicenseForm from '../LicenseData/LicenseForm';
 
 const columns: TableColumn<Licenca>[] = [
   {
+    name: 'Nome',
+    selector: (row) => row.nome,
+    sortable: true,
+  },
+  {
     name: 'Software',
     selector: (row) => row.software.nome,
     sortable: true,
@@ -41,21 +46,29 @@ const columns: TableColumn<Licenca>[] = [
     selector: (row) => row.tpLicenca.nome,
     sortable: true,
   },
-  { name: 'Status', selector: (row) => row.status, sortable: true },
+  {
+    name: 'Status',
+    selector: (row) => row.status,
+    sortable: true,
+    width: '120px',
+  },
   {
     name: 'Qtd. Adquirida',
     selector: (row) => row.qtdAdquirida,
     sortable: true,
+    width: '140px',
   },
   {
     name: 'Qtd. Alocada',
     selector: (row) => row.qtdAlocada,
     sortable: true,
+    width: '140px',
   },
   {
     name: 'Data expiração',
     selector: (row) => row.dtExpiracao,
     sortable: true,
+    width: '145px',
   },
 ];
 

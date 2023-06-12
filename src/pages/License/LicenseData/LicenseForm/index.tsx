@@ -13,7 +13,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import CustomModal from '../../../../components/CustomModal';
 import styled from 'styled-components';
 import Typography from '@mui/material/Typography';
-
 import InputDate from '../../../../components/inputs/InputDate';
 import InputText from '../../../../components/inputs/InputText';
 import InputCurrency from '../../../../components/inputs/InputCurrency';
@@ -77,7 +76,7 @@ export default function LicenseForm({
       .then((response) => {
         setSoftware(response.data);
       })
-      .catch((error) => console.log('falha ao carregar softawares' + error));
+      .catch((error) => console.log('falha ao carregar softwares' + error));
   }, [formContextData]);
 
   useEffect(() => {
@@ -144,7 +143,7 @@ export default function LicenseForm({
             closeForm();
           })
           .catch((error) => {
-            window.alert(error.response.data.message);
+            Swal.fire('Atenção!', error.response.data.message, 'warning');
           });
       }
     });
@@ -189,7 +188,11 @@ export default function LicenseForm({
                     }}
                   >
                     {softwares?.map((software) => (
-                      <MenuItem key={software.id} value={software.id}>
+                      <MenuItem
+                        sx={{ fontSize: 13 }}
+                        key={software.id}
+                        value={software.id}
+                      >
                         {software.nome}
                       </MenuItem>
                     ))}
@@ -207,7 +210,11 @@ export default function LicenseForm({
                     }}
                   >
                     {licenseTypes?.map((licenseType) => (
-                      <MenuItem key={licenseType.id} value={licenseType.id}>
+                      <MenuItem
+                        sx={{ fontSize: 13 }}
+                        key={licenseType.id}
+                        value={licenseType.id}
+                      >
                         {licenseType.nome}
                       </MenuItem>
                     ))}
@@ -223,17 +230,17 @@ export default function LicenseForm({
                   helperText={errors.chave?.message}
                 />
                 <div className="row">
-                  <div className="col-lg-6">
+                  <div className="col-lg-8">
                     <InputText
-                      label="Quantidade alocada"
-                      name="qtdAlocada"
+                      label="numeroSerie"
+                      name="numeroSerie"
                       control={control}
                       register={register}
-                      error={!!errors.qtdAlocada}
-                      helperText={errors.qtdAlocada?.message}
+                      error={!!errors.numeroSerie}
+                      helperText={errors.numeroSerie?.message}
                     />
                   </div>
-                  <div className="col-lg-6">
+                  <div className="col-lg-4">
                     <InputText
                       label="Qtd.Adquirida"
                       name="qtdAdquirida"
@@ -244,14 +251,7 @@ export default function LicenseForm({
                     />
                   </div>
                 </div>
-                <InputText
-                  label="numeroSerie"
-                  name="numeroSerie"
-                  control={control}
-                  register={register}
-                  error={!!errors.numeroSerie}
-                  helperText={errors.numeroSerie?.message}
-                />
+
                 <div className="row">
                   <div className="col-lg-6"></div>
                   <div className="col-lg-6"></div>

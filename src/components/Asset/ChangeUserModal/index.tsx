@@ -26,7 +26,7 @@ type ChangeUserModalProps = {
 };
 
 const columns: TableColumn<Usuario>[] = [
-  { name: 'Id', selector: (row) => row.id, sortable: true },
+  { name: 'Id', selector: (row) => row.id, sortable: true, width: '125px' },
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
   { name: 'Email', selector: (row) => row.email, sortable: true },
 ];

@@ -24,6 +24,8 @@ import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2';
 import { Licenca } from '../../../types/Licenca/Licenca';
 import LicenseForm from './LicenseForm';
+import LicenseDetails from './LicenseDetails';
+import LicenseAsset from './LicenseAsset';
 
 export default function LicenseData() {
   const [openLicenseForm, setOpenLicenseForm] = useState(false);
@@ -158,34 +160,15 @@ export default function LicenseData() {
                 indicatorColor="primary"
               >
                 <CustomTab value="1" label="Detalhes" />
-                <CustomTab value="2" label="Hardware" />
-                <CustomTab value="3" label="Movimentos" />
-                <CustomTab value="4" label="Licenças" />
-                <CustomTab value="5" label="Serviços" />
-                <CustomTab value="6" label="Ativos(Alocado a)" />
+                <CustomTab value="2" label="Alocado a" />
               </Tabs>
             </Box>
           </AppBar>
           <TabPanel style={{ padding: 0 }} value="1">
-            {/* <WorkstationDetails data={active} /> */}
-            <h1>teste</h1>
+            <LicenseDetails data={license} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="2">
-            {/* <WorkstationHardware teste={10} /> */}
-            <h1>teste</h1>
-          </TabPanel>
-          <TabPanel style={{ padding: 0 }} value="3">
-            <AssetMovements assetId={license?.id} />
-          </TabPanel>
-          <TabPanel style={{ padding: 0 }} value="4">
-            <AssetLicense assetId={license?.id} />
-          </TabPanel>
-          <TabPanel style={{ padding: 0 }} value="5">
-            <AssetService assetId={license?.id} />
-          </TabPanel>
-          <TabPanel style={{ padding: 0 }} value="6">
-            {/* <AssetService assetId={license?.id} /> */}
-            <h1>teste</h1>
+            <LicenseAsset licenseId={license?.id} />
           </TabPanel>
         </TabContext>
       </BaseCard>
