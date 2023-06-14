@@ -21,7 +21,6 @@ import Panel from '../../../../components/Panel';
 import Stack from '@mui/material/Stack';
 import { Licenca } from '../../../../types/Licenca/Licenca';
 import { Software } from '../../../../types/Licenca/Software';
-
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -70,7 +69,7 @@ export default function LicenseForm({
       .catch((error) =>
         console.log('falha ao carregar os tipos de software' + error)
       );
-  }, [formContextData]);
+  }, []);
 
   const getSoftwares = useCallback(() => {
     requestBackend({ url: '/software' })
@@ -78,7 +77,7 @@ export default function LicenseForm({
         setSoftware(response.data);
       })
       .catch((error) => console.log('falha ao carregar softwares' + error));
-  }, [formContextData]);
+  }, []);
 
   useEffect(() => {
     getLicenseType();

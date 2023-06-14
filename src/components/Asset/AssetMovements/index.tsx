@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
 import { Movimento } from '../../../types/Movimento';
@@ -10,6 +10,7 @@ import AssetStatusStyle from '../../AssetStatusStyle';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import NoData from '../../NoData';
 import { toDate } from '../../../utils/Date';
+import { FormContext } from '../../../contexts/FormContext';
 
 const columns: TableColumn<Movimento>[] = [
   {
@@ -42,6 +43,7 @@ type AssetMovementsProps = {
 };
 
 export default function AssetMovements({ assetId }: AssetMovementsProps) {
+  const { formContextData } = useContext(FormContext);
   const [movements, setMovements] = useState<Movimento[]>();
 
   const getMovements = useCallback(() => {
@@ -57,7 +59,7 @@ export default function AssetMovements({ assetId }: AssetMovementsProps) {
       .catch((error) => {
         console.log('Erro' + error);
       });
-  }, [assetId]);
+  }, [assetId, formContextData]);
 
   useEffect(() => {
     getMovements();
