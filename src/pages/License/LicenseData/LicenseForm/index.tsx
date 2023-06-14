@@ -32,6 +32,7 @@ import {
   removeUnderline,
   toCamelCase,
 } from '../../../../utils/StringConverter';
+import InputNumber from '../../../../components/inputs/InputNumber';
 
 type LicenseFormProps = {
   licenseData?: Licenca;
@@ -109,7 +110,7 @@ export default function LicenseForm({
     Swal.fire({
       title: 'Salvar dados?',
       text: 'Deseja salvar os dados da Licença?',
-      icon: 'warning',
+      icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
       confirmButtonColor: '#43a047',
@@ -180,6 +181,7 @@ export default function LicenseForm({
                     Selecione um software
                   </InputLabel>
                   <Select
+                    required
                     label="Selecione um software/n/n"
                     value={softwareId}
                     sx={{ fontSize: 13 }}
@@ -202,6 +204,7 @@ export default function LicenseForm({
                 <FormControl fullWidth size="small" margin={'dense'}>
                   <InputLabel sx={{ fontSize: 14 }}>Tipo da licença</InputLabel>
                   <Select
+                    required
                     label="Tipo da licença/n/n"
                     value={licenseTypeId}
                     sx={{ fontSize: 13 }}
@@ -222,6 +225,7 @@ export default function LicenseForm({
                 </FormControl>
 
                 <InputText
+                  required
                   label="Chave"
                   name="chave"
                   control={control}
@@ -241,7 +245,8 @@ export default function LicenseForm({
                     />
                   </div>
                   <div className="col-lg-4">
-                    <InputText
+                    <InputNumber
+                      required
                       label="Qtd.Adquirida"
                       name="qtdAdquirida"
                       control={control}
@@ -268,6 +273,7 @@ export default function LicenseForm({
                     <FormControl fullWidth size="small" margin={'dense'}>
                       <InputLabel sx={{ fontSize: 14 }}>Status</InputLabel>
                       <Select
+                        required
                         label="Status"
                         value={status}
                         sx={{ fontSize: 13 }}

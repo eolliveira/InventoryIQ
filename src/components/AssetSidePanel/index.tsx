@@ -304,6 +304,7 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
 
       {openChangeNfEntradaModal && (
         <ChangeNfEntradaModal
+          license={false}
           assetId={data.id}
           openModal={openChangeNfEntradaModal}
           closeModal={() => setOpenChangeNfEntradaModal(false)}

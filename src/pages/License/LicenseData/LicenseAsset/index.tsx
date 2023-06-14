@@ -73,7 +73,7 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
     Swal.fire({
       title: 'Tem certeza?',
       text: 'Deseja desalocar a licença desse ativo? ',
-      icon: 'warning',
+      icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#dc3545',
       cancelButtonColor: 'secondary',

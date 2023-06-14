@@ -74,7 +74,7 @@ export default function WorkstationData() {
 
   const handleRemove = () => {
     Swal.fire({
-      icon: 'warning',
+      icon: 'question',
       title: `Deseja remover o ativo?`,
       text: 'Todas as informações e histórico de movimentos serão perdidas! ',
       showDenyButton: true,

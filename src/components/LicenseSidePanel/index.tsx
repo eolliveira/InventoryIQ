@@ -4,18 +4,18 @@ import { BaseCard } from '../../style/GlobalStyles';
 
 import Box from '@mui/material/Box';
 import styled from 'styled-components';
+import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import ChangeStateModal from '../Asset/ChangeAssetStateModal';
 import ChangeNfEntradaModal from '../ChangeNfEntradaModal';
+import ChangeStateModal from '../Asset/ChangeAssetStateModal';
+import LicenseStatusStyle from '../../components/LicenseStatusStyle';
 import { requestBackend } from '../../http/requests';
 import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 import { formatCurrency } from '../../utils/CurrencyConverter';
-import Card from '@mui/material/Card';
 import { Licenca } from '../../types/Licenca/Licenca';
-import LicenseStatusStyle from '../../components/LicenseStatusStyle';
 
 type LicenseSidePanelProps = {
   license: Licenca;
@@ -30,7 +30,9 @@ export default function LicenseSidePanel({ license }: LicenseSidePanelProps) {
 
   const getNfEntrada = useCallback(() => {
     requestBackend({ url: `/nfEntrada/${license.idNfEntrada}` })
-      .then((response) => setNfEntrada(response.data))
+      .then((response) => {
+        setNfEntrada(response.data);
+      })
       .catch((error) => window.alert(error.response.data.message));
   }, [license]);
 
@@ -130,6 +132,7 @@ export default function LicenseSidePanel({ license }: LicenseSidePanelProps) {
 
       {openChangeNfEntradaModal && (
         <ChangeNfEntradaModal
+          license
           assetId={license.id}
           openModal={openChangeNfEntradaModal}
           closeModal={() => setOpenChangeNfEntradaModal(false)}

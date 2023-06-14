@@ -83,7 +83,7 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
     Swal.fire({
       title: 'Tem certeza?',
       text: 'Deseja liberar a licença?',
-      icon: 'warning',
+      icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#dc3545',
       cancelButtonColor: 'secondary',

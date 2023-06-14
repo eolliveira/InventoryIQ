@@ -21,6 +21,7 @@ import Swal from 'sweetalert2';
 
 type ChangeNfEntradaModalProps = {
   assetId?: string;
+  license: boolean;
   openModal: boolean;
   closeModal: () => void;
 };
@@ -49,6 +50,7 @@ const columns: TableColumn<NotaFiscalEntrada>[] = [
 
 export default function ChangeNfEntradaModal({
   assetId,
+  license,
   openModal: openForm,
   closeModal: closeForm,
 }: ChangeNfEntradaModalProps) {
@@ -92,17 +94,23 @@ export default function ChangeNfEntradaModal({
     const data = { idNfEntrada: selectedNfEntrada };
     const params: AxiosRequestConfig = {
       method: 'PUT',
-      url: `/active/${assetId}/nfEntrada/update`,
-      data: data,
+      url: license
+        ? `/licenses/${assetId}/nfEntrada/update`
+        : `/active/${assetId}/nfEntrada/update`,
+      data,
     };
     requestBackend(params)
       .then(() => {
-        window.alert('Nota Fiscal de Entrada foi atribuida com sucesso!');
+        Swal.fire(
+          'Sucesso',
+          'Nota Fiscal foi atribuida com sucesso!',
+          'success'
+        );
         setFormContextData({ isEditing: false });
         closeForm();
       })
       .catch((error) => {
-        window.alert(error.response.data.message);
+        Swal.fire('Falha', `${error.response.data.message}`, 'success');
       });
   }
 

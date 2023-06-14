@@ -67,7 +67,7 @@ export default function WorkstationForm({
     Swal.fire({
       title: 'Salvar dados?',
       text: 'Deseja salvar os dados do ativo?',
-      icon: 'warning',
+      icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
       confirmButtonColor: '#43a047',

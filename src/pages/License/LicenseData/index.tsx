@@ -44,7 +44,8 @@ export default function LicenseData() {
         setLicense(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        Swal.fire('Falha', 'Falha ao obter dados da Licença!', 'warning');
+        console.log(error.response.data.message);
       });
   }, [licenseId, formContextData]);
 
@@ -68,9 +69,9 @@ export default function LicenseData() {
 
   const handleRemove = () => {
     Swal.fire({
-      icon: 'warning',
-      title: `Deseja remover o ativo?`,
-      text: 'Todas as informações e histórico de movimentos serão perdidas! ',
+      icon: 'question',
+      title: `Deseja remover esta Licença?`,
+      text: 'Todas as informações serão perdidas! ',
       showDenyButton: true,
       confirmButtonText: 'Confirmar',
       confirmButtonColor: `#dc3545`,
@@ -80,16 +81,20 @@ export default function LicenseData() {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
-          url: `/active/${license?.id}`,
+          url: `/licenses/${license?.id}`,
         };
 
         requestBackend(params)
           .then(() => {
-            Swal.fire('Removido!', 'ativo removido com sucesso!', 'success');
-            navigate('/workstation');
+            Swal.fire(
+              'Removido!',
+              'Licença foi removida com sucesso!',
+              'success'
+            );
+            navigate('/license');
           })
-          .catch(() =>
-            Swal.fire('Falha!', 'Não foi possivel remover o ativo!', 'error')
+          .catch((error) =>
+            Swal.fire('Atenção!', `${error.response.data.message}`, 'warning')
           );
       }
     });

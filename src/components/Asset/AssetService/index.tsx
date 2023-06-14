@@ -87,7 +87,7 @@ export default function AssetService({ assetId }: AssetServiceProps) {
     Swal.fire({
       title: 'Tem certeza?',
       text: 'Você não será capaz de reverter isso!',
-      icon: 'warning',
+      icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#dc3545',
       cancelButtonColor: 'secondary',
