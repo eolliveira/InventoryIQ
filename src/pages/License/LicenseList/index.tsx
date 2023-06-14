@@ -95,7 +95,7 @@ export default function LicenseList() {
       url: `/licenses?${filterField}=${inputFilter}&status=${statusFilter}`,
       params: {
         page: numberPage,
-        size: 50,
+        size: 10,
       },
     };
 

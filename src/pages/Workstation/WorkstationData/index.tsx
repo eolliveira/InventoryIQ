@@ -20,7 +20,7 @@ import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import SidePanelData from '../../../components/SidePanelData';
+import AssetSidePanel from '../../../components/AssetSidePanel';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
 import { AxiosRequestConfig } from 'axios';
@@ -127,7 +127,7 @@ export default function WorkstationData() {
   return (
     <Wapper className="row">
       <ContainerSidePanel className="col-lg-3">
-        <SidePanelData data={active ?? ({} as Workstation)} />
+        <AssetSidePanel data={active ?? ({} as Workstation)} />
       </ContainerSidePanel>
       <BaseCard className="col-lg-9">
         <Box

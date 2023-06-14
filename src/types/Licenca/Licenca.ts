@@ -13,5 +13,6 @@ export type Licenca = {
     dtExpiracao: string,
     vlrAquisicao: number,
     tpLicenca: TipoLicenca,
+    idNfEntrada: string, 
     software: Software
   };

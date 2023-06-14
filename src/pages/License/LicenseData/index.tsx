@@ -5,9 +5,6 @@ import { theme } from '../../../style/Theme';
 import styled from 'styled-components';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
-import AssetMovements from '../../../components/Asset/AssetMovements';
-import AssetLicense from '../../../components/Asset/AssetLicense';
-import AssetService from '../../../components/Asset/AssetService';
 import StockButton from '../../../components/buttons/StockButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
@@ -26,6 +23,7 @@ import { Licenca } from '../../../types/Licenca/Licenca';
 import LicenseForm from './LicenseForm';
 import LicenseDetails from './LicenseDetails';
 import LicenseAsset from './LicenseAsset';
+import LicenseSidePanel from '../../../components/LicenseSidePanel';
 
 export default function LicenseData() {
   const [openLicenseForm, setOpenLicenseForm] = useState(false);
@@ -102,8 +100,7 @@ export default function LicenseData() {
   return (
     <Wapper className="row">
       <ContainerSidePanel className="col-lg-3">
-        <h2>teste</h2>
-        {/* <SidePanelData data={license ?? ({} as Workstation)} /> */}
+        <LicenseSidePanel license={license ?? ({} as Licenca)} />
       </ContainerSidePanel>
       <BaseCard className="col-lg-9">
         <Box

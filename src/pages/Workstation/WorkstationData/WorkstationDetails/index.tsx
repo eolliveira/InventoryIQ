@@ -65,7 +65,10 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             <TextInfo label="Nome" text={data?.nome || '-'} />
             <TextInfo label="Fabricante" text={data?.fabricante || '-'} />
             <TextInfo label="Hostname" text={data?.nomeHost || '-'} />
-            <TextInfo label="Memória Virtual" text={data?.memoriaRam || '-'} />
+            <TextInfo
+              label="Memória Virtual"
+              text={data?.memoriaRam + ' GB' || '-'}
+            />
             <TextInfo label="Dominio" text={data?.dominio || '-'} />
             <TextInfo label="Gateway" text={data?.gateway || '-'} />
             <TextInfo label="Dns" text={data?.dns || '-'} />

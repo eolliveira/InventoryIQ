@@ -23,14 +23,14 @@ import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 import { formatCurrency } from '../../utils/CurrencyConverter';
 import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 import Stack from '@mui/material/Stack';
-import AssetStatusStyle from '../../components/AssetStatusStyle';
+import AssetStatusStyle from '../AssetStatusStyle';
 import Card from '@mui/material/Card';
 
-type SidePanelDataProps = {
+type AssetSidePanelProps = {
   data: Workstation;
 };
 
-export default function SidePanelData({ data }: SidePanelDataProps) {
+export default function AssetSidePanel({ data }: AssetSidePanelProps) {
   const { setFormContextData } = useContext(FormContext);
   const [nfEntrada, setNfEntrada] = useState<NotaFiscalEntrada>();
   const [openChangeStateModal, setOpenChangeStateModal] = useState(false);
