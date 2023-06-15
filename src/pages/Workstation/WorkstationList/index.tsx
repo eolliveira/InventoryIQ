@@ -147,7 +147,14 @@ export default function WorkstationList() {
           <SelectFilter
             filterField={filterField}
             setFieldFilter={setFilterField}
-            selectedItems={['nome', 'fabricante', 'dominio']}
+            selectedItems={[
+              'nome',
+              'dominio',
+              'fabricante',
+              'modelo',
+              'atribuido',
+              'local',
+            ]}
           />
           {statusFilterChecked && (
             <SelectFilter
