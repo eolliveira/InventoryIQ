@@ -30,6 +30,7 @@ import LicenseForm from '../LicenseData/LicenseForm';
 import { toDate } from '../../../utils/Date';
 import LicenseStatusStyle from '../../../components/LicenseStatusStyle';
 import { licenseStatus } from '../../../constants/LicenseStatus';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const columns: TableColumn<Licenca>[] = [
   {
@@ -76,10 +77,11 @@ const columns: TableColumn<Licenca>[] = [
 ];
 
 export default function LicenseList() {
-  const { formContextData, setFormContextData } = useContext(FormContext);
+  const { setFormContextData } = useContext(FormContext);
   const [page, setPage] = useState<SpringPage<Licenca>>();
   const [inputFilter, setInputFilter] = useState('');
   const [numberPage, setNumberPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState('10');
   const navigate = useNavigate();
 
   const [filterField, setFilterField] = useState('nome');
@@ -200,7 +202,34 @@ export default function LicenseList() {
           },
         }}
       />
-      <Stack direction={'row'} justifyContent={'end'} marginY={2}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }} />
+      <Stack
+        display={'flex'}
+        alignItems={'center'}
+        direction={'row'}
+        justifyContent={'end'}
+        flexWrap={'wrap'}
+        marginY={2}
+        spacing={3}
+      >
+        <Typography fontSize={14} textTransform={'none'}>
+          Linhas por página:
+        </Typography>
+
+        <Select
+          variant="standard"
+          id="demo-simple-select"
+          sx={{ fontSize: 14 }}
+          size="small"
+          value={rowsPerPage}
+          onChange={(event: SelectChangeEvent) => {
+            setRowsPerPage(event.target.value);
+          }}
+        >
+          <MenuItem value={5}>5</MenuItem>
+          <MenuItem value={10}>10</MenuItem>
+          <MenuItem value={50}>50</MenuItem>
+        </Select>
         <Pagination
           onChange={(event: ChangeEvent<unknown>, numberPage: number) =>
             setNumberPage(numberPage - 1)

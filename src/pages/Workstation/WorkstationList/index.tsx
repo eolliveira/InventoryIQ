@@ -32,8 +32,8 @@ import WorkstationForm from '../WorkstationData/WorkstationForm';
 import { FormContext } from '../../../contexts/FormContext';
 import { toDate } from '../../../utils/Date';
 import CircularLoading from '../../../components/Loaders/Progress';
-import InputDate from 'components/inputs/InputDate';
-import PeriodFilter from '../../../components/SearchBar/Filters/PeriodFilter';
+
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const columns: TableColumn<Workstation>[] = [
   {
@@ -71,10 +71,11 @@ const columns: TableColumn<Workstation>[] = [
 ];
 
 export default function WorkstationList() {
-  const { formContextData, setFormContextData } = useContext(FormContext);
+  const { setFormContextData } = useContext(FormContext);
   const [page, setPage] = useState<SpringPage<Workstation>>();
   const [inputFilter, setInputFilter] = useState('');
   const [numberPage, setNumberPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState('10');
   const navigate = useNavigate();
 
   const [filterField, setFilterField] = useState('nome');
@@ -97,7 +98,7 @@ export default function WorkstationList() {
       url: `/workstation?${filterField}=${inputFilter}&status=${statusFilter}`,
       params: {
         page: numberPage,
-        size: 5,
+        size: rowsPerPage,
       },
     };
 
@@ -108,7 +109,7 @@ export default function WorkstationList() {
       .catch((error) => {
         console.log('Erro' + error);
       });
-  }, [numberPage, inputFilter, filterField, statusFilter]);
+  }, [numberPage, rowsPerPage, inputFilter, filterField, statusFilter]);
 
   useEffect(() => {
     getWorkstatioData();
@@ -188,7 +189,7 @@ export default function WorkstationList() {
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        fixedHeaderScrollHeight={'70vh'}
+        fixedHeaderScrollHeight={'68vh'}
         selectableRows
         pointerOnHover
         highlightOnHover
@@ -205,7 +206,38 @@ export default function WorkstationList() {
           },
         }}
       />
-      <Stack direction={'row'} justifyContent={'end'} marginY={2}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }} />
+      <Stack
+        display={'flex'}
+        alignItems={'center'}
+        direction={'row'}
+        justifyContent={'end'}
+        flexWrap={'wrap'}
+        marginY={2}
+        spacing={3}
+      >
+        <Typography fontSize={14} textTransform={'none'}>
+          Linhas por página:
+        </Typography>
+        <Select
+          variant="standard"
+          size="small"
+          sx={{ fontSize: 14 }}
+          value={rowsPerPage}
+          onChange={(event: SelectChangeEvent) => {
+            setRowsPerPage(event.target.value);
+          }}
+        >
+          <MenuItem sx={{ fontSize: 14 }} value={5}>
+            5
+          </MenuItem>
+          <MenuItem sx={{ fontSize: 14 }} value={10}>
+            10
+          </MenuItem>
+          <MenuItem sx={{ fontSize: 14 }} value={50}>
+            50
+          </MenuItem>
+        </Select>
         <Pagination
           onChange={(event: ChangeEvent<unknown>, numberPage: number) =>
             setNumberPage(numberPage - 1)
