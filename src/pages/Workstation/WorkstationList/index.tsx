@@ -32,6 +32,8 @@ import WorkstationForm from '../WorkstationData/WorkstationForm';
 import { FormContext } from '../../../contexts/FormContext';
 import { toDate } from '../../../utils/Date';
 import CircularLoading from '../../../components/Loaders/Progress';
+import InputDate from 'components/inputs/InputDate';
+import PeriodFilter from '../../../components/SearchBar/Filters/PeriodFilter';
 
 const columns: TableColumn<Workstation>[] = [
   {
@@ -147,8 +149,16 @@ export default function WorkstationList() {
           <SelectFilter
             filterField={filterField}
             setFieldFilter={setFilterField}
-            selectedItems={['nome', 'fabricante', 'dominio']}
+            selectedItems={[
+              'nome',
+              'dominio',
+              'fabricante',
+              'modelo',
+              'atribuido',
+              'local',
+            ]}
           />
+
           {statusFilterChecked && (
             <SelectFilter
               label="Status"

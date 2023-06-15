@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { SpringPage } from 'types/vendor/spring';
-import { assetStatus } from '../../../constants/AssetStatus';
 import {
   ChangeEvent,
   useCallback,
@@ -28,6 +27,9 @@ import { Licenca } from '../../../types/Licenca/Licenca';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
 import LicenseForm from '../LicenseData/LicenseForm';
+import { toDate } from '../../../utils/Date';
+import LicenseStatusStyle from '../../../components/LicenseStatusStyle';
+import { licenseStatus } from '../../../constants/LicenseStatus';
 
 const columns: TableColumn<Licenca>[] = [
   {
@@ -48,9 +50,10 @@ const columns: TableColumn<Licenca>[] = [
   },
   {
     name: 'Status',
-    selector: (row) => row.status,
     sortable: true,
-    width: '120px',
+    cell: (row) => (
+      <LicenseStatusStyle key={row.id} size="small" status={row.status} />
+    ),
   },
   {
     name: 'Qtd. Adquirida',
@@ -66,7 +69,7 @@ const columns: TableColumn<Licenca>[] = [
   },
   {
     name: 'Data expiração',
-    selector: (row) => row.dtExpiracao,
+    selector: (row) => toDate(row.dtExpiracao),
     sortable: true,
     width: '145px',
   },
@@ -119,6 +122,13 @@ export default function LicenseList() {
     setOpenLicenseForm(true);
   };
 
+  function handleClearFilters() {
+    setStatusFilterchecked(false);
+    setInputFilter('');
+    setStatusFilter('');
+    setFilterField('nome');
+  }
+
   const handleClose = () => {
     setOpenCustomFilters(null);
   };
@@ -136,18 +146,21 @@ export default function LicenseList() {
             inputFilter={inputFilter}
             setInputFilter={setInputFilter}
             setNumberPage={setNumberPage}
-            //setOpenCustomFilters={setOpenCustomFilters}
+            setOpenCustomFilters={setOpenCustomFilters}
+            onClearFilters={handleClearFilters}
           />
           <SelectFilter
             filterField={filterField}
             setFieldFilter={setFilterField}
-            selectedItems={['nome', 'dominio']}
+            selectedItems={['nome', 'chave', 'qtdAdquirida', 'qtdAlocada']}
           />
           {statusFilterChecked && (
             <SelectFilter
+              label="Status"
               filterField={statusFilter}
               setFieldFilter={setStatusFilter}
-              selectedItems={assetStatus.map((status) => status)}
+              setNumberPage={setNumberPage}
+              selectedItems={licenseStatus.map((status) => status)}
             />
           )}
         </Stack>

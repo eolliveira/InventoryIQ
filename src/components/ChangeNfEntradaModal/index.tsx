@@ -27,7 +27,12 @@ type ChangeNfEntradaModalProps = {
 };
 
 const columns: TableColumn<NotaFiscalEntrada>[] = [
-  { name: 'Cod. Pessoa', selector: (row) => row.pessoa.id, sortable: true },
+  {
+    name: 'Cod. Pessoa',
+    selector: (row) => row.pessoa.id,
+    sortable: true,
+    width: '14%',
+  },
   {
     name: 'Razão Social',
     selector: (row) => row.pessoa.razaoSocial,
