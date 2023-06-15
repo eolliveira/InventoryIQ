@@ -47,7 +47,7 @@ export default function StockButton({
         endIcon={<KeyboardArrowDownIcon />}
         disabled={isDisabled}
         color="primary"
-        size="small"
+        size="medium"
       >
         <Typography fontSize={fontSize ?? 13} textTransform={'none'}>
           Ações
