@@ -11,6 +11,8 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import NoData from '../../NoData';
 import { toDate } from '../../../utils/Date';
 import { FormContext } from '../../../contexts/FormContext';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 
 const columns: TableColumn<Movimento>[] = [
   {
@@ -68,7 +70,21 @@ export default function AssetMovements({ assetId }: AssetMovementsProps) {
   const handleRowClicked = () => {};
 
   return (
-    <Card sx={{ marginTop: 2, marginBottom: 2 }} variant="outlined">
+    <Card
+      sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
+      variant="outlined"
+    >
+      <Typography
+        margin={2}
+        fontSize={16}
+        fontWeight={'bold'}
+        letterSpacing={1}
+        color={'primary'}
+        variant="h2"
+      >
+        Movimentos do ativo
+      </Typography>
+      <Divider color="gray" />
       <DataTable
         dense
         striped

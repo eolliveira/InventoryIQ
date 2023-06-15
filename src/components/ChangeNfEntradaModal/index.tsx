@@ -166,6 +166,7 @@ export default function ChangeNfEntradaModal({
           <Box display={'flex'} justifyContent={'end'}>
             <Button
               variant="contained"
+              sx={{ height: 33 }}
               color="error"
               startIcon={<CloseIcon />}
               onClick={handleCancel}
@@ -174,6 +175,7 @@ export default function ChangeNfEntradaModal({
             </Button>
             <LoadingButton
               color="success"
+              sx={{ height: 33 }}
               loading={false}
               loadingPosition="start"
               startIcon={<CheckIcon />}
