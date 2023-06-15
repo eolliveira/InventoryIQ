@@ -4,9 +4,11 @@ import {
   toCamelCase,
 } from '../../../../utils/StringConverter';
 import InputLabel from '@mui/material/InputLabel';
+import { Dispatch, SetStateAction } from 'react';
 
 type SelectFilterProps = {
   label?: string;
+  setNumberPage?: Dispatch<SetStateAction<number>>;
   filterField: string;
   setFieldFilter: React.Dispatch<React.SetStateAction<string>>;
   selectedItems: string[];
@@ -14,6 +16,7 @@ type SelectFilterProps = {
 
 export default function SelectFilter({
   label,
+  setNumberPage,
   filterField,
   setFieldFilter,
   selectedItems,
@@ -43,6 +46,7 @@ export default function SelectFilter({
         label={label}
         value={filterField}
         onChange={(e) => {
+          setNumberPage && setNumberPage(0);
           setFieldFilter(e.target.value);
         }}
       >

@@ -95,7 +95,7 @@ export default function WorkstationList() {
       url: `/workstation?${filterField}=${inputFilter}&status=${statusFilter}`,
       params: {
         page: numberPage,
-        size: 50,
+        size: 5,
       },
     };
 
@@ -147,20 +147,14 @@ export default function WorkstationList() {
           <SelectFilter
             filterField={filterField}
             setFieldFilter={setFilterField}
-            selectedItems={[
-              'nome',
-              'dominio',
-              'fabricante',
-              'modelo',
-              'atribuido',
-              'local',
-            ]}
+            selectedItems={['nome', 'fabricante', 'dominio']}
           />
           {statusFilterChecked && (
             <SelectFilter
               label="Status"
               filterField={statusFilter}
               setFieldFilter={setStatusFilter}
+              setNumberPage={setNumberPage}
               selectedItems={assetStatus.map((status) => status)}
             />
           )}
