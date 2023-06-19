@@ -124,6 +124,7 @@ export default function WorkstationForm({
 
         setValue('fabricante', response.data.fabricante);
         setValue('nomeHost', response.data.nomeHost);
+        setValue('arquiteturaSo', response.data.arquiteturaSo);
         setValue('memoriaRam', response.data.memoriaRam);
         setValue('gateway', response.data.gateway);
         setValue('dominio', response.data.dominio);
