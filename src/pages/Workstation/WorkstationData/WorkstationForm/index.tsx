@@ -116,7 +116,7 @@ export default function WorkstationForm({
             closeForm();
           })
           .catch((error) => {
-            window.alert(error.response.data.message);
+            Swal.fire('Atenção', `${error.response.data.message}`, 'warning');
           });
       }
     });
