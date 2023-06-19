@@ -20,6 +20,8 @@ import { Interface } from 'types/Interface';
 import { Disco } from 'types/Workstation/Disco';
 import { Particao } from 'types/Workstation/Particao';
 import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import NoData from '../../../../components/NoData';
 
 import { Dayjs } from 'dayjs';
 import InputDate from '../../../../components/inputs/InputDate';
@@ -30,6 +32,26 @@ import Swal from 'sweetalert2';
 import Panel from '../../../../components/Panel';
 import SearchBar from '../../../../components/SearchBar';
 import Stack from '@mui/material/Stack';
+import DataTable, { TableColumn } from 'react-data-table-component';
+
+const columns: TableColumn<Interface>[] = [
+  {
+    name: 'Fabricante',
+    selector: (row) => row.fabricante,
+  },
+  { name: 'Ip', selector: (row) => row.enderecoIp },
+  { name: 'Mascara', selector: (row) => row.mascaraSubRede },
+  { name: 'Mac', selector: (row) => row.enderecoMac },
+];
+
+const discColumns: TableColumn<Disco>[] = [
+  {
+    name: 'Nome',
+    selector: (row) => row.nome,
+  },
+  { name: 'Modelo', selector: (row) => row.modelo },
+  { name: 'Capacidade', selector: (row) => row.capacidade },
+];
 
 type WorkstationFormProps = {
   data?: Workstation;
@@ -215,9 +237,9 @@ export default function WorkstationForm({
               borderColor: 'divider',
             }}
           />
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
-              <div className="col-lg-6">
+              <div className="col-md-6 col-xxl-4">
                 <InputText
                   required
                   label="Nome"
@@ -235,28 +257,6 @@ export default function WorkstationForm({
                   error={!!errors.fabricante}
                   helperText={errors.fabricante?.message}
                 />
-                <div className="row">
-                  <div className="col-lg-6">
-                    <InputText
-                      label="Hostname"
-                      name="nomeHost"
-                      control={control}
-                      register={register}
-                      error={!!errors.nomeHost}
-                      helperText={errors.nomeHost?.message}
-                    />
-                  </div>
-                  <div className="col-lg-6">
-                    <InputText
-                      label="Memória ram(Virtual)"
-                      name="memoriaRam"
-                      control={control}
-                      register={register}
-                      error={!!errors.memoriaRam}
-                      helperText={errors.memoriaRam?.message}
-                    />
-                  </div>
-                </div>
                 <InputText
                   label="Dominio"
                   name="dominio"
@@ -313,7 +313,7 @@ export default function WorkstationForm({
                   helperText={errors.observacao?.message}
                 />
               </div>
-              <div className="col-lg-6">
+              <div className="col-md-6 col-xxl-4">
                 <InputText
                   label=" Sistema operacional"
                   name="sistemaOperacional"
@@ -331,6 +331,28 @@ export default function WorkstationForm({
                   error={!!errors.processador}
                   helperText={errors.processador?.message}
                 />
+                <div className="row">
+                  <div className="col-lg-6">
+                    <InputText
+                      label="Hostname"
+                      name="nomeHost"
+                      control={control}
+                      register={register}
+                      error={!!errors.nomeHost}
+                      helperText={errors.nomeHost?.message}
+                    />
+                  </div>
+                  <div className="col-lg-6">
+                    <InputText
+                      label="Memória ram(Virtual)"
+                      name="memoriaRam"
+                      control={control}
+                      register={register}
+                      error={!!errors.memoriaRam}
+                      helperText={errors.memoriaRam?.message}
+                    />
+                  </div>
+                </div>
 
                 <InputText
                   label="Numero de série"
@@ -373,8 +395,6 @@ export default function WorkstationForm({
                       name="dtAquisicao"
                     />
                   </div>
-                </div>
-                <div className="row">
                   <div className="col-lg-6">
                     <InputDate
                       register={register}
@@ -382,7 +402,10 @@ export default function WorkstationForm({
                       label="Data venc.Garantia"
                       control={control}
                     />
-
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6">
                     <InputCurrency
                       label="Valor compra"
                       name="vlrAquisicao"
@@ -393,18 +416,69 @@ export default function WorkstationForm({
                     />
                   </div>
                 </div>
+              </div>
+              <div className="col-lg-4">
+                <BaseCard>
+                  <Panel title="Interfaces">
+                    <Stack height={'140px'}>
+                      <Stack direction={'row'}></Stack>
+                      <DataTable
+                        striped
+                        dense
+                        columns={columns}
+                        data={interfaces ? interfaces : []}
+                        noDataComponent={<NoData />}
+                        responsive
+                        fixedHeader
+                        selectableRows
+                        pointerOnHover
+                        highlightOnHover
+                        onRowClicked={() => {}}
+                        customStyles={{
+                          headCells: {
+                            style: {
+                              fontWeight: 'bold',
+                              height: 30,
+                              fontSize: 13,
+                              letterSpacing: 0.5,
+                            },
+                          },
+                        }}
+                      />
+                    </Stack>
+                  </Panel>
+                </BaseCard>
 
-                {<h1>{String(dateValue)}</h1>}
-
-                <h3>Rede(interfaces)</h3>
-                {interfaces?.map((e) => (
-                  <h6 key={e.id}>{e.enderecoMac}</h6>
-                ))}
-
-                <h3>Armazenamento</h3>
-                {discos?.map((d) => (
-                  <h6>{d.modelo}</h6>
-                ))}
+                <BaseCard>
+                  <Panel title="Interfaces">
+                    <Stack height={'140px'}>
+                      <Stack direction={'row'}></Stack>
+                      <DataTable
+                        striped
+                        dense
+                        columns={discColumns}
+                        data={discos ? discos : []}
+                        noDataComponent={<NoData />}
+                        responsive
+                        fixedHeader
+                        selectableRows
+                        pointerOnHover
+                        highlightOnHover
+                        onRowClicked={() => {}}
+                        customStyles={{
+                          headCells: {
+                            style: {
+                              fontWeight: 'bold',
+                              height: 30,
+                              fontSize: 13,
+                              letterSpacing: 0.5,
+                            },
+                          },
+                        }}
+                      />
+                    </Stack>
+                  </Panel>
+                </BaseCard>
               </div>
             </div>
 
@@ -434,19 +508,43 @@ export default function WorkstationForm({
                 </LoadingButton>
               </Stack>
             </Box>
-          </form>
+          </Form>
         </Panel>
       </BaseCard>
     </CustomModal>
   );
 }
 
-const Container = styled.div`
-  @media (min-width: 992px) {
-    width: 800px;
+const Form = styled.form`
+  @media (min-width: 400px) {
+    width: 380px;
   }
 
-  @media (min-width: 1240px) {
+  @media (min-width: 600px) {
+    width: 500px;
+  }
+
+  @media (min-width: 720px) {
+    width: 620px;
+  }
+
+  @media (min-width: 750px) {
+    width: 700px;
+  }
+
+  @media (min-width: 900px) {
+    width: 850px;
+  }
+
+  @media (min-width: 1100px) {
     width: 1000px;
+  }
+
+  @media (min-width: 1300px) {
+    width: 1200px;
+  }
+
+  @media (min-width: 1400px) {
+    width: 1300px;
   }
 `;
