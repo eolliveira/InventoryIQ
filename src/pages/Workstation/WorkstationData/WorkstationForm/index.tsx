@@ -239,7 +239,7 @@ export default function WorkstationForm({
           />
           <Form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
-              <div className="col-md-6 col-xxl-4">
+              <div className="col-md-6">
                 <InputText
                   required
                   label="Nome"
@@ -313,7 +313,7 @@ export default function WorkstationForm({
                   helperText={errors.observacao?.message}
                 />
               </div>
-              <div className="col-md-6 col-xxl-4">
+              <div className="col-md-6">
                 <InputText
                   label=" Sistema operacional"
                   name="sistemaOperacional"
@@ -387,7 +387,7 @@ export default function WorkstationForm({
                 </div>
 
                 <div className="row">
-                  <div className="col-lg-6">
+                  <div className="col-lg-5">
                     <InputDate
                       register={register}
                       label="Data aquisição"
@@ -395,7 +395,7 @@ export default function WorkstationForm({
                       name="dtAquisicao"
                     />
                   </div>
-                  <div className="col-lg-6">
+                  <div className="col-lg-4">
                     <InputDate
                       register={register}
                       name="dtVencimentoGarantia"
@@ -417,10 +417,11 @@ export default function WorkstationForm({
                   </div>
                 </div>
               </div>
-              <div className="col-lg-4">
+
+              <Box display={'flex'} flexDirection={'column'}>
                 <BaseCard>
                   <Panel title="Interfaces">
-                    <Stack height={'140px'}>
+                    <Stack height={'100px'}>
                       <Stack direction={'row'}></Stack>
                       <DataTable
                         striped
@@ -438,7 +439,7 @@ export default function WorkstationForm({
                           headCells: {
                             style: {
                               fontWeight: 'bold',
-                              height: 30,
+                              height: 15,
                               fontSize: 13,
                               letterSpacing: 0.5,
                             },
@@ -451,7 +452,7 @@ export default function WorkstationForm({
 
                 <BaseCard>
                   <Panel title="Interfaces">
-                    <Stack height={'140px'}>
+                    <Stack height={'80px'}>
                       <Stack direction={'row'}></Stack>
                       <DataTable
                         striped
@@ -469,7 +470,7 @@ export default function WorkstationForm({
                           headCells: {
                             style: {
                               fontWeight: 'bold',
-                              height: 30,
+                              height: 15,
                               fontSize: 13,
                               letterSpacing: 0.5,
                             },
@@ -479,7 +480,7 @@ export default function WorkstationForm({
                     </Stack>
                   </Panel>
                 </BaseCard>
-              </div>
+              </Box>
             </div>
 
             <Box display={'flex'} justifyContent={'end'} marginTop={3}>
