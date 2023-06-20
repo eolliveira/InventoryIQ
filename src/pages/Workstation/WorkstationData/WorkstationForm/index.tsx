@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import { BaseCard } from '../../../../style/GlobalStyles';
 import { Button } from '@mui/material';
 import { Workstation } from '../../../../types/Workstation/Workstation';
-import { Field, Input, Label } from '../../../../style/GlobalStyles';
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect, useState } from 'react';
 import { FormContext } from '../../../../contexts/FormContext';
@@ -20,7 +19,6 @@ import { Interface } from 'types/Interface';
 import { Disco } from 'types/Workstation/Disco';
 import { Particao } from 'types/Workstation/Particao';
 import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NoData from '../../../../components/NoData';
 
 import { Dayjs } from 'dayjs';

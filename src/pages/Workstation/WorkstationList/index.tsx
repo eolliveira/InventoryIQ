@@ -32,8 +32,10 @@ import WorkstationForm from '../WorkstationData/WorkstationForm';
 import { FormContext } from '../../../contexts/FormContext';
 import { toDate } from '../../../utils/Date';
 import CircularLoading from '../../../components/Loaders/Progress';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Swal from 'sweetalert2';
 
 const columns: TableColumn<Workstation>[] = [
   {
@@ -71,7 +73,7 @@ const columns: TableColumn<Workstation>[] = [
 ];
 
 export default function WorkstationList() {
-  const { setFormContextData } = useContext(FormContext);
+  const { formContextData, setFormContextData } = useContext(FormContext);
   const [page, setPage] = useState<SpringPage<Workstation>>();
   const [inputFilter, setInputFilter] = useState('');
   const [numberPage, setNumberPage] = useState(0);
@@ -81,6 +83,7 @@ export default function WorkstationList() {
   const [filterField, setFilterField] = useState('nome');
   const [statusFilter, setStatusFilter] = useState('');
   const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+  const [selectedAsset, setSelectedAsset] = useState('');
 
   const [openCustomFilters, setOpenCustomFilters] =
     useState<null | HTMLElement>(null);
@@ -91,6 +94,59 @@ export default function WorkstationList() {
   const handleClose = () => {
     setOpenCustomFilters(null);
   };
+
+  const handleSelectedRowsChange = (selectedRows: any) => {
+    console.log(selectedRows);
+
+    if (selectedRows.selectedCount != 0) {
+      setSelectedAsset(selectedRows.selectedRows[0].id);
+    }
+  };
+
+  function onDelete(AssetId: string) {
+    if (selectedAsset == '') {
+      Swal.fire({
+        title: 'Atenção!',
+        text: 'Selecione uma Nota Fiscal!',
+        icon: 'warning',
+      });
+      return;
+    }
+
+    setFormContextData({ isEditing: true });
+    Swal.fire({
+      title: `Deseja remover o ativo?`,
+      text: 'Todas as informações e histórico de movimentos serão perdidas! ',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: 'secondary',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const params: AxiosRequestConfig = {
+          method: 'DELETE',
+          url: `/active/${AssetId}`,
+        };
+
+        requestBackend(params)
+          .then(() => {
+            Swal.fire(
+              'Removido!',
+              'Registro foi removido com sucesso!.',
+              'success'
+            );
+          })
+          .catch((error) => {
+            Swal.fire('Erro!', `${error.response.data.message}`, 'warning');
+          })
+          .finally(() => {
+            setFormContextData({ isEditing: false });
+          });
+      }
+    });
+  }
 
   const getWorkstatioData = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -109,7 +165,14 @@ export default function WorkstationList() {
       .catch((error) => {
         console.log('Erro' + error);
       });
-  }, [numberPage, rowsPerPage, inputFilter, filterField, statusFilter]);
+  }, [
+    numberPage,
+    rowsPerPage,
+    formContextData,
+    inputFilter,
+    filterField,
+    statusFilter,
+  ]);
 
   useEffect(() => {
     getWorkstatioData();
@@ -170,16 +233,28 @@ export default function WorkstationList() {
             />
           )}
         </Stack>
-        <Button
-          variant="contained"
-          startIcon={<AddCircleOutlineIcon />}
-          color="primary"
-          onClick={handleAdd}
-        >
-          <Typography fontSize={14} textTransform={'none'}>
-            Novo
-          </Typography>
-        </Button>
+        <Stack direction={'row'} spacing={2}>
+          <Button
+            variant="contained"
+            startIcon={<DeleteIcon />}
+            color="primary"
+            onClick={() => onDelete(selectedAsset)}
+          >
+            <Typography fontSize={14} textTransform={'none'}>
+              Excluir
+            </Typography>
+          </Button>
+          <Button
+            variant="contained"
+            startIcon={<AddCircleOutlineIcon />}
+            color="primary"
+            onClick={handleAdd}
+          >
+            <Typography fontSize={14} textTransform={'none'}>
+              Novo
+            </Typography>
+          </Button>
+        </Stack>
       </Box>
       <DataTable
         striped
@@ -194,6 +269,8 @@ export default function WorkstationList() {
         pointerOnHover
         highlightOnHover
         onRowClicked={handleRowClicked}
+        selectableRowsSingle
+        onSelectedRowsChange={handleSelectedRowsChange}
         progressComponent={<CircularLoading />}
         customStyles={{
           headCells: {
