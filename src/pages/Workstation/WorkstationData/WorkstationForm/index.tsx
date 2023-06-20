@@ -415,7 +415,7 @@ export default function WorkstationForm({
                 <BaseCard>
                   <Stack
                     border={'1px #d6d6d6 solid'}
-                    marginTop={1}
+                    marginTop={0.5}
                     height={'100px'}
                   >
                     <Typography
@@ -445,7 +445,7 @@ export default function WorkstationForm({
                         headCells: {
                           style: {
                             fontWeight: 'bold',
-                            height: 20,
+                            height: 26,
                             fontSize: 13,
                             letterSpacing: 0.5,
                           },
@@ -458,7 +458,7 @@ export default function WorkstationForm({
                 <BaseCard>
                   <Stack
                     border={'1px #d6d6d6 solid'}
-                    marginTop={1}
+                    marginTop={0.5}
                     height={'100px'}
                   >
                     <Typography
@@ -488,7 +488,7 @@ export default function WorkstationForm({
                         headCells: {
                           style: {
                             fontWeight: 'bold',
-                            height: 20,
+                            height: 26,
                             fontSize: 13,
                             letterSpacing: 0.5,
                           },
