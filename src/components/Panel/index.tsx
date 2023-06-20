@@ -25,7 +25,7 @@ export default function Panel({ title, children }: PanelProps<any>) {
           {title}
         </Typography>
       </Stack>
-      <Divider sx={{ marginBottom: 2 }} flexItem color="silver" />
+      <Divider sx={{ marginBottom: 1 }} flexItem color="silver" />
       <Box p={1}>{children}</Box>
     </BaseCard>
   );

@@ -21,7 +21,7 @@ export default function CustomModal({ openModal, children }: CustomModal<any>) {
           bgcolor: 'background.paper',
           boxShadow: 24,
           borderRadius: 3,
-          '@media screen and (min-width: 1720px)': {
+          '@media screen and (min-width: 768px)': {
             height: 'auto',
           },
         }}

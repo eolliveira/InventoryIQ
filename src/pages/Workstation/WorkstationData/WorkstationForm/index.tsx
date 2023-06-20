@@ -229,14 +229,7 @@ export default function WorkstationForm({
               </LoadingButton>
             </Box>
           )}
-          <Box
-            sx={{
-              marginTop: 2,
-              marginBottom: 2,
-              borderBottom: 1,
-              borderColor: 'divider',
-            }}
-          />
+
           <Form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-md-6">
@@ -308,7 +301,7 @@ export default function WorkstationForm({
                   name="observacao"
                   register={register}
                   label="Observação"
-                  rows={6}
+                  rows={4}
                   error={!!errors.observacao}
                   helperText={errors.observacao?.message}
                 />
@@ -332,7 +325,7 @@ export default function WorkstationForm({
                   helperText={errors.processador?.message}
                 />
                 <div className="row">
-                  <div className="col-lg-6">
+                  <div className="col-lg-8">
                     <InputText
                       label="Hostname"
                       name="nomeHost"
@@ -342,7 +335,7 @@ export default function WorkstationForm({
                       helperText={errors.nomeHost?.message}
                     />
                   </div>
-                  <div className="col-lg-6">
+                  <div className="col-lg-4">
                     <InputText
                       label="Memória ram(Virtual)"
                       name="memoriaRam"
@@ -420,70 +413,94 @@ export default function WorkstationForm({
 
               <Box display={'flex'} flexDirection={'column'}>
                 <BaseCard>
-                  <Panel title="Interfaces">
-                    <Stack height={'100px'}>
-                      <Stack direction={'row'}></Stack>
-                      <DataTable
-                        striped
-                        dense
-                        columns={columns}
-                        data={interfaces ? interfaces : []}
-                        noDataComponent={<NoData />}
-                        responsive
-                        fixedHeader
-                        selectableRows
-                        pointerOnHover
-                        highlightOnHover
-                        onRowClicked={() => {}}
-                        customStyles={{
-                          headCells: {
-                            style: {
-                              fontWeight: 'bold',
-                              height: 15,
-                              fontSize: 13,
-                              letterSpacing: 0.5,
-                            },
+                  <Stack
+                    border={'1px #d6d6d6 solid'}
+                    marginTop={1}
+                    height={'100px'}
+                  >
+                    <Typography
+                      borderRadius={'8px 8px 0px 0px'}
+                      bgcolor={'#F8FAFC'}
+                      padding={1}
+                      fontSize={16}
+                      fontWeight={'bold'}
+                      letterSpacing={1}
+                      color={'primary'}
+                      variant="h2"
+                    >
+                      Interfaces
+                    </Typography>
+                    <DataTable
+                      striped
+                      dense
+                      columns={columns}
+                      data={interfaces ? interfaces : []}
+                      noDataComponent={<NoData />}
+                      responsive
+                      fixedHeader
+                      pointerOnHover
+                      highlightOnHover
+                      onRowClicked={() => {}}
+                      customStyles={{
+                        headCells: {
+                          style: {
+                            fontWeight: 'bold',
+                            height: 20,
+                            fontSize: 13,
+                            letterSpacing: 0.5,
                           },
-                        }}
-                      />
-                    </Stack>
-                  </Panel>
+                        },
+                      }}
+                    />
+                  </Stack>
                 </BaseCard>
 
                 <BaseCard>
-                  <Panel title="Interfaces">
-                    <Stack height={'80px'}>
-                      <Stack direction={'row'}></Stack>
-                      <DataTable
-                        striped
-                        dense
-                        columns={discColumns}
-                        data={discos ? discos : []}
-                        noDataComponent={<NoData />}
-                        responsive
-                        fixedHeader
-                        selectableRows
-                        pointerOnHover
-                        highlightOnHover
-                        onRowClicked={() => {}}
-                        customStyles={{
-                          headCells: {
-                            style: {
-                              fontWeight: 'bold',
-                              height: 15,
-                              fontSize: 13,
-                              letterSpacing: 0.5,
-                            },
+                  <Stack
+                    border={'1px #d6d6d6 solid'}
+                    marginTop={1}
+                    height={'100px'}
+                  >
+                    <Typography
+                      borderRadius={'8px 8px 0px 0px'}
+                      bgcolor={'#F8FAFC'}
+                      padding={1}
+                      fontSize={16}
+                      fontWeight={'bold'}
+                      letterSpacing={1}
+                      color={'primary'}
+                      variant="h2"
+                    >
+                      Armazenamento
+                    </Typography>
+                    <DataTable
+                      striped
+                      dense
+                      columns={discColumns}
+                      data={discos ? discos : []}
+                      noDataComponent={<NoData />}
+                      responsive
+                      fixedHeader
+                      pointerOnHover
+                      highlightOnHover
+                      onRowClicked={() => {}}
+                      customStyles={{
+                        headCells: {
+                          style: {
+                            fontWeight: 'bold',
+                            height: 20,
+                            fontSize: 13,
+                            letterSpacing: 0.5,
                           },
-                        }}
-                      />
-                    </Stack>
-                  </Panel>
+                        },
+                      }}
+                    />
+                  </Stack>
                 </BaseCard>
               </Box>
             </div>
 
-            <Box display={'flex'} justifyContent={'end'} marginTop={3}>
+            <Box display={'flex'} justifyContent={'end'} marginTop={2}>
               <Stack direction={'row'} spacing={2}>
                 <Button
                   color="error"
