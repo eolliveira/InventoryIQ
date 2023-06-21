@@ -276,7 +276,7 @@ export default function WorkstationList() {
           headCells: {
             style: {
               fontWeight: 'bold',
-              height: 40,
+              height: 50,
               fontSize: 13,
               letterSpacing: 0.5,
             },
