@@ -73,9 +73,7 @@ export default function WorkstationHardware({
             borderRadius: 2,
             padding: 1.5,
           }}
-        >
-          <h1>dados</h1>
-        </Card>
+        ></Card>
       </Box>
     </Card>
   );

@@ -17,6 +17,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { typeOfService } from '../../constants/TypeOfService';
 import Swal from 'sweetalert2';
+import Panel from '../../components/Panel';
+import InputSelect from '../../components/inputs/InputSelect';
 
 type AddServiceModalProps = {
   assetId?: string;
@@ -80,26 +82,14 @@ export default function AddServiceModal({
   return (
     <CustomModal openModal={openModal}>
       <BaseCard>
-        <Box sx={{ minWidth: 100, padding: 2 }}>
-          <Typography variant="h6">Tipo Serviço</Typography>
-
-          <FormControl sx={{ marginTop: 3 }}>
-            <InputLabel id="demo-simple-select-label">Tipo serviço</InputLabel>
-
-            <Select
-              size="small"
-              labelId="demo-simple-select-label"
-              label="Tipo serviço"
-              id="demo-simple-select"
-              value={state}
-              onChange={(e) => setState(e.target.value as string)}
-            >
-              {typeOfService.map((type) => (
-                <MenuItem key={type.value} value={type.value}>
-                  {type.desc}
-                </MenuItem>
-              ))}
-            </Select>
+        <Panel title="Adicionar Serviço">
+          <FormControl>
+            <InputSelect
+              label="Tipo"
+              inputField={state}
+              setInputField={setState}
+              selectedItems={typeOfService.map((type) => type.value)}
+            />
 
             <TextField
               style={{ width: 350 }}
@@ -124,14 +114,14 @@ export default function AddServiceModal({
               onChange={(e) => setValue(Number(e.target.value))}
             />
 
-            <Box>
+            <Box display={'flex'} justifyContent={'end'}>
               <Button
                 variant="contained"
                 color="error"
                 startIcon={<CloseIcon />}
                 onClick={handleCancel}
               >
-                <Typography>Cancelar</Typography>
+                <Typography textTransform={'none'}>Cancelar</Typography>
               </Button>
               <LoadingButton
                 color="success"
@@ -142,11 +132,11 @@ export default function AddServiceModal({
                 onClick={handleSave}
                 style={{ marginLeft: 10 }}
               >
-                <span>Salvar</span>
+                <Typography textTransform={'none'}>Salvar</Typography>
               </LoadingButton>
             </Box>
           </FormControl>
-        </Box>
+        </Panel>
       </BaseCard>
     </CustomModal>
   );
