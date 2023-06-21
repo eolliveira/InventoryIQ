@@ -191,7 +191,7 @@ export default function LicenseForm({
                   </InputLabel>
                   <Select
                     required
-                    label="Selecione um software/n/n"
+                    label="Selecione um software"
                     value={softwareId}
                     sx={{ fontSize: 13 }}
                     onChange={(e: any) => {
@@ -214,7 +214,7 @@ export default function LicenseForm({
                   <InputLabel sx={{ fontSize: 14 }}>Tipo da licença</InputLabel>
                   <Select
                     required
-                    label="Tipo da licença/n/n"
+                    label="Tipo da licença"
                     value={licenseTypeId}
                     sx={{ fontSize: 13 }}
                     onChange={(e: any) => {

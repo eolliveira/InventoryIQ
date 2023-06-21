@@ -64,16 +64,6 @@ export default function WorkstationHardware({
             ))}
           </Card>
         ))}
-
-        <Card
-          variant="outlined"
-          sx={{
-            backgroundColor: '#F8FAFC',
-            border: '1px solid #e9e9e9',
-            borderRadius: 2,
-            padding: 1.5,
-          }}
-        ></Card>
       </Box>
     </Card>
   );
