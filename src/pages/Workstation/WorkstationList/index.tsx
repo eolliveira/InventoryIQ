@@ -98,17 +98,19 @@ export default function WorkstationList() {
   const handleSelectedRowsChange = (selectedRows: any) => {
     console.log(selectedRows);
 
-    if (selectedRows.selectedCount != 0) {
+    if (selectedRows.selectedCount == 1)
       setSelectedAsset(selectedRows.selectedRows[0].id);
-    }
+
+    if (selectedRows.selectedCount == 0) setSelectedAsset('');
   };
 
   function onDelete(AssetId: string) {
     if (selectedAsset == '') {
       Swal.fire({
         title: 'Atenção!',
-        text: 'Selecione uma Nota Fiscal!',
+        text: 'Selecione um ativo para remover!',
         icon: 'warning',
+        confirmButtonColor: '#999999',
       });
       return;
     }
@@ -132,14 +134,20 @@ export default function WorkstationList() {
 
         requestBackend(params)
           .then(() => {
-            Swal.fire(
-              'Removido!',
-              'Registro foi removido com sucesso!.',
-              'success'
-            );
+            Swal.fire({
+              title: 'Removido!',
+              text: `Registro foi removido com sucesso!.`,
+              icon: 'success',
+              confirmButtonColor: '#999999',
+            });
           })
           .catch((error) => {
-            Swal.fire('Erro!', `${error.response.data.message}`, 'warning');
+            Swal.fire({
+              title: 'Falha!',
+              text: `${error.response.data.message}`,
+              icon: 'warning',
+              confirmButtonColor: '#999999',
+            });
           })
           .finally(() => {
             setFormContextData({ isEditing: false });

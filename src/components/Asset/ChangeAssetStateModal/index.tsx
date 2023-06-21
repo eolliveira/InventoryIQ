@@ -50,17 +50,24 @@ export default function ChangeStateModal({
 
     requestBackend(params)
       .then(() => {
-        Swal.fire(
-          'Sucesso!',
-          'Status do ativo foi alterado com sucesso!',
-          'success'
-        );
+        Swal.fire({
+          title: 'Sucesso!',
+          text: 'Status do ativo foi alterado com sucesso!',
+          icon: 'success',
+          confirmButtonColor: '#999999',
+        });
+
         setFormContextData({ isEditing: false });
         closeModal();
       })
-      .catch((error) =>
-        Swal.fire('Atenção!', error.response.data.message, 'warning')
-      );
+      .catch((error) => {
+        Swal.fire({
+          title: 'Atenção!',
+          text: error.response.data.message,
+          icon: 'warning',
+          confirmButtonColor: '#999999',
+        });
+      });
   }
 
   function handleCancel() {

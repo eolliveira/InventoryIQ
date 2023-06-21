@@ -57,15 +57,19 @@ export default function ChangeLocationModal({
     if (selectedRows.selectedCount != 0) {
       setSelectedLocation(selectedRows.selectedRows[0].id);
     }
+
+    if (selectedRows.selectedCount == 0) setSelectedLocation('');
   };
 
   function handleConfirm() {
     if (selectedLocation == '') {
       Swal.fire({
         title: 'Atenção!',
-        text: 'Selecione um Local da Industria!',
+        text: 'Selecione um Local para atribuir!',
         icon: 'warning',
+        confirmButtonColor: '#999999',
       });
+
       return;
     }
     const data = { localIndustriaId: selectedLocation };

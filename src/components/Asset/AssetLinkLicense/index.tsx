@@ -58,17 +58,19 @@ export default function AssetLinkLicense({
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount != 0) {
+    if (selectedRows.selectedCount != 0)
       setSelectedLicense(selectedRows.selectedRows[0].id);
-    }
+
+    if (selectedRows.selectedCount == 0) setSelectedLicense('');
   };
 
   function handleConfirm() {
     if (selectedLicense == '') {
       Swal.fire({
         title: 'Atenção!',
-        text: 'Selecione uma Lincença!',
+        text: 'Selecione uma lincença para vincular ao ativo!',
         icon: 'warning',
+        confirmButtonColor: '#999999',
       });
       return;
     }
@@ -84,12 +86,24 @@ export default function AssetLinkLicense({
     requestBackend(params)
       .then(() => {
         setFormContextData({ isEditing: false });
-        Swal.fire('Sucesso!', 'Licença foi vinculada ao ativo!', 'success');
+
+        Swal.fire({
+          title: 'Sucesso!',
+          text: 'Licença foi vinculada ao ativo!',
+          icon: 'success',
+          confirmButtonColor: '#999999',
+        });
+
         closeModal();
       })
       .catch((error) => {
         //verificar
-        Swal.fire('Falha!', `${error.response.data.message}`, 'warning');
+        Swal.fire({
+          title: 'Falha!',
+          text: `${error.response.data.message}`,
+          icon: 'warning',
+          confirmButtonColor: '#999999',
+        });
       });
   }
 

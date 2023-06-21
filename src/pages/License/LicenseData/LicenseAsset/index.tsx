@@ -102,7 +102,12 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
             setFormContextData({ isEditing: false });
           })
           .catch((error) => {
-            Swal.fire('Erro!', `${error.response.data.message}`, 'error');
+            Swal.fire({
+              title: 'Erro',
+              text: `${error.response.data.message}`,
+              icon: 'error',
+              confirmButtonColor: '#999999',
+            });
           });
       }
     });

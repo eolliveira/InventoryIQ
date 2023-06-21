@@ -91,12 +91,23 @@ export default function WorkstationData() {
 
         requestBackend(params)
           .then(() => {
-            Swal.fire('Removido!', 'ativo removido com sucesso!', 'success');
+            Swal.fire({
+              title: 'Removido',
+              text: 'ativo removido com sucesso!',
+              icon: 'success',
+              confirmButtonColor: '#999999',
+            });
+
             navigate('/workstation');
           })
-          .catch(() =>
-            Swal.fire('Falha!', 'Não foi possivel remover o ativo!', 'error')
-          );
+          .catch(() => {
+            Swal.fire({
+              title: 'Falha!',
+              text: 'Não foi possivel remover o ativo!',
+              icon: 'error',
+              confirmButtonColor: '#999999',
+            });
+          });
       }
     });
   };
@@ -115,11 +126,12 @@ export default function WorkstationData() {
         Swal.fire('Sucesso', 'Dados do ativo foram sincronizados!', 'success')
       )
       .catch(() => {
-        Swal.fire(
-          'Falha!',
-          'Não foi possivel sincronizar os dados do ativo!',
-          'error'
-        );
+        Swal.fire({
+          title: 'Falha!',
+          text: 'Não foi possivel sincronizar os dados do ativo!',
+          icon: 'error',
+          confirmButtonColor: '#999999',
+        });
       })
       .finally(() => setSweeping(false));
   };

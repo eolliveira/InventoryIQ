@@ -243,13 +243,12 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
           </Box>
 
           <IconButton
-            onClick={(e) => {
+            onClick={() => {
               setOpenChangeNfEntradaModal(true);
               setFormContextData({
                 isEditing: true,
               });
             }}
-            aria-label="delete"
             size="small"
           >
             <EditIcon color="primary" fontSize="small" />

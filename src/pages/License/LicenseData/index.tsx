@@ -44,7 +44,12 @@ export default function LicenseData() {
         setLicense(response.data);
       })
       .catch((error) => {
-        Swal.fire('Falha', 'Falha ao obter dados da Licença!', 'warning');
+        Swal.fire({
+          title: 'Falha',
+          text: 'Falha ao obter dados da Licença!',
+          icon: 'warning',
+          confirmButtonColor: '#999999',
+        });
         console.log(error.response.data.message);
       });
   }, [licenseId, formContextData]);
@@ -86,16 +91,22 @@ export default function LicenseData() {
 
         requestBackend(params)
           .then(() => {
-            Swal.fire(
-              'Removido!',
-              'Licença foi removida com sucesso!',
-              'success'
-            );
+            Swal.fire({
+              title: 'Removido',
+              text: 'Licença foi removida com sucesso!',
+              icon: 'success',
+              confirmButtonColor: '#999999',
+            });
             navigate('/license');
           })
-          .catch((error) =>
-            Swal.fire('Atenção!', `${error.response.data.message}`, 'warning')
-          );
+          .catch((error) => {
+            Swal.fire({
+              title: 'Atenção',
+              text: `${error.response.data.message}`,
+              icon: 'warning',
+              confirmButtonColor: '#999999',
+            });
+          });
       }
     });
   };

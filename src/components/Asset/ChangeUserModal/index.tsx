@@ -52,9 +52,10 @@ export default function ChangeUserModal({
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount != 0) {
+    if (selectedRows.selectedCount != 0)
       setSelectedUser(selectedRows.selectedRows[0].id);
-    }
+
+    if (selectedRows.selectedCount == 0) setSelectedUser('');
   };
 
   function handleConfirm() {
@@ -63,6 +64,7 @@ export default function ChangeUserModal({
         title: 'Atenção!',
         text: 'Selecione um usuario!',
         icon: 'warning',
+        confirmButtonColor: '#999999',
       });
       return;
     }

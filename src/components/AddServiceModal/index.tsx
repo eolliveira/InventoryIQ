@@ -52,12 +52,23 @@ export default function AddServiceModal({
 
     requestBackend(params)
       .then(() => {
-        Swal.fire('Sucesso!', 'Registro foi salvo com sucesso!.', 'success');
+        Swal.fire({
+          title: 'Sucesso!',
+          text: 'Registro foi salvo com sucesso!.',
+          icon: 'success',
+          confirmButtonColor: '#999999',
+        });
         setFormContextData({ isAdding: false });
         closeModal();
       })
       .catch((error) => {
-        Swal.fire('Erro!', `${error.response.data.message}`, 'error');
+        Swal.fire({
+          title: 'Erro!',
+          text: `${error.response.data.message}`,
+          icon: 'error',
+          confirmButtonColor: '#999999',
+        });
+
         closeModal();
       });
   }

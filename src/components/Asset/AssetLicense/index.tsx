@@ -104,11 +104,21 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
 
         requestBackend(params)
           .then(() => {
-            Swal.fire('Sucesso!', 'Licença foi liberada!', 'success');
+            Swal.fire({
+              title: 'Sucesso!',
+              text: 'Licença foi liberada!',
+              icon: 'success',
+              confirmButtonColor: '#999999',
+            });
             setFormContextData({ isEditing: false });
           })
           .catch((error) => {
-            Swal.fire('Erro!', `${error.response.data.message}`, 'error');
+            Swal.fire({
+              title: 'Erro!',
+              text: `${error.response.data.message}`,
+              icon: 'error',
+              confirmButtonColor: '#999999',
+            });
           });
       }
     });

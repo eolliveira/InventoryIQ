@@ -102,15 +102,22 @@ export default function AssetService({ assetId }: AssetServiceProps) {
 
         requestBackend(params)
           .then(() => {
-            Swal.fire(
-              'Removido!',
-              'Registro foi removido com sucesso!.',
-              'success'
-            );
+            Swal.fire({
+              title: 'Removido!',
+              text: 'Registro foi removido com sucesso!.',
+              icon: 'success',
+              confirmButtonColor: '#999999',
+            });
+
             setFormContextData({ isAdding: false });
           })
           .catch((error) => {
-            Swal.fire('Erro!', `${error.response.data.message}`, 'success');
+            Swal.fire({
+              title: 'Falha!',
+              text: `${error.response.data.message}`,
+              icon: 'success',
+              confirmButtonColor: '#999999',
+            });
           });
       }
     });

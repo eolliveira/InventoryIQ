@@ -82,9 +82,10 @@ export default function ChangeNfEntradaModal({
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount != 0) {
+    if (selectedRows.selectedCount != 0)
       setSelectedNfEntrada(selectedRows.selectedRows[0].idNfEntrada);
-    }
+
+    if (selectedRows.selectedCount == 0) setSelectedNfEntrada('');
   };
 
   function handleConfirm() {
@@ -93,6 +94,7 @@ export default function ChangeNfEntradaModal({
         title: 'Atenção!',
         text: 'Selecione uma Nota Fiscal!',
         icon: 'warning',
+        confirmButtonColor: '#999999',
       });
       return;
     }
@@ -106,16 +108,23 @@ export default function ChangeNfEntradaModal({
     };
     requestBackend(params)
       .then(() => {
-        Swal.fire(
-          'Sucesso',
-          'Nota Fiscal foi atribuida com sucesso!',
-          'success'
-        );
+        Swal.fire({
+          title: 'Sucesso',
+          text: 'Nota Fiscal foi atribuida com sucesso!',
+          icon: 'success',
+          confirmButtonColor: '#999999',
+        });
+
         setFormContextData({ isEditing: false });
         closeForm();
       })
       .catch((error) => {
-        Swal.fire('Falha', `${error.response.data.message}`, 'success');
+        Swal.fire({
+          title: 'Falha',
+          text: `${error.response.data.message}`,
+          icon: 'success',
+          confirmButtonColor: '#999999',
+        });
       });
   }
 

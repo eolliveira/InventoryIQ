@@ -94,7 +94,6 @@ export default function AssetMovements({ assetId }: AssetMovementsProps) {
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        selectableRows
         pointerOnHover
         highlightOnHover
         fixedHeaderScrollHeight={'82vh'}

@@ -134,7 +134,12 @@ export default function LicenseForm({
 
         requestBackend(params)
           .then((response) => {
-            Swal.fire('Concluido!', 'Dados foram salvos!', 'success');
+            Swal.fire({
+              title: 'Concluido',
+              text: 'Dados foram salvos!',
+              icon: 'success',
+              confirmButtonColor: '#999999',
+            });
             setFormContextData({
               isAdding: false,
               isEditing: false,
@@ -143,7 +148,12 @@ export default function LicenseForm({
             closeForm();
           })
           .catch((error) => {
-            Swal.fire('Atenção!', error.response.data.message, 'warning');
+            Swal.fire({
+              title: 'Atenção',
+              text: error.response.data.message,
+              icon: 'warning',
+              confirmButtonColor: '#999999',
+            });
           });
       }
     });
