@@ -67,7 +67,7 @@ export default function AssetLinkLicense({
   function handleConfirm() {
     if (selectedLicense == '') {
       Swal.fire({
-        title: 'Atenção!',
+        title: 'Atenção',
         text: 'Selecione uma lincença para vincular ao ativo!',
         icon: 'warning',
         confirmButtonColor: '#999999',

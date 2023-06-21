@@ -107,7 +107,7 @@ export default function WorkstationList() {
   function onDelete(AssetId: string) {
     if (selectedAsset == '') {
       Swal.fire({
-        title: 'Atenção!',
+        title: 'Atenção',
         text: 'Selecione um ativo para remover!',
         icon: 'warning',
         confirmButtonColor: '#999999',

@@ -61,7 +61,7 @@ export default function ChangeUserModal({
   function handleConfirm() {
     if (selectedUser == '') {
       Swal.fire({
-        title: 'Atenção!',
+        title: 'Atenção',
         text: 'Selecione um usuario!',
         icon: 'warning',
         confirmButtonColor: '#999999',
@@ -121,7 +121,7 @@ export default function ChangeUserModal({
                 headCells: {
                   style: {
                     fontWeight: 'bold',
-                    height: 40,
+                    height: 30,
                     fontSize: 13,
                     letterSpacing: 0.5,
                   },

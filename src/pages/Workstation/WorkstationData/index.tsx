@@ -100,11 +100,11 @@ export default function WorkstationData() {
 
             navigate('/workstation');
           })
-          .catch(() => {
+          .catch((error) => {
             Swal.fire({
               title: 'Falha!',
-              text: 'Não foi possivel remover o ativo!',
-              icon: 'error',
+              text: `${error.response.data.message}`,
+              icon: 'warning',
               confirmButtonColor: '#999999',
             });
           });
@@ -221,7 +221,7 @@ export default function WorkstationData() {
             <WorkstationDetails data={active} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="2">
-            <WorkstationHardware teste={10} />
+            <WorkstationHardware assetId={active?.id} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="3">
             <AssetMovements assetId={active?.id} />

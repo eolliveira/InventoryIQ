@@ -62,8 +62,6 @@ export default function WorkstationForm({
   openForm,
   closeForm,
 }: WorkstationFormProps) {
-  const [dateValue, setDateValue] = useState<Dayjs | null>(null);
-
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [sweeping, setSweeping] = useState(false);
   const [ipAddress, setIpAddress] = useState('');
@@ -120,7 +118,7 @@ export default function WorkstationForm({
           })
           .catch((error) => {
             Swal.fire({
-              title: 'Atenção!',
+              title: 'Atenção',
               text: `${error.response.data.message}`,
               icon: 'warning',
               confirmButtonColor: '#999999',
@@ -170,14 +168,16 @@ export default function WorkstationForm({
         setInterfaces(response.data.interfaces);
 
         response.data.discos.forEach((disco: Disco) => {
+          const particoes: Particao[] = [];
           disco.particoes.forEach((particao: Particao) => {
             const p: Particao = {
               pontoMontagem: particao.pontoMontagem,
               capacidade: particao.capacidade,
               usado: particao.usado,
             };
-            disco.particoes.push(p);
+            particoes.push(p);
           });
+          disco.particoes = particoes;
           discos.push(disco);
         });
 
@@ -187,7 +187,12 @@ export default function WorkstationForm({
         setValue('discos', discos);
       })
       .catch((error) => {
-        console.log('Erro ao buscar dados do ativo: ' + error);
+        Swal.fire({
+          title: 'Falha!',
+          text: `Não foi possivel obter os dados do ativo. Por favor verifique se o endereço ip esta correto e se o agente esta configurado corretamente!`,
+          icon: 'warning',
+          confirmButtonColor: '#999999',
+        });
       })
       .finally(() => {
         setSweeping(false);

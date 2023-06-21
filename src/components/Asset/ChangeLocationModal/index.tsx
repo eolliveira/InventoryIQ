@@ -64,7 +64,7 @@ export default function ChangeLocationModal({
   function handleConfirm() {
     if (selectedLocation == '') {
       Swal.fire({
-        title: 'Atenção!',
+        title: 'Atenção',
         text: 'Selecione um Local para atribuir!',
         icon: 'warning',
         confirmButtonColor: '#999999',

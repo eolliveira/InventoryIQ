@@ -62,7 +62,7 @@ export default function ChangeStateModal({
       })
       .catch((error) => {
         Swal.fire({
-          title: 'Atenção!',
+          title: 'Atenção',
           text: error.response.data.message,
           icon: 'warning',
           confirmButtonColor: '#999999',

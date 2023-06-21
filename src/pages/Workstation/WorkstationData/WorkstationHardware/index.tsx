@@ -1,14 +1,34 @@
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
+import { useCallback, useEffect, useState } from 'react';
+import { requestBackend } from '../../../../http/requests';
+import { Disco } from '../../../../types/Workstation/Disco';
 
 type WorkstationHardwareProps = {
-  teste: number;
+  assetId?: string;
 };
 
 export default function WorkstationHardware({
-  teste,
+  assetId,
 }: WorkstationHardwareProps) {
+  const [disc, setDisc] = useState<Disco[]>();
+
+  const getHardDrives = useCallback(() => {
+    requestBackend({ url: `/workstation/${assetId}/hardDrives` })
+      .then((response) => {
+        setDisc(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [assetId]);
+
+  useEffect(() => {
+    getHardDrives();
+  }, [getHardDrives]);
+
   return (
     <Card
       sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
@@ -25,7 +45,38 @@ export default function WorkstationHardware({
         Armazenamento
       </Typography>
       <Divider color="gray" />
-      <h1>dados</h1>
+      <Box padding={1}>
+        {disc?.map((disco) => (
+          <Card
+            variant="outlined"
+            sx={{
+              backgroundColor: '#F8FAFC',
+              border: '1px solid #e9e9e9',
+              borderRadius: 2,
+              padding: 1.5,
+            }}
+          >
+            <h6>
+              {disco.nome + ' - ' + disco.modelo + ' - ' + disco.capacidade}
+            </h6>
+            {disco.particoes.map((particao) => (
+              <p>{particao.pontoMontagem + ' ' + particao.capacidade}</p>
+            ))}
+          </Card>
+        ))}
+
+        <Card
+          variant="outlined"
+          sx={{
+            backgroundColor: '#F8FAFC',
+            border: '1px solid #e9e9e9',
+            borderRadius: 2,
+            padding: 1.5,
+          }}
+        >
+          <h1>dados</h1>
+        </Card>
+      </Box>
     </Card>
   );
 }
