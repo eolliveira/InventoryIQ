@@ -91,7 +91,7 @@ export default function ChangeNfEntradaModal({
   function handleConfirm() {
     if (selectedNfEntrada == '') {
       Swal.fire({
-        title: 'Atenção!',
+        title: 'Atenção',
         text: 'Selecione uma Nota Fiscal!',
         icon: 'warning',
         confirmButtonColor: '#999999',
