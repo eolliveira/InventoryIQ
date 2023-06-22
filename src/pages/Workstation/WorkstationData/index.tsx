@@ -29,6 +29,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import WorkstationForm from './WorkstationForm';
 import Swal from 'sweetalert2';
+import TextSnippetTwoToneIcon from '@mui/icons-material/TextSnippetTwoTone';
+import MemoryTwoToneIcon from '@mui/icons-material/MemoryTwoTone';
+import CompareArrowsTwoToneIcon from '@mui/icons-material/CompareArrowsTwoTone';
+import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
+import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
+import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
 
 export default function WorkstationData() {
   const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
@@ -209,11 +215,36 @@ export default function WorkstationData() {
                 textColor="primary"
                 indicatorColor="primary"
               >
-                <CustomTab value="1" label="Detalhes" />
-                <CustomTab value="2" label="Hardware" />
-                <CustomTab value="3" label="Movimentos" />
-                <CustomTab value="4" label="Licenças" />
-                <CustomTab value="5" label="Serviços" />
+                <CustomTab
+                  value="1"
+                  label="Detalhes"
+                  iconPosition="start"
+                  icon={<TextSnippetTwoToneIcon />}
+                />
+                <CustomTab
+                  value="2"
+                  label="Hardware"
+                  iconPosition="start"
+                  icon={<MemoryTwoToneIcon />}
+                />
+                <CustomTab
+                  value="3"
+                  label="Movimentos"
+                  iconPosition="start"
+                  icon={<ChangeCircleTwoToneIcon />}
+                />
+                <CustomTab
+                  value="4"
+                  label="Licenças"
+                  iconPosition="start"
+                  icon={<WorkspacePremiumTwoToneIcon />}
+                />
+                <CustomTab
+                  value="5"
+                  label="Serviços"
+                  iconPosition="start"
+                  icon={<HandymanTwoToneIcon />}
+                />
               </Tabs>
             </Box>
           </AppBar>

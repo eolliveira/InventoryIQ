@@ -182,7 +182,6 @@ export default function MenuSidebar() {
           >
             Licenças
           </MenuItem>
-          {/* /////// */}
           <Divider variant="middle" color="gray" />
           <SubMenu
             style={{
@@ -201,7 +200,7 @@ export default function MenuSidebar() {
               active={location.pathname.startsWith('/register')}
               component={<NavLink to={'/register'} />}
             >
-              Cadastros
+              Cadastro
             </MenuItem>
           </SubMenu>
         </Menu>

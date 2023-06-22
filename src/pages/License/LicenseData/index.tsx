@@ -24,6 +24,8 @@ import LicenseForm from './LicenseForm';
 import LicenseDetails from './LicenseDetails';
 import LicenseAsset from './LicenseAsset';
 import LicenseSidePanel from '../../../components/LicenseSidePanel';
+import AssignmentReturnedTwoToneIcon from '@mui/icons-material/AssignmentReturnedTwoTone';
+import TextSnippetTwoToneIcon from '@mui/icons-material/TextSnippetTwoTone';
 
 export default function LicenseData() {
   const [openLicenseForm, setOpenLicenseForm] = useState(false);
@@ -172,8 +174,18 @@ export default function LicenseData() {
                 textColor="primary"
                 indicatorColor="primary"
               >
-                <CustomTab value="1" label="Detalhes" />
-                <CustomTab value="2" label="Alocado a" />
+                <CustomTab
+                  value="1"
+                  label="Detalhes"
+                  iconPosition="start"
+                  icon={<TextSnippetTwoToneIcon />}
+                />
+                <CustomTab
+                  value="2"
+                  label="Alocado a"
+                  iconPosition="start"
+                  icon={<AssignmentReturnedTwoToneIcon />}
+                />
               </Tabs>
             </Box>
           </AppBar>
