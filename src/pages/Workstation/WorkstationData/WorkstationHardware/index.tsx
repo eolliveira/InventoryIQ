@@ -5,14 +5,13 @@ import Box from '@mui/material/Box';
 import { useCallback, useEffect, useState } from 'react';
 import { requestBackend } from '../../../../http/requests';
 import { Disco } from '../../../../types/Workstation/Disco';
+import HardDrive from './HardDrive';
 
-type WorkstationHardwareProps = {
+type ProgressBarDiscProps = {
   assetId?: string;
 };
 
-export default function WorkstationHardware({
-  assetId,
-}: WorkstationHardwareProps) {
+export default function ProgressBarDisc({ assetId }: ProgressBarDiscProps) {
   const [disc, setDisc] = useState<Disco[]>();
 
   const getHardDrives = useCallback(() => {
@@ -46,24 +45,15 @@ export default function WorkstationHardware({
       </Typography>
       <Divider color="gray" />
       <Box padding={1}>
-        {disc?.map((disco) => (
-          <Card
-            variant="outlined"
-            sx={{
-              backgroundColor: '#F8FAFC',
-              border: '1px solid #e9e9e9',
-              borderRadius: 2,
-              padding: 1.5,
-            }}
-          >
-            <h6>
-              {disco.nome + ' - ' + disco.modelo + ' - ' + disco.capacidade}
-            </h6>
-            {disco.particoes.map((particao) => (
-              <p>{particao.pontoMontagem + ' ' + particao.capacidade}</p>
-            ))}
-          </Card>
-        ))}
+        <div className="row">
+          {disc?.map((disco) => (
+            <div className="col-lg-6">
+              <div>
+                <HardDrive disco={disco} />
+              </div>
+            </div>
+          ))}
+        </div>
       </Box>
     </Card>
   );

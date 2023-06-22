@@ -10,7 +10,7 @@ import WorkstationDetails from './WorkstationDetails';
 import AssetMovements from '../../../components/Asset/AssetMovements';
 import AssetLicense from '../../../components/Asset/AssetLicense';
 import AssetService from '../../../components/Asset/AssetService';
-import WorkstationHardware from './WorkstationHardware';
+import ProgressBarDisc from './WorkstationHardware';
 import StockButton from '../../../components/buttons/StockButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
@@ -221,7 +221,7 @@ export default function WorkstationData() {
             <WorkstationDetails data={active} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="2">
-            <WorkstationHardware assetId={active?.id} />
+            <ProgressBarDisc assetId={active?.id} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="3">
             <AssetMovements assetId={active?.id} />
