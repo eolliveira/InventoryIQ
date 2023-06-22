@@ -33,6 +33,7 @@ const ProgressBar = styled.div`
 const ProgressFill = styled.div<{ percentage: number }>`
   height: 100%;
   text-align: center;
-  background-color: #37a8ff;
+  background-color: ${({ percentage }) =>
+    percentage < 90 ? '#2195f3ae' : '#e35d6ae1'};
   width: ${({ percentage }) => `${percentage}%`};
 `;
