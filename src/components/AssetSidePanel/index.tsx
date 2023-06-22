@@ -4,11 +4,9 @@ import { toDateTime } from '../../utils/Date';
 import { toCamelCase } from '../../utils/StringConverter';
 import { FormContext } from '../../contexts/FormContext';
 import { BaseCard } from '../../style/GlobalStyles';
-
 import Box from '@mui/material/Box';
 import styled from 'styled-components';
 import Divider from '@mui/material/Divider';
-import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -25,6 +23,7 @@ import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 import Stack from '@mui/material/Stack';
 import AssetStatusStyle from '../AssetStatusStyle';
 import Card from '@mui/material/Card';
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 
 type AssetSidePanelProps = {
   data: Workstation;
@@ -70,7 +69,6 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
             </Typography>
           </Stack>
         </Box>
-
         <Box>
           <Typography
             marginBottom={0.5}
@@ -129,7 +127,6 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
               {data.usuario ? data.usuario.email : ' - '}
             </Typography>
           </Box>
-
           <IconButton
             onClick={(e) => {
               setOpenChangeUserModal(true);
@@ -140,7 +137,7 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
             aria-label="delete"
             size="small"
           >
-            <EditIcon color="primary" fontSize="small" />
+            <EditTwoToneIcon color="primary" fontSize="small" />
           </IconButton>
         </Box>
       </Card>
@@ -196,7 +193,7 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
               });
             }}
           >
-            <EditIcon color="primary" fontSize="small" />
+            <EditTwoToneIcon color="primary" fontSize="small" />
           </IconButton>
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
@@ -251,7 +248,7 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
             }}
             size="small"
           >
-            <EditIcon color="primary" fontSize="small" />
+            <EditTwoToneIcon color="primary" fontSize="small" />
           </IconButton>
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
