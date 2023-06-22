@@ -26,7 +26,7 @@ type AssetServiceProps = {
 export default function AssetService({ assetId }: AssetServiceProps) {
   const columns: TableColumn<Servico>[] = [
     {
-      name: 'Data serviço',
+      name: 'Data',
       selector: (row) => toDate(row.dhGerou),
       sortable: true,
       grow: 0.6,
@@ -43,6 +43,7 @@ export default function AssetService({ assetId }: AssetServiceProps) {
     },
     {
       name: 'Valor',
+      width: '90px',
       selector: (row) => row.vlServico,
       sortable: true,
     },

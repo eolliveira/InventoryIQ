@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { theme } from '../../style/Theme';
 
 interface Props {
   iscollapsed?: string;

@@ -13,6 +13,7 @@ import Mobile from './pages/Mobile';
 import Nobreak from './pages/Nobreak';
 import Printer from './pages/Printer';
 import LicenseData from './pages/License/LicenseData';
+import Register from './pages/Register';
 
 export default function App() {
   const [authContextData, setAuthContextData] = useState<AuthContextData>({
@@ -41,6 +42,7 @@ export default function App() {
             <Route path="mobile" element={<Mobile />} />
             <Route path="nobreak" element={<Nobreak />} />
             <Route path="printer" element={<Printer />} />
+            <Route path="register" element={<Register />} />
           </Route>
         </Routes>
       </FormContext.Provider>

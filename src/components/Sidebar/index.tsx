@@ -19,6 +19,8 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import IconButton from '@mui/material/IconButton';
 import Logo from '../../assets/img/image.png';
 import { customTheme } from '../../style/CustomTheme';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Divider from '@mui/material/Divider';
 export default function MenuSidebar() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
@@ -170,7 +172,7 @@ export default function MenuSidebar() {
           </SubMenu>
           <MenuItem
             style={{
-              margin: '10px 10px 0px 10px',
+              margin: '10px 10px 10px 10px',
               padding: 12,
               borderRadius: 10,
             }}
@@ -180,15 +182,28 @@ export default function MenuSidebar() {
           >
             Licenças
           </MenuItem>
-          {hasAnyHoles(['ROLE_ADMIN']) && (
+          {/* /////// */}
+          <Divider variant="middle" color="gray" />
+          <SubMenu
+            style={{
+              margin: '10px 10px 0px 10px',
+              padding: 12,
+              borderRadius: 10,
+            }}
+            icon={<SettingsIcon />}
+            label="Configurações"
+          >
             <MenuItem
-              active={location.pathname.startsWith('/user')}
-              icon={<PeopleIcon />}
-              component={<Link to={'/user'} />}
+              style={{
+                margin: '10px 10px 0px 10px',
+                borderRadius: 10,
+              }}
+              active={location.pathname.startsWith('/register')}
+              component={<NavLink to={'/register'} />}
             >
-              Usuários
+              Cadastros
             </MenuItem>
-          )}
+          </SubMenu>
         </Menu>
       </Sidebar>
     </SidebarContainer>
