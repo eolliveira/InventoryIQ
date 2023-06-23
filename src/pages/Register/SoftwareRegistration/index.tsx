@@ -1,16 +1,20 @@
+import { Software } from '../../../types/Licenca/Software';
+import { useContext, useEffect, useState } from 'react';
+import { requestBackend } from '../../../http/requests';
+import { AxiosRequestConfig } from 'axios';
+import { FormContext } from '../../../contexts/FormContext';
+import { Box } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import NoData from '../../../components/NoData';
-import { Software } from '../../../types/Licenca/Software';
-import { useEffect, useState } from 'react';
-import { requestBackend } from '../../../http/requests';
 import IconButton from '@mui/material/IconButton';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
-import { Box } from '@mui/material';
+import SoftwareModal from './SoftwareModal';
+import Swal from 'sweetalert2';
 
 export default function SoftwareRegistration() {
   const columns: TableColumn<Software>[] = [
@@ -32,7 +36,7 @@ export default function SoftwareRegistration() {
       cell: (row) => (
         <IconButton
           sx={{ marginRight: 1 }}
-          onClick={() => onEditSoftware(row.id)}
+          onClick={() => onEditSoftware(row)}
           size="small"
         >
           <EditTwoToneIcon color="primary" fontSize="inherit" />
@@ -54,20 +58,68 @@ export default function SoftwareRegistration() {
     },
   ];
 
-  const [page, setPage] = useState<Software[]>();
+  const { formContextData, setFormContextData } = useContext(FormContext);
+  const [softwares, setSoftwares] = useState<Software[]>();
+  const [data, setData] = useState<Software>();
+  const [openSoftwareModal, setOpenSoftwareModal] = useState(false);
 
-  function onDeleteSoftware(softwareId: string) {}
-  function onEditSoftware(softwareId: string) {}
+  function onAddSoftware() {
+    setData(undefined);
+    setFormContextData({ isAdding: true });
+    setOpenSoftwareModal(true);
+  }
+
+  function onEditSoftware(software: Software) {
+    setData(software);
+    setFormContextData({ isEditing: true });
+    setOpenSoftwareModal(true);
+  }
+
+  function onDeleteSoftware(softwareId: string) {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você não será capaz de reverter isso!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: 'secondary',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const params: AxiosRequestConfig = {
+          method: 'DELETE',
+          url: `/software/${softwareId}`,
+        };
+
+        requestBackend(params)
+          .then(() => {
+            Swal.fire({
+              title: 'Removido!',
+              text: 'Registro foi removido com sucesso!.',
+              icon: 'success',
+              confirmButtonColor: '#999999',
+            });
+
+            setFormContextData({ isAdding: false });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: 'Falha!',
+              text: `${error.response.data.message}`,
+              icon: 'error',
+              confirmButtonColor: '#999999',
+            });
+          });
+      }
+    });
+  }
 
   useEffect(() => {
     requestBackend({ url: '/software' })
-      .then((response) => {
-        setPage(response.data);
-      })
-      .catch((error) => {
-        console.log('Erro' + error);
-      });
-  }, []);
+      .then((response) => setSoftwares(response.data))
+      .catch((error) => console.log('Erro' + error));
+  }, [formContextData]);
 
   return (
     <>
@@ -78,7 +130,7 @@ export default function SoftwareRegistration() {
           color="primary"
           sx={{ marginRight: 1 }}
           startIcon={<AddIcon />}
-          //onClick={() => setOpenAddService(true)}
+          onClick={() => onAddSoftware()}
         >
           <Typography textTransform={'none'} fontSize={14}>
             Novo
@@ -90,16 +142,14 @@ export default function SoftwareRegistration() {
         dense
         striped
         columns={columns}
-        data={page ? page : []}
+        data={softwares ? softwares : []}
         sortIcon={<ExpandMoreIcon />}
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        fixedHeaderScrollHeight={'70vh'}
         selectableRows
         pointerOnHover
         highlightOnHover
-        onRowClicked={() => {}}
         customStyles={{
           headCells: {
             style: {
@@ -111,6 +161,13 @@ export default function SoftwareRegistration() {
           },
         }}
       />
+      {openSoftwareModal && (
+        <SoftwareModal
+          data={data}
+          openModal={openSoftwareModal}
+          closeModal={() => setOpenSoftwareModal(false)}
+        />
+      )}
     </>
   );
 }

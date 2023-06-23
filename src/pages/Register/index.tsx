@@ -9,9 +9,8 @@ import Tab from '@mui/material/Tab';
 import { useState } from 'react';
 import SoftwareRegistration from './SoftwareRegistration';
 import LicenseTypeRegistration from './LicenseTypeRegistration';
-import LicenseDetails from 'pages/License/LicenseData/LicenseDetails';
-import SyncIcon from '@mui/icons-material/Sync';
-import AssignmentIndTwoToneIcon from '@mui/icons-material/AssignmentIndTwoTone';
+import MemoryTwoToneIcon from '@mui/icons-material/MemoryTwoTone';
+import FactCheckTwoToneIcon from '@mui/icons-material/FactCheckTwoTone';
 
 export default function Register() {
   const [tabValue, setTabValue] = useState('1');
@@ -35,8 +34,18 @@ export default function Register() {
               textColor="primary"
               indicatorColor="primary"
             >
-              <CustomTab value="1" label="Software" />
-              <CustomTab value="2" label="Tipo Licença" />
+              <CustomTab
+                value="1"
+                label="Software"
+                iconPosition="start"
+                icon={<MemoryTwoToneIcon />}
+              />
+              <CustomTab
+                value="2"
+                label="Tipo Licença"
+                iconPosition="start"
+                icon={<FactCheckTwoToneIcon />}
+              />
             </Tabs>
           </Box>
         </AppBar>
