@@ -1,3 +1,172 @@
+import { Software } from '../../../types/Licenca/Software';
+import { useContext, useEffect, useState } from 'react';
+import { requestBackend } from '../../../http/requests';
+import { AxiosRequestConfig } from 'axios';
+import { FormContext } from '../../../contexts/FormContext';
+import { Box } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import DataTable, { TableColumn } from 'react-data-table-component';
+import NoData from '../../../components/NoData';
+import IconButton from '@mui/material/IconButton';
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import Typography from '@mui/material/Typography';
+import Swal from 'sweetalert2';
+import { TipoLicenca } from '../../../types/Licenca/TipoLicenca';
+import LicenseTypeModal from './LicenseTypeModal';
+
 export default function LicenseTypeRegistration() {
-  return <h1>cadastro de tipo de licenças</h1>;
+  const columns: TableColumn<TipoLicenca>[] = [
+    {
+      name: 'Id',
+      selector: (row) => row.id,
+      sortable: true,
+    },
+    {
+      name: 'Nome',
+      selector: (row) => row.nome,
+      sortable: true,
+    },
+    { name: 'Descricão', width: '500px', selector: (row) => row.descricao },
+    {
+      button: true,
+      sortable: true,
+      cell: (row) => (
+        <IconButton
+          sx={{ marginRight: 1 }}
+          onClick={() => onEditLicenseType(row)}
+          size="small"
+        >
+          <EditTwoToneIcon color="primary" fontSize="inherit" />
+        </IconButton>
+      ),
+    },
+    {
+      button: true,
+      cell: (row) => (
+        <IconButton
+          sx={{ marginRight: 1 }}
+          onClick={() => onDeleteLicenseType(row.id)}
+          size="small"
+        >
+          <DeleteTwoToneIcon color="error" fontSize="inherit" />
+        </IconButton>
+      ),
+    },
+  ];
+
+  const { formContextData, setFormContextData } = useContext(FormContext);
+  const [types, setTypes] = useState<TipoLicenca[]>();
+  const [data, setData] = useState<TipoLicenca>();
+  const [openLicenseTypeModal, setLicenseTypeModal] = useState(false);
+
+  function onAddLicenseType() {
+    setData(undefined);
+    setFormContextData({ isAdding: true });
+    setLicenseTypeModal(true);
+  }
+
+  function onEditLicenseType(tipo: TipoLicenca) {
+    setData(tipo);
+    setFormContextData({ isEditing: true });
+    setLicenseTypeModal(true);
+  }
+
+  function onDeleteLicenseType(licenseTypeId: string) {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você não será capaz de reverter isso!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: 'secondary',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const params: AxiosRequestConfig = {
+          method: 'DELETE',
+          url: `/licenseType/${licenseTypeId}`,
+        };
+
+        requestBackend(params)
+          .then(() => {
+            Swal.fire({
+              title: 'Removido!',
+              text: 'Registro foi removido com sucesso!.',
+              icon: 'success',
+              confirmButtonColor: '#999999',
+            });
+
+            setFormContextData({ isAdding: false });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: 'Falha!',
+              text: `${error.response.data.message}`,
+              icon: 'error',
+              confirmButtonColor: '#999999',
+            });
+          });
+      }
+    });
+  }
+
+  useEffect(() => {
+    requestBackend({ url: '/licenseType' })
+      .then((response) => setTypes(response.data))
+      .catch((error) => console.log('Erro' + error));
+  }, [formContextData]);
+
+  return (
+    <>
+      <Box display={'flex'} justifyContent={'end'} marginTop={1}>
+        <Button
+          variant="contained"
+          size="small"
+          color="primary"
+          sx={{ marginRight: 1 }}
+          startIcon={<AddIcon />}
+          onClick={() => onAddLicenseType()}
+        >
+          <Typography textTransform={'none'} fontSize={14}>
+            Novo
+          </Typography>
+        </Button>
+      </Box>
+
+      <DataTable
+        dense
+        striped
+        columns={columns}
+        data={types ? types : []}
+        sortIcon={<ExpandMoreIcon />}
+        noDataComponent={<NoData />}
+        responsive
+        fixedHeader
+        selectableRows
+        pointerOnHover
+        highlightOnHover
+        customStyles={{
+          headCells: {
+            style: {
+              fontWeight: 'bold',
+              height: 40,
+              fontSize: 13,
+              letterSpacing: 0.5,
+            },
+          },
+        }}
+      />
+      {openLicenseTypeModal && (
+        <LicenseTypeModal
+          data={data}
+          openModal={openLicenseTypeModal}
+          closeModal={() => setLicenseTypeModal(false)}
+        />
+      )}
+    </>
+  );
 }
