@@ -3,7 +3,6 @@ import { SpringPage } from 'types/vendor/spring';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
 import { assetStatus } from '../../../constants/AssetStatus';
-import { Workstation } from '../../../types/Workstation/Workstation';
 import {
   ChangeEvent,
   useCallback,
@@ -19,7 +18,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
-import { toCamelCase } from '../../../utils/StringConverter';
 import AssetStatusStyle from '../../../components/AssetStatusStyle';
 import NoData from '../../../components/NoData';
 import SerchBar from '../../../components/SearchBar';
@@ -28,7 +26,6 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Panel from '../../../components/Panel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import WorkstationForm from '../WorkstationData/WorkstationForm';
 import { FormContext } from '../../../contexts/FormContext';
 import { toDate } from '../../../utils/Date';
 import CircularLoading from '../../../components/Loaders/Progress';
@@ -36,16 +33,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Swal from 'sweetalert2';
+import { Printer } from '../../../types/Printer/Printer';
+import PrinterForm from '../PrinterData/PrinterForm';
+import { toCamelCase } from '../../../utils/StringConverter';
 
-const columns: TableColumn<Workstation>[] = [
+const columns: TableColumn<Printer>[] = [
   {
     name: 'Nome',
     selector: (row) => row.nome,
     sortable: true,
   },
   { name: 'Dominio', selector: (row) => row.dominio, sortable: true },
-  { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
   { name: 'Modelo', selector: (row) => row.modelo, sortable: true },
+
   {
     name: 'Atribuido a',
     selector: (row) =>
@@ -72,9 +72,9 @@ const columns: TableColumn<Workstation>[] = [
   },
 ];
 
-export default function WorkstationList() {
+export default function PrinterList() {
   const { formContextData, setFormContextData } = useContext(FormContext);
-  const [page, setPage] = useState<SpringPage<Workstation>>();
+  const [page, setPage] = useState<SpringPage<Printer>>();
   const [inputFilter, setInputFilter] = useState('');
   const [numberPage, setNumberPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState('10');
@@ -85,24 +85,18 @@ export default function WorkstationList() {
   const [statusFilterChecked, setStatusFilterchecked] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState('');
 
+  const [openPrinterForm, setOpenPrinterForm] = useState(false);
+
   const [openCustomFilters, setOpenCustomFilters] =
     useState<null | HTMLElement>(null);
   const open = Boolean(openCustomFilters);
 
-  const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
-
-  const handleClose = () => {
-    setOpenCustomFilters(null);
+  const handleAddPrinter = () => {
+    setFormContextData({ isAdding: true });
+    setOpenPrinterForm(true);
   };
 
-  const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount == 1)
-      setSelectedAsset(selectedRows.selectedRows[0].id);
-
-    if (selectedRows.selectedCount == 0) setSelectedAsset('');
-  };
-
-  function onDelete(AssetId: string) {
+  function handleDeletePrinter(AssetId: string) {
     if (selectedAsset == '') {
       Swal.fire({
         title: 'Atenção',
@@ -154,10 +148,30 @@ export default function WorkstationList() {
     });
   }
 
-  const getWorkstatioData = useCallback(() => {
+  function handleClearFilters() {
+    setStatusFilterchecked(false);
+    setInputFilter('');
+    setStatusFilter('');
+    setFilterField('nome');
+  }
+
+  const handleClose = () => {
+    setOpenCustomFilters(null);
+  };
+
+  const handleRowClicked = (row: Printer) => navigate(`/printer/${row.id}`);
+
+  const handleSelectedRowsChange = (selectedRows: any) => {
+    if (selectedRows.selectedCount == 1)
+      setSelectedAsset(selectedRows.selectedRows[0].id);
+
+    if (selectedRows.selectedCount == 0) setSelectedAsset('');
+  };
+
+  const getPrintersData = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/workstation?${filterField}=${inputFilter}&status=${statusFilter}`,
+      url: `/printer?${filterField}=${inputFilter}&status=${statusFilter}`,
       params: {
         page: numberPage,
         size: rowsPerPage,
@@ -181,26 +195,11 @@ export default function WorkstationList() {
   ]);
 
   useEffect(() => {
-    getWorkstatioData();
-  }, [getWorkstatioData]);
-
-  const handleRowClicked = (row: Workstation) =>
-    navigate(`/workstation/${row.id}`);
-
-  function handleClearFilters() {
-    setStatusFilterchecked(false);
-    setInputFilter('');
-    setStatusFilter('');
-    setFilterField('nome');
-  }
-
-  const handleAdd = () => {
-    setFormContextData({ isAdding: true });
-    setOpenWorkstationForm(true);
-  };
+    getPrintersData();
+  }, [getPrintersData]);
 
   return (
-    <Panel title="Estação de Trabalho ">
+    <Panel title="Impressoras">
       <Box
         display={'flex'}
         flexWrap={'wrap'}
@@ -244,7 +243,7 @@ export default function WorkstationList() {
             variant="contained"
             startIcon={<DeleteIcon />}
             color="primary"
-            onClick={() => onDelete(selectedAsset)}
+            onClick={() => handleDeletePrinter(selectedAsset)}
           >
             <Typography fontSize={14} textTransform={'none'}>
               Excluir
@@ -254,7 +253,7 @@ export default function WorkstationList() {
             variant="contained"
             startIcon={<AddCircleOutlineIcon />}
             color="primary"
-            onClick={handleAdd}
+            onClick={handleAddPrinter}
           >
             <Typography fontSize={14} textTransform={'none'}>
               Novo
@@ -352,10 +351,10 @@ export default function WorkstationList() {
           </Typography>
         </MenuItem>
       </Menu>
-      {openWorkstationForm && (
-        <WorkstationForm
-          openForm={openWorkstationForm}
-          closeForm={() => setOpenWorkstationForm(false)}
+      {openPrinterForm && (
+        <PrinterForm
+          openForm={openPrinterForm}
+          closeForm={() => setOpenPrinterForm(false)}
         />
       )}
     </Panel>
