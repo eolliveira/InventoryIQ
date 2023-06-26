@@ -34,17 +34,19 @@ export default function Register() {
               textColor="primary"
               indicatorColor="primary"
             >
-              <CustomTab
+              <Tab
                 value="1"
                 label="Software"
                 iconPosition="start"
                 icon={<MemoryTwoToneIcon />}
+                sx={{ fontSize: 13, textTransform: 'none' }}
               />
-              <CustomTab
+              <Tab
                 value="2"
                 label="Tipo Licença"
                 iconPosition="start"
                 icon={<FactCheckTwoToneIcon />}
+                sx={{ fontSize: 13, textTransform: 'none' }}
               />
             </Tabs>
           </Box>
@@ -59,8 +61,3 @@ export default function Register() {
     </Panel>
   );
 }
-
-const CustomTab = styled(Tab)`
-  font-size: small !important;
-  text-transform: none !important;
-`;

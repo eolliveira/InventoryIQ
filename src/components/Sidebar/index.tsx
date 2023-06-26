@@ -9,16 +9,13 @@ import {
 import { ButtonColapseContainer, SidebarContainer } from './Sidebar.style';
 import MenuIcon from '@mui/icons-material/Menu';
 import DevicesIcon from '@mui/icons-material/Devices';
-import PeopleIcon from '@mui/icons-material/People';
 import { Link, useLocation } from 'react-router-dom';
 import SpeedIcon from '@mui/icons-material/Speed';
 import { NavLink } from 'react-router-dom';
 import DescriptionIcon from '@mui/icons-material/Description';
-import { hasAnyHoles } from '../../utils/Auth';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import IconButton from '@mui/material/IconButton';
 import Logo from '../../assets/img/image.png';
-import { customTheme } from '../../style/CustomTheme';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Divider from '@mui/material/Divider';
 export default function MenuSidebar() {
@@ -40,13 +37,13 @@ export default function MenuSidebar() {
           menuItemStyles={{
             icon: ({ active, open }) => ({
               scale: active ? '1.1' : '1.0',
-              color: 'GrayText',
+              color: '#4d4d4d',
             }),
             button: ({ level, active, disabled }) => {
               ///menu interno
               if (level === 1)
                 return {
-                  color: 'GrayText',
+                  color: '#4d4d4d',
                   fontWeight: active ? 'bold' : 'normal',
                   backgroundColor: active ? '#f5df4ea6' : 'rgb(255, 255, 255)',
                   fontSize: '12px',
@@ -58,7 +55,7 @@ export default function MenuSidebar() {
               //menu externo
               if (level === 0)
                 return {
-                  color: 'GrayText',
+                  color: '#4d4d4d',
                   fontSize: '14px',
                   backgroundColor: active ? '#f5df4ea6' : 'rgb(255, 255, 255)',
                   fontWeight: active ? 'bold' : 'normal',
