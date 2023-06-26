@@ -26,7 +26,7 @@ import Card from '@mui/material/Card';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 
 type AssetSidePanelProps = {
-  data: Workstation;
+  data: any;
 };
 
 export default function AssetSidePanel({ data }: AssetSidePanelProps) {

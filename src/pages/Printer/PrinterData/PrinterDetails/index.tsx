@@ -14,6 +14,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
 import CircularLoading from '../../../../components/Loaders/Progress';
+import { Printer } from '../../../../types/Printer/Printer';
 
 const columns: TableColumn<Interface>[] = [
   {
@@ -28,11 +29,11 @@ const columns: TableColumn<Interface>[] = [
   { name: 'Endereço Mac', selector: (row) => row.enderecoMac, sortable: true },
 ];
 
-type WorkstationDetailsProps = {
-  data?: Workstation;
+type PrinterDetailsProps = {
+  data?: Printer;
 };
 
-export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
+export default function PrinterDetails({ data }: PrinterDetailsProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [listInterfaces, setListInterfaces] = useState<Interface[]>();
 
@@ -64,17 +65,8 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             <TextInfo label="Nome" text={data?.nome || '-'} />
             <TextInfo label="Fabricante" text={data?.fabricante || '-'} />
             <TextInfo label="Hostname" text={data?.nomeHost || '-'} />
-            <TextInfo
-              label="Memória Virtual"
-              text={data?.memoriaRam + ' GB' || '-'}
-            />
             <TextInfo label="Dominio" text={data?.dominio || '-'} />
             <TextInfo label="Gateway" text={data?.gateway || '-'} />
-            <TextInfo label="Dns" text={data?.dns || '-'} />
-            <TextInfo
-              label="Ultimo usuário logado"
-              text={data?.ultimoUsuarioLogado || '-'}
-            />
             <TextInfo label="Tempo atividade" text={data?.tempoLigado || '-'} />
             <TextInfo label="Observação" text={data?.observacao || '-'} />
           </Card>
@@ -90,12 +82,6 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               minHeight: 386,
             }}
           >
-            <TextInfo
-              label="Sistema operacional"
-              text={data?.sistemaOperacional || '-'}
-            />
-            <TextInfo label="Processador" text={data?.processador || '-'} />
-            <TextInfo label="Arquitetura" text={data?.arquiteturaSo || '-'} />
             <TextInfo label="Numero de série" text={data?.numeroSerie || '-'} />
             <TextInfo label="Modelo" text={data?.modelo || '-'} />
             <TextInfo
