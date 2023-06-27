@@ -16,6 +16,7 @@ import { assetStatus } from '../../../constants/AssetStatus';
 import Panel from '../../../components/Panel';
 import InputSelect from '../../../components/inputs/InputSelect';
 import Swal from 'sweetalert2';
+import InputText from '../../../components/inputs/InputText';
 
 type ChangeStateProps = {
   assetId?: string;
@@ -37,7 +38,6 @@ export default function ChangeStateModal({
       statusAtivo: state,
       descricao: description,
       ativoId: assetId,
-      //alterar para usuçário logado
       usuarioId: 6566,
     };
 
@@ -88,7 +88,6 @@ export default function ChangeStateModal({
             <TextField
               style={{ width: 350 }}
               margin={'normal'}
-              id="outlined-multiline-static"
               label="Descrição"
               multiline
               size="small"

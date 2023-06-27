@@ -4,6 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 
 type InputSelectProps = {
   label: string;
+  required?: boolean;
   inputField?: string;
   setInputField: React.Dispatch<React.SetStateAction<string>>;
   selectedItems: string[];
@@ -11,6 +12,7 @@ type InputSelectProps = {
 
 export default function InputSelect({
   label,
+  required,
   inputField,
   setInputField,
   selectedItems,
@@ -34,6 +36,7 @@ export default function InputSelect({
           fontSize: '14px',
           color: 'primary',
         }}
+        required={required}
         labelId="demo-simple-select-label"
         id="demo-simple-select-label"
         label={label}

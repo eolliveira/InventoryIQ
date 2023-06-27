@@ -213,7 +213,7 @@ export default function PrinterList() {
               'nome',
               'dominio',
               'modelo',
-              'atribuido',
+              'numeroSerie',
               'local',
               'fabricante',
             ]}
