@@ -21,6 +21,9 @@ export type Printer = {
     gateway: string;
     tempoLigado: string;
     totalImpressoes: string;
+    enderecoMac: string,
+    enderecoIp: string,
+    mascaraSubRede: string,
     usuario: Usuario,
     localIndustria: LocalIndustria
   };

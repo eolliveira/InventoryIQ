@@ -24,9 +24,10 @@ import Stack from '@mui/material/Stack';
 import AssetStatusStyle from '../AssetStatusStyle';
 import Card from '@mui/material/Card';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import { Printer } from '../../types/Printer/Printer';
 
 type AssetSidePanelProps = {
-  data: any;
+  data: Workstation | Printer;
 };
 
 export default function AssetSidePanel({ data }: AssetSidePanelProps) {

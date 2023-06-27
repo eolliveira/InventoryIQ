@@ -12,7 +12,6 @@ import AssetService from '../../../components/Asset/AssetService';
 import StockButton from '../../../components/buttons/StockButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
-import { Workstation } from '../../../types/Workstation/Workstation';
 import TabPanel from '@material-ui/lab/TabPanel';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
@@ -43,38 +42,31 @@ export default function PrinterData() {
 
   const { printerId } = useParams<urlParams>();
   const { formContextData, setFormContextData } = useContext(FormContext);
-  const [active, setActive] = useState<Printer>();
+  const [printer, setPrinter] = useState<Printer>();
   const [sweeping, setSweeping] = useState(false);
   const [tabValue, setTabValue] = useState('1');
   const navigate = useNavigate();
 
   const getPrinterData = useCallback(() => {
     requestBackend({ url: `/printer/${printerId}` })
-      .then((response) => {
-        setActive(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then((response) => setPrinter(response.data))
+      .catch((error) => console.log(error));
   }, [printerId, sweeping, formContextData]);
 
-  useEffect(() => {
-    getPrinterData();
-  }, [getPrinterData]);
+  useEffect(() => getPrinterData(), [getPrinterData]);
 
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
     setTabValue(newValue);
-  };
 
-  const handleAdd = () => {
+  function handleAdd() {
     setFormContextData({ isAdding: true });
     setOpenPrinterForm(true);
-  };
+  }
 
-  const handleEdit = () => {
+  function handleEdit() {
     setFormContextData({ isEditing: true });
     setOpenPrinterForm(true);
-  };
+  }
 
   const handleRemove = () => {
     Swal.fire({
@@ -90,7 +82,7 @@ export default function PrinterData() {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
-          url: `/active/${active?.id}`,
+          url: `/active/${printer?.id}`,
         };
 
         requestBackend(params)
@@ -122,7 +114,7 @@ export default function PrinterData() {
     setSweeping(true);
     const params: AxiosRequestConfig = {
       method: 'PUT',
-      url: `/printer/${active?.id}/sweep`,
+      url: `/printer/${printer?.id}/sweep`,
     };
 
     requestBackend(params)
@@ -143,7 +135,7 @@ export default function PrinterData() {
   return (
     <Wapper className="row">
       <ContainerSidePanel className="col-lg-3">
-        <AssetSidePanel data={active ?? ({} as Printer)} />
+        <AssetSidePanel data={printer ?? ({} as Printer)} />
       </ContainerSidePanel>
       <BaseCard className="col-lg-9">
         <Box
@@ -169,7 +161,9 @@ export default function PrinterData() {
             marginLeft={2}
             flex={1}
           >
-            {(active ? active?.id : '') + ' - ' + (active ? active?.nome : '')}
+            {(printer ? printer?.id : '') +
+              ' - ' +
+              (printer ? printer?.nome : '')}
           </Typography>
           <Stack spacing={2} direction="row">
             <StockButton
@@ -219,19 +213,19 @@ export default function PrinterData() {
                 />
 
                 <CustomTab
-                  value="3"
+                  value="2"
                   label="Movimentos"
                   iconPosition="start"
                   icon={<ChangeCircleTwoToneIcon />}
                 />
                 <CustomTab
-                  value="4"
+                  value="3"
                   label="Licenças"
                   iconPosition="start"
                   icon={<WorkspacePremiumTwoToneIcon />}
                 />
                 <CustomTab
-                  value="5"
+                  value="4"
                   label="Serviços"
                   iconPosition="start"
                   icon={<HandymanTwoToneIcon />}
@@ -240,22 +234,22 @@ export default function PrinterData() {
             </Box>
           </AppBar>
           <TabPanel style={{ padding: 0 }} value="1">
-            <PrinterDetails data={active} />
+            <PrinterDetails data={printer} />
+          </TabPanel>
+          <TabPanel style={{ padding: 0 }} value="2">
+            <AssetMovements assetId={printer?.id} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="3">
-            <AssetMovements assetId={active?.id} />
+            <AssetLicense assetId={printer?.id} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="4">
-            <AssetLicense assetId={active?.id} />
-          </TabPanel>
-          <TabPanel style={{ padding: 0 }} value="5">
-            <AssetService assetId={active?.id} />
+            <AssetService assetId={printer?.id} />
           </TabPanel>
         </TabContext>
       </BaseCard>
       {openPrinterForm && (
         <PrinterForm
-          data={active}
+          data={printer}
           openForm={openPrinterForm}
           closeForm={() => setOpenPrinterForm(false)}
         />

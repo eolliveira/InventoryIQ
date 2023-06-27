@@ -167,6 +167,10 @@ export default function PrinterForm({
     setValue('dtVencimentoGarantia', data.dtVencimentoGarantia);
     setValue('vlrAquisicao', data.vlrAquisicao);
     setValue('observacao', data.observacao);
+
+    setValue('enderecoIp', data.enderecoIp);
+    setValue('enderecoMac', data.enderecoMac);
+    setValue('mascaraSubRede', data.mascaraSubRede);
   };
 
   return (

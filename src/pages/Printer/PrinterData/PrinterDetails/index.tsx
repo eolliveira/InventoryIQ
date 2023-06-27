@@ -82,8 +82,9 @@ export default function PrinterDetails({ data }: PrinterDetailsProps) {
               minHeight: 386,
             }}
           >
-            <TextInfo label="Numero de série" text={data?.numeroSerie || '-'} />
             <TextInfo label="Modelo" text={data?.modelo || '-'} />
+            <TextInfo label="Numero de série" text={data?.numeroSerie || '-'} />
+            <TextInfo label="Impressões" text={data?.totalImpressoes || '-'} />
             <TextInfo
               label="Data aquisição"
               text={

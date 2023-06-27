@@ -45,17 +45,15 @@ const columns: TableColumn<Printer>[] = [
   },
   { name: 'Dominio', selector: (row) => row.dominio, sortable: true },
   { name: 'Modelo', selector: (row) => row.modelo, sortable: true },
-
-  {
-    name: 'Atribuido a',
-    selector: (row) =>
-      row.usuario.nome ? toCamelCase(row.usuario.nome) : ' - ',
-    sortable: true,
-  },
   {
     name: 'Local',
     selector: (row) =>
       row.localIndustria ? row.localIndustria.dsLocalIndustria : ' - ',
+    sortable: true,
+  },
+  {
+    name: 'Numero de Série',
+    selector: (row) => (row.numeroSerie ? row.numeroSerie : ' - '),
     sortable: true,
   },
   {
