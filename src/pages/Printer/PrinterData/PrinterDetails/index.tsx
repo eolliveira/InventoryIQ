@@ -20,10 +20,14 @@ const columns: TableColumn<Interface>[] = [
   {
     name: 'Nome',
     width: '90px',
-    selector: (row) => row.nomeLocal,
+    selector: (row) => (row.nomeLocal ? row.nomeLocal : ' - '),
     sortable: true,
   },
-  { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
+  {
+    name: 'Fabricante',
+    selector: (row) => (row.fabricante ? row.fabricante : ' - '),
+    sortable: true,
+  },
   { name: 'Mascara', selector: (row) => row.mascaraSubRede, sortable: true },
   { name: 'Endereço Ip', selector: (row) => row.enderecoIp, sortable: true },
   { name: 'Endereço Mac', selector: (row) => row.enderecoMac, sortable: true },

@@ -27,7 +27,7 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import { Printer } from '../../types/Printer/Printer';
 
 type AssetSidePanelProps = {
-  data: Workstation | Printer;
+  data: Printer | Workstation;
 };
 
 export default function AssetSidePanel({ data }: AssetSidePanelProps) {

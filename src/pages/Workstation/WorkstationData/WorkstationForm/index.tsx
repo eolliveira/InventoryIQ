@@ -223,7 +223,13 @@ export default function WorkstationForm({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel title="Adicionando Estação de Trabalho">
+        <Panel
+          title={
+            formContextData.isAdding
+              ? 'Adicionando Estação de Trabalho'
+              : 'Alterando Estação de Trabalho'
+          }
+        >
           {formContextData.isAdding && (
             <Box display={'flex'}>
               <SearchBar

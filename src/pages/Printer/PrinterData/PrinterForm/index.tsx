@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import { BaseCard } from '../../../../style/GlobalStyles';
-import { Button } from '@mui/material';
+import { Button, listClasses } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect, useState } from 'react';
 import { FormContext } from '../../../../contexts/FormContext';
@@ -140,6 +140,21 @@ export default function PrinterForm({
         setValue('gateway', response.data.gateway);
         setValue('dominio', response.data.dominio);
         setValue('tempoLigado', response.data.tempoLigado);
+        setValue('enderecoIp', response.data.enderecoIp);
+        setValue('enderecoMac', response.data.enderecoMac);
+        setValue('mascaraSubRede', response.data.mascaraSubRede);
+
+        const i: Interface = {
+          id: response.data.id,
+          nomeLocal: response.data.nomeLocal,
+          fabricante: response.data.fabricante,
+          enderecoIp: response.data.enderecoIp,
+          enderecoMac: response.data.enderecoMac,
+          mascaraSubRede: response.data.mascaraSubRede,
+        };
+
+        const newInterface: Interface[] = [i];
+        setInterfaces(newInterface);
       })
       .catch(() => {
         Swal.fire({
@@ -156,21 +171,17 @@ export default function PrinterForm({
 
   const setFormData = (data: Printer) => {
     setValue('nome', data.nome);
-    setValue('fabricante', data.fabricante);
-    setValue('nomeHost', data.nomeHost);
     setValue('dominio', data.dominio);
     setValue('gateway', data.gateway);
+    setValue('modelo', data.modelo);
+    setValue('nomeHost', data.nomeHost);
+    setValue('fabricante', data.fabricante);
+    setValue('observacao', data.observacao);
+    setValue('dtAquisicao', data.dtAquisicao);
     setValue('tempoLigado', data.tempoLigado);
     setValue('numeroSerie', data.numeroSerie);
-    setValue('modelo', data.modelo);
-    setValue('dtAquisicao', data.dtAquisicao);
-    setValue('dtVencimentoGarantia', data.dtVencimentoGarantia);
     setValue('vlrAquisicao', data.vlrAquisicao);
-    setValue('observacao', data.observacao);
-
-    setValue('enderecoIp', data.enderecoIp);
-    setValue('enderecoMac', data.enderecoMac);
-    setValue('mascaraSubRede', data.mascaraSubRede);
+    setValue('dtVencimentoGarantia', data.dtVencimentoGarantia);
   };
 
   return (
