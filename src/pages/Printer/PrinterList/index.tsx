@@ -86,15 +86,14 @@ export default function PrinterList() {
   const [selectedAsset, setSelectedAsset] = useState('');
 
   const [openPrinterForm, setOpenPrinterForm] = useState(false);
-
   const [openCustomFilters, setOpenCustomFilters] =
     useState<null | HTMLElement>(null);
   const open = Boolean(openCustomFilters);
 
-  const handleAddPrinter = () => {
+  function handleAddPrinter() {
     setFormContextData({ isAdding: true });
     setOpenPrinterForm(true);
-  };
+  }
 
   function handleDeletePrinter(AssetId: string) {
     if (selectedAsset == '') {
@@ -141,9 +140,7 @@ export default function PrinterList() {
               confirmButtonColor: '#999999',
             });
           })
-          .finally(() => {
-            setFormContextData({ isEditing: false });
-          });
+          .finally(() => setFormContextData({ isEditing: false }));
       }
     });
   }
@@ -155,9 +152,7 @@ export default function PrinterList() {
     setFilterField('nome');
   }
 
-  const handleClose = () => {
-    setOpenCustomFilters(null);
-  };
+  const handleClose = () => setOpenCustomFilters(null);
 
   const handleRowClicked = (row: Printer) => navigate(`/printer/${row.id}`);
 
@@ -194,9 +189,7 @@ export default function PrinterList() {
     statusFilter,
   ]);
 
-  useEffect(() => {
-    getPrintersData();
-  }, [getPrintersData]);
+  useEffect(() => getPrintersData(), [getPrintersData]);
 
   return (
     <Panel title="Impressoras">
@@ -221,10 +214,10 @@ export default function PrinterList() {
             selectedItems={[
               'nome',
               'dominio',
-              'fabricante',
               'modelo',
               'atribuido',
               'local',
+              'fabricante',
             ]}
           />
 
