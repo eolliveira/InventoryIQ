@@ -20,8 +20,6 @@ import { Disco } from 'types/Workstation/Disco';
 import { Particao } from 'types/Workstation/Particao';
 import Typography from '@mui/material/Typography';
 import NoData from '../../../../components/NoData';
-
-import { Dayjs } from 'dayjs';
 import InputDate from '../../../../components/inputs/InputDate';
 import InputText from '../../../../components/inputs/InputText';
 import InputCurrency from '../../../../components/inputs/InputCurrency';
@@ -96,7 +94,7 @@ export default function WorkstationForm({
         const params: AxiosRequestConfig = {
           method: formContextData.isAdding ? 'POST' : 'PUT',
           url: formContextData.isAdding
-            ? '/workstation'
+            ? `/workstation`
             : `/workstation/${data?.id}/update`,
           data: formData,
         };
@@ -186,7 +184,7 @@ export default function WorkstationForm({
         setValue('interfaces', interfaces);
         setValue('discos', discos);
       })
-      .catch((error) => {
+      .catch(() => {
         Swal.fire({
           title: 'Falha!',
           text: `Não foi possivel obter os dados do ativo. Por favor verifique se o endereço ip esta correto e se o agente esta configurado corretamente!`,

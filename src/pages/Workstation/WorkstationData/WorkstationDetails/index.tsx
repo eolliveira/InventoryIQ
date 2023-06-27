@@ -129,9 +129,6 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
                   }
                 />
               </div>
-              <div className="col-lg-5">
-                <h2 style={{ border: '1px solid silver' }}>anexo</h2>
-              </div>
             </div>
           </Card>
         </div>
