@@ -124,10 +124,10 @@ export default function ChangeStateModal({
             </Select>
 
             <TextField
-              required={true}
-              style={{ width: 350 }}
+              required
+              style={{ width: 350, marginBottom: 22 }}
               margin={'normal'}
-              label="Descrição"
+              label="Motivo"
               multiline
               size="small"
               rows={6}

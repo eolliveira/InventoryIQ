@@ -38,18 +38,22 @@ type PrinterDetailsProps = {
 };
 
 export default function PrinterDetails({ data }: PrinterDetailsProps) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingInterfaces, setIsLoadingInterfaces] = useState(false);
   const [listInterfaces, setListInterfaces] = useState<Interface[]>();
 
-  useEffect(() => {
-    setIsLoading(true);
+  const getInterfaces = useCallback(() => {
+    setIsLoadingInterfaces(true);
     requestBackend({ url: `/active/${data?.id}/interfaces` })
       .then((response) => {
         setListInterfaces(response.data);
       })
       .catch((error) => console.log('Erro ao carregar as interfaces: ' + error))
-      .finally(() => setIsLoading(false));
+      .finally(() => setIsLoadingInterfaces(false));
   }, [data]);
+
+  useEffect(() => {
+    if (data?.id) getInterfaces();
+  }, [getInterfaces]);
 
   return (
     <Box marginTop={2}>
@@ -151,7 +155,7 @@ export default function PrinterDetails({ data }: PrinterDetailsProps) {
           pointerOnHover
           highlightOnHover
           fixedHeaderScrollHeight={'82vh'}
-          progressPending={isLoading}
+          progressPending={isLoadingInterfaces}
           progressComponent={<CircularLoading />}
           customStyles={{
             headCells: {
