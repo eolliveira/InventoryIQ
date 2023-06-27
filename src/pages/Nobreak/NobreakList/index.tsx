@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-export default function Nobreak() {
+export default function NobreakList() {
   return (
     <Wrapper>
-      <h1>page nobreak</h1>
+      <h1>page nobreak list</h1>
     </Wrapper>
   );
 }

@@ -18,6 +18,11 @@ import InputSelect from '../../../components/inputs/InputSelect';
 import Swal from 'sweetalert2';
 import InputText from '../../../components/inputs/InputText';
 
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { removeUnderline, toCamelCase } from '../../../utils/StringConverter';
+
 type ChangeStateProps = {
   assetId?: string;
   openModal: boolean;
@@ -34,6 +39,26 @@ export default function ChangeStateModal({
   const [description, setDescription] = useState('');
 
   function handleSave() {
+    if (state == '') {
+      Swal.fire({
+        title: 'Atenção!',
+        text: 'Informe um status!',
+        icon: 'warning',
+        confirmButtonColor: '#999999',
+      });
+      return;
+    }
+
+    if (description == '') {
+      Swal.fire({
+        title: 'Atenção!',
+        text: 'Descreva o motivo para a mudança do status!',
+        icon: 'warning',
+        confirmButtonColor: '#999999',
+      });
+      return;
+    }
+
     const data = {
       statusAtivo: state,
       descricao: description,
@@ -79,20 +104,34 @@ export default function ChangeStateModal({
       <BaseCard>
         <Panel title="Alterar Status">
           <FormControl>
-            <InputSelect
-              label="Status"
-              inputField={state}
-              setInputField={setState}
-              selectedItems={assetStatus.map((status) => status)}
-            />
+            <InputLabel size="small" id="demo-simple-select-label">
+              Status
+            </InputLabel>
+            <Select
+              required
+              size="small"
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={state}
+              label="Statu"
+              onChange={(e) => setState(String(e.target.value))}
+            >
+              {assetStatus.map((status) => (
+                <MenuItem value={status}>
+                  {toCamelCase(removeUnderline(status))}
+                </MenuItem>
+              ))}
+            </Select>
+
             <TextField
+              required={true}
               style={{ width: 350 }}
               margin={'normal'}
               label="Descrição"
               multiline
               size="small"
               rows={6}
-              required
+              value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
 
