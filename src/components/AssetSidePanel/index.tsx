@@ -25,9 +25,10 @@ import AssetStatusStyle from '../AssetStatusStyle';
 import Card from '@mui/material/Card';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import { Printer } from '../../types/Printer/Printer';
+import { Nobreak } from '../../types/Nobreak';
 
 type AssetSidePanelProps = {
-  data: Printer | Workstation;
+  data: Printer | Workstation | Nobreak;
 };
 
 export default function AssetSidePanel({ data }: AssetSidePanelProps) {
@@ -52,24 +53,26 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
   return (
     <Wapper>
       <HeaderContainer>
-        <Box>
-          <Typography color={'primary'} fontWeight={'bold'} fontSize={14}>
-            Ultimo Sincronismo
-          </Typography>
-          <Stack
-            marginBottom={1.5}
-            marginTop={0.2}
-            direction={'row'}
-            spacing={1}
-          >
-            <EventRepeatIcon fontSize="small" color="secondary" />
-            <Typography style={{ marginTop: 2 }} fontSize={13}>
-              {data.dhUltimaVarredura
-                ? toDateTime(data.dhUltimaVarredura)
-                : ' - '}
+        {'dhUltimaVarredura' in data && (
+          <Box>
+            <Typography color={'primary'} fontWeight={'bold'} fontSize={14}>
+              Ultimo Sincronismo
             </Typography>
-          </Stack>
-        </Box>
+            <Stack
+              marginBottom={1.5}
+              marginTop={0.2}
+              direction={'row'}
+              spacing={1}
+            >
+              <EventRepeatIcon fontSize="small" color="secondary" />
+              <Typography style={{ marginTop: 2 }} fontSize={13}>
+                {data.dhUltimaVarredura
+                  ? toDateTime(data.dhUltimaVarredura)
+                  : ' - '}
+              </Typography>
+            </Stack>
+          </Box>
+        )}
         <Box>
           <Typography
             marginBottom={0.5}
@@ -89,59 +92,67 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
         </Box>
       </HeaderContainer>
       <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
-      <Typography color={'primary'} fontWeight={'bold'} fontSize={14}>
-        Atribuido a
-      </Typography>
-      <Card
-        variant="outlined"
-        sx={{
-          backgroundColor: '#F8FAFC',
-          border: '1px solid #e9e9e9',
-          borderRadius: 2,
-          padding: 1.5,
-        }}
-      >
-        <Box
-          display={'flex'}
-          flexWrap={'wrap'}
-          justifyContent={'space-around'}
-          alignItems={'center'}
-        >
-          <AccountCircleIcon
-            color="secondary"
-            fontSize="medium"
-            sx={{ marginRight: 1 }}
-          />
-          <Box
-            display={'flex'}
-            flex={1}
-            flexDirection={'column'}
-            justifyContent={'flex-start'}
-          >
-            <Typography color={'primary'} fontSize={14} variant="subtitle2">
-              {(data.usuario &&
-                data.usuario.nome &&
-                toCamelCase(data.usuario.nome)) ||
-                ' - '}
-            </Typography>
-            <Typography color={'secondary'} fontSize={12} variant="subtitle2">
-              {data.usuario ? data.usuario.email : ' - '}
-            </Typography>
-          </Box>
-          <IconButton
-            onClick={(e) => {
-              setOpenChangeUserModal(true);
-              setFormContextData({
-                isEditing: true,
-              });
+      {'dhUltimaVarredura' in data && (
+        <>
+          <Typography color={'primary'} fontWeight={'bold'} fontSize={14}>
+            Atribuido a
+          </Typography>
+          <Card
+            variant="outlined"
+            sx={{
+              backgroundColor: '#F8FAFC',
+              border: '1px solid #e9e9e9',
+              borderRadius: 2,
+              padding: 1.5,
             }}
-            aria-label="delete"
-            size="small"
           >
-            <EditTwoToneIcon color="primary" fontSize="small" />
-          </IconButton>
-        </Box>
-      </Card>
+            <Box
+              display={'flex'}
+              flexWrap={'wrap'}
+              justifyContent={'space-around'}
+              alignItems={'center'}
+            >
+              <AccountCircleIcon
+                color="secondary"
+                fontSize="medium"
+                sx={{ marginRight: 1 }}
+              />
+              <Box
+                display={'flex'}
+                flex={1}
+                flexDirection={'column'}
+                justifyContent={'flex-start'}
+              >
+                <Typography color={'primary'} fontSize={14} variant="subtitle2">
+                  {(data.usuario &&
+                    data.usuario.nome &&
+                    toCamelCase(data.usuario.nome)) ||
+                    ' - '}
+                </Typography>
+                <Typography
+                  color={'secondary'}
+                  fontSize={12}
+                  variant="subtitle2"
+                >
+                  {data.usuario ? data.usuario.email : ' - '}
+                </Typography>
+              </Box>
+              <IconButton
+                onClick={(e) => {
+                  setOpenChangeUserModal(true);
+                  setFormContextData({
+                    isEditing: true,
+                  });
+                }}
+                aria-label="delete"
+                size="small"
+              >
+                <EditTwoToneIcon color="primary" fontSize="small" />
+              </IconButton>
+            </Box>
+          </Card>
+        </>
+      )}
       <Typography
         marginTop={1}
         color={'primary'}
