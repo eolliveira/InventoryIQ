@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-export default function Mobile() {
+export default function MobileData() {
   return (
     <Wrapper>
-      <h1>page mobile</h1>
+      <h1>mobile data</h1>
     </Wrapper>
   );
 }
