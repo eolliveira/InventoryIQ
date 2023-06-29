@@ -48,7 +48,7 @@ export default function App() {
             <Route path="nobreak/" element={<NobreakList />} />
             <Route path="nobreak/:nobreakId" element={<NobreakData />} />
             <Route path="mobile/" element={<MobileList />} />
-            <Route path="mobile/:mobileId" element={<MobileData />} />
+            <Route path="mobile/:deviceId" element={<MobileData />} />
           </Route>
         </Routes>
       </FormContext.Provider>

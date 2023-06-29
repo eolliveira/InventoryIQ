@@ -1,5 +1,5 @@
 export type Interface = {
-  id: number;
+  id: string;
   nomeLocal: string;
   fabricante: string;
   enderecoMac: string;

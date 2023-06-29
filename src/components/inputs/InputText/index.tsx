@@ -30,7 +30,7 @@ export default function InputText({
       render={({ field: { value, onChange } }) => (
         <TextField
           {...register(name, {
-            required: required ? 'Campo requirido' : undefined,
+            required: required ? 'Campo requerido' : undefined,
           })}
           fullWidth
           margin="dense"

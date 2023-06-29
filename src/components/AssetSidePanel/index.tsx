@@ -26,9 +26,10 @@ import Card from '@mui/material/Card';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import { Printer } from '../../types/Printer/Printer';
 import { Nobreak } from '../../types/Nobreak';
+import { Mobile } from 'types/Mobile';
 
 type AssetSidePanelProps = {
-  data: Printer | Workstation | Nobreak;
+  data: Printer | Workstation | Nobreak | Mobile;
 };
 
 export default function AssetSidePanel({ data }: AssetSidePanelProps) {
@@ -92,7 +93,7 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
         </Box>
       </HeaderContainer>
       <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
-      {'dhUltimaVarredura' in data && (
+      {'usuario' in data && (
         <>
           <Typography color={'primary'} fontWeight={'bold'} fontSize={14}>
             Atribuido a

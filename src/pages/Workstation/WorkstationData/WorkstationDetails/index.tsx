@@ -5,34 +5,58 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 import NoData from '../../../../components/NoData';
 import TextInfo from '../../../../components/TextInfo';
 import { Interface } from '../../../../types/Interface';
-import { useCallback, useEffect, useState } from 'react';
 import { requestBackend } from '../../../../http/requests';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
 import CircularLoading from '../../../../components/Loaders/Progress';
-
-const columns: TableColumn<Interface>[] = [
-  {
-    name: 'Nome',
-    width: '90px',
-    selector: (row) => row.nomeLocal,
-    sortable: true,
-  },
-  { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
-  { name: 'Mascara', selector: (row) => row.mascaraSubRede, sortable: true },
-  { name: 'Endereço Ip', selector: (row) => row.enderecoIp, sortable: true },
-  { name: 'Endereço Mac', selector: (row) => row.enderecoMac, sortable: true },
-];
+import { useCallback, useContext, useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
+import { AxiosRequestConfig } from 'axios';
+import { FormContext } from '../../../../contexts/FormContext';
 
 type WorkstationDetailsProps = {
   data?: Workstation;
 };
 
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
+  const columns: TableColumn<Interface>[] = [
+    {
+      name: 'Nome',
+      width: '90px',
+      selector: (row) => row.nomeLocal,
+      sortable: true,
+    },
+    { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
+    { name: 'Mascara', selector: (row) => row.mascaraSubRede, sortable: true },
+    { name: 'Endereço Ip', selector: (row) => row.enderecoIp, sortable: true },
+    {
+      name: 'Endereço Mac',
+      selector: (row) => row.enderecoMac,
+      sortable: true,
+    },
+    {
+      button: true,
+      width: '80px',
+      cell: (row) => (
+        <IconButton
+          sx={{ marginRight: 1 }}
+          onClick={() => onDeleteInterface(row.id)}
+          aria-label="delete"
+          size="small"
+        >
+          <DeleteIcon color="primary" fontSize="inherit" />
+        </IconButton>
+      ),
+    },
+  ];
+
+  const { formContextData, setFormContextData } = useContext(FormContext);
   const [isLoadingInterfaces, setIsLoadingInterfaces] = useState(false);
   const [listInterfaces, setListInterfaces] = useState<Interface[]>();
 
@@ -49,6 +73,46 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   useEffect(() => {
     if (data?.id) getInterfaces();
   }, [getInterfaces]);
+
+  function onDeleteInterface(interfaceId: string) {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você não será capaz de reverter isso!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: 'secondary',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const params: AxiosRequestConfig = {
+          method: 'DELETE',
+          url: `/interface/${interfaceId}`,
+        };
+
+        requestBackend(params)
+          .then(() => {
+            Swal.fire({
+              title: 'Removido!',
+              text: 'Registro foi removido com sucesso!.',
+              icon: 'success',
+              confirmButtonColor: '#999999',
+            });
+
+            setFormContextData({ isAdding: false });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: 'Falha!',
+              text: `${error.response.data.message}`,
+              icon: 'success',
+              confirmButtonColor: '#999999',
+            });
+          });
+      }
+    });
+  }
 
   return (
     <Box marginTop={2}>
@@ -157,7 +221,6 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           responsive
           noDataComponent={<NoData />}
           fixedHeader
-          selectableRows
           pointerOnHover
           highlightOnHover
           fixedHeaderScrollHeight={'82vh'}
