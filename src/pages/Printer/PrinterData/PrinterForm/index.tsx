@@ -187,7 +187,13 @@ export default function PrinterForm({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel title="Adicionando Impressora">
+        <Panel
+          title={
+            formContextData.isEditing
+              ? 'Alterar impressora'
+              : 'Adicionar Impressora'
+          }
+        >
           {formContextData.isAdding && (
             <Box display={'flex'}>
               <SearchBar

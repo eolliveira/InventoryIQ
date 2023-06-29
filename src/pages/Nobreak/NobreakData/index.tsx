@@ -3,7 +3,6 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import TabContext from '@material-ui/lab/TabContext';
 import { theme } from '../../../style/Theme';
 import styled from 'styled-components';
-import SyncIcon from '@mui/icons-material/Sync';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
 import AssetMovements from '../../../components/Asset/AssetMovements';
@@ -13,7 +12,6 @@ import StockButton from '../../../components/buttons/StockButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
 import TabPanel from '@material-ui/lab/TabPanel';
-import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -21,7 +19,6 @@ import AssetSidePanel from '../../../components/AssetSidePanel';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
 import { AxiosRequestConfig } from 'axios';
-import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2';
@@ -29,9 +26,9 @@ import TextSnippetTwoToneIcon from '@mui/icons-material/TextSnippetTwoTone';
 import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
-import { Printer } from '../../../types/Printer/Printer';
 import { Nobreak } from 'types/Nobreak';
 import NobreakForm from './NobreakForm';
+import NobreakDetails from './NobreakDetails';
 
 export default function NobreakData() {
   const [openNobreakForm, setOpenNobreakForm] = useState(false);
@@ -43,7 +40,6 @@ export default function NobreakData() {
   const { nobreakId } = useParams<urlParams>();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [nobreak, setNobreak] = useState<Nobreak>();
-  const [sweeping, setSweeping] = useState(false);
   const [tabValue, setTabValue] = useState('1');
   const navigate = useNavigate();
 
@@ -51,7 +47,7 @@ export default function NobreakData() {
     requestBackend({ url: `/nobreak/${nobreakId}` })
       .then((response) => setNobreak(response.data))
       .catch((error) => console.log(error));
-  }, [nobreakId, sweeping, formContextData]);
+  }, [nobreakId, formContextData]);
 
   useEffect(() => getNobreakData(), [getNobreakData]);
 
@@ -126,7 +122,7 @@ export default function NobreakData() {
           <IconButton
             aria-label="back"
             size="medium"
-            onClick={() => navigate('/printer')}
+            onClick={() => navigate('/nobreak')}
           >
             <ArrowBackIcon color="primary" />
           </IconButton>
@@ -197,7 +193,7 @@ export default function NobreakData() {
             </Box>
           </AppBar>
           <TabPanel style={{ padding: 0 }} value="1">
-            {/* <PrinterDetails data={printer} /> */}
+            <NobreakDetails data={nobreak} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="2">
             <AssetMovements assetId={nobreak?.id} />

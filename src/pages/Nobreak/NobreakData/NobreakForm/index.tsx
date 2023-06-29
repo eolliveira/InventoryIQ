@@ -13,7 +13,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import CustomModal from '../../../../components/CustomModal';
 import styled from 'styled-components';
 import Typography from '@mui/material/Typography';
-
 import InputDate from '../../../../components/inputs/InputDate';
 import InputText from '../../../../components/inputs/InputText';
 import InputCurrency from '../../../../components/inputs/InputCurrency';
@@ -64,8 +63,8 @@ export default function NobreakForm({
         const params: AxiosRequestConfig = {
           method: formContextData.isAdding ? 'POST' : 'PUT',
           url: formContextData.isAdding
-            ? '/printer'
-            : `/printer/${data?.id}/update`,
+            ? '/nobreak'
+            : `/nobreak/${data?.id}/update`,
           data: formData,
         };
 
@@ -81,7 +80,7 @@ export default function NobreakForm({
               isAdding: false,
               isEditing: false,
             });
-            navigate(`/printer/${response.data.id}`);
+            navigate(`/nobreak/${response.data.id}`);
             closeForm();
           })
           .catch((error) => {
@@ -108,10 +107,10 @@ export default function NobreakForm({
   const setFormData = (data: Nobreak) => {
     setValue('nome', data.nome);
     setValue('modelo', data.modelo);
-    setValue('nomeHost', data.nomeHost);
     setValue('fabricante', data.fabricante);
     setValue('observacao', data.observacao);
     setValue('dtAquisicao', data.dtAquisicao);
+    setValue('potencialNominal', data.potencialNominal);
     setValue('tensaoEntrada', data.tensaoEntrada);
     setValue('tensaoSaida', data.tensaoSaida);
     setValue('numeroSerie', data.numeroSerie);
@@ -122,7 +121,11 @@ export default function NobreakForm({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel title="Adicionando Nobreak">
+        <Panel
+          title={
+            formContextData.isEditing ? 'Alterar Nobreak' : 'Adicionar Nobreak'
+          }
+        >
           <Form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-md-6">
@@ -135,6 +138,16 @@ export default function NobreakForm({
                   error={!!errors.nome}
                   helperText={errors.nome?.message}
                 />
+
+                <InputText
+                  label="Modelo"
+                  name="modelo"
+                  control={control}
+                  register={register}
+                  error={!!errors.modelo}
+                  helperText={errors.modelo?.message}
+                />
+
                 <InputText
                   label="Fabricante"
                   name="fabricante"
@@ -143,28 +156,6 @@ export default function NobreakForm({
                   error={!!errors.fabricante}
                   helperText={errors.fabricante?.message}
                 />
-                <div className="row">
-                  <div className="col-lg-6">
-                    <InputText
-                      label="Tensão Entrada"
-                      name="gateway"
-                      control={control}
-                      register={register}
-                      error={!!errors.tensaoEntrada}
-                      helperText={errors.tensaoEntrada?.message}
-                    />
-                  </div>
-                  <div className="col-lg-6">
-                    <InputText
-                      label="Tensão Saida"
-                      name="gateway"
-                      control={control}
-                      register={register}
-                      error={!!errors.tensaoSaida}
-                      helperText={errors.tensaoSaida?.message}
-                    />
-                  </div>
-                </div>
 
                 <InputMultiline
                   control={control}
@@ -177,20 +168,6 @@ export default function NobreakForm({
                 />
               </div>
               <div className="col-md-6">
-                <div className="row">
-                  <div className="col-lg-8">
-                    <InputText
-                      label="Hostname"
-                      name="nomeHost"
-                      control={control}
-                      register={register}
-                      error={!!errors.nomeHost}
-                      helperText={errors.nomeHost?.message}
-                    />
-                  </div>
-                  <div className="col-lg-4"></div>
-                </div>
-
                 <InputText
                   label="Numero de série"
                   name="numeroSerie"
@@ -200,22 +177,40 @@ export default function NobreakForm({
                   helperText={errors.numeroSerie?.message}
                 />
 
+                <InputText
+                  label="Potência nominal"
+                  name="potencialNominal"
+                  control={control}
+                  register={register}
+                  error={!!errors.potencialNominal}
+                  helperText={errors.potencialNominal?.message}
+                />
+
                 <div className="row">
-                  <div className="col-lg-9">
+                  <div className="col-lg-6">
                     <InputText
-                      label="Modelo"
-                      name="modelo"
+                      label="Tensão Entrada"
+                      name="tensaoEntrada"
                       control={control}
                       register={register}
-                      error={!!errors.modelo}
-                      helperText={errors.modelo?.message}
+                      error={!!errors.tensaoEntrada}
+                      helperText={errors.tensaoEntrada?.message}
                     />
                   </div>
-                  <div className="col-lg-3"></div>
+                  <div className="col-lg-6">
+                    <InputText
+                      label="Tensão Saida"
+                      name="tensaoSaida"
+                      control={control}
+                      register={register}
+                      error={!!errors.tensaoSaida}
+                      helperText={errors.tensaoSaida?.message}
+                    />
+                  </div>
                 </div>
 
                 <div className="row">
-                  <div className="col-lg-5">
+                  <div className="col-lg-6">
                     <InputDate
                       register={register}
                       label="Data aquisição"
@@ -223,7 +218,7 @@ export default function NobreakForm({
                       name="dtAquisicao"
                     />
                   </div>
-                  <div className="col-lg-4">
+                  <div className="col-lg-6">
                     <InputDate
                       register={register}
                       name="dtVencimentoGarantia"
@@ -299,17 +294,5 @@ const Form = styled.form`
 
   @media (min-width: 900px) {
     width: 850px;
-  }
-
-  @media (min-width: 1100px) {
-    width: 1000px;
-  }
-
-  @media (min-width: 1300px) {
-    width: 1200px;
-  }
-
-  @media (min-width: 1400px) {
-    width: 1300px;
   }
 `;

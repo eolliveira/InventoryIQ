@@ -12,12 +12,10 @@ export type Nobreak = {
     dtVencimentoGarantia: string,
     vlrAquisicao: string,
     observacao: string,
-    nomeHost: string,
     potencialNominal: string,
     tensaoEntrada: string,
     tensaoSaida: string,
     idNfEntrada: string,
-    usuario: Usuario,
     localIndustria: LocalIndustria
   };
 

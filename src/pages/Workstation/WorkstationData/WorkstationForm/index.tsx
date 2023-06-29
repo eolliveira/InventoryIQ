@@ -224,8 +224,8 @@ export default function WorkstationForm({
         <Panel
           title={
             formContextData.isAdding
-              ? 'Adicionando Estação de Trabalho'
-              : 'Alterando Estação de Trabalho'
+              ? 'Adicionar Estação de Trabalho'
+              : 'Alterar Estação de Trabalho'
           }
         >
           {formContextData.isAdding && (
