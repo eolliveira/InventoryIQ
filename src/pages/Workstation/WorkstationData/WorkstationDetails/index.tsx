@@ -16,9 +16,14 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
 import CircularLoading from '../../../../components/Loaders/Progress';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
+
 import { AxiosRequestConfig } from 'axios';
 import { FormContext } from '../../../../contexts/FormContext';
+
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import Swal from 'sweetalert2';
+import InterfaceForm from '../../../../components/InterfaceForm';
 
 type WorkstationDetailsProps = {
   data?: Workstation;
@@ -29,12 +34,24 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
     {
       name: 'Nome',
       width: '90px',
-      selector: (row) => row.nomeLocal,
+      selector: (row) => (row.nomeLocal ? row.nomeLocal : ' - '),
       sortable: true,
     },
-    { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
-    { name: 'Mascara', selector: (row) => row.mascaraSubRede, sortable: true },
-    { name: 'Endereço Ip', selector: (row) => row.enderecoIp, sortable: true },
+    {
+      name: 'Fabricante',
+      selector: (row) => (row.fabricante ? row.fabricante : ' - '),
+      sortable: true,
+    },
+    {
+      name: 'Mascara',
+      selector: (row) => (row.mascaraSubRede ? row.mascaraSubRede : ' -'),
+      sortable: true,
+    },
+    {
+      name: 'Endereço Ip',
+      selector: (row) => (row.enderecoIp ? row.enderecoIp : ' - '),
+      sortable: true,
+    },
     {
       name: 'Endereço Mac',
       selector: (row) => row.enderecoMac,
@@ -59,6 +76,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [isLoadingInterfaces, setIsLoadingInterfaces] = useState(false);
   const [listInterfaces, setListInterfaces] = useState<Interface[]>();
+  const [openAddInterface, setOpenAddInterface] = useState(false);
 
   const getInterfaces = useCallback(() => {
     setIsLoadingInterfaces(true);
@@ -201,16 +219,34 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
         sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
         variant="outlined"
       >
-        <Typography
-          margin={2}
-          fontSize={16}
-          fontWeight={'bold'}
-          letterSpacing={1}
-          color={'primary'}
-          variant="h2"
+        <Box
+          display={'flex'}
+          justifyContent={'space-between'}
+          alignItems={'center'}
         >
-          Interfaces
-        </Typography>
+          <Typography
+            margin={2}
+            fontSize={16}
+            fontWeight={'bold'}
+            letterSpacing={1}
+            color={'primary'}
+            variant="h2"
+          >
+            Interfaces
+          </Typography>
+          <Button
+            variant="contained"
+            size="small"
+            color="primary"
+            sx={{ marginRight: 1 }}
+            startIcon={<AddIcon />}
+            onClick={() => setOpenAddInterface(true)}
+          >
+            <Typography textTransform={'none'} fontSize={14}>
+              Novo
+            </Typography>
+          </Button>
+        </Box>
         <Divider color="gray" />
         <DataTable
           dense
@@ -237,6 +273,13 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             },
           }}
         />
+        {openAddInterface && (
+          <InterfaceForm
+            assetId={data?.id}
+            openModal={openAddInterface}
+            closeModal={() => setOpenAddInterface(false)}
+          />
+        )}
       </Card>
     </Box>
   );
