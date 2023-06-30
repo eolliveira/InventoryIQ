@@ -1,31 +1,25 @@
-import dayjs from 'dayjs';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
-
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
-
 import { useCallback, useContext, useEffect, useState } from 'react';
-
 import { AxiosRequestConfig } from 'axios';
-import CircularLoading from '../../components/Loaders/Progress';
-
+import CircularLoading from '../Loaders/Progress';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import Swal from 'sweetalert2';
-import InterfaceForm from '../../components/InterfaceForm';
+import InterfaceForm from '../InterfaceForm';
 import { Interface } from '../../types/Interface';
-import { requestBackend } from 'http/requests';
+import { requestBackend } from '../../http/requests';
 import { FormContext } from '../../contexts/FormContext';
-import { Workstation } from '../../types/Workstation/Workstation';
-import NoData from '../../components/NoData';
+import NoData from '../NoData';
 
 type ListInterfaceProps = {
-  assetId: string;
+  assetId?: string;
 };
 
 export default function ListInterface({ assetId }: ListInterfaceProps) {
@@ -77,6 +71,18 @@ export default function ListInterface({ assetId }: ListInterfaceProps) {
   const [isLoadingInterfaces, setIsLoadingInterfaces] = useState(false);
   const [listInterfaces, setListInterfaces] = useState<Interface[]>();
 
+  const getInterfaces = useCallback(() => {
+    setIsLoadingInterfaces(true);
+    requestBackend({ url: `/active/${assetId}/interfaces` })
+      .then((response) => {
+        setListInterfaces(response.data);
+      })
+      .catch((error) => console.log('Erro ao carregar as interfaces: ' + error))
+      .finally(() => setIsLoadingInterfaces(false));
+  }, [assetId, formContextData]);
+
+  useEffect(() => getInterfaces(), [getInterfaces]);
+
   function onDeleteInterface(interfaceId: string) {
     Swal.fire({
       title: 'Tem certeza?',
@@ -116,20 +122,6 @@ export default function ListInterface({ assetId }: ListInterfaceProps) {
       }
     });
   }
-
-  const getInterfaces = useCallback(() => {
-    setIsLoadingInterfaces(true);
-    requestBackend({ url: `/active/${assetId}/interfaces` })
-      .then((response) => {
-        setListInterfaces(response.data);
-      })
-      .catch((error) => console.log('Erro ao carregar as interfaces: ' + error))
-      .finally(() => setIsLoadingInterfaces(false));
-  }, [assetId]);
-
-  useEffect(() => {
-    getInterfaces();
-  }, [getInterfaces]);
 
   return (
     <Card
