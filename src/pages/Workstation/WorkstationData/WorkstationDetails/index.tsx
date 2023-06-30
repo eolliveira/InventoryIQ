@@ -6,7 +6,7 @@ import Card from '@mui/material/Card';
 import TextInfo from '../../../../components/TextInfo';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
 
-import ListInterface from '../../../../components/InterfaceList/InterfaceList';
+import InterfaceList from '../../../../components/Asset/InterfaceList/InterfaceList';
 
 type WorkstationDetailsProps = {
   data?: Workstation;
@@ -96,7 +96,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           </Card>
         </div>
       </div>
-      <ListInterface assetId={data?.id} />
+      <InterfaceList assetId={data?.id} />
     </Box>
   );
 }

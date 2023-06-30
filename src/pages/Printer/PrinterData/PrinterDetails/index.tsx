@@ -1,60 +1,16 @@
-import { Workstation } from '../../../../types/Workstation/Workstation';
-
 import dayjs from 'dayjs';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
-import NoData from '../../../../components/NoData';
 import TextInfo from '../../../../components/TextInfo';
-import { Interface } from '../../../../types/Interface';
-import { useCallback, useEffect, useState } from 'react';
-import { requestBackend } from '../../../../http/requests';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import DataTable, { TableColumn } from 'react-data-table-component';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
-import CircularLoading from '../../../../components/Loaders/Progress';
 import { Printer } from '../../../../types/Printer/Printer';
-
-const columns: TableColumn<Interface>[] = [
-  {
-    name: 'Nome',
-    width: '90px',
-    selector: (row) => (row.nomeLocal ? row.nomeLocal : ' - '),
-    sortable: true,
-  },
-  {
-    name: 'Fabricante',
-    selector: (row) => (row.fabricante ? row.fabricante : ' - '),
-    sortable: true,
-  },
-  { name: 'Mascara', selector: (row) => row.mascaraSubRede, sortable: true },
-  { name: 'Endereço Ip', selector: (row) => row.enderecoIp, sortable: true },
-  { name: 'Endereço Mac', selector: (row) => row.enderecoMac, sortable: true },
-];
+import InterfaceList from '../../../../components/Asset/InterfaceList/InterfaceList';
 
 type PrinterDetailsProps = {
   data?: Printer;
 };
 
 export default function PrinterDetails({ data }: PrinterDetailsProps) {
-  const [isLoadingInterfaces, setIsLoadingInterfaces] = useState(false);
-  const [listInterfaces, setListInterfaces] = useState<Interface[]>();
-
-  const getInterfaces = useCallback(() => {
-    setIsLoadingInterfaces(true);
-    requestBackend({ url: `/active/${data?.id}/interfaces` })
-      .then((response) => {
-        setListInterfaces(response.data);
-      })
-      .catch((error) => console.log('Erro ao carregar as interfaces: ' + error))
-      .finally(() => setIsLoadingInterfaces(false));
-  }, [data]);
-
-  useEffect(() => {
-    if (data?.id) getInterfaces();
-  }, [getInterfaces]);
-
   return (
     <Box marginTop={2}>
       <div className="row">
@@ -124,48 +80,7 @@ export default function PrinterDetails({ data }: PrinterDetailsProps) {
           </Card>
         </div>
       </div>
-      <Card
-        sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
-        variant="outlined"
-      >
-        <Typography
-          margin={2}
-          fontSize={16}
-          fontWeight={'bold'}
-          letterSpacing={1}
-          color={'primary'}
-          variant="h2"
-        >
-          Interfaces
-        </Typography>
-        <Divider color="gray" />
-        <DataTable
-          dense
-          striped
-          data={listInterfaces ? listInterfaces : []}
-          columns={columns}
-          sortIcon={<ExpandMoreIcon />}
-          responsive
-          noDataComponent={<NoData />}
-          fixedHeader
-          selectableRows
-          pointerOnHover
-          highlightOnHover
-          fixedHeaderScrollHeight={'82vh'}
-          progressPending={isLoadingInterfaces}
-          progressComponent={<CircularLoading />}
-          customStyles={{
-            headCells: {
-              style: {
-                fontWeight: 'bold',
-                height: 40,
-                fontSize: 13,
-                letterSpacing: 0.5,
-              },
-            },
-          }}
-        />
-      </Card>
+      <InterfaceList assetId={data?.id} />
     </Box>
   );
 }

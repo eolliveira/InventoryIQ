@@ -8,21 +8,21 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
-import CircularLoading from '../Loaders/Progress';
+import CircularLoading from '../../Loaders/Progress';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import Swal from 'sweetalert2';
-import InterfaceForm from '../InterfaceForm';
-import { Interface } from '../../types/Interface';
-import { requestBackend } from '../../http/requests';
-import { FormContext } from '../../contexts/FormContext';
-import NoData from '../NoData';
+import InterfaceForm from '../../InterfaceForm';
+import { Interface } from '../../../types/Interface';
+import { requestBackend } from '../../../http/requests';
+import { FormContext } from '../../../contexts/FormContext';
+import NoData from '../../NoData';
 
-type ListInterfaceProps = {
+type InterfaceList = {
   assetId?: string;
 };
 
-export default function ListInterface({ assetId }: ListInterfaceProps) {
+export default function InterfaceList({ assetId }: InterfaceList) {
   const columns: TableColumn<Interface>[] = [
     {
       name: 'Nome',

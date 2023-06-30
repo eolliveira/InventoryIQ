@@ -29,6 +29,7 @@ import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
 import { Mobile } from '../../../types/Mobile';
 import MobileForm from './MobileForm';
+import MobileDetails from './MobileDetails';
 
 export default function MobileData() {
   const [openDeviceForm, setOpenDeviceForm] = useState(false);
@@ -192,7 +193,7 @@ export default function MobileData() {
             </Box>
           </AppBar>
           <TabPanel style={{ padding: 0 }} value="1">
-            {/* <PrinterDetails data={device} /> */}
+            <MobileDetails data={device} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="2">
             <AssetMovements assetId={device?.id} />
