@@ -1,5 +1,4 @@
 import { LocalIndustria } from "./LocalIndustria";
-import { Usuario } from "./Usuario";
 
 export type Nobreak = {
     id: string,

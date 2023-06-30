@@ -42,7 +42,6 @@ export default function HardDrive({ disco }: HardDriveProps) {
           }`}
       </Typography>
       <Divider color="gray" />
-
       {disco.particoes.map((particao: Particao) => (
         <>
           <Typography marginTop={1} color={'primary'} fontSize={13}>

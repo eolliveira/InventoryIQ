@@ -23,10 +23,12 @@ export default function LicenseTypeRegistration() {
       name: 'Id',
       selector: (row) => row.id,
       sortable: true,
+      compact: true,
     },
     {
       name: 'Nome',
       selector: (row) => row.nome,
+      compact: true,
       sortable: true,
     },
     { name: 'Descricão', width: '500px', selector: (row) => row.descricao },

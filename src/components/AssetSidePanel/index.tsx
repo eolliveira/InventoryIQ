@@ -93,7 +93,7 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
         </Box>
       </HeaderContainer>
       <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
-      {'usuario' in data && (
+      {!('potencialNominal' in data) && !('totalImpressoes' in data) && (
         <>
           <Typography color={'primary'} fontWeight={'bold'} fontSize={14}>
             Atribuido a
