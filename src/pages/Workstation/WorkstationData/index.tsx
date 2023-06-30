@@ -174,9 +174,7 @@ export default function WorkstationData() {
             marginLeft={2}
             flex={1}
           >
-            {(active ? active?.id : '') +
-              ' - ' +
-              (active ? active?.nomeHost : '')}
+            {(active ? active?.id : '') + ' - ' + (active ? active?.nome : '')}
           </Typography>
           <Stack spacing={2} direction="row">
             <StockButton

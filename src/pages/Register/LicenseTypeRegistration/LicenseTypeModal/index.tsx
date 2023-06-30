@@ -98,6 +98,7 @@ export default function LicenseTypeModal({
                 error={!!errors.nome}
                 helperText={errors.nome?.message}
               />
+
               <InputText
                 label="Descrição"
                 name="descricao"

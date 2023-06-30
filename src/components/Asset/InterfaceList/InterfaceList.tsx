@@ -12,7 +12,7 @@ import CircularLoading from '../../Loaders/Progress';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import Swal from 'sweetalert2';
-import InterfaceForm from '../../InterfaceForm';
+import InterfaceForm from '../InterfaceForm';
 import { Interface } from '../../../types/Interface';
 import { requestBackend } from '../../../http/requests';
 import { FormContext } from '../../../contexts/FormContext';

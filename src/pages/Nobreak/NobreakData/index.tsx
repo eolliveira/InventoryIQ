@@ -179,12 +179,6 @@ export default function NobreakData() {
                 />
                 <CustomTab
                   value="3"
-                  label="Licenças"
-                  iconPosition="start"
-                  icon={<WorkspacePremiumTwoToneIcon />}
-                />
-                <CustomTab
-                  value="4"
                   label="Serviços"
                   iconPosition="start"
                   icon={<HandymanTwoToneIcon />}
@@ -199,9 +193,6 @@ export default function NobreakData() {
             <AssetMovements assetId={nobreak?.id} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="3">
-            <AssetLicense assetId={nobreak?.id} />
-          </TabPanel>
-          <TabPanel style={{ padding: 0 }} value="4">
             <AssetService assetId={nobreak?.id} />
           </TabPanel>
         </TabContext>

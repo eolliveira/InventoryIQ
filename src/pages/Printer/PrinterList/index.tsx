@@ -43,7 +43,7 @@ const columns: TableColumn<Printer>[] = [
     selector: (row) => row.nome,
     sortable: true,
   },
-  { name: 'Dominio', selector: (row) => row.dominio, sortable: true },
+  { name: 'Hostname', selector: (row) => row.nomeHost, sortable: true },
   { name: 'Modelo', selector: (row) => row.modelo, sortable: true },
   {
     name: 'Local',
@@ -213,6 +213,7 @@ export default function PrinterList() {
               'nome',
               'dominio',
               'modelo',
+              'nomeHost',
               'numeroSerie',
               'local',
               'fabricante',

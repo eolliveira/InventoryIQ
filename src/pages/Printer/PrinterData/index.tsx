@@ -129,7 +129,10 @@ export default function PrinterData() {
           confirmButtonColor: '#999999',
         });
       })
-      .finally(() => setSweeping(false));
+      .finally(() => {
+        setSweeping(false);
+        setFormContextData({ isEditing: false });
+      });
   };
 
   return (

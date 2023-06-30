@@ -342,50 +342,52 @@ export default function PrinterForm({
                 </div>
               </div>
 
-              <Box display={'flex'} flexDirection={'column'}>
-                <BaseCard>
-                  <Stack
-                    border={'1px #d6d6d6 solid'}
-                    marginTop={0.5}
-                    height={'100px'}
-                  >
-                    <Typography
-                      borderRadius={'8px 8px 0px 0px'}
-                      bgcolor={'#F8FAFC'}
-                      padding={1}
-                      fontSize={16}
-                      fontWeight={'bold'}
-                      letterSpacing={1}
-                      color={'primary'}
-                      variant="h2"
+              {formContextData.isAdding && (
+                <Box display={'flex'} flexDirection={'column'}>
+                  <BaseCard>
+                    <Stack
+                      border={'1px #d6d6d6 solid'}
+                      marginTop={0.5}
+                      height={'100px'}
                     >
-                      Interfaces
-                    </Typography>
-                    <DataTable
-                      striped
-                      dense
-                      columns={columns}
-                      data={interfaces ? interfaces : []}
-                      noDataComponent={<NoData />}
-                      responsive
-                      fixedHeader
-                      pointerOnHover
-                      highlightOnHover
-                      onRowClicked={() => {}}
-                      customStyles={{
-                        headCells: {
-                          style: {
-                            fontWeight: 'bold',
-                            height: 26,
-                            fontSize: 13,
-                            letterSpacing: 0.5,
+                      <Typography
+                        borderRadius={'8px 8px 0px 0px'}
+                        bgcolor={'#F8FAFC'}
+                        padding={1}
+                        fontSize={16}
+                        fontWeight={'bold'}
+                        letterSpacing={1}
+                        color={'primary'}
+                        variant="h2"
+                      >
+                        Interfaces
+                      </Typography>
+                      <DataTable
+                        striped
+                        dense
+                        columns={columns}
+                        data={interfaces ? interfaces : []}
+                        noDataComponent={<NoData />}
+                        responsive
+                        fixedHeader
+                        pointerOnHover
+                        highlightOnHover
+                        onRowClicked={() => {}}
+                        customStyles={{
+                          headCells: {
+                            style: {
+                              fontWeight: 'bold',
+                              height: 26,
+                              fontSize: 13,
+                              letterSpacing: 0.5,
+                            },
                           },
-                        },
-                      }}
-                    />
-                  </Stack>
-                </BaseCard>
-              </Box>
+                        }}
+                      />
+                    </Stack>
+                  </BaseCard>
+                </Box>
+              )}
             </div>
 
             <Box display={'flex'} justifyContent={'end'} marginTop={2}>

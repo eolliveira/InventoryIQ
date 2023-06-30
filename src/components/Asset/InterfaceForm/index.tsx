@@ -8,12 +8,12 @@ import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { FormContext } from '../../contexts/FormContext';
+import { FormContext } from '../../../contexts/FormContext';
 import Swal from 'sweetalert2';
-import { requestBackend } from '../../http/requests';
-import CustomModal from '../../components/CustomModal';
-import { BaseCard } from '../../style/GlobalStyles';
-import Panel from '../../components/Panel';
+import { requestBackend } from '../../../http/requests';
+import CustomModal from '../../CustomModal';
+import { BaseCard } from '../../../style/GlobalStyles';
+import Panel from '../../Panel';
 
 type InterfaceFormProps = {
   assetId?: string;
