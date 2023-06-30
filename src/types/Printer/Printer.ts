@@ -27,7 +27,3 @@ export type Printer = {
     usuario: Usuario,
     localIndustria: LocalIndustria
   };
-
-
-
-
