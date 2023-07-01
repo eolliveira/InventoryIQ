@@ -2,9 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { toDateTime } from '../../../utils/DateConverter';
 import { toCamelCase } from '../../../utils/StringConverter';
 import { FormContext } from '../../../contexts/FormContext';
-import { BaseCard } from '../../../style/GlobalStyles';
 import Box from '@mui/material/Box';
-import styled from 'styled-components';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -26,6 +24,7 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import { Printer } from '../../../types/Printer/Printer';
 import { Nobreak } from '../../../types/Nobreak';
 import { Mobile } from 'types/Mobile';
+import { Wapper, HeaderContainer } from './style';
 
 type AssetSidePanelProps = {
   data: Printer | Workstation | Nobreak | Mobile;
@@ -321,20 +320,3 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
     </Wapper>
   );
 }
-
-const Wapper = styled(BaseCard)`
-  height: 100%;
-  padding: 12px;
-`;
-
-const HeaderContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
-
-  @media (min-width: 992px) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-`;
