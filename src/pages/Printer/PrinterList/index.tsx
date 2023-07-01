@@ -27,7 +27,7 @@ import Panel from '../../../components/Panel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { FormContext } from '../../../contexts/FormContext';
-import { toDate } from '../../../utils/Date';
+import { toDate } from '../../../utils/DateConverter';
 import CircularLoading from '../../../components/Loaders/Progress';
 import DeleteIcon from '@mui/icons-material/Delete';
 

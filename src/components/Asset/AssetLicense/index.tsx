@@ -11,7 +11,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { Licenca } from 'types/Licenca/Licenca';
 import NoData from '../../NoData';
 import { requestBackend } from '../../../http/requests';
-import { toDate } from '../../../utils/Date';
+import { toDate } from '../../../utils/DateConverter';
 import AssetLinkLicense from '../AssetLinkLicense';
 import { FormContext } from '../../../contexts/FormContext';
 import IconButton from '@mui/material/IconButton';

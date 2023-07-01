@@ -17,7 +17,7 @@ import NoData from '../../NoData';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
-import { toDate } from '../../../utils/Date';
+import { toDate } from '../../../utils/DateConverter';
 
 type AssetServiceProps = {
   assetId?: string;

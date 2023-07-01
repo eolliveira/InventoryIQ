@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import TabContext from '@material-ui/lab/TabContext';
-import { theme } from '../../../style/Theme';
 import styled from 'styled-components';
 import SyncIcon from '@mui/icons-material/Sync';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -198,7 +197,7 @@ export default function PrinterData() {
             position="static"
             style={{
               boxShadow: 'none',
-              backgroundColor: `${theme.colors.white}`,
+              backgroundColor: `white`,
             }}
           >
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

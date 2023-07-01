@@ -27,7 +27,7 @@ import { Licenca } from '../../../types/Licenca/Licenca';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
 import LicenseForm from '../LicenseData/LicenseForm';
-import { toDate } from '../../../utils/Date';
+import { toDate } from '../../../utils/DateConverter';
 import LicenseStatusStyle from '../../../components/LicenseStatusStyle';
 import { licenseStatus } from '../../../constants/LicenseStatus';
 import Select, { SelectChangeEvent } from '@mui/material/Select';

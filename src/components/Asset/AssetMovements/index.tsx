@@ -9,7 +9,7 @@ import Card from '@mui/material/Card';
 import AssetStatusStyle from '../AssetStatusStyle';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import NoData from '../../NoData';
-import { toDate } from '../../../utils/Date';
+import { toDate } from '../../../utils/DateConverter';
 import { FormContext } from '../../../contexts/FormContext';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';

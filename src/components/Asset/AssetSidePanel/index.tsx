@@ -1,6 +1,5 @@
-import { theme } from '../../../style/Theme';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { toDateTime } from '../../../utils/Date';
+import { toDateTime } from '../../../utils/DateConverter';
 import { toCamelCase } from '../../../utils/StringConverter';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
@@ -338,24 +337,4 @@ const HeaderContainer = styled.div`
     flex-direction: column;
     align-items: flex-start;
   }
-`;
-
-const Status = styled.div`
-  min-width: 150px;
-  display: flex;
-  text-align: center;
-  justify-content: space-between;
-  border-radius: 3px;
-  background: #65d59f;
-  padding: 1.5px;
-`;
-
-const Text = styled.p`
-  margin: 0 0 0 5px;
-  padding: 0px 5px;
-  text-align: center;
-  margin-top: 5px;
-  font-size: 13px;
-  font-weight: bold;
-  color: ${theme.colors.secondary};
 `;
