@@ -6,7 +6,7 @@ import { toCamelCase } from '../../../utils/StringConverter';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Card from '@mui/material/Card';
-import AssetStatusStyle from '../../AssetStatusStyle';
+import AssetStatusStyle from '../AssetStatusStyle';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import NoData from '../../NoData';
 import { toDate } from '../../../utils/Date';

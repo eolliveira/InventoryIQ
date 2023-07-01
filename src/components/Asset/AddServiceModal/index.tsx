@@ -1,24 +1,21 @@
-import { BaseCard, Label } from '../../style/GlobalStyles';
+import { BaseCard } from '../../../style/GlobalStyles';
 import { useContext, useState } from 'react';
 import { Button } from '@mui/material';
-import { requestBackend } from '../../http/requests';
-import { FormContext } from '../../contexts/FormContext';
+import { requestBackend } from '../../../http/requests';
+import { FormContext } from '../../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import CustomModal from '../CustomModal';
+import CustomModal from '../../CustomModal';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { typeOfService } from '../../constants/TypeOfService';
+import { typeOfService } from '../../../constants/TypeOfService';
 import Swal from 'sweetalert2';
-import Panel from '../../components/Panel';
-import InputSelect from '../../components/inputs/InputSelect';
+import Panel from '../../Panel';
+import InputSelect from '../../inputs/InputSelect';
 
 type AddServiceModalProps = {
   assetId?: string;

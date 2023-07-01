@@ -1,5 +1,5 @@
 import Chip from '@mui/material/Chip';
-import { removeUnderline, toCamelCase } from '../../utils/StringConverter';
+import { removeUnderline, toCamelCase } from '../../../utils/StringConverter';
 
 type AssetStatusStyleProps = {
   size?: 'small' | 'medium';

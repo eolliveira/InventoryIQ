@@ -17,7 +17,7 @@ import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import AssetSidePanel from '../../../components/AssetSidePanel';
+import AssetSidePanel from '../../../components/Asset/AssetSidePanel';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
 import { AxiosRequestConfig } from 'axios';

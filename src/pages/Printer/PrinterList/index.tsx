@@ -18,7 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
-import AssetStatusStyle from '../../../components/AssetStatusStyle';
+import AssetStatusStyle from '../../../components/Asset/AssetStatusStyle';
 import NoData from '../../../components/NoData';
 import SerchBar from '../../../components/SearchBar';
 import SelectFilter from '../../../components/SearchBar/Filters/SelectFilter';
