@@ -19,6 +19,13 @@ import CircularLoading from '../Loaders/Progress';
 import Panel from '../../components/Panel';
 import Swal from 'sweetalert2';
 
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { toDate } from '../../utils/DateConverter';
+import styled from 'styled-components';
+
 type ChangeNfEntradaModalProps = {
   assetId?: string;
   license: boolean;
@@ -44,8 +51,16 @@ const columns: TableColumn<NotaFiscalEntrada>[] = [
     selector: (row) => row.nrNotaFiscal,
     sortable: true,
   },
-  { name: 'Data de Emissão', selector: (row) => row.dtEmissao, sortable: true },
-  { name: 'Data de Entrada', selector: (row) => row.dtEntrada, sortable: true },
+  {
+    name: 'Data de Emissão',
+    selector: (row) => toDate(row.dtEmissao),
+    sortable: true,
+  },
+  {
+    name: 'Data de Entrada',
+    selector: (row) => toDate(row.dtEntrada),
+    sortable: true,
+  },
   {
     name: 'Valor da Nota',
     selector: (row) => row.valorNotaFiscal,
@@ -63,12 +78,17 @@ export default function ChangeNfEntradaModal({
   const [isLoading, setIsLoading] = useState(false);
   const [notes, setNotes] = useState<NotaFiscalEntrada[]>();
   const [inputFilter, setInputFilter] = useState('');
+  const [dtEmissaoInicioFilter, setDtEmissaoInicioFilter] = useState('');
+  const [dtEmissaoFinalFilter, setDtEmissaoFinalFilter] = useState('');
   const [selectedNfEntrada, setSelectedNfEntrada] = useState('');
+
+  const [dtEmissaoInicio, setDtEmissaoInicio] = useState('');
+  const [dtEmissaoFinal, setDtEmissaoFinal] = useState('');
 
   useEffect(() => {
     setIsLoading(true);
     const params: AxiosRequestConfig = {
-      url: `/nfEntrada?NrNotaFiscal=${inputFilter}`,
+      url: `/nfEntrada?NrNotaFiscal=${inputFilter}&dtEmissaoInicio=${dtEmissaoInicioFilter}&dtEmissaoFinal=${dtEmissaoFinalFilter}`,
       withCredentials: true,
     };
 
@@ -80,7 +100,7 @@ export default function ChangeNfEntradaModal({
         window.alert(error.response.data.message);
       })
       .finally(() => setIsLoading(false));
-  }, [inputFilter]);
+  }, [inputFilter, dtEmissaoInicioFilter, dtEmissaoFinalFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
     if (selectedRows.selectedCount != 0)
@@ -139,13 +159,81 @@ export default function ChangeNfEntradaModal({
     <CustomModal openModal={openForm}>
       <BaseCard>
         <Panel title="Atribuir Nota Fiscal">
-          <Stack height={500} width={850}>
-            <Stack direction={'row'}>
-              <SerchBar
-                inputFilter={inputFilter}
-                setInputFilter={setInputFilter}
-              />
-            </Stack>
+          <Container>
+            <Box display={'flex'} alignItems={'center'} flexWrap={'wrap'}>
+              <Stack direction={'row'}>
+                <SerchBar
+                  inputFilter={inputFilter}
+                  setInputFilter={setInputFilter}
+                  onClearFilters={() => {}}
+                  setOpenCustomFilters={() => {}}
+                />
+              </Stack>
+              <Box>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    format="DD/MM/YYYY"
+                    value={dtEmissaoInicio}
+                    onChange={(event) => {
+                      setDtEmissaoInicioFilter(
+                        dayjs(event).format('DD/MM/YYYY')
+                      );
+                    }}
+                    slotProps={{
+                      textField: {
+                        margin: 'dense',
+                        size: 'small',
+                        variant: 'outlined',
+                        InputLabelProps: {
+                          style: {
+                            fontSize: 14,
+                          },
+                        },
+                        InputProps: {
+                          style: {
+                            fontSize: 13,
+                            width: 150,
+                            height: 33,
+                          },
+                        },
+                      },
+                    }}
+                  />
+                  <DatePicker
+                    format="DD/MM/YYYY"
+                    value={dtEmissaoFinal}
+                    onChange={(event) => {
+                      setDtEmissaoFinalFilter(
+                        dayjs(event).format('DD/MM/YYYY')
+                      );
+                      console.log(
+                        'data EMISSAO FINAL: ' +
+                          dayjs(event).format('YYYY-MM-DD')
+                      );
+                    }}
+                    slotProps={{
+                      textField: {
+                        margin: 'dense',
+                        size: 'small',
+                        variant: 'outlined',
+                        InputLabelProps: {
+                          style: {
+                            fontSize: 14,
+                          },
+                        },
+                        InputProps: {
+                          style: {
+                            fontSize: 13,
+                            width: 150,
+                            height: 33,
+                          },
+                        },
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              </Box>
+            </Box>
             <DataTable
               columns={columns}
               data={notes ? notes : []}
@@ -173,8 +261,8 @@ export default function ChangeNfEntradaModal({
                 },
               }}
             />
-          </Stack>
-          <Box display={'flex'} justifyContent={'end'}>
+          </Container>
+          <Box marginTop={6} display={'flex'} justifyContent={'end'}>
             <Button
               variant="contained"
               sx={{ height: 33 }}
@@ -202,3 +290,41 @@ export default function ChangeNfEntradaModal({
     </CustomModal>
   );
 }
+
+const Container = styled.div`
+  @media (min-width: 400px) {
+    width: 380px;
+  }
+
+  @media (min-width: 600px) {
+    width: 500px;
+  }
+
+  @media (min-width: 720px) {
+    width: 620px;
+  }
+
+  @media (min-width: 750px) {
+    width: 700px;
+  }
+
+  @media (min-width: 900px) {
+    width: 850px;
+    height: 600px;
+  }
+
+  @media (min-width: 1100px) {
+    width: 1000px;
+    height: 600px;
+  }
+
+  @media (min-width: 1300px) {
+    width: 1200px;
+    height: 600px;
+  }
+
+  @media (min-width: 1400px) {
+    width: 1300px;
+    height: 600px;
+  }
+`;

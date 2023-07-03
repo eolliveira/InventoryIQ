@@ -17,6 +17,7 @@ import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
 import Logout from '@mui/icons-material/Logout';
 import { removeAuthData } from '../../utils/LocalStorage';
+import Typography from '@mui/material/Typography';
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -114,7 +115,9 @@ export default function Header() {
           >
             <MenuItem>
               <Avatar sx={{ color: '#4d4d4d' }} />
-              {authContextData.tokenData?.sub}
+              <Typography fontSize={14}>
+                {authContextData.tokenData?.sub}
+              </Typography>
             </MenuItem>
             <Divider />
 
