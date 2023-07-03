@@ -2,6 +2,6 @@ import { Role } from './Role';
 
 export type TokenData = {
   exp: number;
-  user_name: string;
+  sub: string;
   authorities: Role[];
 };

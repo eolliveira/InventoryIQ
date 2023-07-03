@@ -165,6 +165,7 @@ export default function PrinterList() {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/printer?${filterField}=${inputFilter}&status=${statusFilter}`,
+      withCredentials: true,
       params: {
         page: numberPage,
         size: rowsPerPage,

@@ -97,6 +97,7 @@ export default function WorkstationForm({
             ? `/workstation`
             : `/workstation/${data?.id}/update`,
           data: formData,
+          withCredentials: true,
         };
 
         requestBackend(params)

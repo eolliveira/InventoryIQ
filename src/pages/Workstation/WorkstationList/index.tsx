@@ -36,6 +36,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Swal from 'sweetalert2';
+import { hasAnyHoles } from '../../../utils/Auth';
 
 const columns: TableColumn<Workstation>[] = [
   {
@@ -158,6 +159,7 @@ export default function WorkstationList() {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/workstation?${filterField}=${inputFilter}&status=${statusFilter}`,
+      withCredentials: true,
       params: {
         page: numberPage,
         size: rowsPerPage,
@@ -201,6 +203,9 @@ export default function WorkstationList() {
 
   return (
     <Panel title="Estações de Trabalho ">
+      <h1>
+        {hasAnyHoles(['ROLE_ADMIN']) ? 'USUARIO ADMIN' : 'USUARIO NORMAL'}
+      </h1>
       <Box
         display={'flex'}
         flexWrap={'wrap'}

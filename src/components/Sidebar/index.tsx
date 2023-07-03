@@ -6,7 +6,7 @@ import {
   useProSidebar,
   sidebarClasses,
 } from 'react-pro-sidebar';
-import { ButtonColapseContainer, SidebarContainer } from './Sidebar.style';
+import { ButtonColapseContainer, SidebarContainer } from './style';
 import MenuIcon from '@mui/icons-material/Menu';
 import DevicesIcon from '@mui/icons-material/Devices';
 import { Link, useLocation } from 'react-router-dom';

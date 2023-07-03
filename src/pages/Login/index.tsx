@@ -8,18 +8,20 @@ import { saveAuthData } from '../../utils/LocalStorage';
 import { getTokenData } from '../../utils/Auth';
 
 type FormData = {
-  username: string;
+  login: string;
   password: string;
 };
-
 
 //imprementar erro na requisição usando um estado
 
 export default function Login() {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
   const { setAuthContextData } = useContext(AuthContext);
-
 
   const onSubmit = (formData: FormData) => {
     requestBackendLogin(formData)
@@ -27,8 +29,8 @@ export default function Login() {
         saveAuthData(response.data);
         setAuthContextData({
           authenticated: true,
-          tokenData: getTokenData()
-        })
+          tokenData: getTokenData(),
+        });
         navigate('/dashboard');
       })
       .catch((error) => {
@@ -38,13 +40,13 @@ export default function Login() {
 
   return (
     <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="username">Usuário:</label>
-      <div>{errors.username?.message}</div>
+      <label htmlFor="login">Usuário:</label>
+      <div>{errors.login?.message}</div>
       <input
-        {...register('username', {
+        {...register('login', {
           required: 'Login obrigatorio',
         })}
-        name="username"
+        name="login"
         type="text"
         placeholder="Login"
       />

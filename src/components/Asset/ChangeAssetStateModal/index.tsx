@@ -14,13 +14,11 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { assetStatus } from '../../../constants/AssetStatus';
 import Panel from '../../../components/Panel';
-import InputSelect from '../../../components/inputs/InputSelect';
 import Swal from 'sweetalert2';
-import InputText from '../../../components/inputs/InputText';
 
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import { removeUnderline, toCamelCase } from '../../../utils/StringConverter';
 
 type ChangeStateProps = {

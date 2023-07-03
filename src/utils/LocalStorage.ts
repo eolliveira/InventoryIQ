@@ -1,10 +1,7 @@
 type LoginResponse = {
-  access_token: string;
-  expires_in: string;
-  scope: string;
-  token_type: string;
-  userFirstName: string;
-  userId: string;
+    token: string,
+    login: string,
+    userId: string
 };
 
 const tokenKey = 'authData';

@@ -4,31 +4,30 @@ import { getAuthData } from '../utils/LocalStorage';
 
 //export const BASE_URL = 'http://localhost:8080';
 export const BASE_URL = 'http://192.168.0.104:8080';
-export const CLIENT_ID = 'snmpmanager';
-export const CLIENT_ID_SECRET = 'snmpmanager123';
+// export const CLIENT_ID = 'snmpmanager';
+// export const CLIENT_ID_SECRET = 'snmpmanager123';
 
 type LoginData = {
-  username: string;
+  login: string;
   password: string;
 };
 
 export const requestBackendLogin = (loginData: LoginData) => {
-  const headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: 'Basic ' + window.btoa(CLIENT_ID + ':' + CLIENT_ID_SECRET),
-  };
+  // const headers = {
+  //   'Content-Type': 'application/x-www-form-urlencoded',
+  //   Authorization: 'Basic ' + window.btoa(CLIENT_ID + ':' + CLIENT_ID_SECRET),
+  // };
 
-  const data = qs.stringify({
-    ...loginData,
-    grant_type: 'password',
-  });
+  // const data = qs.stringify({
+  //   ...loginData,
+  //   grant_type: 'password',
+  // });
 
   return axios({
     method: 'POST',
     baseURL: BASE_URL,
-    url: '/oauth/token',
-    headers,
-    data,
+    url: '/auth/login',
+    data: loginData
   });
 };
 
@@ -36,7 +35,7 @@ export const requestBackend = (config: AxiosRequestConfig) => {
   const headers = config.withCredentials
     ? {
         ...config.headers,
-        Authorization: 'Bearer ' + getAuthData().access_token,
+        Authorization: 'Bearer ' + getAuthData().token,
       }
     : config.headers;
 
@@ -61,12 +60,15 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    // if (error.response.status === 401) {
-    //   window.location.href = '/login';
-    // }
+    if (error.response.status === 401) {
+      window.location.href = '/login';
+      console.log("codigo de resposta 401");
+            
+    }
 
     if (error.response.status === 403) {
-      window.location.href = '/dashboard';
+      //window.location.href = '/dashboard';
+      console.log("codigo de resposta 403");
     }
 
     return Promise.reject(error);

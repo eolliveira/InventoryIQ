@@ -5,7 +5,7 @@ import { Role } from 'types/Authentication/Role';
 
 export const getTokenData = (): TokenData | undefined => {
   try {
-    return jwtDecode(getAuthData().access_token) as TokenData;
+    return jwtDecode(getAuthData().token) as TokenData;
   } catch (error) {
     return undefined;
   }
