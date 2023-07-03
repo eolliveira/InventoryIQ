@@ -68,9 +68,10 @@ export default function ChangeNfEntradaModal({
   useEffect(() => {
     setIsLoading(true);
     const params: AxiosRequestConfig = {
-      method: 'GET',
       url: `/nfEntrada?NrNotaFiscal=${inputFilter}`,
+      withCredentials: true,
     };
+
     requestBackend(params)
       .then((response) => {
         setNotes(response.data.content);
@@ -105,6 +106,7 @@ export default function ChangeNfEntradaModal({
         ? `/licenses/${assetId}/nfEntrada/update`
         : `/active/${assetId}/nfEntrada/update`,
       data,
+      withCredentials: true,
     };
     requestBackend(params)
       .then(() => {

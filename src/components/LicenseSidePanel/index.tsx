@@ -16,6 +16,7 @@ import { requestBackend } from '../../http/requests';
 import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 import { formatCurrency } from '../../utils/CurrencyConverter';
 import { Licenca } from '../../types/Licenca/Licenca';
+import { AxiosRequestConfig } from 'axios';
 
 type LicenseSidePanelProps = {
   license: Licenca;
@@ -29,7 +30,12 @@ export default function LicenseSidePanel({ license }: LicenseSidePanelProps) {
     useState(false);
 
   const getNfEntrada = useCallback(() => {
-    requestBackend({ url: `/nfEntrada/${license.idNfEntrada}` })
+    const params: AxiosRequestConfig = {
+      url: `/nfEntrada/${license.idNfEntrada}`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => {
         setNfEntrada(response.data);
       })

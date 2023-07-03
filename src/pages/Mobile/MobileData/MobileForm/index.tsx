@@ -73,6 +73,7 @@ export default function MobileForm({
             ? '/mobileDevice'
             : `/mobileDevice/${data?.id}/update`,
           data: formData,
+          withCredentials: true,
         };
 
         requestBackend(params)

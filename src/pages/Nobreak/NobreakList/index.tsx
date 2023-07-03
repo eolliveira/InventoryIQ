@@ -116,6 +116,7 @@ export default function NobreakList() {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
           url: `/active/${AssetId}`,
+          withCredentials: true,
         };
 
         requestBackend(params)
@@ -162,6 +163,7 @@ export default function NobreakList() {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/nobreak?${filterField}=${inputFilter}&status=${statusFilter}`,
+      withCredentials: true,
       params: {
         page: numberPage,
         size: rowsPerPage,

@@ -25,6 +25,7 @@ import { Printer } from '../../../types/Printer/Printer';
 import { Nobreak } from '../../../types/Nobreak';
 import { Mobile } from 'types/Mobile';
 import { Wapper, HeaderContainer } from './style';
+import { AxiosRequestConfig } from 'axios';
 
 type AssetSidePanelProps = {
   data: Printer | Workstation | Nobreak | Mobile;
@@ -40,7 +41,12 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
     useState(false);
 
   const getNfEntrada = useCallback(() => {
-    requestBackend({ url: `/nfEntrada/${data.idNfEntrada}` })
+    const params: AxiosRequestConfig = {
+      url: `/nfEntrada/${data.idNfEntrada}`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => setNfEntrada(response.data))
       .catch((error) => window.alert(error.response.data.message));
   }, [data]);

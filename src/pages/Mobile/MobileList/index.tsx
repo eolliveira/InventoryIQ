@@ -123,6 +123,7 @@ export default function MobileList() {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
           url: `/active/${AssetId}`,
+          withCredentials: true,
         };
 
         requestBackend(params)
@@ -169,6 +170,7 @@ export default function MobileList() {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/mobileDevice?${filterField}=${inputFilter}&status=${statusFilter}`,
+      withCredentials: true,
       params: {
         page: numberPage,
         size: rowsPerPage,

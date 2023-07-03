@@ -47,7 +47,12 @@ export default function PrinterData() {
   const navigate = useNavigate();
 
   const getPrinterData = useCallback(() => {
-    requestBackend({ url: `/printer/${printerId}` })
+    const params: AxiosRequestConfig = {
+      url: `/printer/${printerId}`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => setPrinter(response.data))
       .catch((error) => console.log(error));
   }, [printerId, sweeping, formContextData]);
@@ -82,6 +87,7 @@ export default function PrinterData() {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
           url: `/active/${printer?.id}`,
+          withCredentials: true,
         };
 
         requestBackend(params)
@@ -114,6 +120,7 @@ export default function PrinterData() {
     const params: AxiosRequestConfig = {
       method: 'PUT',
       url: `/printer/${printer?.id}/sweep`,
+      withCredentials: true,
     };
 
     requestBackend(params)

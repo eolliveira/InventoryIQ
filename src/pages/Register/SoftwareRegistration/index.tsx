@@ -90,6 +90,7 @@ export default function SoftwareRegistration() {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
           url: `/software/${softwareId}`,
+          withCredentials: true,
         };
 
         requestBackend(params)
@@ -116,7 +117,12 @@ export default function SoftwareRegistration() {
   }
 
   useEffect(() => {
-    requestBackend({ url: '/software' })
+    const params: AxiosRequestConfig = {
+      url: '/software',
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => setSoftwares(response.data))
       .catch((error) => console.log('Erro' + error));
   }, [formContextData]);

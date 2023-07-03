@@ -51,6 +51,11 @@ export default function AssetLinkLicense({
   const [selectedLicense, setSelectedLicense] = useState('');
 
   useEffect(() => {
+    const params: AxiosRequestConfig = {
+      url: `/active/${assetId}/licenses`,
+      withCredentials: true,
+    };
+
     requestBackend({ url: `/licenses` })
       .then((response) => setLicenses(response.data.content))
       .catch((error) => window.alert(error.response.data.message));
@@ -80,6 +85,7 @@ export default function AssetLinkLicense({
     const params: AxiosRequestConfig = {
       method: 'PUT',
       url: `/licenses/linkActive`,
+      withCredentials: true,
       data: data,
     };
     requestBackend(params)

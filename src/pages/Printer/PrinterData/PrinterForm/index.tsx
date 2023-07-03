@@ -85,6 +85,7 @@ export default function PrinterForm({
             ? '/printer'
             : `/printer/${data?.id}/update`,
           data: formData,
+          withCredentials: true,
         };
 
         requestBackend(params)
@@ -129,6 +130,7 @@ export default function PrinterForm({
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/printer/data/${ipAddress}`,
+      withCredentials: true,
     };
 
     requestBackend(params)

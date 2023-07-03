@@ -69,8 +69,8 @@ export default function AssetService({ assetId }: AssetServiceProps) {
 
   const getServices = useCallback(() => {
     const params: AxiosRequestConfig = {
-      method: 'GET',
       url: `/active/${assetId}/services`,
+      withCredentials: true,
     };
 
     requestBackend(params)
@@ -99,6 +99,7 @@ export default function AssetService({ assetId }: AssetServiceProps) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
           url: `/services/${serviceId}`,
+          withCredentials: true,
         };
 
         requestBackend(params)

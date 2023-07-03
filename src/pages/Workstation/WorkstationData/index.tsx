@@ -50,7 +50,12 @@ export default function WorkstationData() {
   const navigate = useNavigate();
 
   const getWorkstationData = useCallback(() => {
-    requestBackend({ url: `/workstation/${workstationId}` })
+    const params: AxiosRequestConfig = {
+      url: `/workstation/${workstationId}`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => {
         setActive(response.data);
       })
@@ -92,6 +97,7 @@ export default function WorkstationData() {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
           url: `/active/${active?.id}`,
+          withCredentials: true,
         };
 
         requestBackend(params)
@@ -124,6 +130,7 @@ export default function WorkstationData() {
     const params: AxiosRequestConfig = {
       method: 'PUT',
       url: `/workstation/${active?.id}/sweep`,
+      withCredentials: true,
     };
 
     requestBackend(params)

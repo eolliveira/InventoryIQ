@@ -48,7 +48,12 @@ export default function ChangeLocationModal({
   const [selectedLocation, setSelectedLocation] = useState('');
 
   useEffect(() => {
-    requestBackend({ url: `/IndustrySite?dsLocalIndustria=${inputFilter}` })
+    const params: AxiosRequestConfig = {
+      url: `/IndustrySite?dsLocalIndustria=${inputFilter}`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => setLocations(response.data))
       .catch((error) => window.alert(error.response.data.message));
   }, [inputFilter]);
@@ -77,6 +82,7 @@ export default function ChangeLocationModal({
       method: 'PUT',
       url: `/active/${assetId}/location/update`,
       data: data,
+      withCredentials: true,
     };
     requestBackend(params)
       .then(() => {

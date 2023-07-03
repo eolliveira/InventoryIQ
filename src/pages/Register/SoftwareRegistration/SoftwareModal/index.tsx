@@ -52,7 +52,7 @@ export default function SoftwareModal({
         ? `/software/${software?.id}`
         : '/software',
       data: formData,
-      withCredentials: false,
+      withCredentials: true,
     };
 
     requestBackend(params)

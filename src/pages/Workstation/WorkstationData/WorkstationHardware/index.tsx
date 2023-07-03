@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { requestBackend } from '../../../../http/requests';
 import { Disco } from '../../../../types/Workstation/Disco';
 import HardDrive from './HardDrive';
+import { AxiosRequestConfig } from 'axios';
 
 type ProgressBarDiscProps = {
   assetId?: string;
@@ -15,7 +16,12 @@ export default function ProgressBarDisc({ assetId }: ProgressBarDiscProps) {
   const [disc, setDisc] = useState<Disco[]>();
 
   const getHardDrives = useCallback(() => {
-    requestBackend({ url: `/workstation/${assetId}/hardDrives` })
+    const params: AxiosRequestConfig = {
+      url: `/workstation/${assetId}/hardDrives`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => {
         setDisc(response.data);
       })

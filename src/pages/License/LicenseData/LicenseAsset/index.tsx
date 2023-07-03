@@ -60,9 +60,12 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
   const navigate = useNavigate();
 
   const getAssets = useCallback(() => {
-    requestBackend({ url: `/licenses/${licenseId}/assets` }).then((response) =>
-      setAssets(response.data)
-    );
+    const params: AxiosRequestConfig = {
+      url: `/licenses/${licenseId}/assets`,
+      withCredentials: true,
+    };
+
+    requestBackend(params).then((response) => setAssets(response.data));
   }, [licenseId, formContextData]);
 
   useEffect(() => {
@@ -90,6 +93,7 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
           method: 'PUT',
           url: `/licenses/unlinkActive`,
           data,
+          withCredentials: true,
         };
 
         requestBackend(params)

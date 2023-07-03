@@ -42,7 +42,12 @@ export default function ChangeUserModal({
   const [selectedUser, setSelectedUser] = useState('');
 
   useEffect(() => {
-    requestBackend({ url: `/users?nome=${inputFilter}` })
+    const params: AxiosRequestConfig = {
+      url: `/users?nome=${inputFilter}`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => {
         setUsers(response.data.content);
       })
@@ -75,6 +80,7 @@ export default function ChangeUserModal({
       method: 'PUT',
       url: `/active/${assetId}/user/update`,
       data: data,
+      withCredentials: true,
     };
     requestBackend(params)
       .then(() => {

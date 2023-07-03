@@ -142,6 +142,7 @@ export default function WorkstationForm({
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/workstation/data/${ipAddress}`,
+      withCredentials: true,
     };
 
     requestBackend(params)

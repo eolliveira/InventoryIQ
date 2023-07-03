@@ -77,7 +77,7 @@ export default function MobileDetails({ data }: MobileDetailsProps) {
           </Card>
         </div>
       </div>
-      <InterfaceList assetId={data?.id} />
+      {data && <InterfaceList assetId={data.id} />}
     </Box>
   );
 }

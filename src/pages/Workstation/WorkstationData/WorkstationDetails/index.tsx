@@ -96,7 +96,7 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
           </Card>
         </div>
       </div>
-      <InterfaceList assetId={data?.id} />
+      {data && <InterfaceList assetId={data.id} />}
     </Box>
   );
 }

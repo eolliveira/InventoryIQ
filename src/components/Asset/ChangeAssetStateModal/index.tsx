@@ -20,6 +20,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { removeUnderline, toCamelCase } from '../../../utils/StringConverter';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 type ChangeStateProps = {
   assetId?: string;
@@ -32,6 +33,7 @@ export default function ChangeStateModal({
   openModal,
   closeModal,
 }: ChangeStateProps) {
+  const { authContextData, setAuthContextData } = useContext(AuthContext);
   const { setFormContextData } = useContext(FormContext);
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');
@@ -61,14 +63,14 @@ export default function ChangeStateModal({
       statusAtivo: state,
       descricao: description,
       ativoId: assetId,
-      usuarioId: 6566,
+      usuarioId: authContextData.tokenData?.userId,
     };
 
     const params: AxiosRequestConfig = {
       method: 'POST',
       url: '/movement',
-      data: data,
-      withCredentials: false,
+      data,
+      withCredentials: true,
     };
 
     requestBackend(params)

@@ -52,7 +52,7 @@ export default function LicenseTypeModal({
         ? `/licenseType/${data?.id}`
         : '/licenseType',
       data: formData,
-      withCredentials: false,
+      withCredentials: true,
     };
 
     requestBackend(params)

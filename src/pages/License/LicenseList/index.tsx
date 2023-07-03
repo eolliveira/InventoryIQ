@@ -98,6 +98,7 @@ export default function LicenseList() {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/licenses?${filterField}=${inputFilter}&status=${statusFilter}`,
+      withCredentials: true,
       params: {
         page: numberPage,
         size: 10,

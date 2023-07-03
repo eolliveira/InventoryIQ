@@ -62,7 +62,12 @@ export default function LicenseForm({
   const navigate = useNavigate();
 
   const getLicenseType = useCallback(() => {
-    requestBackend({ url: '/licenseType' })
+    const params: AxiosRequestConfig = {
+      url: '/licenseType',
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => {
         setLicenseType(response.data);
       })
@@ -72,7 +77,12 @@ export default function LicenseForm({
   }, []);
 
   const getSoftwares = useCallback(() => {
-    requestBackend({ url: '/software' })
+    const params: AxiosRequestConfig = {
+      url: '/software',
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => {
         setSoftware(response.data);
       })
@@ -130,6 +140,7 @@ export default function LicenseForm({
             ? '/licenses'
             : `/licenses/${licenseData?.id}/update`,
           data,
+          withCredentials: true,
         };
 
         requestBackend(params)

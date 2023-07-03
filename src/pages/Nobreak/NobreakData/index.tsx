@@ -43,7 +43,12 @@ export default function NobreakData() {
   const navigate = useNavigate();
 
   const getNobreakData = useCallback(() => {
-    requestBackend({ url: `/nobreak/${nobreakId}` })
+    const params: AxiosRequestConfig = {
+      url: `/nobreak/${nobreakId}`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => setNobreak(response.data))
       .catch((error) => console.log(error));
   }, [nobreakId, formContextData]);
@@ -78,6 +83,7 @@ export default function NobreakData() {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
           url: `/active/${nobreak?.id}`,
+          withCredentials: true,
         };
 
         requestBackend(params)

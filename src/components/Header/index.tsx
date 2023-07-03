@@ -61,6 +61,7 @@ export default function Header() {
         }}
       >
         <Box>
+          {/* // remover esse tooltip */}
           <Tooltip title="Configurações do usuário">
             <IconButton
               onClick={handleClick}
@@ -70,7 +71,9 @@ export default function Header() {
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>E</Avatar>
+              <Avatar sx={{ bgcolor: '#914ab9', width: 32, height: 32 }}>
+                {authContextData.tokenData?.sub.substring(0, 1)}
+              </Avatar>
             </IconButton>
           </Tooltip>
 
@@ -110,14 +113,14 @@ export default function Header() {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
             <MenuItem>
-              <Avatar />
+              <Avatar sx={{ color: '#4d4d4d' }} />
               {authContextData.tokenData?.sub}
             </MenuItem>
             <Divider />
 
             <MenuItem onClick={handleLogout}>
               <ListItemIcon>
-                <Logout fontSize="small" />
+                <Logout color="primary" fontSize="small" />
               </ListItemIcon>
               Sair
             </MenuItem>

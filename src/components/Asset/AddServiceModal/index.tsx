@@ -16,6 +16,7 @@ import { typeOfService } from '../../../constants/TypeOfService';
 import Swal from 'sweetalert2';
 import Panel from '../../Panel';
 import InputSelect from '../../inputs/InputSelect';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 type AddServiceModalProps = {
   assetId?: string;
@@ -28,6 +29,7 @@ export default function AddServiceModal({
   openModal,
   closeModal,
 }: AddServiceModalProps) {
+  const { authContextData, setAuthContextData } = useContext(AuthContext);
   const { setFormContextData } = useContext(FormContext);
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');
@@ -39,14 +41,14 @@ export default function AddServiceModal({
       descricao: description,
       vlServico: value,
       ativoId: assetId,
-      usuarioId: 6566,
+      usuarioId: authContextData.tokenData?.userId,
     };
 
     const params: AxiosRequestConfig = {
       method: 'POST',
       url: '/services',
       data: data,
-      withCredentials: false,
+      withCredentials: true,
     };
 
     requestBackend(params)

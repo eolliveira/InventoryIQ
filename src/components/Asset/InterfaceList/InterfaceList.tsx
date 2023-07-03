@@ -73,7 +73,13 @@ export default function InterfaceList({ assetId }: InterfaceList) {
 
   const getInterfaces = useCallback(() => {
     setIsLoadingInterfaces(true);
-    requestBackend({ url: `/active/${assetId}/interfaces` })
+
+    const params: AxiosRequestConfig = {
+      url: `/active/${assetId}/interfaces`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => {
         setListInterfaces(response.data);
       })
@@ -98,6 +104,7 @@ export default function InterfaceList({ assetId }: InterfaceList) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
           url: `/interface/${interfaceId}`,
+          withCredentials: true,
         };
 
         requestBackend(params)

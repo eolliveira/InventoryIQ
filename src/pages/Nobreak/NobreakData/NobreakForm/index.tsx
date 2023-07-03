@@ -66,6 +66,7 @@ export default function NobreakForm({
             ? '/nobreak'
             : `/nobreak/${data?.id}/update`,
           data: formData,
+          withCredentials: true,
         };
 
         requestBackend(params)

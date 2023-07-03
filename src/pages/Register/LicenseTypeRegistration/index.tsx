@@ -91,6 +91,7 @@ export default function LicenseTypeRegistration() {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
           url: `/licenseType/${licenseTypeId}`,
+          withCredentials: true,
         };
 
         requestBackend(params)
@@ -117,7 +118,12 @@ export default function LicenseTypeRegistration() {
   }
 
   useEffect(() => {
-    requestBackend({ url: '/licenseType' })
+    const params: AxiosRequestConfig = {
+      url: '/licenseType',
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => setTypes(response.data))
       .catch((error) => console.log('Erro' + error));
   }, [formContextData]);

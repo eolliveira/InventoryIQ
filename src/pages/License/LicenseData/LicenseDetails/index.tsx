@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { requestBackend } from '../../../../http/requests';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
 import { Licenca } from '../../../../types/Licenca/Licenca';
+import { AxiosRequestConfig } from 'axios';
 
 type LicenseDetailsProps = {
   data?: Licenca;
@@ -18,7 +19,13 @@ export default function LicenseDetails({ data }: LicenseDetailsProps) {
 
   useEffect(() => {
     setIsLoading(true);
-    requestBackend({ url: `/active/${data?.id}/interfaces` })
+
+    const params: AxiosRequestConfig = {
+      url: `/active/${data?.id}/interfaces`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => {
         console.log('teste');
         setListInterfaces(response.data);

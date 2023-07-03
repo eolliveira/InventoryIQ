@@ -53,7 +53,7 @@ export default function InterfaceForm({
       method: 'POST',
       url: '/interface',
       data: data,
-      withCredentials: false,
+      withCredentials: true,
     };
 
     requestBackend(params)

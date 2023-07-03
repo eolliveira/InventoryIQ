@@ -40,7 +40,12 @@ export default function LicenseData() {
   const navigate = useNavigate();
 
   const getLicenseData = useCallback(() => {
-    requestBackend({ url: `/licenses/${licenseId}` })
+    const params: AxiosRequestConfig = {
+      url: `/licenses/${licenseId}`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => {
         setLicense(response.data);
       })
@@ -88,6 +93,7 @@ export default function LicenseData() {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
           url: `/licenses/${license?.id}`,
+          withCredentials: true,
         };
 
         requestBackend(params)

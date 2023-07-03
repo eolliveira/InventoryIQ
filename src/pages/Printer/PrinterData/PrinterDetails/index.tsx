@@ -80,7 +80,7 @@ export default function PrinterDetails({ data }: PrinterDetailsProps) {
           </Card>
         </div>
       </div>
-      <InterfaceList assetId={data?.id} />
+      {data && <InterfaceList assetId={data.id} />}
     </Box>
   );
 }

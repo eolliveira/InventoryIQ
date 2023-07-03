@@ -44,7 +44,12 @@ export default function MobileData() {
   const navigate = useNavigate();
 
   const getDeviceData = useCallback(() => {
-    requestBackend({ url: `/mobileDevice/${deviceId}` })
+    const params: AxiosRequestConfig = {
+      url: `/mobileDevice/${deviceId}`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => setDevice(response.data))
       .catch((error) => console.log(error));
   }, [deviceId, formContextData]);
@@ -79,6 +84,7 @@ export default function MobileData() {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
           url: `/active/${device?.id}`,
+          withCredentials: true,
         };
 
         requestBackend(params)

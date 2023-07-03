@@ -129,6 +129,7 @@ export default function WorkstationList() {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
           url: `/active/${AssetId}`,
+          withCredentials: true,
         };
 
         requestBackend(params)
