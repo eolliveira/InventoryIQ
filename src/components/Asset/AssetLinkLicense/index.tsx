@@ -52,11 +52,11 @@ export default function AssetLinkLicense({
 
   useEffect(() => {
     const params: AxiosRequestConfig = {
-      url: `/active/${assetId}/licenses`,
+      url: `/licenses`,
       withCredentials: true,
     };
 
-    requestBackend({ url: `/licenses` })
+    requestBackend(params)
       .then((response) => setLicenses(response.data.content))
       .catch((error) => window.alert(error.response.data.message));
   }, [inputFilter]);

@@ -31,13 +31,32 @@ export default function AddServiceModal({
 }: AddServiceModalProps) {
   const { authContextData, setAuthContextData } = useContext(AuthContext);
   const { setFormContextData } = useContext(FormContext);
-  const [state, setState] = useState('');
+  const [typeService, setTypeService] = useState('');
   const [description, setDescription] = useState('');
   const [value, setValue] = useState(0);
 
   function handleSave() {
+    if (typeService == '') {
+      Swal.fire({
+        title: 'Atenção',
+        text: 'Selecione o tipo do serviço!',
+        icon: 'warning',
+        confirmButtonColor: '#999999',
+      });
+      return;
+    }
+    if (description == '') {
+      Swal.fire({
+        title: 'Atenção',
+        text: 'Informe uma descrição para o serviço!',
+        icon: 'warning',
+        confirmButtonColor: '#999999',
+      });
+      return;
+    }
+
     const data = {
-      tipoServico: state,
+      tipoServico: typeService,
       descricao: description,
       vlServico: value,
       ativoId: assetId,
@@ -84,21 +103,21 @@ export default function AddServiceModal({
         <Panel title="Adicionar Serviço">
           <FormControl>
             <InputSelect
+              required
               label="Tipo"
-              inputField={state}
-              setInputField={setState}
+              inputField={typeService}
+              setInputField={setTypeService}
               selectedItems={typeOfService.map((type) => type.value)}
             />
 
             <TextField
               style={{ width: 350 }}
               margin={'normal'}
-              id="outlined-multiline-static"
               label="Descrição"
               multiline
               size="small"
               rows={6}
-              required
+              value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
 

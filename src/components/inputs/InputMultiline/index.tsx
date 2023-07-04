@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 type InputMultilineProps = {
   name: string;
   control: Control<any, any>;
-  defaultValue?: string;
   label?: string;
   error?: boolean;
   helperText?: string;
@@ -16,7 +15,6 @@ type InputMultilineProps = {
 export default function InputMultiline({
   name,
   control,
-  defaultValue,
   label,
   error,
   helperText,
@@ -28,7 +26,6 @@ export default function InputMultiline({
     <Controller
       name={name}
       control={control}
-      defaultValue={defaultValue ?? ''}
       render={({ field: { value, onChange } }) => (
         <TextField
           {...register(name, {
@@ -45,7 +42,6 @@ export default function InputMultiline({
           fullWidth
           multiline
           rows={rows}
-          defaultValue="Default Value"
           variant="outlined"
           onChange={onChange}
           size="small"

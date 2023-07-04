@@ -22,20 +22,12 @@ export default function InputSelect({
       size="small"
       sx={{
         backgroundColor: 'rgb(248, 250, 252)',
-        height: 35,
-        borderRadius: 2,
-        fontSize: '14px',
         color: 'primary',
       }}
     >
       <InputLabel id="demo-simple-select-label">{label}</InputLabel>
       <Select
-        sx={{
-          height: 35,
-          borderRadius: 2,
-          fontSize: '14px',
-          color: 'primary',
-        }}
+        sx={{ color: 'primary' }}
         required={required}
         labelId="demo-simple-select-label"
         id="demo-simple-select-label"

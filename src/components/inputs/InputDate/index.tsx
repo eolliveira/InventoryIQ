@@ -7,7 +7,6 @@ import 'dayjs/locale/pt-br';
 
 interface InputDateProps {
   control: Control<any, any>;
-  defaultValue?: string;
   name: string;
   helperText?: string;
   label: string;
@@ -19,7 +18,6 @@ export default function InputDate({
   control,
   name,
   label,
-  defaultValue,
   helperText,
   register,
   required,
@@ -38,7 +36,6 @@ export default function InputDate({
             label={label}
             slotProps={{
               textField: {
-                defaultValue: defaultValue,
                 margin: 'dense',
                 size: 'small',
                 variant: 'outlined',

@@ -15,7 +15,7 @@ import { NavLink } from 'react-router-dom';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import IconButton from '@mui/material/IconButton';
-import Logo from '../../assets/img/image.png';
+import Logo from '../../assets/img/logo2.gif';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Divider from '@mui/material/Divider';
 export default function MenuSidebar() {

@@ -117,7 +117,7 @@ export default function ChangeStateModal({
               onChange={(e) => setState(String(e.target.value))}
             >
               {assetStatus.map((status) => (
-                <MenuItem value={status}>
+                <MenuItem key={status} value={status}>
                   {toCamelCase(removeUnderline(status))}
                 </MenuItem>
               ))}
