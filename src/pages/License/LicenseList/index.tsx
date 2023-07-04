@@ -16,7 +16,7 @@ import Menu from '@mui/material/Menu';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import NoData from '../../../components/NoData';
-import SerchBar from '../../../components/SearchBar';
+import SearchBar from '../../../components/SearchBar';
 import SelectFilter from '../../../components/SearchBar/Filters/SelectFilter';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Panel from '../../../components/Panel';
@@ -145,7 +145,7 @@ export default function LicenseList() {
         marginBottom={2}
       >
         <Stack flexWrap={'wrap'} marginLeft={1} direction={'row'} spacing={1}>
-          <SerchBar
+          <SearchBar
             inputFilter={inputFilter}
             setInputFilter={setInputFilter}
             setNumberPage={setNumberPage}

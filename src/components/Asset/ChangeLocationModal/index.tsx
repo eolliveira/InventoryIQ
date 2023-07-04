@@ -14,7 +14,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import NoData from '../../NoData';
-import SerchBar from '../../../components/SearchBar';
+import SearchBar from '../../../components/SearchBar';
 import Panel from '../../../components/Panel';
 import Swal from 'sweetalert2';
 
@@ -105,7 +105,7 @@ export default function ChangeLocationModal({
         <Panel title="Atribuir local">
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
-              <SerchBar
+              <SearchBar
                 inputFilter={inputFilter}
                 setInputFilter={setInputFilter}
               />

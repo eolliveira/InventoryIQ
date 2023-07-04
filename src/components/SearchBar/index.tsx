@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import TuneIcon from '@mui/icons-material/Tune';
 
-type SerchBarProps = {
+type SearchBarProps = {
   inputFilter: string;
   setInputFilter: (value: string) => void;
   setNumberPage?: (value: number) => void;
@@ -12,13 +12,13 @@ type SerchBarProps = {
   setOpenCustomFilters?: (value: HTMLElement | null) => void;
 };
 
-export default function SerchBar({
+export default function SearchBar({
   inputFilter,
   setInputFilter,
   setNumberPage,
   onClearFilters,
   setOpenCustomFilters,
-}: SerchBarProps) {
+}: SearchBarProps) {
   return (
     <Box
       minWidth={300}

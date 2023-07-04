@@ -1,6 +1,5 @@
 import { BaseCard } from '../../style/GlobalStyles';
-import { useContext, useEffect, useState } from 'react';
-import { Button, Stack } from '@mui/material';
+import { useContext, useState } from 'react';
 import { requestBackend } from '../../http/requests';
 import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
@@ -14,17 +13,24 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
-import SerchBar from '../../components/SearchBar';
+import SearchBar from '../../components/SearchBar';
 import CircularLoading from '../Loaders/Progress';
 import Panel from '../../components/Panel';
 import Swal from 'sweetalert2';
 
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs, { Dayjs } from 'dayjs';
 import { toDate } from '../../utils/DateConverter';
 import styled from 'styled-components';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import Checkbox from '@mui/material/Checkbox';
+
+import SearchIcon from '@mui/icons-material/Search';
+import NoData from '../../components/NoData';
+import InputDatePeriod from '../../components/inputs/InputDatePeriod';
 
 type ChangeNfEntradaModalProps = {
   assetId?: string;
@@ -77,30 +83,13 @@ export default function ChangeNfEntradaModal({
   const { setFormContextData } = useContext(FormContext);
   const [isLoading, setIsLoading] = useState(false);
   const [notes, setNotes] = useState<NotaFiscalEntrada[]>();
-  const [inputFilter, setInputFilter] = useState('');
-  const [dtEmissaoInicioFilter, setDtEmissaoInicioFilter] = useState('');
-  const [dtEmissaoFinalFilter, setDtEmissaoFinalFilter] = useState('');
   const [selectedNfEntrada, setSelectedNfEntrada] = useState('');
 
-  const [dtEmissaoInicio, setDtEmissaoInicio] = useState('');
-  const [dtEmissaoFinal, setDtEmissaoFinal] = useState('');
-
-  useEffect(() => {
-    setIsLoading(true);
-    const params: AxiosRequestConfig = {
-      url: `/nfEntrada?NrNotaFiscal=${inputFilter}&dtEmissaoInicio=${dtEmissaoInicioFilter}&dtEmissaoFinal=${dtEmissaoFinalFilter}`,
-      withCredentials: true,
-    };
-
-    requestBackend(params)
-      .then((response) => {
-        setNotes(response.data.content);
-      })
-      .catch((error) => {
-        window.alert(error.response.data.message);
-      })
-      .finally(() => setIsLoading(false));
-  }, [inputFilter, dtEmissaoInicioFilter, dtEmissaoFinalFilter]);
+  const [inputFilter, setInputFilter] = useState('');
+  const [dtEmissaoInicioFilter, setDtEmissaoInicioFilter] =
+    useState<Dayjs | null>(null);
+  const [dtEmissaoFinalFilter, setDtEmissaoFinalFilter] =
+    useState<Dayjs | null>(null);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
     if (selectedRows.selectedCount != 0)
@@ -150,10 +139,58 @@ export default function ChangeNfEntradaModal({
       });
   }
 
+  const handleSearch = () => {
+    setIsLoading(true);
+    const params: AxiosRequestConfig = {
+      url: `/nfEntrada?${
+        inputFilter ? `&NrNotaFiscal=${inputFilter.trim()}` : ''
+      }${
+        dtEmissaoInicioFilter
+          ? `&dtEmissaoInicio=${dayjs(dtEmissaoInicioFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }${
+        dtEmissaoFinalFilter
+          ? `&dtEmissaoFinal=${dayjs(dtEmissaoFinalFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
+      .then((response) => {
+        setNotes(response.data.content);
+      })
+      .catch((error) => {
+        window.alert(error.response.data.message);
+      })
+      .finally(() => setIsLoading(false));
+  };
+
+  const handleClose = () => {
+    setOpenCustomFilters(null);
+  };
+
   function handleCancel() {
     setFormContextData({ isEditing: false });
     closeForm();
   }
+
+  const [openCustomFilters, setOpenCustomFilters] =
+    useState<null | HTMLElement>(null);
+
+  function handleClearFilters() {
+    setStatusFilterchecked(false);
+    setDtEmissaoFinalFilter(null);
+    setDtEmissaoInicioFilter(null);
+    setInputFilter('');
+  }
+
+  const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+  const open = Boolean(openCustomFilters);
 
   return (
     <CustomModal openModal={openForm}>
@@ -162,77 +199,36 @@ export default function ChangeNfEntradaModal({
           <Container>
             <Box display={'flex'} alignItems={'center'} flexWrap={'wrap'}>
               <Stack direction={'row'}>
-                <SerchBar
+                <SearchBar
                   inputFilter={inputFilter}
                   setInputFilter={setInputFilter}
-                  onClearFilters={() => {}}
-                  setOpenCustomFilters={() => {}}
+                  onClearFilters={handleClearFilters}
+                  setOpenCustomFilters={setOpenCustomFilters}
                 />
               </Stack>
-              <Box>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    format="DD/MM/YYYY"
-                    value={dtEmissaoInicio}
-                    onChange={(event) => {
-                      setDtEmissaoInicioFilter(
-                        dayjs(event).format('DD/MM/YYYY')
-                      );
-                    }}
-                    slotProps={{
-                      textField: {
-                        margin: 'dense',
-                        size: 'small',
-                        variant: 'outlined',
-                        InputLabelProps: {
-                          style: {
-                            fontSize: 14,
-                          },
-                        },
-                        InputProps: {
-                          style: {
-                            fontSize: 13,
-                            width: 150,
-                            height: 33,
-                          },
-                        },
-                      },
-                    }}
-                  />
-                  <DatePicker
-                    format="DD/MM/YYYY"
-                    value={dtEmissaoFinal}
-                    onChange={(event) => {
-                      setDtEmissaoFinalFilter(
-                        dayjs(event).format('DD/MM/YYYY')
-                      );
-                      console.log(
-                        'data EMISSAO FINAL: ' +
-                          dayjs(event).format('YYYY-MM-DD')
-                      );
-                    }}
-                    slotProps={{
-                      textField: {
-                        margin: 'dense',
-                        size: 'small',
-                        variant: 'outlined',
-                        InputLabelProps: {
-                          style: {
-                            fontSize: 14,
-                          },
-                        },
-                        InputProps: {
-                          style: {
-                            fontSize: 13,
-                            width: 150,
-                            height: 33,
-                          },
-                        },
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
-              </Box>
+
+              <LoadingButton
+                sx={{
+                  bgcolor: 'primary',
+                  height: 33,
+                  marginLeft: 1,
+                }}
+                size="small"
+                onClick={handleSearch}
+                loading={isLoading}
+                variant="contained"
+              >
+                <SearchIcon />
+              </LoadingButton>
+              {statusFilterChecked && (
+                <InputDatePeriod
+                  label="Dt.Emissão"
+                  valueStart={dtEmissaoInicioFilter}
+                  valueEnd={dtEmissaoFinalFilter}
+                  onChangeStart={(date) => setDtEmissaoInicioFilter(date)}
+                  onChangeEnd={(date) => setDtEmissaoFinalFilter(date)}
+                />
+              )}
             </Box>
             <DataTable
               columns={columns}
@@ -242,6 +238,7 @@ export default function ChangeNfEntradaModal({
               responsive
               fixedHeader
               sortIcon={<ExpandMoreIcon />}
+              noDataComponent={<NoData />}
               fixedHeaderScrollHeight={'62vh'}
               pointerOnHover
               highlightOnHover
@@ -285,6 +282,29 @@ export default function ChangeNfEntradaModal({
               <Typography textTransform={'none'}>Confirmar</Typography>
             </LoadingButton>
           </Box>
+
+          <Menu
+            sx={{ flexDirection: 'column' }}
+            anchorEl={openCustomFilters}
+            open={open}
+            onClose={handleClose}
+          >
+            <MenuItem
+              sx={{ marginRight: 2, padding: '0px 6px' }}
+              onClick={handleClose}
+            >
+              <Checkbox
+                size="small"
+                checked={statusFilterChecked}
+                onChange={(event) =>
+                  setStatusFilterchecked(event.target.checked)
+                }
+              />
+              <Typography fontSize={13} variant="subtitle2">
+                Data de emissão
+              </Typography>
+            </MenuItem>
+          </Menu>
         </Panel>
       </BaseCard>
     </CustomModal>

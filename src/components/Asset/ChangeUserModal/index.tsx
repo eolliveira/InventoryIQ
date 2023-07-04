@@ -14,7 +14,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import SerchBar from '../../../components/SearchBar';
+import SearchBar from '../../../components/SearchBar';
 import NoData from '../../../components/NoData';
 import Panel from '../../../components/Panel';
 import Swal from 'sweetalert2';
@@ -103,7 +103,7 @@ export default function ChangeUserModal({
         <Panel title="Atribuir usuário">
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
-              <SerchBar
+              <SearchBar
                 inputFilter={inputFilter}
                 setInputFilter={setInputFilter}
               />
