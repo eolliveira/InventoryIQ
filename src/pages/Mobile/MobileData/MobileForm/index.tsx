@@ -53,6 +53,9 @@ export default function MobileForm({
 
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
+
+    if (data && formContextData.isDuplicated && formContextData.isAdding)
+      setFormData(data);
   }, []);
 
   const onSubmit = (formData: Mobile) => {
@@ -107,13 +110,16 @@ export default function MobileForm({
     setFormContextData({
       isAdding: false,
       isEditing: false,
+      isDuplicated: false,
     });
 
     closeForm();
   };
 
   const setFormData = (data: Mobile) => {
-    setValue('nome', data.nome);
+    formContextData.isDuplicated
+      ? setValue('nome', '')
+      : setValue('nome', data.nome);
     setValue('gateway', data.gateway);
     setValue('modelo', data.modelo);
     setValue('nomeHost', data.nomeHost);

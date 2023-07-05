@@ -68,6 +68,11 @@ export default function NobreakData() {
     setOpenNobreakForm(true);
   }
 
+  const handleDuplicate = () => {
+    setFormContextData({ isAdding: true, isDuplicated: true });
+    setOpenNobreakForm(true);
+  };
+
   const handleRemove = () => {
     Swal.fire({
       icon: 'question',
@@ -108,8 +113,6 @@ export default function NobreakData() {
       }
     });
   };
-
-  const handleDuplicate = () => {};
 
   return (
     <Wapper className="row">

@@ -46,6 +46,9 @@ export default function NobreakForm({
 
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
+
+    if (data && formContextData.isDuplicated && formContextData.isAdding)
+      setFormData(data);
   }, []);
 
   const onSubmit = (formData: Nobreak) => {
@@ -100,13 +103,16 @@ export default function NobreakForm({
     setFormContextData({
       isAdding: false,
       isEditing: false,
+      isDuplicated: false,
     });
 
     closeForm();
   };
 
   const setFormData = (data: Nobreak) => {
-    setValue('nome', data.nome);
+    formContextData.isDuplicated
+      ? setValue('nome', '')
+      : setValue('nome', data.nome);
     setValue('modelo', data.modelo);
     setValue('fabricante', data.fabricante);
     setValue('observacao', data.observacao);

@@ -30,7 +30,6 @@ import WorkstationForm from './WorkstationForm';
 import Swal from 'sweetalert2';
 import TextSnippetTwoToneIcon from '@mui/icons-material/TextSnippetTwoTone';
 import MemoryTwoToneIcon from '@mui/icons-material/MemoryTwoTone';
-import CompareArrowsTwoToneIcon from '@mui/icons-material/CompareArrowsTwoTone';
 import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
@@ -64,9 +63,7 @@ export default function WorkstationData() {
       });
   }, [workstationId, sweeping, formContextData]);
 
-  useEffect(() => {
-    getWorkstationData();
-  }, [getWorkstationData]);
+  useEffect(() => getWorkstationData(), [getWorkstationData]);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setTabValue(newValue);
@@ -79,6 +76,11 @@ export default function WorkstationData() {
 
   const handleEdit = () => {
     setFormContextData({ isEditing: true });
+    setOpenWorkstationForm(true);
+  };
+
+  const handleDuplicate = () => {
+    setFormContextData({ isAdding: true, isDuplicated: true });
     setOpenWorkstationForm(true);
   };
 
@@ -122,8 +124,6 @@ export default function WorkstationData() {
       }
     });
   };
-
-  const handleDuplicate = () => {};
 
   const handleToSweep = () => {
     setSweeping(true);

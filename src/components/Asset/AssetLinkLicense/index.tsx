@@ -102,7 +102,6 @@ export default function AssetLinkLicense({
         closeModal();
       })
       .catch((error) => {
-        //verificar
         Swal.fire({
           title: 'Falha!',
           text: `${error.response.data.message}`,

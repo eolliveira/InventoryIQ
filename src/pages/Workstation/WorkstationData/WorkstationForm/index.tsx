@@ -31,20 +31,14 @@ import Stack from '@mui/material/Stack';
 import DataTable, { TableColumn } from 'react-data-table-component';
 
 const columns: TableColumn<Interface>[] = [
-  {
-    name: 'Fabricante',
-    selector: (row) => row.fabricante,
-  },
+  { name: 'Fabricante', selector: (row) => row.fabricante },
   { name: 'Ip', selector: (row) => row.enderecoIp },
   { name: 'Mascara', selector: (row) => row.mascaraSubRede },
   { name: 'Mac', selector: (row) => row.enderecoMac },
 ];
 
 const discColumns: TableColumn<Disco>[] = [
-  {
-    name: 'Nome',
-    selector: (row) => row.nome,
-  },
+  { name: 'Nome', selector: (row) => row.nome },
   { name: 'Modelo', selector: (row) => row.modelo },
   { name: 'Capacidade', selector: (row) => row.capacidade },
 ];
@@ -77,6 +71,9 @@ export default function WorkstationForm({
 
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
+
+    if (data && formContextData.isDuplicated && formContextData.isAdding)
+      setFormData(data);
   }, []);
 
   const onSubmit = (formData: WorkstationSync) => {
@@ -131,6 +128,7 @@ export default function WorkstationForm({
     setFormContextData({
       isAdding: false,
       isEditing: false,
+      isDuplicated: false,
     });
 
     closeForm();
@@ -200,7 +198,9 @@ export default function WorkstationForm({
   };
 
   const setFormData = (data: Workstation) => {
-    setValue('nome', data.nome);
+    formContextData.isDuplicated
+      ? setValue('nome', '')
+      : setValue('nome', data.nome);
     setValue('fabricante', data.fabricante);
     setValue('nomeHost', data.nomeHost);
     setValue('dominio', data.dominio);

@@ -16,7 +16,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Interface } from 'types/Interface';
 import Typography from '@mui/material/Typography';
 import NoData from '../../../../components/NoData';
-
 import InputDate from '../../../../components/inputs/InputDate';
 import InputText from '../../../../components/inputs/InputText';
 import InputCurrency from '../../../../components/inputs/InputCurrency';
@@ -29,10 +28,7 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 import { Printer } from '../../../../types/Printer/Printer';
 
 const columns: TableColumn<Interface>[] = [
-  {
-    name: 'Fabricante',
-    selector: (row) => row.fabricante,
-  },
+  { name: 'Fabricante', selector: (row) => row.fabricante },
   { name: 'Ip', selector: (row) => row.enderecoIp },
   { name: 'Mascara', selector: (row) => row.mascaraSubRede },
   { name: 'Mac', selector: (row) => row.enderecoMac },
@@ -65,6 +61,9 @@ export default function PrinterForm({
 
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
+
+    if (data && formContextData.isDuplicated && formContextData.isAdding)
+      setFormData(data);
   }, []);
 
   const onSubmit = (formData: Printer) => {
@@ -119,6 +118,7 @@ export default function PrinterForm({
     setFormContextData({
       isAdding: false,
       isEditing: false,
+      isDuplicated: false,
     });
 
     closeForm();
@@ -172,7 +172,9 @@ export default function PrinterForm({
   };
 
   const setFormData = (data: Printer) => {
-    setValue('nome', data.nome);
+    formContextData.isDuplicated
+      ? setValue('nome', '')
+      : setValue('nome', data.nome);
     setValue('dominio', data.dominio);
     setValue('gateway', data.gateway);
     setValue('modelo', data.modelo);

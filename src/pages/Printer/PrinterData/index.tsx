@@ -72,6 +72,11 @@ export default function PrinterData() {
     setOpenPrinterForm(true);
   }
 
+  const handleDuplicate = () => {
+    setFormContextData({ isAdding: true, isDuplicated: true });
+    setOpenPrinterForm(true);
+  };
+
   const handleRemove = () => {
     Swal.fire({
       icon: 'question',
@@ -112,8 +117,6 @@ export default function PrinterData() {
       }
     });
   };
-
-  const handleDuplicate = () => {};
 
   const handleToSweep = () => {
     setSweeping(true);

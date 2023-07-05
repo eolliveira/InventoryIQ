@@ -1,7 +1,5 @@
 type LoginResponse = {
-    token: string,
-    login: string,
-    userId: string
+    token: string
 };
 
 const tokenKey = 'authData';

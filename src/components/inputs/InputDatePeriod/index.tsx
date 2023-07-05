@@ -33,7 +33,6 @@ export default function InputDatePeriod({
           onChange={onChangeStart}
           slotProps={{
             textField: {
-              //margin: 'dense',
               size: 'small',
               variant: 'outlined',
               InputLabelProps: {
@@ -60,7 +59,6 @@ export default function InputDatePeriod({
           onChange={onChangeEnd}
           slotProps={{
             textField: {
-              //margin: 'dense',
               size: 'small',
               variant: 'outlined',
               InputLabelProps: {

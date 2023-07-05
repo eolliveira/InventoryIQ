@@ -69,6 +69,11 @@ export default function MobileData() {
     setOpenDeviceForm(true);
   }
 
+  const handleDuplicate = () => {
+    setFormContextData({ isAdding: true, isDuplicated: true });
+    setOpenDeviceForm(true);
+  };
+
   const handleRemove = () => {
     Swal.fire({
       icon: 'question',
@@ -96,7 +101,7 @@ export default function MobileData() {
               confirmButtonColor: '#999999',
             });
 
-            navigate('/mobileDevice');
+            navigate('/mobile');
           })
           .catch((error) => {
             Swal.fire({
@@ -109,8 +114,6 @@ export default function MobileData() {
       }
     });
   };
-
-  const handleDuplicate = () => {};
 
   return (
     <Wapper className="row">

@@ -14,7 +14,6 @@ import { getTokenData, isAuthenticated } from '../../utils/Auth';
 import Avatar from '@mui/material/Avatar';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
-import Tooltip from '@mui/material/Tooltip';
 import Logout from '@mui/icons-material/Logout';
 import { removeAuthData } from '../../utils/LocalStorage';
 import Typography from '@mui/material/Typography';
@@ -27,7 +26,6 @@ export default function Header() {
 
   useEffect(() => {
     if (isAuthenticated()) {
-      //se estiver autenticado, armazena os dados do token
       setAuthContextData({
         authenticated: true,
         tokenData: getTokenData(),
@@ -62,21 +60,18 @@ export default function Header() {
         }}
       >
         <Box>
-          {/* // remover esse tooltip */}
-          <Tooltip title="Configurações do usuário">
-            <IconButton
-              onClick={handleClick}
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? 'account-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-            >
-              <Avatar sx={{ bgcolor: '#914ab9', width: 32, height: 32 }}>
-                {authContextData.tokenData?.sub.substring(0, 1)}
-              </Avatar>
-            </IconButton>
-          </Tooltip>
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={open ? 'account-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+          >
+            <Avatar sx={{ bgcolor: '#914ab9', width: 32, height: 32 }}>
+              {authContextData.tokenData?.sub.substring(0, 1)}
+            </Avatar>
+          </IconButton>
 
           <Menu
             anchorEl={anchorEl}
