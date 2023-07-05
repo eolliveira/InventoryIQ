@@ -200,6 +200,8 @@ export default function ChangeNfEntradaModal({
             <Box display={'flex'} alignItems={'center'} flexWrap={'wrap'}>
               <Stack direction={'row'}>
                 <SearchBar
+                  placeholder="Número da NF..."
+                  type="number"
                   inputFilter={inputFilter}
                   setInputFilter={setInputFilter}
                   onClearFilters={handleClearFilters}

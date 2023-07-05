@@ -106,6 +106,7 @@ export default function ChangeLocationModal({
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
               <SearchBar
+                placeholder="Nome..."
                 inputFilter={inputFilter}
                 setInputFilter={setInputFilter}
               />

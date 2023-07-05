@@ -39,5 +39,4 @@ const ContentWrapper = styled.div`
   height: 100vh;
   overflow: hidden;
   background-color: '#ffffff';
-  //padding: 10px;
 `;

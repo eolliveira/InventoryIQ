@@ -3,9 +3,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import TuneIcon from '@mui/icons-material/Tune';
+import { HTMLInputTypeAttribute } from 'react';
 
 type SearchBarProps = {
   inputFilter: string;
+  placeholder?: string;
+  type?: HTMLInputTypeAttribute;
   setInputFilter: (value: string) => void;
   setNumberPage?: (value: number) => void;
   onClearFilters?: () => void;
@@ -14,6 +17,8 @@ type SearchBarProps = {
 
 export default function SearchBar({
   inputFilter,
+  type,
+  placeholder,
   setInputFilter,
   setNumberPage,
   onClearFilters,
@@ -37,7 +42,8 @@ export default function SearchBar({
           if (setNumberPage) setNumberPage(0);
         }}
         value={inputFilter}
-        placeholder="Pesquisar..."
+        placeholder={placeholder ? placeholder : 'Pesquisar...'}
+        type={type ? type : 'text'}
         style={{
           backgroundColor: 'unset',
           fontSize: '14px',

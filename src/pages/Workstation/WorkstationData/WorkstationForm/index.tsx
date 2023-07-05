@@ -233,6 +233,7 @@ export default function WorkstationForm({
           {formContextData.isAdding && (
             <Box display={'flex'}>
               <SearchBar
+                placeholder="0.0.0.0"
                 inputFilter={ipAddress}
                 setInputFilter={setIpAddress}
               />
