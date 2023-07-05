@@ -7,17 +7,16 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { Licenca } from 'types/Licenca/Licenca';
+import Tooltip from '@mui/material/Tooltip';
 import NoData from '../../../../components/NoData';
 import { requestBackend } from '../../../../http/requests';
-import AssetLinkLicense from '../../../../components/Asset/AssetLinkLicense';
 import { FormContext } from '../../../../contexts/FormContext';
 import IconButton from '@mui/material/IconButton';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import Swal from 'sweetalert2';
 import { AxiosRequestConfig } from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { Ativo } from '../../../../types/Ativo';
+import LicenseLinkAsset from '../LicenseLinkAsset';
 
 type LicenseAssetProps = {
   licenseId?: string;
@@ -29,14 +28,16 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
       button: true,
       width: '70px',
       cell: (row) => (
-        <IconButton
-          sx={{ marginRight: 1 }}
-          onClick={() => onReleaseLicense(row.id)}
-          aria-label="delete"
-          size="small"
-        >
-          <IosShareIcon color="primary" fontSize="inherit" />
-        </IconButton>
+        <Tooltip title="Desalocar ativo">
+          <IconButton
+            sx={{ marginRight: 1 }}
+            onClick={() => onReleaseLicense(row.id)}
+            aria-label="delete"
+            size="small"
+          >
+            <IosShareIcon color="primary" fontSize="inherit" />
+          </IconButton>
+        </Tooltip>
       ),
     },
     { name: 'Id', selector: (row) => row.id, sortable: true, width: '100px' },
@@ -57,7 +58,6 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [assets, setAssets] = useState<Ativo[]>();
   const [openAssetLinkLicense, setAssetLinkLicense] = useState(false);
-  const navigate = useNavigate();
 
   const getAssets = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -117,8 +117,6 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
     });
   };
 
-  const handleRowClicked = () => {};
-
   return (
     <Card
       sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
@@ -167,7 +165,6 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
         pointerOnHover
         highlightOnHover
         fixedHeaderScrollHeight={'82vh'}
-        onRowClicked={handleRowClicked}
         customStyles={{
           headCells: {
             style: {
@@ -180,8 +177,8 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
         }}
       />
       {openAssetLinkLicense && (
-        <AssetLinkLicense
-          assetId={licenseId}
+        <LicenseLinkAsset
+          licenseId={licenseId}
           openModal={openAssetLinkLicense}
           closeModal={() => setAssetLinkLicense(false)}
         />

@@ -1,11 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import qs from 'qs';
 import { getAuthData } from '../utils/LocalStorage';
 
-//export const BASE_URL = 'http://localhost:8080';
-export const BASE_URL = 'http://192.168.0.104:8080';
-// export const CLIENT_ID = 'snmpmanager';
-// export const CLIENT_ID_SECRET = 'snmpmanager123';
+export const BASE_URL = 'http://10.0.5.36:8080';
 
 type LoginData = {
   login: string;
@@ -13,16 +9,6 @@ type LoginData = {
 };
 
 export const requestBackendLogin = (loginData: LoginData) => {
-  // const headers = {
-  //   'Content-Type': 'application/x-www-form-urlencoded',
-  //   Authorization: 'Basic ' + window.btoa(CLIENT_ID + ':' + CLIENT_ID_SECRET),
-  // };
-
-  // const data = qs.stringify({
-  //   ...loginData,
-  //   grant_type: 'password',
-  // });
-
   return axios({
     method: 'POST',
     baseURL: BASE_URL,

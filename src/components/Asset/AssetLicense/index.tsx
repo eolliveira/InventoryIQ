@@ -19,6 +19,7 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import Swal from 'sweetalert2';
 import { AxiosRequestConfig } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Tooltip from '@mui/material/Tooltip';
 
 type AssetLicenseProps = {
   assetId?: string;
@@ -30,14 +31,16 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
       button: true,
       width: '70px',
       cell: (row) => (
-        <IconButton
-          sx={{ marginRight: 1 }}
-          onClick={() => onReleaseLicense(row.id)}
-          aria-label="delete"
-          size="small"
-        >
-          <IosShareIcon color="primary" fontSize="inherit" />
-        </IconButton>
+        <Tooltip title="Liberar licença">
+          <IconButton
+            sx={{ marginRight: 1 }}
+            onClick={() => onReleaseLicense(row.id)}
+            aria-label="delete"
+            size="small"
+          >
+            <IosShareIcon color="primary" fontSize="inherit" />
+          </IconButton>
+        </Tooltip>
       ),
     },
     { name: 'Software', selector: (row) => row.software.nome, sortable: true },

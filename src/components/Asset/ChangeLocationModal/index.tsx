@@ -138,7 +138,7 @@ export default function ChangeLocationModal({
               }}
             />
           </Stack>
-          <Box display={'flex'} justifyContent={'end'}>
+          <Box display={'flex'} marginTop={2} justifyContent={'end'}>
             <Button
               variant="contained"
               color="error"

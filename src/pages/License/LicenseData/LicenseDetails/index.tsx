@@ -2,38 +2,14 @@ import dayjs from 'dayjs';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import TextInfo from '../../../../components/TextInfo';
-import { Interface } from '../../../../types/Interface';
-import { useEffect, useState } from 'react';
-import { requestBackend } from '../../../../http/requests';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
 import { Licenca } from '../../../../types/Licenca/Licenca';
-import { AxiosRequestConfig } from 'axios';
 
 type LicenseDetailsProps = {
   data?: Licenca;
 };
 
 export default function LicenseDetails({ data }: LicenseDetailsProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [listInterfaces, setListInterfaces] = useState<Interface[]>();
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    const params: AxiosRequestConfig = {
-      url: `/active/${data?.id}/interfaces`,
-      withCredentials: true,
-    };
-
-    requestBackend(params)
-      .then((response) => {
-        console.log('teste');
-        setListInterfaces(response.data);
-      })
-      .catch((error) => console.log('Erro ao carregar as interfaces: ' + error))
-      .finally(() => setIsLoading(false));
-  }, [data]);
-
   return (
     <Box marginTop={2}>
       <div className="row">

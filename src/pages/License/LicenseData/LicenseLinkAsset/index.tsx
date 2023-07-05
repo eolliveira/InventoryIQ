@@ -1,124 +1,143 @@
-import { BaseCard } from '../../../style/GlobalStyles';
+import { BaseCard } from '../../../../style/GlobalStyles';
 import { useContext, useEffect, useState } from 'react';
 import { Button, Stack } from '@mui/material';
-import { requestBackend } from '../../../http/requests';
-import { FormContext } from '../../../contexts/FormContext';
+import { requestBackend } from '../../../../http/requests';
 import { AxiosRequestConfig } from 'axios';
-import { Usuario } from 'types/Usuario';
-
 import Box from '@mui/material/Box';
-import CustomModal from '../../CustomModal';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CheckIcon from '@mui/icons-material/Check';
-import LoadingButton from '@mui/lab/LoadingButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import LoadingButton from '@mui/lab/LoadingButton';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import SearchBar from '../../../components/SearchBar';
-import NoData from '../../../components/NoData';
-import Panel from '../../../components/Panel';
 import Swal from 'sweetalert2';
+import SearchBar from '../../../../components/SearchBar';
+import Panel from '../../../../components/Panel';
+import { Workstation } from 'types/Workstation/Workstation';
+import { FormContext } from '../../../../contexts/FormContext';
+import CustomModal from '../../../../components/CustomModal';
+import NoData from '../../../../components/NoData';
 
-type ChangeUserModalProps = {
-  assetId?: string;
-  openForm: boolean;
-  closeForm: () => void;
+type LicenseLinkAssetProps = {
+  licenseId?: string;
+  openModal: boolean;
+  closeModal: () => void;
 };
 
-const columns: TableColumn<Usuario>[] = [
-  { name: 'Id', selector: (row) => row.id, sortable: true, width: '125px' },
+const columns: TableColumn<Workstation>[] = [
+  { name: 'Id', selector: (row) => row.id, sortable: true },
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
-  { name: 'Email', selector: (row) => row.email, sortable: true },
+  { name: 'Hostname', selector: (row) => row.nomeHost, sortable: true },
+  {
+    name: 'Fabricante',
+    selector: (row) => row.fabricante,
+    sortable: true,
+  },
+  {
+    name: 'Valor aquisição',
+    selector: (row) => row.vlrAquisicao,
+    sortable: true,
+  },
 ];
 
-export default function ChangeUserModal({
-  assetId,
-  openForm,
-  closeForm,
-}: ChangeUserModalProps) {
+export default function LicenseLinkAsset({
+  licenseId,
+  openModal,
+  closeModal,
+}: LicenseLinkAssetProps) {
   const { setFormContextData } = useContext(FormContext);
-  const [users, setUsers] = useState<Usuario[]>();
+  const [assets, setAssets] = useState<Workstation[]>();
   const [inputFilter, setInputFilter] = useState('');
-  const [selectedUser, setSelectedUser] = useState('');
+  const [selectedAsset, setSelectedAsset] = useState('');
 
   useEffect(() => {
     const params: AxiosRequestConfig = {
-      url: `/users?nome=${inputFilter}`,
+      url: `/workstation`,
       withCredentials: true,
     };
 
     requestBackend(params)
-      .then((response) => {
-        setUsers(response.data.content);
-      })
-      .catch((error) => {
-        window.alert(error.response.data.message);
-      });
+      .then((response) => setAssets(response.data.content))
+      .catch((error) => window.alert(error.response.data.message));
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
     if (selectedRows.selectedCount != 0)
-      setSelectedUser(selectedRows.selectedRows[0].id);
+      setSelectedAsset(selectedRows.selectedRows[0].id);
 
-    if (selectedRows.selectedCount == 0) setSelectedUser('');
+    if (selectedRows.selectedCount == 0) setSelectedAsset('');
   };
 
   function handleConfirm() {
-    if (selectedUser == '') {
+    if (selectedAsset == '') {
       Swal.fire({
         title: 'Atenção',
-        text: 'Selecione um usuario!',
+        text: 'Selecione uma ativo para vincular a licença!',
         icon: 'warning',
         confirmButtonColor: '#999999',
       });
       return;
     }
-
-    const data = { usuarioId: selectedUser };
-
+    const data = {
+      ativoId: selectedAsset,
+      licencaId: licenseId,
+    };
     const params: AxiosRequestConfig = {
       method: 'PUT',
-      url: `/active/${assetId}/user/update`,
-      data: data,
+      url: `/licenses/linkActive`,
       withCredentials: true,
+      data: data,
     };
     requestBackend(params)
       .then(() => {
         setFormContextData({ isEditing: false });
-        closeForm();
+
+        Swal.fire({
+          title: 'Sucesso!',
+          text: 'Ativo foi vinculada a licença!',
+          icon: 'success',
+          confirmButtonColor: '#999999',
+        });
+
+        closeModal();
       })
       .catch((error) => {
-        console.log(error);
+        //verificar
+        Swal.fire({
+          title: 'Falha!',
+          text: `${error.response.data.message}`,
+          icon: 'warning',
+          confirmButtonColor: '#999999',
+        });
       });
   }
 
   function handleCancel() {
     setFormContextData({ isEditing: false });
-    closeForm();
+    closeModal();
   }
 
   return (
-    <CustomModal openModal={openForm}>
+    <CustomModal openModal={openModal}>
       <BaseCard>
-        <Panel title="Atribuir usuário">
+        <Panel title="Vincular ativo">
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
               <SearchBar
-                placeholder="Nome..."
                 inputFilter={inputFilter}
                 setInputFilter={setInputFilter}
               />
             </Stack>
             <DataTable
               columns={columns}
-              data={users ? users : []}
+              data={assets ? assets : []}
               dense
               striped
               responsive
               fixedHeader
-              noDataComponent={<NoData />}
               sortIcon={<ExpandMoreIcon />}
               fixedHeaderScrollHeight={'62vh'}
+              noDataComponent={<NoData />}
               pointerOnHover
               highlightOnHover
               selectableRows
@@ -128,7 +147,7 @@ export default function ChangeUserModal({
                 headCells: {
                   style: {
                     fontWeight: 'bold',
-                    height: 30,
+                    height: 40,
                     fontSize: 13,
                     letterSpacing: 0.5,
                   },
@@ -136,7 +155,7 @@ export default function ChangeUserModal({
               }}
             />
           </Stack>
-          <Box marginTop={2} display={'flex'} justifyContent={'end'}>
+          <Box display={'flex'} justifyContent={'end'}>
             <Button
               variant="contained"
               color="error"

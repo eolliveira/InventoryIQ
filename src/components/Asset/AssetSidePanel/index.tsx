@@ -149,8 +149,6 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
                     isEditing: true,
                   });
                 }}
-                aria-label="delete"
-                size="small"
               >
                 <EditTwoToneIcon color="primary" fontSize="small" />
               </IconButton>
@@ -215,7 +213,12 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
         <Box display={'flex'} flexDirection={'column'}>
-          <Typography fontWeight={'bold'} fontSize={13} variant="subtitle2">
+          <Typography
+            color={'primary'}
+            fontWeight={'bold'}
+            fontSize={13}
+            variant="subtitle2"
+          >
             Centro de custo
           </Typography>
           <Typography color={'secondary'} fontSize={12} variant="subtitle2">
@@ -248,7 +251,12 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
       >
         <Box display={'flex'} justifyContent={'space-between'}>
           <Box display={'flex'} flexDirection={'column'}>
-            <Typography fontWeight={'bold'} fontSize={13} variant="subtitle2">
+            <Typography
+              color={'primary'}
+              fontWeight={'bold'}
+              fontSize={13}
+              variant="subtitle2"
+            >
               Numero nota fiscal
             </Typography>
             <Typography color={'secondary'} fontSize={12} variant="subtitle2">
@@ -263,14 +271,18 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
                 isEditing: true,
               });
             }}
-            size="small"
           >
             <EditTwoToneIcon color="primary" fontSize="small" />
           </IconButton>
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
         <Box display={'flex'} flexDirection={'column'}>
-          <Typography fontWeight={'bold'} fontSize={13} variant="subtitle2">
+          <Typography
+            color={'primary'}
+            fontWeight={'bold'}
+            fontSize={13}
+            variant="subtitle2"
+          >
             Fornecedor
           </Typography>
           <Typography color={'secondary'} fontSize={12} variant="subtitle2">
@@ -281,7 +293,12 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
         <Box display={'flex'} flexDirection={'column'}>
-          <Typography fontWeight={'bold'} fontSize={13} variant="subtitle2">
+          <Typography
+            color={'primary'}
+            fontWeight={'bold'}
+            fontSize={13}
+            variant="subtitle2"
+          >
             Valor da nota
           </Typography>
           <Typography color={'secondary'} fontSize={12} variant="subtitle2">

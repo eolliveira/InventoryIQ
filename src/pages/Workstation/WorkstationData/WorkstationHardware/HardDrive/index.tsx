@@ -48,6 +48,7 @@ export default function HardDrive({ disco }: HardDriveProps) {
             {'Disco (' + particao.pontoMontagem + ')'}
           </Typography>
           <ProgressBarDisc
+            key={particao.pontoMontagem}
             used={Number(particao.usado)}
             available={Number(particao.capacidade) - Number(particao.usado)}
           />
