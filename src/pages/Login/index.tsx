@@ -6,6 +6,7 @@ import { useContext } from 'react';
 import { requestBackendLogin } from '../../http/requests';
 import { saveAuthData } from '../../utils/LocalStorage';
 import { getTokenData } from '../../utils/Auth';
+import Swal from 'sweetalert2';
 
 type FormData = {
   login: string;
@@ -34,7 +35,12 @@ export default function Login() {
         navigate('/dashboard');
       })
       .catch((error) => {
-        console.log('error:' + error);
+        Swal.fire({
+          title: 'Falha',
+          text: `${error.response.data.message}`,
+          icon: 'warning',
+          confirmButtonColor: '#999999',
+        });
       });
   };
 
