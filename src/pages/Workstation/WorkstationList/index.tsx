@@ -33,17 +33,14 @@ import { FormContext } from '../../../contexts/FormContext';
 import { toDate } from '../../../utils/DateConverter';
 import CircularLoading from '../../../components/Loaders/Progress';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Swal from 'sweetalert2';
 import { hasAnyHoles } from '../../../utils/Auth';
+import InputDatePeriod from '../../../components/inputs/InputDatePeriod';
+import dayjs, { Dayjs } from 'dayjs';
 
 const columns: TableColumn<Workstation>[] = [
-  {
-    name: 'Nome',
-    selector: (row) => row.nome,
-    sortable: true,
-  },
+  { name: 'Nome', selector: (row) => row.nome, sortable: true },
   { name: 'Dominio', selector: (row) => row.dominio, sortable: true },
   { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
   { name: 'Modelo', selector: (row) => row.modelo, sortable: true },
@@ -82,8 +79,17 @@ export default function WorkstationList() {
   const navigate = useNavigate();
 
   const [filterField, setFilterField] = useState('nome');
+
   const [statusFilter, setStatusFilter] = useState('');
   const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+
+  const [dtAquisicaoInicioFilter, setDtAquisicaoInicioFilter] =
+    useState<Dayjs | null>(null);
+  const [dtAquisicaoFinalFilter, setDtAquisicaoFinalFilter] =
+    useState<Dayjs | null>(null);
+  const [dtAquisicaoFilterChecked, setDtAquisicaoFilterchecked] =
+    useState(false);
+
   const [selectedAsset, setSelectedAsset] = useState('');
 
   const [openCustomFilters, setOpenCustomFilters] =
@@ -159,7 +165,19 @@ export default function WorkstationList() {
   const getWorkstatioData = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/workstation?${filterField}=${inputFilter}&status=${statusFilter}`,
+      url: `/workstation?${filterField}=${inputFilter}&status=${statusFilter}${
+        dtAquisicaoInicioFilter
+          ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }${
+        dtAquisicaoFinalFilter
+          ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }`,
       withCredentials: true,
       params: {
         page: numberPage,
@@ -181,6 +199,8 @@ export default function WorkstationList() {
     inputFilter,
     filterField,
     statusFilter,
+    dtAquisicaoInicioFilter,
+    dtAquisicaoFinalFilter,
   ]);
 
   useEffect(() => {
@@ -192,8 +212,11 @@ export default function WorkstationList() {
 
   function handleClearFilters() {
     setStatusFilterchecked(false);
+    setDtAquisicaoFilterchecked(false);
     setInputFilter('');
     setStatusFilter('');
+    setDtAquisicaoFinalFilter(null);
+    setDtAquisicaoInicioFilter(null);
     setFilterField('nome');
   }
 
@@ -244,8 +267,18 @@ export default function WorkstationList() {
               selectedItems={assetStatus.map((status) => status)}
             />
           )}
+
+          {dtAquisicaoFilterChecked && (
+            <InputDatePeriod
+              label="Dt.aquisição"
+              valueStart={dtAquisicaoInicioFilter}
+              valueEnd={dtAquisicaoFinalFilter}
+              onChangeStart={(date) => setDtAquisicaoInicioFilter(date)}
+              onChangeEnd={(date) => setDtAquisicaoFinalFilter(date)}
+            />
+          )}
         </Stack>
-        <Stack direction={'row'} spacing={2}>
+        <Stack flexWrap={'wrap'} direction={'row'} spacing={2}>
           <Button
             variant="contained"
             startIcon={<DeleteIcon />}
@@ -355,6 +388,21 @@ export default function WorkstationList() {
           />
           <Typography fontSize={13} variant="subtitle2">
             Status
+          </Typography>
+        </MenuItem>
+        <MenuItem
+          sx={{ marginRight: 2, padding: '0px 6px' }}
+          onClick={handleClose}
+        >
+          <Checkbox
+            size="small"
+            checked={dtAquisicaoFilterChecked}
+            onChange={(event) =>
+              setDtAquisicaoFilterchecked(event.target.checked)
+            }
+          />
+          <Typography fontSize={13} variant="subtitle2">
+            Data aquisição
           </Typography>
         </MenuItem>
       </Menu>

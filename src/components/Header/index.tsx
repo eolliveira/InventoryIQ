@@ -9,7 +9,9 @@ import Menu from '@mui/material/Menu';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
-import { getTokenData, isAuthenticated } from '../../utils/Auth';
+import { getTokenData, hasAnyHoles, isAuthenticated } from '../../utils/Auth';
+import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
+import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 
 import Avatar from '@mui/material/Avatar';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -109,7 +111,17 @@ export default function Header() {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
             <MenuItem>
-              <Avatar sx={{ color: '#4d4d4d' }} />
+              {hasAnyHoles(['ROLE_ADMIN']) ? (
+                <ManageAccountsOutlinedIcon
+                  sx={{ marginRight: 1 }}
+                  color="primary"
+                />
+              ) : (
+                <PermIdentityOutlinedIcon
+                  sx={{ marginRight: 1 }}
+                  color="primary"
+                />
+              )}
               <Typography fontSize={14}>
                 {authContextData.tokenData?.sub}
               </Typography>
@@ -118,7 +130,7 @@ export default function Header() {
 
             <MenuItem onClick={handleLogout}>
               <ListItemIcon>
-                <Logout color="primary" fontSize="small" />
+                <Logout color="primary" />
               </ListItemIcon>
               Sair
             </MenuItem>

@@ -1,8 +1,3 @@
-import { useNavigate } from 'react-router-dom';
-import { SpringPage } from 'types/vendor/spring';
-import { AxiosRequestConfig } from 'axios';
-import { requestBackend } from '../../../http/requests';
-import { assetStatus } from '../../../constants/AssetStatus';
 import {
   ChangeEvent,
   useCallback,
@@ -10,6 +5,11 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { SpringPage } from 'types/vendor/spring';
+import { AxiosRequestConfig } from 'axios';
+import { requestBackend } from '../../../http/requests';
+import { assetStatus } from '../../../constants/AssetStatus';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Stack from '@mui/material/Stack';
@@ -30,19 +30,15 @@ import { FormContext } from '../../../contexts/FormContext';
 import { toDate } from '../../../utils/DateConverter';
 import CircularLoading from '../../../components/Loaders/Progress';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Swal from 'sweetalert2';
 import { Printer } from '../../../types/Printer/Printer';
 import PrinterForm from '../PrinterData/PrinterForm';
-import { toCamelCase } from '../../../utils/StringConverter';
+import dayjs, { Dayjs } from 'dayjs';
+import InputDatePeriod from '../../../components/inputs/InputDatePeriod';
 
 const columns: TableColumn<Printer>[] = [
-  {
-    name: 'Nome',
-    selector: (row) => row.nome,
-    sortable: true,
-  },
+  { name: 'Nome', selector: (row) => row.nome, sortable: true },
   { name: 'Hostname', selector: (row) => row.nomeHost, sortable: true },
   { name: 'Modelo', selector: (row) => row.modelo, sortable: true },
   {
@@ -79,8 +75,17 @@ export default function PrinterList() {
   const navigate = useNavigate();
 
   const [filterField, setFilterField] = useState('nome');
+
   const [statusFilter, setStatusFilter] = useState('');
   const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+
+  const [dtAquisicaoInicioFilter, setDtAquisicaoInicioFilter] =
+    useState<Dayjs | null>(null);
+  const [dtAquisicaoFinalFilter, setDtAquisicaoFinalFilter] =
+    useState<Dayjs | null>(null);
+  const [dtAquisicaoFilterChecked, setDtAquisicaoFilterchecked] =
+    useState(false);
+
   const [selectedAsset, setSelectedAsset] = useState('');
 
   const [openPrinterForm, setOpenPrinterForm] = useState(false);
@@ -146,8 +151,11 @@ export default function PrinterList() {
 
   function handleClearFilters() {
     setStatusFilterchecked(false);
+    setDtAquisicaoFilterchecked(false);
     setInputFilter('');
     setStatusFilter('');
+    setDtAquisicaoFinalFilter(null);
+    setDtAquisicaoInicioFilter(null);
     setFilterField('nome');
   }
 
@@ -165,7 +173,19 @@ export default function PrinterList() {
   const getPrintersData = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/printer?${filterField}=${inputFilter}&status=${statusFilter}`,
+      url: `/printer?${filterField}=${inputFilter}&status=${statusFilter}${
+        dtAquisicaoInicioFilter
+          ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }${
+        dtAquisicaoFinalFilter
+          ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }`,
       withCredentials: true,
       params: {
         page: numberPage,
@@ -187,6 +207,8 @@ export default function PrinterList() {
     inputFilter,
     filterField,
     statusFilter,
+    dtAquisicaoInicioFilter,
+    dtAquisicaoFinalFilter,
   ]);
 
   useEffect(() => getPrintersData(), [getPrintersData]);
@@ -213,15 +235,12 @@ export default function PrinterList() {
             setFieldFilter={setFilterField}
             selectedItems={[
               'nome',
-              'dominio',
-              'modelo',
               'nomeHost',
-              'numeroSerie',
+              'modelo',
               'local',
-              'fabricante',
+              'numeroSerie',
             ]}
           />
-
           {statusFilterChecked && (
             <SelectFilter
               label="Status"
@@ -229,6 +248,15 @@ export default function PrinterList() {
               setFieldFilter={setStatusFilter}
               setNumberPage={setNumberPage}
               selectedItems={assetStatus.map((status) => status)}
+            />
+          )}
+          {dtAquisicaoFilterChecked && (
+            <InputDatePeriod
+              label="Dt.aquisição"
+              valueStart={dtAquisicaoInicioFilter}
+              valueEnd={dtAquisicaoFinalFilter}
+              onChangeStart={(date) => setDtAquisicaoInicioFilter(date)}
+              onChangeEnd={(date) => setDtAquisicaoFinalFilter(date)}
             />
           )}
         </Stack>
@@ -342,6 +370,21 @@ export default function PrinterList() {
           />
           <Typography fontSize={13} variant="subtitle2">
             Status
+          </Typography>
+        </MenuItem>
+        <MenuItem
+          sx={{ marginRight: 2, padding: '0px 6px' }}
+          onClick={handleClose}
+        >
+          <Checkbox
+            size="small"
+            checked={dtAquisicaoFilterChecked}
+            onChange={(event) =>
+              setDtAquisicaoFilterchecked(event.target.checked)
+            }
+          />
+          <Typography fontSize={13} variant="subtitle2">
+            Data aquisição
           </Typography>
         </MenuItem>
       </Menu>

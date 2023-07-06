@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box';
 import { BaseCard } from '../../../../style/GlobalStyles';
-import { Button, listClasses } from '@mui/material';
+import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { FormContext } from '../../../../contexts/FormContext';
 import { useNavigate } from 'react-router-dom';
 import { AxiosRequestConfig } from 'axios';
@@ -12,10 +12,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomModal from '../../../../components/CustomModal';
 import styled from 'styled-components';
-import SearchIcon from '@mui/icons-material/Search';
-import { Interface } from 'types/Interface';
 import Typography from '@mui/material/Typography';
-import NoData from '../../../../components/NoData';
 
 import InputDate from '../../../../components/inputs/InputDate';
 import InputText from '../../../../components/inputs/InputText';
@@ -23,10 +20,7 @@ import InputCurrency from '../../../../components/inputs/InputCurrency';
 import InputMultiline from '../../../../components/inputs/InputMultiline';
 import Swal from 'sweetalert2';
 import Panel from '../../../../components/Panel';
-import SearchBar from '../../../../components/SearchBar';
 import Stack from '@mui/material/Stack';
-import DataTable, { TableColumn } from 'react-data-table-component';
-import { Printer } from '../../../../types/Printer/Printer';
 import { Mobile } from '../../../../types/Mobile';
 
 type MobileFormProps = {
@@ -90,6 +84,7 @@ export default function MobileForm({
             setFormContextData({
               isAdding: false,
               isEditing: false,
+              isDuplicated: false,
             });
             navigate(`/mobile/${response.data.id}`);
             closeForm();

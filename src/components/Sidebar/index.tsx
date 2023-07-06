@@ -158,7 +158,7 @@ export default function MenuSidebar() {
             </MenuItem>
             <MenuItem
               style={{
-                margin: '10px 10px 0px 10px',
+                margin: '10px 10px 10px 10px',
                 borderRadius: 10,
               }}
               active={location.pathname.startsWith('/nobreak')}
@@ -191,7 +191,7 @@ export default function MenuSidebar() {
           >
             <MenuItem
               style={{
-                margin: '10px 10px 0px 10px',
+                margin: '10px 10px 10px 10px',
                 borderRadius: 10,
               }}
               active={location.pathname.startsWith('/register')}

@@ -43,16 +43,8 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
     { name: 'Id', selector: (row) => row.id, sortable: true, width: '100px' },
     { name: 'Nome', selector: (row) => row.nome, sortable: true },
     { name: 'Hostname', selector: (row) => row.nomeHost, sortable: true },
-    {
-      name: 'Status',
-      selector: (row) => row.status,
-      sortable: true,
-    },
-    {
-      name: 'Modelo',
-      selector: (row) => row.modelo,
-      sortable: true,
-    },
+    { name: 'Status', selector: (row) => row.status, sortable: true },
+    { name: 'Modelo', selector: (row) => row.modelo, sortable: true },
   ];
 
   const { formContextData, setFormContextData } = useContext(FormContext);
