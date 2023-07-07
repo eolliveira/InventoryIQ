@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { getAuthData } from '../utils/LocalStorage';
 
-export const BASE_URL = 'http://192.168.0.104:8080';
+export const BASE_URL = 'http://erick:8080';
 
 type LoginData = {
   login: string;
