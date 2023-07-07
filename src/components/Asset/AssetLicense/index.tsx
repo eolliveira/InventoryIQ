@@ -11,7 +11,6 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { Licenca } from 'types/Licenca/Licenca';
 import NoData from '../../NoData';
 import { requestBackend } from '../../../http/requests';
-import { toDate } from '../../../utils/DateConverter';
 import AssetLinkLicense from '../AssetLinkLicense';
 import { FormContext } from '../../../contexts/FormContext';
 import IconButton from '@mui/material/IconButton';
@@ -20,6 +19,7 @@ import Swal from 'sweetalert2';
 import { AxiosRequestConfig } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
+import dayjs from 'dayjs';
 
 type AssetLicenseProps = {
   assetId?: string;
@@ -57,12 +57,12 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
     },
     {
       name: 'Data expiração',
-      selector: (row) => toDate(row.dtExpiracao),
+      selector: (row) => dayjs(row.dtExpiracao).format('DD/MM/YYYY'),
       sortable: true,
     },
     {
       name: 'Data aquisição',
-      selector: (row) => toDate(row.dtAquisicao),
+      selector: (row) => dayjs(row.dtAquisicao).format('DD/MM/YYYY'),
       sortable: true,
     },
   ];

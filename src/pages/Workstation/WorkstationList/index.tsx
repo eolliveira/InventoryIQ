@@ -30,7 +30,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import WorkstationForm from '../WorkstationData/WorkstationForm';
 import { FormContext } from '../../../contexts/FormContext';
-import { toDate } from '../../../utils/DateConverter';
 import CircularLoading from '../../../components/Loaders/Progress';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -65,7 +64,7 @@ const columns: TableColumn<Workstation>[] = [
   },
   {
     name: 'Dt.Aquisição',
-    selector: (row) => toDate(row.dtAquisicao),
+    selector: (row) => dayjs(row.dtAquisicao).format('DD/MM/YYYY'),
     sortable: true,
   },
 ];
@@ -227,9 +226,6 @@ export default function WorkstationList() {
 
   return (
     <Panel title="Estações de Trabalho ">
-      <h1>
-        {hasAnyHoles(['ROLE_ADMIN']) ? 'USUARIO ADMIN' : 'USUARIO NORMAL'}
-      </h1>
       <Box
         display={'flex'}
         flexWrap={'wrap'}
@@ -257,7 +253,6 @@ export default function WorkstationList() {
               'local',
             ]}
           />
-
           {statusFilterChecked && (
             <SelectFilter
               label="Status"
@@ -267,7 +262,6 @@ export default function WorkstationList() {
               selectedItems={assetStatus.map((status) => status)}
             />
           )}
-
           {dtAquisicaoFilterChecked && (
             <InputDatePeriod
               label="Dt.aquisição"

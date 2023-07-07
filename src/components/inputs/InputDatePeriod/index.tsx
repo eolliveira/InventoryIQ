@@ -1,7 +1,6 @@
 import 'dayjs/locale/pt-br';
 
 import Box from '@mui/material/Box';
-
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -24,10 +23,10 @@ export default function InputDatePeriod({
   onChangeEnd,
 }: InputDatePeriodProps) {
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'pt-br'}>
       <Box display={'flex'} flexWrap={'wrap'}>
         <DatePicker
-          label={`${label} (De)`}
+          label={`${label}(De)`}
           format="DD/MM/YYYY"
           value={valueStart}
           onChange={onChangeStart}
@@ -37,16 +36,15 @@ export default function InputDatePeriod({
               variant: 'outlined',
               InputLabelProps: {
                 style: {
-                  fontSize: 14,
+                  fontSize: 13,
                 },
               },
               InputProps: {
                 style: {
                   fontSize: 13,
                   borderRadius: 8,
-                  width: 150,
-                  height: 33,
-                  marginLeft: 5,
+                  maxWidth: 150,
+                  height: 35,
                 },
               },
             },
@@ -54,7 +52,7 @@ export default function InputDatePeriod({
         />
         <DatePicker
           format="DD/MM/YYYY"
-          label={`${label} (Até)`}
+          label={`${label}(Até)`}
           value={valueEnd}
           onChange={onChangeEnd}
           slotProps={{
@@ -63,15 +61,15 @@ export default function InputDatePeriod({
               variant: 'outlined',
               InputLabelProps: {
                 style: {
-                  fontSize: 14,
+                  fontSize: 13,
                 },
               },
               InputProps: {
                 style: {
                   fontSize: 13,
                   borderRadius: 8,
-                  width: 150,
-                  height: 33,
+                  maxWidth: 150,
+                  height: 35,
                   marginLeft: 5,
                 },
               },

@@ -27,7 +27,6 @@ import Panel from '../../../components/Panel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { FormContext } from '../../../contexts/FormContext';
-import { toDate } from '../../../utils/DateConverter';
 import CircularLoading from '../../../components/Loaders/Progress';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -35,13 +34,11 @@ import Swal from 'sweetalert2';
 import { Mobile } from '../../../types/Mobile';
 import MobileForm from '../MobileData/MobileForm';
 import { toCamelCase } from '../../../utils/StringConverter';
+import dayjs, { Dayjs } from 'dayjs';
+import InputDatePeriod from '../../../components/inputs/InputDatePeriod';
 
 const columns: TableColumn<Mobile>[] = [
-  {
-    name: 'Nome',
-    selector: (row) => row.nome,
-    sortable: true,
-  },
+  { name: 'Nome', selector: (row) => row.nome, sortable: true },
   { name: 'Modelo', selector: (row) => row.modelo, sortable: true },
   {
     name: 'Atribuido a',
@@ -69,7 +66,8 @@ const columns: TableColumn<Mobile>[] = [
   },
   {
     name: 'Dt.Aquisição',
-    selector: (row) => toDate(row.dtAquisicao),
+    selector: (row) =>
+      row.dtAquisicao ? dayjs(row.dtAquisicao).format('DD/MM/YYYY') : ' - ',
     sortable: true,
   },
 ];
@@ -83,8 +81,17 @@ export default function MobileList() {
   const navigate = useNavigate();
 
   const [filterField, setFilterField] = useState('nome');
+
   const [statusFilter, setStatusFilter] = useState('');
   const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+
+  const [dtAquisicaoInicioFilter, setDtAquisicaoInicioFilter] =
+    useState<Dayjs | null>(null);
+  const [dtAquisicaoFinalFilter, setDtAquisicaoFinalFilter] =
+    useState<Dayjs | null>(null);
+  const [dtAquisicaoFilterChecked, setDtAquisicaoFilterchecked] =
+    useState(false);
+
   const [selectedAsset, setSelectedAsset] = useState('');
 
   const [openDeviceForm, setOpenDeviceForm] = useState(false);
@@ -150,8 +157,11 @@ export default function MobileList() {
 
   function handleClearFilters() {
     setStatusFilterchecked(false);
+    setDtAquisicaoFilterchecked(false);
     setInputFilter('');
     setStatusFilter('');
+    setDtAquisicaoFinalFilter(null);
+    setDtAquisicaoInicioFilter(null);
     setFilterField('nome');
   }
 
@@ -169,7 +179,19 @@ export default function MobileList() {
   const getDevicesData = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/mobileDevice?${filterField}=${inputFilter}&status=${statusFilter}`,
+      url: `/mobileDevice?${filterField}=${inputFilter}&status=${statusFilter}${
+        dtAquisicaoInicioFilter
+          ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }${
+        dtAquisicaoFinalFilter
+          ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }`,
       withCredentials: true,
       params: {
         page: numberPage,
@@ -191,6 +213,8 @@ export default function MobileList() {
     inputFilter,
     filterField,
     statusFilter,
+    dtAquisicaoInicioFilter,
+    dtAquisicaoFinalFilter,
   ]);
 
   useEffect(() => getDevicesData(), [getDevicesData]);
@@ -225,7 +249,6 @@ export default function MobileList() {
               'numeroSerie',
             ]}
           />
-
           {statusFilterChecked && (
             <SelectFilter
               label="Status"
@@ -233,6 +256,15 @@ export default function MobileList() {
               setFieldFilter={setStatusFilter}
               setNumberPage={setNumberPage}
               selectedItems={assetStatus.map((status) => status)}
+            />
+          )}
+          {dtAquisicaoFilterChecked && (
+            <InputDatePeriod
+              label="Dt.aquisição"
+              valueStart={dtAquisicaoInicioFilter}
+              valueEnd={dtAquisicaoFinalFilter}
+              onChangeStart={(date) => setDtAquisicaoInicioFilter(date)}
+              onChangeEnd={(date) => setDtAquisicaoFinalFilter(date)}
             />
           )}
         </Stack>
@@ -346,6 +378,21 @@ export default function MobileList() {
           />
           <Typography fontSize={13} variant="subtitle2">
             Status
+          </Typography>
+        </MenuItem>
+        <MenuItem
+          sx={{ marginRight: 2, padding: '0px 6px' }}
+          onClick={handleClose}
+        >
+          <Checkbox
+            size="small"
+            checked={dtAquisicaoFilterChecked}
+            onChange={(event) =>
+              setDtAquisicaoFilterchecked(event.target.checked)
+            }
+          />
+          <Typography fontSize={13} variant="subtitle2">
+            Data aquisição
           </Typography>
         </MenuItem>
       </Menu>

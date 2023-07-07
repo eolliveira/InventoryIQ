@@ -27,7 +27,6 @@ import Panel from '../../../components/Panel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { FormContext } from '../../../contexts/FormContext';
-import { toDate } from '../../../utils/DateConverter';
 import CircularLoading from '../../../components/Loaders/Progress';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -61,7 +60,7 @@ const columns: TableColumn<Printer>[] = [
   },
   {
     name: 'Dt.Aquisição',
-    selector: (row) => toDate(row.dtAquisicao),
+    selector: (row) => dayjs(row.dtAquisicao).format('DD/MM/YYYY'),
     sortable: true,
   },
 ];

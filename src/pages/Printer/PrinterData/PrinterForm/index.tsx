@@ -195,7 +195,7 @@ export default function PrinterForm({
           title={
             formContextData.isEditing
               ? 'Alterar impressora'
-              : 'Adicionar Impressora'
+              : 'Adicionar impressora'
           }
         >
           {formContextData.isAdding && (

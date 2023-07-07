@@ -1,5 +1,4 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { toDateTime } from '../../../utils/DateConverter';
 import { toCamelCase } from '../../../utils/StringConverter';
 import { FormContext } from '../../../contexts/FormContext';
 import Box from '@mui/material/Box';
@@ -26,6 +25,10 @@ import { Nobreak } from '../../../types/Nobreak';
 import { Mobile } from 'types/Mobile';
 import { Wapper, HeaderContainer } from './style';
 import { AxiosRequestConfig } from 'axios';
+import dayjs from 'dayjs';
+import RoomTwoToneIcon from '@mui/icons-material/RoomTwoTone';
+import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
+import EventRepeatTwoToneIcon from '@mui/icons-material/EventRepeatTwoTone';
 
 type AssetSidePanelProps = {
   data: Printer | Workstation | Nobreak | Mobile;
@@ -69,10 +72,10 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
               direction={'row'}
               spacing={1}
             >
-              <EventRepeatIcon fontSize="small" color="secondary" />
+              <EventRepeatTwoToneIcon fontSize="small" color="primary" />
               <Typography style={{ marginTop: 2 }} fontSize={13}>
                 {data.dhUltimaVarredura
-                  ? toDateTime(data.dhUltimaVarredura)
+                  ? dayjs(data.dhUltimaVarredura).format('DD/MM/YYYY HH:mm:ss')
                   : ' - '}
               </Typography>
             </Stack>
@@ -117,9 +120,8 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
               justifyContent={'space-around'}
               alignItems={'center'}
             >
-              <AccountCircleIcon
-                color="secondary"
-                fontSize="medium"
+              <AccountCircleTwoToneIcon
+                color="primary"
                 sx={{ marginRight: 1 }}
               />
               <Box
@@ -179,11 +181,8 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
           flexWrap={'wrap'}
           alignItems={'center'}
         >
-          <LocationOnIcon
-            style={{ marginRight: 5 }}
-            color="secondary"
-            fontSize="medium"
-          />
+          <RoomTwoToneIcon color="primary" style={{ marginRight: 5 }} />
+
           <Typography
             color={'primary'}
             flex={1}

@@ -27,13 +27,14 @@ import Panel from '../../../components/Panel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { FormContext } from '../../../contexts/FormContext';
-import { toDate } from '../../../utils/DateConverter';
 import CircularLoading from '../../../components/Loaders/Progress';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Swal from 'sweetalert2';
 import { Nobreak } from '../../../types/Nobreak';
 import NobreakForm from '../NobreakData/NobreakForm';
+import dayjs, { Dayjs } from 'dayjs';
+import InputDatePeriod from '../../../components/inputs/InputDatePeriod';
 
 const columns: TableColumn<Nobreak>[] = [
   {
@@ -62,7 +63,7 @@ const columns: TableColumn<Nobreak>[] = [
   },
   {
     name: 'Dt.Aquisição',
-    selector: (row) => toDate(row.dtAquisicao),
+    selector: (row) => dayjs(row.dtAquisicao).format('DD/MM/YYYY'),
     sortable: true,
   },
 ];
@@ -76,8 +77,17 @@ export default function NobreakList() {
   const navigate = useNavigate();
 
   const [filterField, setFilterField] = useState('nome');
+
   const [statusFilter, setStatusFilter] = useState('');
   const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+
+  const [dtAquisicaoInicioFilter, setDtAquisicaoInicioFilter] =
+    useState<Dayjs | null>(null);
+  const [dtAquisicaoFinalFilter, setDtAquisicaoFinalFilter] =
+    useState<Dayjs | null>(null);
+  const [dtAquisicaoFilterChecked, setDtAquisicaoFilterchecked] =
+    useState(false);
+
   const [selectedAsset, setSelectedAsset] = useState('');
 
   const [openNpbreakForm, setOpenNobreakForm] = useState(false);
@@ -143,8 +153,11 @@ export default function NobreakList() {
 
   function handleClearFilters() {
     setStatusFilterchecked(false);
+    setDtAquisicaoFilterchecked(false);
     setInputFilter('');
     setStatusFilter('');
+    setDtAquisicaoFinalFilter(null);
+    setDtAquisicaoInicioFilter(null);
     setFilterField('nome');
   }
 
@@ -162,7 +175,19 @@ export default function NobreakList() {
   const getNobreakData = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/nobreak?${filterField}=${inputFilter}&status=${statusFilter}`,
+      url: `/nobreak?${filterField}=${inputFilter}&status=${statusFilter}${
+        dtAquisicaoInicioFilter
+          ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }${
+        dtAquisicaoFinalFilter
+          ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }`,
       withCredentials: true,
       params: {
         page: numberPage,
@@ -184,6 +209,8 @@ export default function NobreakList() {
     inputFilter,
     filterField,
     statusFilter,
+    dtAquisicaoInicioFilter,
+    dtAquisicaoFinalFilter,
   ]);
 
   useEffect(() => getNobreakData(), [getNobreakData]);
@@ -218,6 +245,15 @@ export default function NobreakList() {
               setFieldFilter={setStatusFilter}
               setNumberPage={setNumberPage}
               selectedItems={assetStatus.map((status) => status)}
+            />
+          )}
+          {dtAquisicaoFilterChecked && (
+            <InputDatePeriod
+              label="Dt.aquisição"
+              valueStart={dtAquisicaoInicioFilter}
+              valueEnd={dtAquisicaoFinalFilter}
+              onChangeStart={(date) => setDtAquisicaoInicioFilter(date)}
+              onChangeEnd={(date) => setDtAquisicaoFinalFilter(date)}
             />
           )}
         </Stack>
@@ -331,6 +367,21 @@ export default function NobreakList() {
           />
           <Typography fontSize={13} variant="subtitle2">
             Status
+          </Typography>
+        </MenuItem>
+        <MenuItem
+          sx={{ marginRight: 2, padding: '0px 6px' }}
+          onClick={handleClose}
+        >
+          <Checkbox
+            size="small"
+            checked={dtAquisicaoFilterChecked}
+            onChange={(event) =>
+              setDtAquisicaoFilterchecked(event.target.checked)
+            }
+          />
+          <Typography fontSize={13} variant="subtitle2">
+            Data aquisição
           </Typography>
         </MenuItem>
       </Menu>

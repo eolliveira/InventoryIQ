@@ -17,7 +17,7 @@ import NoData from '../../NoData';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
-import { toDate } from '../../../utils/DateConverter';
+import dayjs from 'dayjs';
 
 type AssetServiceProps = {
   assetId?: string;
@@ -27,7 +27,7 @@ export default function AssetService({ assetId }: AssetServiceProps) {
   const columns: TableColumn<Servico>[] = [
     {
       name: 'Data',
-      selector: (row) => toDate(row.dhGerou),
+      selector: (row) => dayjs(row.dhGerou).format('DD/MM/YYYY'),
       sortable: true,
       grow: 0.6,
     },

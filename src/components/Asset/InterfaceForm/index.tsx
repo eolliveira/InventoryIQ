@@ -29,7 +29,6 @@ export default function InterfaceForm({
   const { setFormContextData } = useContext(FormContext);
   const [enderecoIp, setEnderecoIp] = useState('');
   const [enderecoMac, setEnderecoMac] = useState('');
-  const [mascara, setMascara] = useState('');
 
   function handleSave() {
     if (enderecoIp == '') {
@@ -45,7 +44,6 @@ export default function InterfaceForm({
     const data = {
       enderecoIp: enderecoIp,
       enderecoMac: enderecoMac,
-      mascaraSubRede: mascara,
       ativo_id: assetId,
     };
 
@@ -102,14 +100,6 @@ export default function InterfaceForm({
               size="small"
               value={enderecoMac}
               onChange={(e) => setEnderecoMac(e.target.value)}
-            />
-
-            <TextField
-              style={{ width: 350, marginBottom: 22 }}
-              label="Mascara"
-              size="small"
-              value={mascara}
-              onChange={(e) => setMascara(e.target.value)}
             />
 
             <Box display={'flex'} justifyContent={'end'}>

@@ -27,10 +27,10 @@ import { Licenca } from '../../../types/Licenca/Licenca';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
 import LicenseForm from '../LicenseData/LicenseForm';
-import { toDate } from '../../../utils/DateConverter';
 import LicenseStatusStyle from '../../../components/LicenseStatusStyle';
 import { licenseStatus } from '../../../constants/LicenseStatus';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import dayjs from 'dayjs';
 
 const columns: TableColumn<Licenca>[] = [
   {
@@ -70,7 +70,7 @@ const columns: TableColumn<Licenca>[] = [
   },
   {
     name: 'Data expiração',
-    selector: (row) => toDate(row.dtExpiracao),
+    selector: (row) => dayjs(row.dtExpiracao).format('DD/MM/YYYY'),
     sortable: true,
     width: '145px',
   },

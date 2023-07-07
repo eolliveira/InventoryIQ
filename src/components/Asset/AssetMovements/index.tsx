@@ -9,15 +9,15 @@ import Card from '@mui/material/Card';
 import AssetStatusStyle from '../AssetStatusStyle';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import NoData from '../../NoData';
-import { toDate } from '../../../utils/DateConverter';
 import { FormContext } from '../../../contexts/FormContext';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import dayjs from 'dayjs';
 
 const columns: TableColumn<Movimento>[] = [
   {
     name: 'Data movimento',
-    selector: (row) => toDate(row.dtMovimento),
+    selector: (row) => dayjs(row.dtMovimento).format('DD/MM/YYYY'),
     sortable: true,
     grow: 0.6,
   },

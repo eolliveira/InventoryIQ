@@ -19,7 +19,6 @@ import Panel from '../../components/Panel';
 import Swal from 'sweetalert2';
 
 import dayjs, { Dayjs } from 'dayjs';
-import { toDate } from '../../utils/DateConverter';
 import styled from 'styled-components';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -59,12 +58,12 @@ const columns: TableColumn<NotaFiscalEntrada>[] = [
   },
   {
     name: 'Data de Emissão',
-    selector: (row) => toDate(row.dtEmissao),
+    selector: (row) => dayjs(row.dtEmissao).format('DD/MM/YYYY'),
     sortable: true,
   },
   {
     name: 'Data de Entrada',
-    selector: (row) => toDate(row.dtEntrada),
+    selector: (row) => dayjs(row.dtEntrada).format('DD/MM/YYYY'),
     sortable: true,
   },
   {
@@ -198,22 +197,20 @@ export default function ChangeNfEntradaModal({
         <Panel title="Atribuir Nota Fiscal">
           <Container>
             <Box display={'flex'} alignItems={'center'} flexWrap={'wrap'}>
-              <Stack direction={'row'}>
-                <SearchBar
-                  placeholder="Número da NF..."
-                  type="number"
-                  inputFilter={inputFilter}
-                  setInputFilter={setInputFilter}
-                  onClearFilters={handleClearFilters}
-                  setOpenCustomFilters={setOpenCustomFilters}
-                />
-              </Stack>
-
+              <SearchBar
+                placeholder="Número da NF..."
+                type="number"
+                inputFilter={inputFilter}
+                setInputFilter={setInputFilter}
+                onClearFilters={handleClearFilters}
+                setOpenCustomFilters={setOpenCustomFilters}
+              />
               <LoadingButton
                 sx={{
                   bgcolor: 'primary',
                   height: 33,
-                  marginLeft: 1,
+                  marginLeft: 0.5,
+                  marginRight: 1,
                 }}
                 size="small"
                 onClick={handleSearch}
@@ -222,6 +219,7 @@ export default function ChangeNfEntradaModal({
               >
                 <SearchIcon />
               </LoadingButton>
+
               {statusFilterChecked && (
                 <InputDatePeriod
                   label="Dt.Emissão"
