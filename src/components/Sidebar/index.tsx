@@ -158,13 +158,23 @@ export default function MenuSidebar() {
             </MenuItem>
             <MenuItem
               style={{
-                margin: '10px 10px 10px 10px',
+                margin: '10px 10px 0px 10px',
                 borderRadius: 10,
               }}
               active={location.pathname.startsWith('/nobreak')}
               component={<NavLink to={'/nobreak'} />}
             >
               Nobreak
+            </MenuItem>
+            <MenuItem
+              style={{
+                margin: '10px 10px 10px 10px',
+                borderRadius: 10,
+              }}
+              active={location.pathname.startsWith('/collector')}
+              component={<NavLink to={'/collector'} />}
+            >
+              Coletor
             </MenuItem>
           </SubMenu>
           <MenuItem

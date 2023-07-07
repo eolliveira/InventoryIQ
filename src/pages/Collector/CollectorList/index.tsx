@@ -32,11 +32,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Swal from 'sweetalert2';
 import { Nobreak } from '../../../types/Nobreak';
-import NobreakForm from '../NobreakData/NobreakForm';
 import dayjs, { Dayjs } from 'dayjs';
 import InputDatePeriod from '../../../components/inputs/InputDatePeriod';
+import { Coletor } from '../../../types/Coletor';
 
-const columns: TableColumn<Nobreak>[] = [
+const columns: TableColumn<Coletor>[] = [
   {
     name: 'Nome',
     selector: (row) => row.nome,
@@ -68,9 +68,9 @@ const columns: TableColumn<Nobreak>[] = [
   },
 ];
 
-export default function NobreakList() {
+export default function CollectorList() {
   const { formContextData, setFormContextData } = useContext(FormContext);
-  const [page, setPage] = useState<SpringPage<Nobreak>>();
+  const [page, setPage] = useState<SpringPage<Coletor>>();
   const [inputFilter, setInputFilter] = useState('');
   const [numberPage, setNumberPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState('10');
@@ -90,17 +90,17 @@ export default function NobreakList() {
 
   const [selectedAsset, setSelectedAsset] = useState('');
 
-  const [openNobreakForm, setOpenNobreakForm] = useState(false);
+  const [openColetorForm, setOpenColetorForm] = useState(false);
   const [openCustomFilters, setOpenCustomFilters] =
     useState<null | HTMLElement>(null);
   const open = Boolean(openCustomFilters);
 
-  function handleAddNobreak() {
+  function handleAdd() {
     setFormContextData({ isAdding: true });
-    setOpenNobreakForm(true);
+    setOpenColetorForm(true);
   }
 
-  function handleDeleteNobreak(AssetId: string) {
+  function handleDelete(AssetId: string) {
     if (selectedAsset == '') {
       Swal.fire({
         title: 'Atenção',
@@ -163,7 +163,7 @@ export default function NobreakList() {
 
   const handleClose = () => setOpenCustomFilters(null);
 
-  const handleRowClicked = (row: Nobreak) => navigate(`/nobreak/${row.id}`);
+  const handleRowClicked = (row: Coletor) => navigate(`/collector/${row.id}`);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
     if (selectedRows.selectedCount == 1)
@@ -172,10 +172,10 @@ export default function NobreakList() {
     if (selectedRows.selectedCount == 0) setSelectedAsset('');
   };
 
-  const getNobreakData = useCallback(() => {
+  const getCollectorsData = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/nobreak?${filterField}=${inputFilter}&status=${statusFilter}${
+      url: `/collectors?${filterField}=${inputFilter}&status=${statusFilter}${
         dtAquisicaoInicioFilter
           ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format(
               'DD/MM/YYYY'
@@ -213,10 +213,10 @@ export default function NobreakList() {
     dtAquisicaoFinalFilter,
   ]);
 
-  useEffect(() => getNobreakData(), [getNobreakData]);
+  useEffect(() => getCollectorsData(), [getCollectorsData]);
 
   return (
-    <Panel title="Nobreaks">
+    <Panel title="Coletores">
       <Box
         display={'flex'}
         flexWrap={'wrap'}
@@ -262,7 +262,7 @@ export default function NobreakList() {
             variant="contained"
             startIcon={<DeleteIcon />}
             color="primary"
-            onClick={() => handleDeleteNobreak(selectedAsset)}
+            onClick={() => handleDelete(selectedAsset)}
           >
             <Typography fontSize={14} textTransform={'none'}>
               Excluir
@@ -272,7 +272,7 @@ export default function NobreakList() {
             variant="contained"
             startIcon={<AddCircleOutlineIcon />}
             color="primary"
-            onClick={handleAddNobreak}
+            onClick={handleAdd}
           >
             <Typography fontSize={14} textTransform={'none'}>
               Novo
@@ -385,12 +385,12 @@ export default function NobreakList() {
           </Typography>
         </MenuItem>
       </Menu>
-      {openNobreakForm && (
+      {/* {openColetorForm && (
         <NobreakForm
-          openForm={openNobreakForm}
-          closeForm={() => setOpenNobreakForm(false)}
+          openForm={openColetorForm}
+          closeForm={() => setOpenColetorForm(false)}
         />
-      )}
+      )} */}
     </Panel>
   );
 }

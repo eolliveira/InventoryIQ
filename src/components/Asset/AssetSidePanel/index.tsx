@@ -29,9 +29,10 @@ import dayjs from 'dayjs';
 import RoomTwoToneIcon from '@mui/icons-material/RoomTwoTone';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import EventRepeatTwoToneIcon from '@mui/icons-material/EventRepeatTwoTone';
+import { Coletor } from 'types/Coletor';
 
 type AssetSidePanelProps = {
-  data: Printer | Workstation | Nobreak | Mobile;
+  data: Printer | Workstation | Nobreak | Mobile | Coletor;
 };
 
 export default function AssetSidePanel({ data }: AssetSidePanelProps) {

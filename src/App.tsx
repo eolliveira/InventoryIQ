@@ -17,6 +17,8 @@ import PrinterList from './pages/Printer/PrinterList';
 import PrinterData from './pages/Printer/PrinterData';
 import NobreakList from './pages/Nobreak/NobreakList';
 import MobileList from './pages/Mobile/MobileList';
+import CollectorList from './pages/Collector/CollectorList';
+import CollectorData from './pages/Collector/CollectorData';
 
 export default function App() {
   const [authContextData, setAuthContextData] = useState<AuthContextData>({
@@ -49,6 +51,8 @@ export default function App() {
             <Route path="nobreak/:nobreakId" element={<NobreakData />} />
             <Route path="mobile/" element={<MobileList />} />
             <Route path="mobile/:deviceId" element={<MobileData />} />
+            <Route path="collector/" element={<CollectorList />} />
+            <Route path="collector/:collectorId" element={<CollectorData />} />
           </Route>
         </Routes>
       </FormContext.Provider>
