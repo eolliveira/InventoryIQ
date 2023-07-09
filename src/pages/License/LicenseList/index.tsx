@@ -140,11 +140,12 @@ export default function LicenseList() {
     <Panel title="Licenças de Software">
       <Box
         display={'flex'}
+        flexWrap={'wrap'}
         alignItems={'center'}
         justifyContent={'space-between'}
         marginBottom={2}
       >
-        <Stack flexWrap={'wrap'} marginLeft={1} direction={'row'} spacing={1}>
+        <Box display={'flex'} flexWrap={'wrap'} marginBottom={0.5}>
           <SearchBar
             inputFilter={inputFilter}
             setInputFilter={setInputFilter}
@@ -166,7 +167,7 @@ export default function LicenseList() {
               selectedItems={licenseStatus.map((status) => status)}
             />
           )}
-        </Stack>
+        </Box>
         <Button
           variant="contained"
           startIcon={<AddCircleOutlineIcon />}

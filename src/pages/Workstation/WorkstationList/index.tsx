@@ -233,7 +233,7 @@ export default function WorkstationList() {
         justifyContent={'space-between'}
         marginBottom={2}
       >
-        <Stack flexWrap={'wrap'} marginLeft={1} direction={'row'} spacing={1}>
+        <Box display={'flex'} flexWrap={'wrap'} marginBottom={0.5}>
           <SearchBar
             inputFilter={inputFilter}
             setInputFilter={setInputFilter}
@@ -271,7 +271,7 @@ export default function WorkstationList() {
               onChangeEnd={(date) => setDtAquisicaoFinalFilter(date)}
             />
           )}
-        </Stack>
+        </Box>
         <Stack flexWrap={'wrap'} direction={'row'} spacing={2}>
           <Button
             variant="contained"

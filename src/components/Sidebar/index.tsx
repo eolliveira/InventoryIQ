@@ -67,7 +67,10 @@ export default function MenuSidebar() {
           }}
         >
           <ButtonColapseContainer
-            style={{ backgroundColor: '#F5DE41', height: 64 }}
+            style={{
+              backgroundColor: '#F5DE41',
+              height: 56,
+            }}
             iscollapsed={`${collapsed}`}
           >
             {!collapsed ? (

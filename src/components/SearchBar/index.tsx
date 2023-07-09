@@ -26,12 +26,14 @@ export default function SearchBar({
 }: SearchBarProps) {
   return (
     <Box
-      minWidth={300}
+      minWidth={100}
       height={35}
       borderRadius={2}
       border={'1px solid silver'}
       alignItems={'center'}
       display={'flex'}
+      marginBottom={0.5}
+      marginRight={0.5}
       bgcolor={'rgb(248, 250, 252);'}
     >
       <SearchIcon color="primary" sx={{ margin: 1 }} fontSize="small" />

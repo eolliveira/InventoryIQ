@@ -29,10 +29,13 @@ export default function SelectFilter({
         height: 35,
         borderRadius: 2,
         fontSize: '14px',
+        marginRight: 0.5,
         color: 'primary',
       }}
     >
-      <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+      <InputLabel id="demo-simple-select-label" size="small">
+        {label}
+      </InputLabel>
       <Select
         sx={{
           height: 35,
