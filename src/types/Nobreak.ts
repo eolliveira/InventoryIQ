@@ -1,4 +1,5 @@
 import { LocalIndustria } from "./LocalIndustria";
+import { Usuario } from "./Usuario";
 
 export type Nobreak = {
     id: string,
@@ -15,6 +16,7 @@ export type Nobreak = {
     tensaoEntrada: string,
     tensaoSaida: string,
     idNfEntrada: string,
+    usuario: Usuario;
     localIndustria: LocalIndustria
   };
 

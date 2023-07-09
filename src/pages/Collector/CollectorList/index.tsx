@@ -31,10 +31,10 @@ import CircularLoading from '../../../components/Loaders/Progress';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Swal from 'sweetalert2';
-import { Nobreak } from '../../../types/Nobreak';
 import dayjs, { Dayjs } from 'dayjs';
 import InputDatePeriod from '../../../components/inputs/InputDatePeriod';
 import { Coletor } from '../../../types/Coletor';
+import CollectorForm from '../CollectorData/CollectorForm';
 
 const columns: TableColumn<Coletor>[] = [
   {
@@ -385,12 +385,12 @@ export default function CollectorList() {
           </Typography>
         </MenuItem>
       </Menu>
-      {/* {openColetorForm && (
-        <NobreakForm
+      {openColetorForm && (
+        <CollectorForm
           openForm={openColetorForm}
           closeForm={() => setOpenColetorForm(false)}
         />
-      )} */}
+      )}
     </Panel>
   );
 }

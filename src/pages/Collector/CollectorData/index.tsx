@@ -27,6 +27,8 @@ import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
 import { Nobreak } from 'types/Nobreak';
 import { Coletor } from 'types/Coletor';
+import CollectorForm from './CollectorForm';
+import CollectorDetails from './CollectorDetails';
 
 export default function CollectorData() {
   const [openCollectorForm, setOpenCollectorForm] = useState(false);
@@ -194,7 +196,7 @@ export default function CollectorData() {
             </Box>
           </AppBar>
           <TabPanel style={{ padding: 0 }} value="1">
-            {/* <NobreakDetails data={collector} /> */}
+            <CollectorDetails data={collector} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="2">
             <AssetMovements assetId={collector?.id} />
@@ -204,13 +206,13 @@ export default function CollectorData() {
           </TabPanel>
         </TabContext>
       </BaseCard>
-      {/* {openCollectorForm && (
-        <NobreakForm
+      {openCollectorForm && (
+        <CollectorForm
           data={collector}
           openForm={openCollectorForm}
           closeForm={() => setOpenCollectorForm(false)}
         />
-      )} */}
+      )}
     </Wapper>
   );
 }

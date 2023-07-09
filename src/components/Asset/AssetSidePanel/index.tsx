@@ -101,7 +101,7 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
         </Box>
       </HeaderContainer>
       <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
-      {!('potencialNominal' in data) && !('totalImpressoes' in data) && (
+      {!('totalImpressoes' in data) && (
         <>
           <Typography color={'primary'} fontWeight={'bold'} fontSize={14}>
             Atribuido a
@@ -165,7 +165,7 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
         fontWeight={'bold'}
         fontSize={14}
       >
-        Local da Industria
+        Local
       </Typography>
       <Card
         variant="outlined"
