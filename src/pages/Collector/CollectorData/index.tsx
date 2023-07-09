@@ -88,7 +88,7 @@ export default function CollectorData() {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
-          url: `/active/${collector?.id}`,
+          url: `/asset/${collector?.id}`,
           withCredentials: true,
         };
 

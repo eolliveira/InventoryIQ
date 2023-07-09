@@ -50,7 +50,7 @@ export default function AssetMovements({ assetId }: AssetMovementsProps) {
 
   const getMovements = useCallback(() => {
     const params: AxiosRequestConfig = {
-      url: `/active/${assetId}/movements`,
+      url: `/asset/${assetId}/movements`,
       withCredentials: true,
     };
 

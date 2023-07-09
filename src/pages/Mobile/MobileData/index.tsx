@@ -88,7 +88,7 @@ export default function MobileData() {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
-          url: `/active/${device?.id}`,
+          url: `/asset/${device?.id}`,
           withCredentials: true,
         };
 

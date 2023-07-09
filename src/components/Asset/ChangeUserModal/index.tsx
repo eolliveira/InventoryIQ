@@ -78,7 +78,7 @@ export default function ChangeUserModal({
 
     const params: AxiosRequestConfig = {
       method: 'PUT',
-      url: `/active/${assetId}/user/update`,
+      url: `/asset/${assetId}/user/update`,
       data: data,
       withCredentials: true,
     };

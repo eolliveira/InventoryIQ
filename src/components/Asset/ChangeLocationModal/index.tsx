@@ -80,7 +80,7 @@ export default function ChangeLocationModal({
     const data = { localIndustriaId: selectedLocation };
     const params: AxiosRequestConfig = {
       method: 'PUT',
-      url: `/active/${assetId}/location/update`,
+      url: `/asset/${assetId}/location/update`,
       data: data,
       withCredentials: true,
     };

@@ -74,7 +74,7 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
 
   const getLicenses = useCallback(() => {
     const params: AxiosRequestConfig = {
-      url: `/active/${assetId}/licenses`,
+      url: `/asset/${assetId}/licenses`,
       withCredentials: true,
     };
 

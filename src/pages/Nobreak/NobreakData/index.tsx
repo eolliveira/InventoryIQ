@@ -87,7 +87,7 @@ export default function NobreakData() {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
-          url: `/active/${nobreak?.id}`,
+          url: `/asset/${nobreak?.id}`,
           withCredentials: true,
         };
 

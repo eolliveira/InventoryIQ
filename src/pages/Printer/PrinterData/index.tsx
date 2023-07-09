@@ -91,7 +91,7 @@ export default function PrinterData() {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
-          url: `/active/${printer?.id}`,
+          url: `/asset/${printer?.id}`,
           withCredentials: true,
         };
 

@@ -69,7 +69,7 @@ export default function AssetService({ assetId }: AssetServiceProps) {
 
   const getServices = useCallback(() => {
     const params: AxiosRequestConfig = {
-      url: `/active/${assetId}/services`,
+      url: `/asset/${assetId}/services`,
       withCredentials: true,
     };
 

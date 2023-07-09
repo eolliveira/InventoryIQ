@@ -98,7 +98,7 @@ export default function WorkstationData() {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
-          url: `/active/${active?.id}`,
+          url: `/asset/${active?.id}`,
           withCredentials: true,
         };
 

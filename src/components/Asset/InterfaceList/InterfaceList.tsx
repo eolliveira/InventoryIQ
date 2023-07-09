@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineTwoToneIcon from '@mui/icons-material/DeleteOutlineTwoTone';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
@@ -60,7 +60,7 @@ export default function InterfaceList({ assetId }: InterfaceList) {
           aria-label="delete"
           size="small"
         >
-          <DeleteIcon color="primary" fontSize="inherit" />
+          <DeleteOutlineTwoToneIcon color="primary" fontSize="small" />
         </IconButton>
       ),
     },
@@ -75,7 +75,7 @@ export default function InterfaceList({ assetId }: InterfaceList) {
     setIsLoadingInterfaces(true);
 
     const params: AxiosRequestConfig = {
-      url: `/active/${assetId}/interfaces`,
+      url: `/asset/${assetId}/interfaces`,
       withCredentials: true,
     };
 
