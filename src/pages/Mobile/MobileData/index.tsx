@@ -30,13 +30,12 @@ import { Mobile } from '../../../types/Mobile';
 import MobileForm from './MobileForm';
 import MobileDetails from './MobileDetails';
 
+type urlParams = {
+  deviceId: string;
+};
+
 export default function MobileData() {
   const [openDeviceForm, setOpenDeviceForm] = useState(false);
-
-  type urlParams = {
-    deviceId: string;
-  };
-
   const { deviceId } = useParams<urlParams>();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [device, setDevice] = useState<Mobile>();

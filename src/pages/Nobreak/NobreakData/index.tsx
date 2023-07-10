@@ -29,13 +29,12 @@ import { Nobreak } from 'types/Nobreak';
 import NobreakForm from './NobreakForm';
 import NobreakDetails from './NobreakDetails';
 
+type urlParams = {
+  nobreakId: string;
+};
+
 export default function NobreakData() {
   const [openNobreakForm, setOpenNobreakForm] = useState(false);
-
-  type urlParams = {
-    nobreakId: string;
-  };
-
   const { nobreakId } = useParams<urlParams>();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [nobreak, setNobreak] = useState<Nobreak>();

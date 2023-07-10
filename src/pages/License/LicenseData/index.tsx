@@ -26,13 +26,12 @@ import LicenseSidePanel from '../../../components/LicenseSidePanel';
 import AssignmentReturnedTwoToneIcon from '@mui/icons-material/AssignmentReturnedTwoTone';
 import TextSnippetTwoToneIcon from '@mui/icons-material/TextSnippetTwoTone';
 
+type urlParams = {
+  licenseId: string;
+};
+
 export default function LicenseData() {
   const [openLicenseForm, setOpenLicenseForm] = useState(false);
-
-  type urlParams = {
-    licenseId: string;
-  };
-
   const { licenseId } = useParams<urlParams>();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [license, setLicense] = useState<Licenca>();
@@ -46,9 +45,7 @@ export default function LicenseData() {
     };
 
     requestBackend(params)
-      .then((response) => {
-        setLicense(response.data);
-      })
+      .then((response) => setLicense(response.data))
       .catch((error) => {
         Swal.fire({
           title: 'Falha',
@@ -60,9 +57,7 @@ export default function LicenseData() {
       });
   }, [licenseId, formContextData]);
 
-  useEffect(() => {
-    getLicenseData();
-  }, [getLicenseData]);
+  useEffect(() => getLicenseData(), [getLicenseData]);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setTabValue(newValue);

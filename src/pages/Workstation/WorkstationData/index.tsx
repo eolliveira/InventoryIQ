@@ -34,16 +34,15 @@ import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwo
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
 
+type urlParams = {
+  workstationId: string;
+};
+
 export default function WorkstationData() {
   const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
-
-  type urlParams = {
-    workstationId: string;
-  };
-
   const { workstationId } = useParams<urlParams>();
   const { formContextData, setFormContextData } = useContext(FormContext);
-  const [active, setActive] = useState<Workstation>();
+  const [workstation, setWorkstation] = useState<Workstation>();
   const [sweeping, setSweeping] = useState(false);
   const [tabValue, setTabValue] = useState('1');
   const navigate = useNavigate();
@@ -55,19 +54,14 @@ export default function WorkstationData() {
     };
 
     requestBackend(params)
-      .then((response) => {
-        setActive(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then((response) => setWorkstation(response.data))
+      .catch((error) => console.log(error));
   }, [workstationId, sweeping, formContextData]);
 
   useEffect(() => getWorkstationData(), [getWorkstationData]);
 
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
     setTabValue(newValue);
-  };
 
   const handleAdd = () => {
     setFormContextData({ isAdding: true });
@@ -98,7 +92,7 @@ export default function WorkstationData() {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
-          url: `/asset/${active?.id}`,
+          url: `/asset/${workstation?.id}`,
           withCredentials: true,
         };
 
@@ -129,7 +123,7 @@ export default function WorkstationData() {
     setSweeping(true);
     const params: AxiosRequestConfig = {
       method: 'PUT',
-      url: `/workstation/${active?.id}/sweep`,
+      url: `/workstation/${workstation?.id}/sweep`,
       withCredentials: true,
     };
 
@@ -154,7 +148,7 @@ export default function WorkstationData() {
   return (
     <Wapper className="row">
       <ContainerSidePanel className="col-lg-3">
-        <AssetSidePanel data={active ?? ({} as Workstation)} />
+        <AssetSidePanel data={workstation ?? ({} as Workstation)} />
       </ContainerSidePanel>
       <BaseCard className="col-lg-9">
         <Box
@@ -180,7 +174,9 @@ export default function WorkstationData() {
             marginLeft={2}
             flex={1}
           >
-            {(active ? active?.id : '') + ' - ' + (active ? active?.nome : '')}
+            {(workstation ? workstation?.id : '') +
+              ' - ' +
+              (workstation ? workstation?.nome : '')}
           </Typography>
           <Stack spacing={2} direction="row">
             <StockButton
@@ -256,25 +252,25 @@ export default function WorkstationData() {
             </Box>
           </AppBar>
           <TabPanel style={{ padding: 0 }} value="1">
-            <WorkstationDetails data={active} />
+            <WorkstationDetails data={workstation} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="2">
-            <ProgressBarDisc assetId={active?.id} />
+            <ProgressBarDisc assetId={workstation?.id} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="3">
-            <AssetMovements assetId={active?.id} />
+            <AssetMovements assetId={workstation?.id} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="4">
-            <AssetLicense assetId={active?.id} />
+            <AssetLicense assetId={workstation?.id} />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="5">
-            <AssetService assetId={active?.id} />
+            <AssetService assetId={workstation?.id} />
           </TabPanel>
         </TabContext>
       </BaseCard>
       {openWorkstationForm && (
         <WorkstationForm
-          data={active}
+          data={workstation}
           openForm={openWorkstationForm}
           closeForm={() => setOpenWorkstationForm(false)}
         />

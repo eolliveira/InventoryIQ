@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
 import AssetMovements from '../../../components/Asset/AssetMovements';
-import AssetLicense from '../../../components/Asset/AssetLicense';
 import AssetService from '../../../components/Asset/AssetService';
 import StockButton from '../../../components/buttons/StockButton';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -22,21 +21,18 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2';
 import TextSnippetTwoToneIcon from '@mui/icons-material/TextSnippetTwoTone';
-import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
-import { Nobreak } from 'types/Nobreak';
 import { Coletor } from 'types/Coletor';
 import CollectorForm from './CollectorForm';
 import CollectorDetails from './CollectorDetails';
 
+type urlParams = {
+  collectorId: string;
+};
+
 export default function CollectorData() {
   const [openCollectorForm, setOpenCollectorForm] = useState(false);
-
-  type urlParams = {
-    collectorId: string;
-  };
-
   const { collectorId } = useParams<urlParams>();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [collector, setCollector] = useState<Coletor>();

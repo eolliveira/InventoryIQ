@@ -32,13 +32,12 @@ import { Printer } from '../../../types/Printer/Printer';
 import PrinterDetails from './PrinterDetails';
 import PrinterForm from './PrinterForm';
 
+type urlParams = {
+  printerId: string;
+};
+
 export default function PrinterData() {
   const [openPrinterForm, setOpenPrinterForm] = useState(false);
-
-  type urlParams = {
-    printerId: string;
-  };
-
   const { printerId } = useParams<urlParams>();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [printer, setPrinter] = useState<Printer>();
