@@ -2,27 +2,32 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { requestBackendLogin } from '../../http/requests';
 import { saveAuthData } from '../../utils/LocalStorage';
 import { getTokenData } from '../../utils/Auth';
+import Logo from '../../assets/img/logo2.gif';
 import Swal from 'sweetalert2';
+import Typography from '@mui/material/Typography';
+import LoadingButton from '@mui/lab/LoadingButton';
 
-type FormData = {
+type LoginData = {
   login: string;
   password: string;
 };
 
 export default function Login() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<LoginData>();
   const { setAuthContextData } = useContext(AuthContext);
 
-  const onSubmit = (formData: FormData) => {
+  const onSubmit = (formData: LoginData) => {
+    setIsLoading(true);
     requestBackendLogin(formData)
       .then((response) => {
         saveAuthData(response.data);
@@ -39,53 +44,84 @@ export default function Login() {
           icon: 'warning',
           confirmButtonColor: '#999999',
         });
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
-    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="login">Usuário:</label>
-      <div>{errors.login?.message}</div>
-      <input
-        {...register('login', {
-          required: 'Login obrigatorio',
-        })}
-        name="login"
-        type="text"
-        placeholder="Login"
-      />
+    <Container>
+      <LogoContainer>
+        <img width={200} src={Logo} alt="Logo" />
+      </LogoContainer>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Typography color={'GrayText'}>USUÁRIO</Typography>
+        <input
+          {...register('login', {
+            required: 'Campo obrigatório!',
+          })}
+          name="login"
+          type="text"
+          placeholder="Informe o usuário"
+        />
+        <Typography color={'error'} variant="subtitle2">
+          {errors.login?.message}
+        </Typography>
 
-      <label htmlFor="password">Senha:</label>
-      <div>{errors.password?.message}</div>
-      <input
-        {...register('password', {
-          required: 'Informe a senha',
-        })}
-        name="password"
-        type="password"
-        placeholder="senha"
-      />
+        <Typography color={'GrayText'}>SENHA</Typography>
 
-      <button>Entrar</button>
-    </FormWrapper>
+        <input
+          {...register('password', {
+            required: 'Campo obrigatório!',
+          })}
+          name="password"
+          type="password"
+          placeholder="Informe a senha"
+        />
+        <Typography color={'error'} variant="subtitle2">
+          {errors.password?.message}
+        </Typography>
+        <LoadingButton
+          sx={{ color: '#d1ab00c8' }}
+          type="submit"
+          loading={isLoading}
+        >
+          <Typography textTransform={'none'}>Entrar</Typography>
+        </LoadingButton>
+      </Form>
+      <VersionContainer>
+        <p>versão 1.0</p>
+      </VersionContainer>
+    </Container>
   );
 }
 
-const FormWrapper = styled.form`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  margin: 2rem;
-  padding: 2rem;
-  border: 2px solid #ccc;
-  border-radius: 0.5rem;
+  justify-content: center;
+  background-image: linear-gradient(to bottom, #ffeb3c, #fffcdc);
+  height: 100vh;
+`;
 
-  label {
-    font-weight: bold;
-  }
+const LogoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const Form = styled.form`
+  display: flex;
+  width: 400px;
+  flex-direction: column;
+
+  gap: 0.5rem;
+  margin: 40px auto;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: rgb(160, 160, 160) 0px 0px 20px;
+  background-color: #eeeeee;
 
   input {
+    width: 100%;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 0.25rem;
@@ -94,13 +130,17 @@ const FormWrapper = styled.form`
   button {
     padding: 0.5rem 1rem;
     border: none;
-    border-radius: 0.25rem;
-    background-color: #0077ff;
+    background-color: #d1ab00c8;
     color: #fff;
     cursor: pointer;
 
     &:hover {
-      background-color: #0055ff;
+      background-color: #d1ab00ea;
     }
   }
+`;
+
+const VersionContainer = styled.div`
+  display: flex;
+  justify-content: center;
 `;

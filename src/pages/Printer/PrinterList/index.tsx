@@ -92,12 +92,55 @@ export default function PrinterList() {
     useState<null | HTMLElement>(null);
   const open = Boolean(openCustomFilters);
 
-  function handleAddPrinter() {
+  const getPrintersData = useCallback(() => {
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: `/printer?${filterField}=${inputFilter}&status=${statusFilter}${
+        dtAquisicaoInicioFilter
+          ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }${
+        dtAquisicaoFinalFilter
+          ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }`,
+      withCredentials: true,
+      params: {
+        page: numberPage,
+        size: rowsPerPage,
+      },
+    };
+
+    requestBackend(params)
+      .then((response) => {
+        setPage(response.data);
+      })
+      .catch((error) => {
+        console.log('Erro' + error);
+      });
+  }, [
+    numberPage,
+    rowsPerPage,
+    formContextData,
+    inputFilter,
+    filterField,
+    statusFilter,
+    dtAquisicaoInicioFilter,
+    dtAquisicaoFinalFilter,
+  ]);
+
+  useEffect(() => getPrintersData(), [getPrintersData]);
+
+  function handleAdd() {
     setFormContextData({ isAdding: true });
     setOpenPrinterForm(true);
   }
 
-  function handleDeletePrinter(AssetId: string) {
+  function handleDelete(AssetId: string) {
     if (selectedAsset == '') {
       Swal.fire({
         title: 'Atenção',
@@ -169,49 +212,6 @@ export default function PrinterList() {
     if (selectedRows.selectedCount == 0) setSelectedAsset('');
   };
 
-  const getPrintersData = useCallback(() => {
-    const params: AxiosRequestConfig = {
-      method: 'GET',
-      url: `/printer?${filterField}=${inputFilter}&status=${statusFilter}${
-        dtAquisicaoInicioFilter
-          ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }${
-        dtAquisicaoFinalFilter
-          ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }`,
-      withCredentials: true,
-      params: {
-        page: numberPage,
-        size: rowsPerPage,
-      },
-    };
-
-    requestBackend(params)
-      .then((response) => {
-        setPage(response.data);
-      })
-      .catch((error) => {
-        console.log('Erro' + error);
-      });
-  }, [
-    numberPage,
-    rowsPerPage,
-    formContextData,
-    inputFilter,
-    filterField,
-    statusFilter,
-    dtAquisicaoInicioFilter,
-    dtAquisicaoFinalFilter,
-  ]);
-
-  useEffect(() => getPrintersData(), [getPrintersData]);
-
   return (
     <Panel title="Impressoras">
       <Box
@@ -264,7 +264,7 @@ export default function PrinterList() {
             variant="contained"
             startIcon={<DeleteIcon />}
             color="primary"
-            onClick={() => handleDeletePrinter(selectedAsset)}
+            onClick={() => handleDelete(selectedAsset)}
           >
             <Typography fontSize={14} textTransform={'none'}>
               Excluir
@@ -274,7 +274,7 @@ export default function PrinterList() {
             variant="contained"
             startIcon={<AddCircleOutlineIcon />}
             color="primary"
-            onClick={handleAddPrinter}
+            onClick={handleAdd}
           >
             <Typography fontSize={14} textTransform={'none'}>
               Novo
