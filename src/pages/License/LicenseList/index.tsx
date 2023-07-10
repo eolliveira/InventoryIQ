@@ -30,19 +30,12 @@ import LicenseForm from '../LicenseData/LicenseForm';
 import LicenseStatusStyle from '../../../components/LicenseStatusStyle';
 import { licenseStatus } from '../../../constants/LicenseStatus';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import InputDatePeriod from '../../../components/inputs/InputDatePeriod';
 
 const columns: TableColumn<Licenca>[] = [
-  {
-    name: 'Nome',
-    selector: (row) => row.nome,
-    sortable: true,
-  },
-  {
-    name: 'Software',
-    selector: (row) => row.software.nome,
-    sortable: true,
-  },
+  { name: 'Nome', selector: (row) => row.nome, sortable: true },
+  { name: 'Software', selector: (row) => row.software.nome, sortable: true },
   { name: 'Chave', selector: (row) => row.chave, sortable: true },
   {
     name: 'Tipo Licença',
@@ -70,7 +63,8 @@ const columns: TableColumn<Licenca>[] = [
   },
   {
     name: 'Data expiração',
-    selector: (row) => dayjs(row.dtExpiracao).format('DD/MM/YYYY'),
+    selector: (row) =>
+      row.dtExpiracao ? dayjs(row.dtExpiracao).format('DD/MM/YYYY') : ' - ',
     sortable: true,
     width: '145px',
   },
@@ -85,8 +79,16 @@ export default function LicenseList() {
   const navigate = useNavigate();
 
   const [filterField, setFilterField] = useState('nome');
+
   const [statusFilter, setStatusFilter] = useState('');
   const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+
+  const [dtExpiracaoInicioFilter, setDtExpiracaoInicioFilter] =
+    useState<Dayjs | null>(null);
+  const [dtExpiracaoFinalFilter, setDtExpiracaoFinalFilter] =
+    useState<Dayjs | null>(null);
+  const [dtExpiracaoFilterChecked, setDtExpiracaoFilterchecked] =
+    useState(false);
 
   const [openCustomFilters, setOpenCustomFilters] =
     useState<null | HTMLElement>(null);
@@ -97,7 +99,19 @@ export default function LicenseList() {
   const getLicenses = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/licenses?${filterField}=${inputFilter}&status=${statusFilter}`,
+      url: `/licenses?${filterField}=${inputFilter}&status=${statusFilter}${
+        dtExpiracaoInicioFilter
+          ? `&dtExpiracaoInicio=${dayjs(dtExpiracaoInicioFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }${
+        dtExpiracaoFinalFilter
+          ? `&dtExpiracaoFinal=${dayjs(dtExpiracaoFinalFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }`,
       withCredentials: true,
       params: {
         page: numberPage,
@@ -106,19 +120,20 @@ export default function LicenseList() {
     };
 
     requestBackend(params)
-      .then((response) => {
-        setPage(response.data);
-      })
-      .catch((error) => {
-        console.log('Erro' + error);
-      });
-  }, [numberPage, inputFilter, filterField, statusFilter]);
+      .then((response) => setPage(response.data))
+      .catch((error) => console.log('Erro' + error));
+  }, [
+    numberPage,
+    inputFilter,
+    filterField,
+    statusFilter,
+    dtExpiracaoInicioFilter,
+    dtExpiracaoFinalFilter,
+  ]);
+
+  useEffect(() => getLicenses(), [getLicenses]);
 
   const handleRowClicked = (row: Licenca) => navigate(`/license/${row.id}`);
-
-  useEffect(() => {
-    getLicenses();
-  }, [getLicenses]);
 
   const handleAdd = () => {
     setFormContextData({ isAdding: true });
@@ -127,14 +142,15 @@ export default function LicenseList() {
 
   function handleClearFilters() {
     setStatusFilterchecked(false);
+    setDtExpiracaoFilterchecked(false);
     setInputFilter('');
     setStatusFilter('');
+    setDtExpiracaoFinalFilter(null);
+    setDtExpiracaoInicioFilter(null);
     setFilterField('nome');
   }
 
-  const handleClose = () => {
-    setOpenCustomFilters(null);
-  };
+  const handleClose = () => setOpenCustomFilters(null);
 
   return (
     <Panel title="Licenças de Software">
@@ -165,6 +181,15 @@ export default function LicenseList() {
               setFieldFilter={setStatusFilter}
               setNumberPage={setNumberPage}
               selectedItems={licenseStatus.map((status) => status)}
+            />
+          )}
+          {dtExpiracaoFilterChecked && (
+            <InputDatePeriod
+              label="Dt.expiração"
+              valueStart={dtExpiracaoInicioFilter}
+              valueEnd={dtExpiracaoFinalFilter}
+              onChangeStart={(date) => setDtExpiracaoInicioFilter(date)}
+              onChangeEnd={(date) => setDtExpiracaoFinalFilter(date)}
             />
           )}
         </Box>
@@ -260,6 +285,21 @@ export default function LicenseList() {
           />
           <Typography fontSize={13} variant="subtitle2">
             Status
+          </Typography>
+        </MenuItem>
+        <MenuItem
+          sx={{ marginRight: 2, padding: '0px 6px' }}
+          onClick={handleClose}
+        >
+          <Checkbox
+            size="small"
+            checked={dtExpiracaoFilterChecked}
+            onChange={(event) =>
+              setDtExpiracaoFilterchecked(event.target.checked)
+            }
+          />
+          <Typography fontSize={13} variant="subtitle2">
+            Data expiração
           </Typography>
         </MenuItem>
       </Menu>

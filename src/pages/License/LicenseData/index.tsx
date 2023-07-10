@@ -113,8 +113,6 @@ export default function LicenseData() {
     });
   };
 
-  const handleDuplicate = () => {};
-
   return (
     <Wapper className="row">
       <ContainerSidePanel className="col-lg-3">
@@ -152,7 +150,6 @@ export default function LicenseData() {
             <StockButton
               fontSize={14}
               onClickAdd={handleAdd}
-              onClickDuplicate={handleDuplicate}
               onClickEdit={handleEdit}
               onClickRemove={handleRemove}
               isDisabled={formContextData.isAdding || formContextData.isEditing}

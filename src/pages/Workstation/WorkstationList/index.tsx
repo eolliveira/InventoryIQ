@@ -64,7 +64,8 @@ const columns: TableColumn<Workstation>[] = [
   },
   {
     name: 'Dt.Aquisição',
-    selector: (row) => dayjs(row.dtAquisicao).format('DD/MM/YYYY'),
+    selector: (row) =>
+      row.dtAquisicao ? dayjs(row.dtAquisicao).format('DD/MM/YYYY') : ' - ',
     sortable: true,
   },
 ];
@@ -97,15 +98,48 @@ export default function WorkstationList() {
 
   const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
 
-  const handleClose = () => {
-    setOpenCustomFilters(null);
-  };
+  const getWorkstatioData = useCallback(() => {
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: `/workstation?${filterField}=${inputFilter}&status=${statusFilter}${
+        dtAquisicaoInicioFilter
+          ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }${
+        dtAquisicaoFinalFilter
+          ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format(
+              'DD/MM/YYYY'
+            )}`
+          : ''
+      }`,
+      withCredentials: true,
+      params: {
+        page: numberPage,
+        size: rowsPerPage,
+      },
+    };
 
-  const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount == 1)
-      setSelectedAsset(selectedRows.selectedRows[0].id);
+    requestBackend(params)
+      .then((response) => setPage(response.data))
+      .catch((error) => console.log('Erro' + error));
+  }, [
+    numberPage,
+    rowsPerPage,
+    formContextData,
+    inputFilter,
+    filterField,
+    statusFilter,
+    dtAquisicaoInicioFilter,
+    dtAquisicaoFinalFilter,
+  ]);
 
-    if (selectedRows.selectedCount == 0) setSelectedAsset('');
+  useEffect(() => getWorkstatioData(), [getWorkstatioData]);
+
+  const handleAdd = () => {
+    setFormContextData({ isAdding: true });
+    setOpenWorkstationForm(true);
   };
 
   function onDelete(AssetId: string) {
@@ -161,53 +195,17 @@ export default function WorkstationList() {
     });
   }
 
-  const getWorkstatioData = useCallback(() => {
-    const params: AxiosRequestConfig = {
-      method: 'GET',
-      url: `/workstation?${filterField}=${inputFilter}&status=${statusFilter}${
-        dtAquisicaoInicioFilter
-          ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }${
-        dtAquisicaoFinalFilter
-          ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }`,
-      withCredentials: true,
-      params: {
-        page: numberPage,
-        size: rowsPerPage,
-      },
-    };
+  const handleSelectedRowsChange = (selectedRows: any) => {
+    if (selectedRows.selectedCount == 1)
+      setSelectedAsset(selectedRows.selectedRows[0].id);
 
-    requestBackend(params)
-      .then((response) => {
-        setPage(response.data);
-      })
-      .catch((error) => {
-        console.log('Erro' + error);
-      });
-  }, [
-    numberPage,
-    rowsPerPage,
-    formContextData,
-    inputFilter,
-    filterField,
-    statusFilter,
-    dtAquisicaoInicioFilter,
-    dtAquisicaoFinalFilter,
-  ]);
-
-  useEffect(() => {
-    getWorkstatioData();
-  }, [getWorkstatioData]);
+    if (selectedRows.selectedCount == 0) setSelectedAsset('');
+  };
 
   const handleRowClicked = (row: Workstation) =>
     navigate(`/workstation/${row.id}`);
+
+  const handleClose = () => setOpenCustomFilters(null);
 
   function handleClearFilters() {
     setStatusFilterchecked(false);
@@ -219,13 +217,8 @@ export default function WorkstationList() {
     setFilterField('nome');
   }
 
-  const handleAdd = () => {
-    setFormContextData({ isAdding: true });
-    setOpenWorkstationForm(true);
-  };
-
   return (
-    <Panel title="Estações de Trabalho ">
+    <Panel title="Estações de Trabalho">
       <Box
         display={'flex'}
         flexWrap={'wrap'}

@@ -112,7 +112,7 @@ export default function ChangeNfEntradaModal({
       method: 'PUT',
       url: license
         ? `/licenses/${assetId}/nfEntrada/update`
-        : `/active/${assetId}/nfEntrada/update`,
+        : `/asset/${assetId}/nfEntrada/update`,
       data,
       withCredentials: true,
     };

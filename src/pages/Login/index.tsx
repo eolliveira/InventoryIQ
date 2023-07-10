@@ -13,8 +13,6 @@ type FormData = {
   password: string;
 };
 
-//imprementar erro na requisição usando um estado
-
 export default function Login() {
   const navigate = useNavigate();
   const {
