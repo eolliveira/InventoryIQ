@@ -1,7 +1,6 @@
 import { AuthContext } from '../../contexts/AuthContext';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { useContext, useState } from 'react';
 import { requestBackendLogin } from '../../http/requests';
 import { saveAuthData } from '../../utils/LocalStorage';
@@ -10,6 +9,9 @@ import Logo from '../../assets/img/logo2.gif';
 import Swal from 'sweetalert2';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
+import './style';
+import { Container, Form, LogoContainer, VersionContainer } from './style';
+import Box from '@mui/material/Box';
 
 type LoginData = {
   login: string;
@@ -53,94 +55,48 @@ export default function Login() {
       <LogoContainer>
         <img width={200} src={Logo} alt="Logo" />
       </LogoContainer>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <Typography color={'GrayText'}>USUÁRIO</Typography>
-        <input
-          {...register('login', {
-            required: 'Campo obrigatório!',
-          })}
-          name="login"
-          type="text"
-          placeholder="Informe o usuário"
-        />
-        <Typography color={'error'} variant="subtitle2">
-          {errors.login?.message}
-        </Typography>
+      <Box>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Typography color={'GrayText'}>USUÁRIO</Typography>
+          <input
+            {...register('login', {
+              required: 'Campo obrigatório!',
+            })}
+            name="login"
+            type="text"
+            placeholder="Informe o usuário"
+          />
+          <Typography color={'error'} variant="subtitle2">
+            {errors.login?.message}
+          </Typography>
 
-        <Typography color={'GrayText'}>SENHA</Typography>
+          <Typography color={'GrayText'}>SENHA</Typography>
 
-        <input
-          {...register('password', {
-            required: 'Campo obrigatório!',
-          })}
-          name="password"
-          type="password"
-          placeholder="Informe a senha"
-        />
-        <Typography color={'error'} variant="subtitle2">
-          {errors.password?.message}
-        </Typography>
-        <LoadingButton
-          sx={{ color: '#d1ab00c8' }}
-          type="submit"
-          loading={isLoading}
-        >
-          <Typography textTransform={'none'}>Entrar</Typography>
-        </LoadingButton>
-      </Form>
+          <input
+            {...register('password', {
+              required: 'Campo obrigatório!',
+            })}
+            name="password"
+            type="password"
+            placeholder="Informe a senha"
+          />
+          <Typography color={'error'} variant="subtitle2">
+            {errors.password?.message}
+          </Typography>
+          <LoadingButton
+            sx={{ color: '#d1ab00c8' }}
+            type="submit"
+            loading={isLoading}
+          >
+            <Typography textTransform={'none'}>Entrar</Typography>
+          </LoadingButton>
+        </Form>
+      </Box>
       <VersionContainer>
-        <p>versão 1.0</p>
+        <Typography fontWeight={'bold'} variant="subtitle2">
+          versão 1.0
+        </Typography>
       </VersionContainer>
     </Container>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-image: linear-gradient(to bottom, #ffeb3c, #fffcdc);
-  height: 100vh;
-`;
-
-const LogoContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  width: 400px;
-  flex-direction: column;
-
-  gap: 0.5rem;
-  margin: 40px auto;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: rgb(160, 160, 160) 0px 0px 20px;
-  background-color: #eeeeee;
-
-  input {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem;
-  }
-
-  button {
-    padding: 0.5rem 1rem;
-    border: none;
-    background-color: #d1ab00c8;
-    color: #fff;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #d1ab00ea;
-    }
-  }
-`;
-
-const VersionContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
