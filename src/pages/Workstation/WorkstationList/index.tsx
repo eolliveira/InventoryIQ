@@ -184,9 +184,7 @@ export default function WorkstationList() {
               icon: 'warning',
             });
           })
-          .finally(() => {
-            setFormContextData({ isEditing: false });
-          });
+          .finally(() => setFormContextData({ isEditing: false }));
       }
     });
   }

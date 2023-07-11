@@ -60,7 +60,8 @@ const columns: TableColumn<Printer>[] = [
   },
   {
     name: 'Dt.Aquisição',
-    selector: (row) => dayjs(row.dtAquisicao).format('DD/MM/YYYY'),
+    selector: (row) =>
+      row.dtAquisicao ? dayjs(row.dtAquisicao).format('DD/MM/YYYY') : ' - ',
     sortable: true,
   },
 ];

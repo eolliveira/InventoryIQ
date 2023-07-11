@@ -166,9 +166,7 @@ export default function ChangeNfEntradaModal({
       .finally(() => setIsLoading(false));
   };
 
-  const handleClose = () => {
-    setOpenCustomFilters(null);
-  };
+  const handleClose = () => setOpenCustomFilters(null);
 
   function handleCancel() {
     setFormContextData({ isEditing: false });

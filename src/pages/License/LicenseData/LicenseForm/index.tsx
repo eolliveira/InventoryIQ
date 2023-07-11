@@ -47,10 +47,10 @@ export default function LicenseForm({
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [licenseTypes, setLicenseType] = useState<TipoLicenca[]>();
   const [softwares, setSoftware] = useState<Software[]>();
-
   const [status, setStatus] = useState('');
-  const [licenseTypeId, setLicenseTypeId] = useState('');
+  const [tpLicencaId, settTpLicencaId] = useState('');
   const [softwareId, setSoftwareId] = useState('');
+  const navigate = useNavigate();
 
   const {
     register,
@@ -59,7 +59,6 @@ export default function LicenseForm({
     setValue,
     control,
   } = useForm<Licenca>();
-  const navigate = useNavigate();
 
   const getLicenseType = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -68,9 +67,7 @@ export default function LicenseForm({
     };
 
     requestBackend(params)
-      .then((response) => {
-        setLicenseType(response.data);
-      })
+      .then((response) => setLicenseType(response.data))
       .catch((error) =>
         console.log('falha ao carregar os tipos de software' + error)
       );
@@ -83,9 +80,7 @@ export default function LicenseForm({
     };
 
     requestBackend(params)
-      .then((response) => {
-        setSoftware(response.data);
-      })
+      .then((response) => setSoftware(response.data))
       .catch((error) => console.log('falha ao carregar softwares' + error));
   }, []);
 
@@ -97,7 +92,7 @@ export default function LicenseForm({
       setFormData(licenseData);
       setStatus(licenseData.status);
       setSoftwareId(licenseData.software.id);
-      setLicenseTypeId(licenseData.tpLicenca.id);
+      settTpLicencaId(licenseData.tpLicenca.id);
     }
   }, [getLicenseType, getSoftwares, licenseData]);
 
@@ -128,8 +123,8 @@ export default function LicenseForm({
         const data = {
           ...formData,
           status,
-          softwareId: softwareId,
-          tpLicencaId: licenseTypeId,
+          softwareId,
+          tpLicencaId,
         };
 
         const params: AxiosRequestConfig = {
@@ -227,10 +222,10 @@ export default function LicenseForm({
                   <Select
                     required
                     label="Tipo da licença"
-                    value={licenseTypeId}
+                    value={tpLicencaId}
                     sx={{ fontSize: 13 }}
                     onChange={(e: any) => {
-                      setLicenseTypeId(e.target.value);
+                      settTpLicencaId(e.target.value);
                     }}
                   >
                     {licenseTypes?.map((licenseType) => (
