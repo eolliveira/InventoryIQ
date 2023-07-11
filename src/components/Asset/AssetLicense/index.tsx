@@ -115,7 +115,6 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
               title: 'Sucesso!',
               text: 'Licença foi liberada!',
               icon: 'success',
-              confirmButtonColor: '#999999',
             });
             setFormContextData({ isEditing: false });
           })
@@ -124,7 +123,6 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
               title: 'Erro!',
               text: `${error.response.data.message}`,
               icon: 'error',
-              confirmButtonColor: '#999999',
             });
           });
       }

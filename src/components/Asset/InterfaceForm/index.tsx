@@ -36,7 +36,6 @@ export default function InterfaceForm({
         title: 'Atenção!',
         text: 'Informe um endereço ip!',
         icon: 'warning',
-        confirmButtonColor: '#999999',
       });
       return;
     }
@@ -60,7 +59,6 @@ export default function InterfaceForm({
           title: 'Sucesso!',
           text: 'Interface foi adicionada com sucesso!',
           icon: 'success',
-          confirmButtonColor: '#999999',
         });
 
         setFormContextData({ isEditing: false });
@@ -71,7 +69,6 @@ export default function InterfaceForm({
           title: 'Atenção',
           text: error.response.data.message,
           icon: 'warning',
-          confirmButtonColor: '#999999',
         });
       });
   }

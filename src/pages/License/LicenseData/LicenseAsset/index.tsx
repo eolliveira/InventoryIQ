@@ -102,7 +102,6 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
               title: 'Erro',
               text: `${error.response.data.message}`,
               icon: 'error',
-              confirmButtonColor: '#999999',
             });
           });
       }

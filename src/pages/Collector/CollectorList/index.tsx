@@ -106,7 +106,6 @@ export default function CollectorList() {
         title: 'Atenção',
         text: 'Selecione um ativo para remover!',
         icon: 'warning',
-        confirmButtonColor: '#999999',
       });
       return;
     }
@@ -116,11 +115,11 @@ export default function CollectorList() {
       title: `Deseja remover o ativo?`,
       text: 'Todas as informações e histórico de movimentos serão perdidas! ',
       icon: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#dc3545',
-      cancelButtonColor: 'secondary',
+      showDenyButton: true,
       confirmButtonText: 'Confirmar',
-      cancelButtonText: 'Cancelar',
+      confirmButtonColor: `#dc3545`,
+      denyButtonText: `Cancelar`,
+      denyButtonColor: '#4d4d4d',
     }).then((result) => {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
@@ -135,7 +134,6 @@ export default function CollectorList() {
               title: 'Removido!',
               text: `Registro foi removido com sucesso!.`,
               icon: 'success',
-              confirmButtonColor: '#999999',
             });
           })
           .catch((error) => {
@@ -143,7 +141,6 @@ export default function CollectorList() {
               title: 'Falha!',
               text: `${error.response.data.message}`,
               icon: 'warning',
-              confirmButtonColor: '#999999',
             });
           })
           .finally(() => setFormContextData({ isEditing: false }));

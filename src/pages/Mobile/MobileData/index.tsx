@@ -82,7 +82,7 @@ export default function MobileData() {
       confirmButtonText: 'Confirmar',
       confirmButtonColor: `#dc3545`,
       denyButtonText: `Cancelar`,
-      denyButtonColor: '#999999',
+      denyButtonColor: '#4d4d4d',
     }).then((result) => {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
@@ -97,7 +97,6 @@ export default function MobileData() {
               title: 'Removido',
               text: 'ativo removido com sucesso!',
               icon: 'success',
-              confirmButtonColor: '#999999',
             });
 
             navigate('/mobile');
@@ -107,7 +106,6 @@ export default function MobileData() {
               title: 'Falha!',
               text: `${error.response.data.message}`,
               icon: 'warning',
-              confirmButtonColor: '#999999',
             });
           });
       }

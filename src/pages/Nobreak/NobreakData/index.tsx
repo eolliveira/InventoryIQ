@@ -81,7 +81,7 @@ export default function NobreakData() {
       confirmButtonText: 'Confirmar',
       confirmButtonColor: `#dc3545`,
       denyButtonText: `Cancelar`,
-      denyButtonColor: '#999999',
+      denyButtonColor: '#4d4d4d',
     }).then((result) => {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
@@ -96,7 +96,6 @@ export default function NobreakData() {
               title: 'Removido',
               text: 'ativo removido com sucesso!',
               icon: 'success',
-              confirmButtonColor: '#999999',
             });
 
             navigate('/nobreak');
@@ -106,7 +105,6 @@ export default function NobreakData() {
               title: 'Falha!',
               text: `${error.response.data.message}`,
               icon: 'warning',
-              confirmButtonColor: '#999999',
             });
           });
       }

@@ -85,7 +85,7 @@ export default function PrinterData() {
       confirmButtonText: 'Confirmar',
       confirmButtonColor: `#dc3545`,
       denyButtonText: `Cancelar`,
-      denyButtonColor: '#999999',
+      denyButtonColor: '#4d4d4d',
     }).then((result) => {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
@@ -100,7 +100,6 @@ export default function PrinterData() {
               title: 'Removido',
               text: 'ativo removido com sucesso!',
               icon: 'success',
-              confirmButtonColor: '#999999',
             });
 
             navigate('/printer');
@@ -110,7 +109,6 @@ export default function PrinterData() {
               title: 'Falha!',
               text: `${error.response.data.message}`,
               icon: 'warning',
-              confirmButtonColor: '#999999',
             });
           });
       }
@@ -134,7 +132,6 @@ export default function PrinterData() {
           title: 'Falha!',
           text: 'Não foi possivel sincronizar os dados do ativo!',
           icon: 'error',
-          confirmButtonColor: '#999999',
         });
       })
       .finally(() => {

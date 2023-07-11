@@ -44,7 +44,6 @@ export default function ChangeStateModal({
         title: 'Atenção!',
         text: 'Informe um status!',
         icon: 'warning',
-        confirmButtonColor: '#999999',
       });
       return;
     }
@@ -54,7 +53,6 @@ export default function ChangeStateModal({
         title: 'Atenção!',
         text: 'Descreva o motivo para a mudança do status!',
         icon: 'warning',
-        confirmButtonColor: '#999999',
       });
       return;
     }
@@ -79,7 +77,6 @@ export default function ChangeStateModal({
           title: 'Sucesso!',
           text: 'Status do ativo foi alterado com sucesso!',
           icon: 'success',
-          confirmButtonColor: '#999999',
         });
 
         setFormContextData({ isEditing: false });
@@ -90,7 +87,6 @@ export default function ChangeStateModal({
           title: 'Atenção',
           text: error.response.data.message,
           icon: 'warning',
-          confirmButtonColor: '#999999',
         });
       });
   }

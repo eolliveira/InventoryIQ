@@ -79,7 +79,7 @@ export default function CollectorData() {
       confirmButtonText: 'Confirmar',
       confirmButtonColor: `#dc3545`,
       denyButtonText: `Cancelar`,
-      denyButtonColor: '#999999',
+      denyButtonColor: '#4d4d4d',
     }).then((result) => {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
@@ -94,7 +94,6 @@ export default function CollectorData() {
               title: 'Removido',
               text: 'ativo removido com sucesso!',
               icon: 'success',
-              confirmButtonColor: '#999999',
             });
 
             navigate('/nobreak');
@@ -104,7 +103,6 @@ export default function CollectorData() {
               title: 'Falha!',
               text: `${error.response.data.message}`,
               icon: 'warning',
-              confirmButtonColor: '#999999',
             });
           });
       }

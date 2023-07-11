@@ -41,7 +41,6 @@ export default function AddServiceModal({
         title: 'Atenção',
         text: 'Selecione o tipo do serviço!',
         icon: 'warning',
-        confirmButtonColor: '#999999',
       });
       return;
     }
@@ -50,7 +49,6 @@ export default function AddServiceModal({
         title: 'Atenção',
         text: 'Informe uma descrição para o serviço!',
         icon: 'warning',
-        confirmButtonColor: '#999999',
       });
       return;
     }
@@ -76,7 +74,6 @@ export default function AddServiceModal({
           title: 'Sucesso!',
           text: 'Registro foi salvo com sucesso!.',
           icon: 'success',
-          confirmButtonColor: '#999999',
         });
         setFormContextData({ isAdding: false });
         closeModal();
@@ -86,7 +83,6 @@ export default function AddServiceModal({
           title: 'Erro!',
           text: `${error.response.data.message}`,
           icon: 'error',
-          confirmButtonColor: '#999999',
         });
 
         closeModal();

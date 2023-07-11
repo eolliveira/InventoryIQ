@@ -73,9 +73,7 @@ export default function PrinterForm({
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
-      confirmButtonColor: '#43a047',
       cancelButtonText: 'Cancelar',
-      cancelButtonColor: '#dc3545',
     }).then((result) => {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
@@ -93,11 +91,11 @@ export default function PrinterForm({
               title: 'Concluido!',
               text: 'Dados foram salvos!',
               icon: 'success',
-              confirmButtonColor: '#999999',
             });
             setFormContextData({
               isAdding: false,
               isEditing: false,
+              isDuplicated: false,
             });
             navigate(`/printer/${response.data.id}`);
             closeForm();
@@ -107,7 +105,6 @@ export default function PrinterForm({
               title: 'Atenção',
               text: `${error.response.data.message}`,
               icon: 'warning',
-              confirmButtonColor: '#999999',
             });
           });
       }
@@ -163,7 +160,6 @@ export default function PrinterForm({
           title: 'Falha!',
           text: `Não foi possivel obter os dados do ativo. Por favor verifique se o endereço ip esta correto e se o agente esta configurado corretamente!`,
           icon: 'warning',
-          confirmButtonColor: '#999999',
         });
       })
       .finally(() => {

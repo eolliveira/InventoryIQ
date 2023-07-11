@@ -61,11 +61,13 @@ export default function LicenseTypeModal({
           title: 'Sucesso!',
           text: 'Dados foram salvos!',
           icon: 'success',
-          confirmButtonColor: '#999999',
         });
 
-        setFormContextData({ isAdding: false });
-        setFormContextData({ isEditing: false });
+        setFormContextData({
+          isAdding: false,
+          isEditing: false,
+          isDuplicated: false,
+        });
         closeModal();
       })
       .catch((error: any) => {
@@ -73,13 +75,16 @@ export default function LicenseTypeModal({
           title: 'Atenção',
           text: error.response.data.message,
           icon: 'warning',
-          confirmButtonColor: '#999999',
         });
       });
   }
 
   function handleCancel() {
-    setFormContextData({ isAdding: false, isEditing: false });
+    setFormContextData({
+      isAdding: false,
+      isEditing: false,
+      isDuplicated: false,
+    });
     closeModal();
   }
 

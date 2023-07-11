@@ -100,7 +100,6 @@ export default function LicenseTypeRegistration() {
               title: 'Removido!',
               text: 'Registro foi removido com sucesso!.',
               icon: 'success',
-              confirmButtonColor: '#999999',
             });
 
             setFormContextData({ isAdding: false });
@@ -110,7 +109,6 @@ export default function LicenseTypeRegistration() {
               title: 'Falha!',
               text: `${error.response.data.message}`,
               icon: 'error',
-              confirmButtonColor: '#999999',
             });
           });
       }

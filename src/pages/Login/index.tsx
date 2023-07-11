@@ -2,7 +2,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
-import { requestBackendLogin } from '../../http/requests';
+import { VERSION, requestBackendLogin } from '../../http/requests';
 import { saveAuthData } from '../../utils/LocalStorage';
 import { getTokenData } from '../../utils/Auth';
 import Logo from '../../assets/img/logo2.gif';
@@ -44,7 +44,6 @@ export default function Login() {
           title: 'Falha',
           text: `${error.response.data.message}`,
           icon: 'warning',
-          confirmButtonColor: '#999999',
         });
       })
       .finally(() => setIsLoading(false));
@@ -94,7 +93,7 @@ export default function Login() {
       </Box>
       <VersionContainer>
         <Typography fontWeight={'bold'} variant="subtitle2">
-          versão 1.0
+          versão {VERSION}
         </Typography>
       </VersionContainer>
     </Container>

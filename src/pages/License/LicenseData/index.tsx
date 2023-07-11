@@ -51,7 +51,6 @@ export default function LicenseData() {
           title: 'Falha',
           text: 'Falha ao obter dados da Licença!',
           icon: 'warning',
-          confirmButtonColor: '#999999',
         });
         console.log(error.response.data.message);
       });
@@ -82,7 +81,7 @@ export default function LicenseData() {
       confirmButtonText: 'Confirmar',
       confirmButtonColor: `#dc3545`,
       denyButtonText: `Cancelar`,
-      denyButtonColor: '#999999',
+      denyButtonColor: '#4d4d4d',
     }).then((result) => {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
@@ -97,7 +96,6 @@ export default function LicenseData() {
               title: 'Removido',
               text: 'Licença foi removida com sucesso!',
               icon: 'success',
-              confirmButtonColor: '#999999',
             });
             navigate('/license');
           })
@@ -106,7 +104,6 @@ export default function LicenseData() {
               title: 'Atenção',
               text: `${error.response.data.message}`,
               icon: 'warning',
-              confirmButtonColor: '#999999',
             });
           });
       }

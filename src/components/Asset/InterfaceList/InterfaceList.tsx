@@ -113,7 +113,6 @@ export default function InterfaceList({ assetId }: InterfaceList) {
               title: 'Removido!',
               text: 'Registro foi removido com sucesso!.',
               icon: 'success',
-              confirmButtonColor: '#999999',
             });
 
             setFormContextData({ isAdding: false });
@@ -123,7 +122,6 @@ export default function InterfaceList({ assetId }: InterfaceList) {
               title: 'Falha!',
               text: `${error.response.data.message}`,
               icon: 'success',
-              confirmButtonColor: '#999999',
             });
           });
       }

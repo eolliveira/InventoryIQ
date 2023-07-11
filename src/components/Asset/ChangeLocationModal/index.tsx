@@ -72,7 +72,6 @@ export default function ChangeLocationModal({
         title: 'Atenção',
         text: 'Selecione um Local para atribuir!',
         icon: 'warning',
-        confirmButtonColor: '#999999',
       });
 
       return;

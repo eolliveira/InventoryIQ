@@ -14,6 +14,15 @@ export const GlobalStyles = createGlobalStyle`
     
     .swal2-container { z-index: 9999 } 
 
+    .swal2-confirm.swal2-styled {
+      background-color: #43a047;
+    }
+
+    .swal2-cancel.swal2-styled {
+      background-color: #dc3545;
+    }
+
+
 `;
 
 export const BaseCard = styled.div`

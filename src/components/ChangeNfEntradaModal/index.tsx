@@ -103,7 +103,6 @@ export default function ChangeNfEntradaModal({
         title: 'Atenção',
         text: 'Selecione uma Nota Fiscal!',
         icon: 'warning',
-        confirmButtonColor: '#999999',
       });
       return;
     }
@@ -122,7 +121,6 @@ export default function ChangeNfEntradaModal({
           title: 'Sucesso',
           text: 'Nota Fiscal foi atribuida com sucesso!',
           icon: 'success',
-          confirmButtonColor: '#999999',
         });
 
         setFormContextData({ isEditing: false });
@@ -133,7 +131,6 @@ export default function ChangeNfEntradaModal({
           title: 'Falha',
           text: `${error.response.data.message}`,
           icon: 'success',
-          confirmButtonColor: '#999999',
         });
       });
   }

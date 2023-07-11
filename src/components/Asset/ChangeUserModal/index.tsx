@@ -69,7 +69,6 @@ export default function ChangeUserModal({
         title: 'Atenção',
         text: 'Selecione um usuario!',
         icon: 'warning',
-        confirmButtonColor: '#999999',
       });
       return;
     }

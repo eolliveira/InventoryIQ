@@ -74,7 +74,6 @@ export default function LicenseLinkAsset({
         title: 'Atenção',
         text: 'Selecione uma ativo para vincular a licença!',
         icon: 'warning',
-        confirmButtonColor: '#999999',
       });
       return;
     }
@@ -96,7 +95,6 @@ export default function LicenseLinkAsset({
           title: 'Sucesso!',
           text: 'Ativo foi vinculada a licença!',
           icon: 'success',
-          confirmButtonColor: '#999999',
         });
 
         closeModal();
@@ -106,13 +104,16 @@ export default function LicenseLinkAsset({
           title: 'Falha!',
           text: `${error.response.data.message}`,
           icon: 'warning',
-          confirmButtonColor: '#999999',
         });
       });
   }
 
   function handleCancel() {
-    setFormContextData({ isEditing: false });
+    setFormContextData({
+      isEditing: false,
+      isAdding: false,
+      isDuplicated: false,
+    });
     closeModal();
   }
 

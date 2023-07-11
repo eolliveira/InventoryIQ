@@ -74,7 +74,6 @@ export default function AssetLinkLicense({
         title: 'Atenção',
         text: 'Selecione uma lincença para vincular ao ativo!',
         icon: 'warning',
-        confirmButtonColor: '#999999',
       });
       return;
     }
@@ -96,7 +95,6 @@ export default function AssetLinkLicense({
           title: 'Sucesso!',
           text: 'Licença foi vinculada ao ativo!',
           icon: 'success',
-          confirmButtonColor: '#999999',
         });
 
         closeModal();
@@ -106,7 +104,6 @@ export default function AssetLinkLicense({
           title: 'Falha!',
           text: `${error.response.data.message}`,
           icon: 'warning',
-          confirmButtonColor: '#999999',
         });
       });
   }

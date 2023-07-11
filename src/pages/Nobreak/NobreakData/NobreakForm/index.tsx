@@ -58,9 +58,7 @@ export default function NobreakForm({
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
-      confirmButtonColor: '#43a047',
       cancelButtonText: 'Cancelar',
-      cancelButtonColor: '#dc3545',
     }).then((result) => {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
@@ -78,11 +76,11 @@ export default function NobreakForm({
               title: 'Concluido!',
               text: 'Dados foram salvos!',
               icon: 'success',
-              confirmButtonColor: '#999999',
             });
             setFormContextData({
               isAdding: false,
               isEditing: false,
+              isDuplicated: false,
             });
             navigate(`/nobreak/${response.data.id}`);
             closeForm();
@@ -92,7 +90,6 @@ export default function NobreakForm({
               title: 'Atenção',
               text: `${error.response.data.message}`,
               icon: 'warning',
-              confirmButtonColor: '#999999',
             });
           });
       }
