@@ -48,7 +48,7 @@ export default function LicenseForm({
   const [licenseTypes, setLicenseType] = useState<TipoLicenca[]>();
   const [softwares, setSoftware] = useState<Software[]>();
   const [status, setStatus] = useState('');
-  const [tpLicencaId, settTpLicencaId] = useState('');
+  const [tpLicencaId, setTpLicencaId] = useState('');
   const [softwareId, setSoftwareId] = useState('');
   const navigate = useNavigate();
 
@@ -92,7 +92,7 @@ export default function LicenseForm({
       setFormData(licenseData);
       setStatus(licenseData.status);
       setSoftwareId(licenseData.software.id);
-      settTpLicencaId(licenseData.tpLicenca.id);
+      setTpLicencaId(licenseData.tpLicenca.id);
     }
   }, [getLicenseType, getSoftwares, licenseData]);
 
@@ -225,7 +225,7 @@ export default function LicenseForm({
                     value={tpLicencaId}
                     sx={{ fontSize: 13 }}
                     onChange={(e: any) => {
-                      settTpLicencaId(e.target.value);
+                      setTpLicencaId(e.target.value);
                     }}
                   >
                     {licenseTypes?.map((licenseType) => (
