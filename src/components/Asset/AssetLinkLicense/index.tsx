@@ -25,8 +25,13 @@ type AssetLinkLicenseProps = {
 };
 
 const columns: TableColumn<Licenca>[] = [
-  { name: 'Id', selector: (row) => row.id, sortable: true },
-  { name: 'Software', selector: (row) => row.software.nome, sortable: true },
+  { name: 'Id', width: '80px', selector: (row) => row.id, sortable: true },
+  {
+    name: 'Software',
+    width: '260px',
+    selector: (row) => row.software.nome,
+    sortable: true,
+  },
   {
     name: 'Qtd. adquirida',
     selector: (row) => row.qtdAdquirida,
@@ -52,7 +57,7 @@ export default function AssetLinkLicense({
 
   useEffect(() => {
     const params: AxiosRequestConfig = {
-      url: `/licenses`,
+      url: `/licenses?licencasDisponiveis=true`,
       withCredentials: true,
     };
 

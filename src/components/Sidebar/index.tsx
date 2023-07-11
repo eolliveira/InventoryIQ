@@ -18,6 +18,10 @@ import IconButton from '@mui/material/IconButton';
 import Logo from '../../assets/img/logo2.gif';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Divider from '@mui/material/Divider';
+import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
+import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
+import DevicesOutlinedIcon from '@mui/icons-material/DevicesOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 export default function MenuSidebar() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
@@ -116,7 +120,7 @@ export default function MenuSidebar() {
             }}
             active={location.pathname.startsWith('/dashboard')}
             component={<Link to={'/dashboard'} />}
-            icon={<SpeedIcon />}
+            icon={<SpeedOutlinedIcon />}
           >
             Dashboard
           </MenuItem>
@@ -126,7 +130,7 @@ export default function MenuSidebar() {
               padding: 12,
               borderRadius: 10,
             }}
-            icon={<DevicesIcon />}
+            icon={<DevicesOutlinedIcon />}
             label="Ativos"
           >
             <MenuItem
@@ -186,7 +190,7 @@ export default function MenuSidebar() {
               padding: 12,
               borderRadius: 10,
             }}
-            icon={<DescriptionIcon />}
+            icon={<AssignmentOutlinedIcon />}
             active={location.pathname.startsWith('/license')}
             component={<Link to={'/license'} />}
           >
@@ -199,7 +203,7 @@ export default function MenuSidebar() {
               padding: 12,
               borderRadius: 10,
             }}
-            icon={<SettingsIcon />}
+            icon={<SettingsOutlinedIcon />}
             label="Configurações"
           >
             <MenuItem

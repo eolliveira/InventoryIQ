@@ -260,7 +260,7 @@ export default function WorkstationData() {
           <TabPanel style={{ padding: 0 }} value="4">
             <AssetLicense assetId={workstation?.id} />
           </TabPanel>
-          <TabPanel value="5">
+          <TabPanel style={{ padding: 0 }} value="5">
             <AssetService assetId={workstation?.id} />
           </TabPanel>
         </TabContext>

@@ -148,17 +148,14 @@ export default function InterfaceList({ assetId }: InterfaceList) {
         >
           Interfaces
         </Typography>
+
         <Button
-          variant="contained"
           size="small"
-          color="primary"
+          variant="outlined"
           sx={{ marginRight: 1 }}
-          startIcon={<AddIcon />}
           onClick={() => setOpenAddInterface(true)}
         >
-          <Typography textTransform={'none'} fontSize={14}>
-            Novo
-          </Typography>
+          <AddIcon />
         </Button>
       </Box>
       <Divider color="gray" />

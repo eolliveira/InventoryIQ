@@ -57,12 +57,14 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
     },
     {
       name: 'Data expiração',
-      selector: (row) => dayjs(row.dtExpiracao).format('DD/MM/YYYY'),
+      selector: (row) =>
+        row.dtExpiracao ? dayjs(row.dtExpiracao).format('DD/MM/YYYY') : ' - ',
       sortable: true,
     },
     {
       name: 'Data aquisição',
-      selector: (row) => dayjs(row.dtAquisicao).format('DD/MM/YYYY'),
+      selector: (row) =>
+        row.dtAquisicao ? dayjs(row.dtAquisicao).format('DD/MM/YYYY') : ' - ',
       sortable: true,
     },
   ];
@@ -153,16 +155,12 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
         </Typography>
 
         <Button
-          variant="contained"
           size="small"
-          color="primary"
+          variant="outlined"
           sx={{ marginRight: 1 }}
-          startIcon={<AddIcon />}
           onClick={() => setAssetLinkLicense(true)}
         >
-          <Typography textTransform={'none'} fontSize={14}>
-            Adicionar
-          </Typography>
+          <AddIcon />
         </Button>
       </Box>
       <Divider color="gray" />

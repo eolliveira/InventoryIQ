@@ -11,7 +11,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
-import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
@@ -32,6 +31,12 @@ import { licenseStatus } from '../../../constants/LicenseStatus';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import dayjs, { Dayjs } from 'dayjs';
 import InputDatePeriod from '../../../components/inputs/InputDatePeriod';
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import { Software } from '../../../types/Licenca/Software';
+import { TipoLicenca } from '../../../types/Licenca/TipoLicenca';
 
 const columns: TableColumn<Licenca>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -82,6 +87,8 @@ export default function LicenseList() {
 
   const [statusFilter, setStatusFilter] = useState('');
   const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+  const [softwareFilterChecked, setSoftwareFilterchecked] = useState(false);
+  const [tpLicencaFilterChecked, setTpLicencaFilterchecked] = useState(false);
 
   const [dtExpiracaoInicioFilter, setDtExpiracaoInicioFilter] =
     useState<Dayjs | null>(null);
@@ -93,6 +100,11 @@ export default function LicenseList() {
   const [openCustomFilters, setOpenCustomFilters] =
     useState<null | HTMLElement>(null);
   const open = Boolean(openCustomFilters);
+
+  const [softwares, setSoftware] = useState<Software[]>();
+  const [licenseTypes, setLicenseType] = useState<TipoLicenca[]>();
+  const [tpLicencaId, settTpLicencaId] = useState('');
+  const [softwareId, setSoftwareId] = useState('');
 
   const [openLicenseForm, setOpenLicenseForm] = useState(false);
 
@@ -131,7 +143,35 @@ export default function LicenseList() {
     dtExpiracaoFinalFilter,
   ]);
 
-  useEffect(() => getLicenses(), [getLicenses]);
+  const getSoftwares = useCallback(() => {
+    const params: AxiosRequestConfig = {
+      url: '/software',
+      withCredentials: true,
+    };
+
+    requestBackend(params)
+      .then((response) => setSoftware(response.data))
+      .catch((error) => console.log('falha ao carregar softwares' + error));
+  }, []);
+
+  const getLicenseType = useCallback(() => {
+    const params: AxiosRequestConfig = {
+      url: '/licenseType',
+      withCredentials: true,
+    };
+
+    requestBackend(params)
+      .then((response) => setLicenseType(response.data))
+      .catch((error) =>
+        console.log('falha ao carregar os tipos de software' + error)
+      );
+  }, []);
+
+  useEffect(() => {
+    getLicenses();
+    getSoftwares();
+    getLicenseType();
+  }, [getLicenses]);
 
   const handleRowClicked = (row: Licenca) => navigate(`/license/${row.id}`);
 
@@ -142,6 +182,8 @@ export default function LicenseList() {
 
   function handleClearFilters() {
     setStatusFilterchecked(false);
+    setSoftwareFilterchecked(false);
+    setTpLicencaFilterchecked(false);
     setDtExpiracaoFilterchecked(false);
     setInputFilter('');
     setStatusFilter('');
@@ -174,6 +216,61 @@ export default function LicenseList() {
             setFieldFilter={setFilterField}
             selectedItems={['nome', 'chave', 'qtdAdquirida', 'qtdAlocada']}
           />
+
+          {softwareFilterChecked && (
+            <FormControl fullWidth size="small" margin="dense">
+              <InputLabel sx={{ fontSize: 14 }}>
+                Selecione um software
+              </InputLabel>
+              <Select
+                required
+                label="Software"
+                value={softwareId}
+                sx={{ fontSize: 13 }}
+                onChange={(e: any) => {
+                  setSoftwareId(e.target.value);
+                }}
+              >
+                {softwares?.map((software) => (
+                  <MenuItem
+                    sx={{ fontSize: 13 }}
+                    key={software.id}
+                    value={software.id}
+                  >
+                    {software.nome}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
+
+          {tpLicencaFilterChecked && (
+            <FormControl fullWidth size="small" margin="dense">
+              <InputLabel sx={{ fontSize: 14 }}>
+                Selecione um software
+              </InputLabel>
+              <Select
+                required
+                label="Software"
+                value={tpLicencaId}
+                sx={{ fontSize: 13 }}
+                onChange={(e: any) => {
+                  settTpLicencaId(e.target.value);
+                }}
+              >
+                {licenseTypes?.map((software) => (
+                  <MenuItem
+                    sx={{ fontSize: 13 }}
+                    key={software.id}
+                    value={software.id}
+                  >
+                    {software.nome}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
+
           {statusFilterChecked && (
             <SelectFilter
               label="Status"
@@ -274,6 +371,34 @@ export default function LicenseList() {
         open={open}
         onClose={handleClose}
       >
+        <MenuItem
+          sx={{ marginRight: 2, padding: '0px 6px' }}
+          onClick={handleClose}
+        >
+          <Checkbox
+            size="small"
+            checked={softwareFilterChecked}
+            onChange={(event) => setSoftwareFilterchecked(event.target.checked)}
+          />
+          <Typography fontSize={13} variant="subtitle2">
+            Software
+          </Typography>
+        </MenuItem>
+        <MenuItem
+          sx={{ marginRight: 2, padding: '0px 6px' }}
+          onClick={handleClose}
+        >
+          <Checkbox
+            size="small"
+            checked={tpLicencaFilterChecked}
+            onChange={(event) =>
+              setTpLicencaFilterchecked(event.target.checked)
+            }
+          />
+          <Typography fontSize={13} variant="subtitle2">
+            Tipo licença
+          </Typography>
+        </MenuItem>
         <MenuItem
           sx={{ marginRight: 2, padding: '0px 6px' }}
           onClick={handleClose}

@@ -212,7 +212,7 @@ export default function WorkstationList() {
   }
 
   return (
-    <Panel title="Estações de Trabalho">
+    <Panel title="Estações de trabalho">
       <Box
         display={'flex'}
         flexWrap={'wrap'}

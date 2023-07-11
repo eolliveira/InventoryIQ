@@ -143,17 +143,14 @@ export default function AssetService({ assetId }: AssetServiceProps) {
         >
           Serviços realizados no ativo
         </Typography>
+
         <Button
-          variant="contained"
           size="small"
-          color="primary"
+          variant="outlined"
           sx={{ marginRight: 1 }}
-          startIcon={<AddIcon />}
           onClick={() => setOpenAddService(true)}
         >
-          <Typography textTransform={'none'} fontSize={14}>
-            Novo
-          </Typography>
+          <AddIcon />
         </Button>
       </Box>
       <Divider color="gray" />
