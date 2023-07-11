@@ -8,7 +8,7 @@ type CustomModal<T extends ReactNode> = {
 
 export default function CustomModal({ openModal, children }: CustomModal<any>) {
   return (
-    <Modal open={openModal} onClose={() => {}}>
+    <Modal open={openModal}>
       <Box
         sx={{
           height: '100vh',

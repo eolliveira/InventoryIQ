@@ -309,6 +309,10 @@ export default function ChangeNfEntradaModal({
 }
 
 const Container = styled.div`
+  @media (min-width: 300px) {
+    width: 280px;
+  }
+
   @media (min-width: 400px) {
     width: 380px;
   }
@@ -327,12 +331,12 @@ const Container = styled.div`
 
   @media (min-width: 900px) {
     width: 850px;
-    height: 600px;
+    height: 500px;
   }
 
   @media (min-width: 1100px) {
     width: 1000px;
-    height: 600px;
+    height: 500px;
   }
 
   @media (min-width: 1300px) {
