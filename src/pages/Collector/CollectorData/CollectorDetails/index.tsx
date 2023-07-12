@@ -23,10 +23,11 @@ export default function CollectorDetails({ data }: CollectorDetailsProps) {
               borderRadius: 2,
               padding: 1.5,
               marginBottom: 1,
-              minHeight: 386,
+              minHeight: 300,
             }}
           >
             <TextInfo label="Nome" text={data?.nome || '-'} />
+            <TextInfo label="Modelo" text={data?.modelo || '-'} />
             <TextInfo label="Fabricante" text={data?.fabricante || '-'} />
             <TextInfo label="Observação" text={data?.observacao || '-'} />
           </Card>
@@ -39,10 +40,9 @@ export default function CollectorDetails({ data }: CollectorDetailsProps) {
               border: '1px solid #e9e9e9',
               borderRadius: 2,
               padding: 1.5,
-              minHeight: 386,
+              minHeight: 300,
             }}
           >
-            <TextInfo label="Modelo" text={data?.modelo || '-'} />
             <TextInfo label="Numero de série" text={data?.numeroSerie || '-'} />
 
             <TextInfo

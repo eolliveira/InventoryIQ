@@ -124,7 +124,7 @@ export default function CollectorList() {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
-          url: `/active/${AssetId}`,
+          url: `/asset/${AssetId}`,
           withCredentials: true,
         };
 
@@ -145,6 +145,7 @@ export default function CollectorList() {
           })
           .finally(() => setFormContextData({ isEditing: false }));
       }
+      setFormContextData({ isEditing: false });
     });
   }
 

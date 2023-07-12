@@ -186,6 +186,7 @@ export default function WorkstationList() {
           })
           .finally(() => setFormContextData({ isEditing: false }));
       }
+      setFormContextData({ isEditing: false });
     });
   }
 

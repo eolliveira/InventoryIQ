@@ -128,7 +128,7 @@ export default function MobileList() {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
-          url: `/active/${AssetId}`,
+          url: `/asset/${AssetId}`,
           withCredentials: true,
         };
 

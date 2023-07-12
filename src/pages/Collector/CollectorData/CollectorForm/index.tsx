@@ -124,7 +124,7 @@ export default function CollectorForm({
       <BaseCard>
         <Panel
           title={
-            formContextData.isEditing ? 'Alterar Coletor' : 'Adicionar Coletor'
+            formContextData.isEditing ? 'Alterar coletor' : 'Adicionar coletor'
           }
         >
           <Form onSubmit={handleSubmit(onSubmit)}>
@@ -177,11 +177,6 @@ export default function CollectorForm({
                   error={!!errors.numeroSerie}
                   helperText={errors.numeroSerie?.message}
                 />
-
-                <div className="row">
-                  <div className="col-lg-6"></div>
-                  <div className="col-lg-6"></div>
-                </div>
 
                 <div className="row">
                   <div className="col-lg-6">

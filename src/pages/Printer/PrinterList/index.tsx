@@ -59,7 +59,7 @@ const columns: TableColumn<Printer>[] = [
     ),
   },
   {
-    name: 'Dt.Aquisição',
+    name: 'Dt.aquisição',
     selector: (row) =>
       row.dtAquisicao ? dayjs(row.dtAquisicao).format('DD/MM/YYYY') : ' - ',
     sortable: true,
@@ -165,7 +165,7 @@ export default function PrinterList() {
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: 'DELETE',
-          url: `/active/${AssetId}`,
+          url: `/asset/${AssetId}`,
           withCredentials: true,
         };
 
@@ -186,6 +186,7 @@ export default function PrinterList() {
           })
           .finally(() => setFormContextData({ isEditing: false }));
       }
+      setFormContextData({ isEditing: false });
     });
   }
 
