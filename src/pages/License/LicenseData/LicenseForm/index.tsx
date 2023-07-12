@@ -286,28 +286,30 @@ export default function LicenseForm({
 
                 <div className="row">
                   <div className="col-lg-12">
-                    <FormControl fullWidth size="small" margin={'dense'}>
-                      <InputLabel sx={{ fontSize: 14 }}>Status</InputLabel>
-                      <Select
-                        required
-                        label="Status"
-                        value={status}
-                        sx={{ fontSize: 13 }}
-                        onChange={(e: any) => {
-                          setStatus(e.target.value);
-                        }}
-                      >
-                        {licenseStatus?.map((status) => (
-                          <MenuItem
-                            sx={{ fontSize: 13 }}
-                            key={status}
-                            value={status}
-                          >
-                            {toCamelCase(removeUnderline(status))}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
+                    {formContextData.isEditing && (
+                      <FormControl fullWidth size="small" margin={'dense'}>
+                        <InputLabel sx={{ fontSize: 14 }}>Status</InputLabel>
+                        <Select
+                          required
+                          label="Status"
+                          value={status}
+                          sx={{ fontSize: 13 }}
+                          onChange={(e: any) => {
+                            setStatus(e.target.value);
+                          }}
+                        >
+                          {licenseStatus?.map((status) => (
+                            <MenuItem
+                              sx={{ fontSize: 13 }}
+                              key={status}
+                              value={status}
+                            >
+                              {toCamelCase(removeUnderline(status))}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    )}
                   </div>
 
                   <div className="col-lg-6">

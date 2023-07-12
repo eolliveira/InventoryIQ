@@ -25,17 +25,11 @@ export default function SelectFilter({
     <FormControl
       size="small"
       sx={{
-        backgroundColor: 'rgb(248, 250, 252)',
-        height: 35,
-        borderRadius: 2,
-        fontSize: '14px',
+        //backgroundColor: 'rgb(248, 250, 252)',
         marginRight: 0.5,
-        color: 'primary',
       }}
     >
-      <InputLabel id="demo-simple-select-label" size="small">
-        {label}
-      </InputLabel>
+      <InputLabel sx={{ fontSize: 14 }}>{label}</InputLabel>
       <Select
         sx={{
           height: 35,
@@ -44,7 +38,6 @@ export default function SelectFilter({
           fontSize: '14px',
           color: 'primary',
         }}
-        labelId="demo-simple-select-label"
         id="demo-simple-select-label"
         label={label}
         value={filterField}

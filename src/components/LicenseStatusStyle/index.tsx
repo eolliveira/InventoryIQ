@@ -17,22 +17,18 @@ export default function LicenseStatusStyle({
   const color =
     status === 'ATIVA'
       ? '#00C853'
-      : status === 'EM_USO'
-      ? '#2196F3'
-      : status === 'EXPIRADA'
+      : status === 'INATIVA'
       ? '#979797'
-      : status === 'DESATIVADA'
+      : status === 'EXPIRADA'
       ? '#D84315'
       : 'default';
 
   const bgColor =
     status === 'ATIVA'
       ? '#00c85316'
-      : status === 'EM_USO'
-      ? '#2195f318'
-      : status === 'EXPIRADA'
+      : status === 'INATIVA'
       ? '#9c9c9c2f'
-      : status === 'DESATIVADA'
+      : status === 'EXPIRADA'
       ? '#d8421516'
       : 'default';
 

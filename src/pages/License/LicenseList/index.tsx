@@ -111,7 +111,7 @@ export default function LicenseList() {
   const getLicenses = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `/licenses?${filterField}=${inputFilter}&status=${statusFilter}${
+      url: `/licenses?${filterField}=${inputFilter}&status=${statusFilter}&softwareId=${softwareId}&tpLicencaId=${tpLicencaId}${
         dtExpiracaoInicioFilter
           ? `&dtExpiracaoInicio=${dayjs(dtExpiracaoInicioFilter).format(
               'DD/MM/YYYY'
@@ -138,10 +138,14 @@ export default function LicenseList() {
     numberPage,
     inputFilter,
     filterField,
+    softwareId,
+    tpLicencaId,
     statusFilter,
     dtExpiracaoInicioFilter,
     dtExpiracaoFinalFilter,
   ]);
+
+  useEffect(() => getLicenses(), [getLicenses]);
 
   const getSoftwares = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -168,10 +172,9 @@ export default function LicenseList() {
   }, []);
 
   useEffect(() => {
-    getLicenses();
     getSoftwares();
     getLicenseType();
-  }, [getLicenses]);
+  }, []);
 
   const handleRowClicked = (row: Licenca) => navigate(`/license/${row.id}`);
 
@@ -218,15 +221,19 @@ export default function LicenseList() {
           />
 
           {softwareFilterChecked && (
-            <FormControl fullWidth size="small" margin="dense">
-              <InputLabel sx={{ fontSize: 14 }}>
-                Selecione um software
-              </InputLabel>
+            <FormControl size="small">
+              <InputLabel sx={{ fontSize: 14 }}>Software</InputLabel>
               <Select
                 required
                 label="Software"
+                autoWidth
                 value={softwareId}
-                sx={{ fontSize: 13 }}
+                sx={{
+                  minWidth: 100,
+                  fontSize: 13,
+                  borderRadius: 2,
+                  marginRight: 0.5,
+                }}
                 onChange={(e: any) => {
                   setSoftwareId(e.target.value);
                 }}
@@ -245,15 +252,19 @@ export default function LicenseList() {
           )}
 
           {tpLicencaFilterChecked && (
-            <FormControl fullWidth size="small" margin="dense">
-              <InputLabel sx={{ fontSize: 14 }}>
-                Selecione um software
-              </InputLabel>
+            <FormControl size="small">
+              <InputLabel sx={{ fontSize: 14 }}>Tipo</InputLabel>
               <Select
                 required
-                label="Software"
+                autoWidth
+                label="Tipo"
                 value={tpLicencaId}
-                sx={{ fontSize: 13 }}
+                sx={{
+                  minWidth: 100,
+                  fontSize: 13,
+                  borderRadius: 2,
+                  marginRight: 0.5,
+                }}
                 onChange={(e: any) => {
                   settTpLicencaId(e.target.value);
                 }}

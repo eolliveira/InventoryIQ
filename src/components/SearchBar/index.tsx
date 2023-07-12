@@ -32,7 +32,7 @@ export default function SearchBar({
       border={'1px solid silver'}
       alignItems={'center'}
       display={'flex'}
-      marginBottom={0.5}
+      marginBottom={1}
       marginRight={0.5}
       bgcolor={'rgb(248, 250, 252);'}
     >

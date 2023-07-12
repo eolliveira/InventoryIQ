@@ -100,7 +100,6 @@ export default function LicenseSidePanel({ license }: LicenseSidePanelProps) {
                 isEditing: true,
               });
             }}
-            size="small"
           >
             <EditIcon color="primary" fontSize="small" />
           </IconButton>
