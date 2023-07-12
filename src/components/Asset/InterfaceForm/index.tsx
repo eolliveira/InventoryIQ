@@ -73,9 +73,7 @@ export default function InterfaceForm({
       });
   }
 
-  function handleCancel() {
-    closeModal();
-  }
+  const handleCancel = () => closeModal();
 
   return (
     <CustomModal openModal={openModal}>
@@ -86,6 +84,7 @@ export default function InterfaceForm({
               required
               style={{ width: 350, marginBottom: 10 }}
               label="Endereço Ip"
+              placeholder="0.0.0.0"
               size="small"
               value={enderecoIp}
               onChange={(e) => setEnderecoIp(e.target.value)}
@@ -94,6 +93,7 @@ export default function InterfaceForm({
             <TextField
               style={{ width: 350, marginBottom: 10 }}
               label="Endereço Mac"
+              placeholder="00:00:00:00:00:00"
               size="small"
               value={enderecoMac}
               onChange={(e) => setEnderecoMac(e.target.value)}

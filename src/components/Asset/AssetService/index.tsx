@@ -15,7 +15,7 @@ import AddIcon from '@mui/icons-material/Add';
 import AddServiceModal from '../AddServiceModal';
 import NoData from '../../NoData';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineTwoToneIcon from '@mui/icons-material/DeleteOutlineTwoTone';
 import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
 
@@ -57,7 +57,7 @@ export default function AssetService({ assetId }: AssetServiceProps) {
           aria-label="delete"
           size="small"
         >
-          <DeleteIcon color="primary" fontSize="inherit" />
+          <DeleteOutlineTwoToneIcon color="primary" fontSize="small" />
         </IconButton>
       ),
     },

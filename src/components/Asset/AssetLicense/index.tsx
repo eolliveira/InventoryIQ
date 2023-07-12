@@ -93,7 +93,8 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
       text: 'Deseja liberar a licença?',
       icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#dc3545',
+      //confirmButtonColor: '#dc3545',
+
       cancelButtonColor: 'secondary',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',

@@ -189,9 +189,9 @@ export default function ChangeNfEntradaModal({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel title="Atribuir Nota Fiscal">
+        <Panel title="Atribuir nota fiscal">
           <Container>
-            <Box display={'flex'} alignItems={'center'} flexWrap={'wrap'}>
+            <Box display={'flex'} alignItems={'flex-start'} flexWrap={'wrap'}>
               <SearchBar
                 placeholder="Número da NF..."
                 type="number"
@@ -204,6 +204,7 @@ export default function ChangeNfEntradaModal({
                 sx={{
                   bgcolor: 'primary',
                   height: 33,
+                  marginTop: 0,
                   marginLeft: 0.5,
                   marginRight: 1,
                 }}
