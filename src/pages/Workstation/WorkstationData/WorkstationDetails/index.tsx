@@ -42,7 +42,6 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               label="Ultimo usuário logado"
               text={data?.ultimoUsuarioLogado || '-'}
             />
-            <TextInfo label="Tempo atividade" text={data?.tempoLigado || '-'} />
             <TextInfo label="Observação" text={data?.observacao || '-'} />
           </Card>
         </div>

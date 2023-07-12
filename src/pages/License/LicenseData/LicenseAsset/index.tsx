@@ -130,16 +130,12 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
         </Typography>
 
         <Button
-          variant="contained"
           size="small"
-          color="primary"
+          variant="outlined"
           sx={{ marginRight: 1 }}
-          startIcon={<AddIcon />}
           onClick={() => setAssetLinkLicense(true)}
         >
-          <Typography textTransform={'none'} fontSize={14}>
-            Adicionar
-          </Typography>
+          <AddIcon />
         </Button>
       </Box>
       <Divider color="gray" />

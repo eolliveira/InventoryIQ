@@ -12,7 +12,6 @@ export type WorkstationSync = {
   arquiteturaSo: string;
   processador: string;
   memoriaRam: string;
-  tempoLigado: string;
   nomeHost: string;
   dominio: string;
   ultimoUsuarioLogado: string;

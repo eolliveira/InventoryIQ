@@ -153,7 +153,6 @@ export default function WorkstationForm({
         setValue('dominio', response.data.dominio);
         setValue('dnsList', response.data.dnsList);
         setValue('ultimoUsuarioLogado', response.data.ultimoUsuarioLogado);
-        setValue('tempoLigado', response.data.tempoLigado);
         setValue('sistemaOperacional', response.data.sistemaOperacional);
         setValue('processador', response.data.processador);
         setValue('numeroSerie', response.data.numeroSerie);
@@ -206,7 +205,6 @@ export default function WorkstationForm({
     setValue('arquiteturaSo', data.arquiteturaSo);
     setValue('memoriaRam', data.memoriaRam);
     setValue('ultimoUsuarioLogado', data.ultimoUsuarioLogado);
-    setValue('tempoLigado', data.tempoLigado);
     setValue('sistemaOperacional', data.sistemaOperacional);
     setValue('processador', data.processador);
     setValue('numeroSerie', data.numeroSerie);
@@ -304,14 +302,6 @@ export default function WorkstationForm({
                   register={register}
                   error={!!errors.ultimoUsuarioLogado}
                   helperText={errors.ultimoUsuarioLogado?.message}
-                />
-                <InputText
-                  label="Tempo de atividade."
-                  name="tempoLigado"
-                  control={control}
-                  register={register}
-                  error={!!errors.tempoLigado}
-                  helperText={errors.tempoLigado?.message}
                 />
                 <InputMultiline
                   control={control}

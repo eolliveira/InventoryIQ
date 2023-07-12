@@ -12,6 +12,7 @@ export type Licenca = {
     dtAquisicao: string,
     dtExpiracao: string,
     vlrAquisicao: number,
+    observacao: string,
     tpLicenca: TipoLicenca,
     idNfEntrada: string, 
     software: Software

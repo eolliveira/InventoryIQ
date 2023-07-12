@@ -26,17 +26,14 @@ export default function LicenseDetails({ data }: LicenseDetailsProps) {
             }}
           >
             <TextInfo label="Nome" text={data?.nome || '-'} />
-            <TextInfo label="Software" text={data?.software.nome || '-'} />
-            <TextInfo
-              label="Tipo de licença"
-              text={data?.tpLicenca.nome || '-'}
-            />
+
             <TextInfo label="Chave" text={data?.chave || '-'} />
             <TextInfo label="Numero de série" text={data?.numeroSerie || '-'} />
             <TextInfo
               label="Quantidade adquirida"
               text={String(data?.qtdAdquirida) || '-'}
             />
+            <TextInfo label="Observação" text={data?.observacao || '-'} />
           </Card>
         </div>
         <div className="col-lg-6">
@@ -50,6 +47,11 @@ export default function LicenseDetails({ data }: LicenseDetailsProps) {
               minHeight: 386,
             }}
           >
+            <TextInfo label="Software" text={data?.software.nome || '-'} />
+            <TextInfo
+              label="Tipo de licença"
+              text={data?.tpLicenca.nome || '-'}
+            />
             <TextInfo
               label="Data aquisição"
               text={

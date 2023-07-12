@@ -32,6 +32,7 @@ import {
   toCamelCase,
 } from '../../../../utils/StringConverter';
 import InputNumber from '../../../../components/inputs/InputNumber';
+import InputMultiline from '../../../../components/inputs/InputMultiline';
 
 type LicenseFormProps = {
   licenseData?: Licenca;
@@ -106,6 +107,7 @@ export default function LicenseForm({
     setValue('dtAquisicao', data.dtAquisicao);
     setValue('dtExpiracao', data.dtExpiracao);
     setValue('vlrAquisicao', data.vlrAquisicao);
+    setValue('observacao', data.observacao);
     setValue('software', data.software);
     setValue('tpLicenca', data.tpLicenca);
   };
@@ -181,7 +183,7 @@ export default function LicenseForm({
         >
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
-              <div className="col-lg-7">
+              <div className="col-lg-6">
                 <InputText
                   required
                   label="Nome"
@@ -250,40 +252,20 @@ export default function LicenseForm({
                   helperText={errors.chave?.message}
                 />
                 <div className="row">
-                  <div className="col-lg-8">
-                    <InputText
-                      label="numeroSerie"
-                      name="numeroSerie"
+                  <div className="col-lg-12">
+                    <InputMultiline
                       control={control}
+                      name="observacao"
                       register={register}
-                      error={!!errors.numeroSerie}
-                      helperText={errors.numeroSerie?.message}
+                      label="Observação"
+                      rows={4}
+                      error={!!errors.observacao}
+                      helperText={errors.observacao?.message}
                     />
                   </div>
-                  <div className="col-lg-4">
-                    <InputNumber
-                      required
-                      label="Qtd.Adquirida"
-                      name="qtdAdquirida"
-                      control={control}
-                      register={register}
-                      error={!!errors.qtdAdquirida}
-                      helperText={errors.qtdAdquirida?.message}
-                    />
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-lg-6"></div>
-                  <div className="col-lg-6"></div>
                 </div>
               </div>
-              <div className="col-lg-5">
-                <div className="row">
-                  <div className="col-lg-9"></div>
-                  <div className="col-lg-3"></div>
-                </div>
-
+              <div className="col-lg-6">
                 <div className="row">
                   <div className="col-lg-12">
                     {formContextData.isEditing && (
@@ -311,6 +293,16 @@ export default function LicenseForm({
                       </FormControl>
                     )}
                   </div>
+                  <div className="col-lg-12">
+                    <InputText
+                      label="numeroSerie"
+                      name="numeroSerie"
+                      control={control}
+                      register={register}
+                      error={!!errors.numeroSerie}
+                      helperText={errors.numeroSerie?.message}
+                    />
+                  </div>
 
                   <div className="col-lg-6">
                     <InputDate
@@ -330,6 +322,17 @@ export default function LicenseForm({
                   </div>
                 </div>
                 <div className="row">
+                  <div className="col-lg-6">
+                    <InputNumber
+                      required
+                      label="Qtd.Adquirida"
+                      name="qtdAdquirida"
+                      control={control}
+                      register={register}
+                      error={!!errors.qtdAdquirida}
+                      helperText={errors.qtdAdquirida?.message}
+                    />
+                  </div>
                   <div className="col-lg-6">
                     <InputCurrency
                       label="Valor compra"

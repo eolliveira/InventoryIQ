@@ -10,7 +10,6 @@ export type Workstation = {
   nomeHost: string;
   inativo: boolean;
   dominio: string;
-  tempoLigado: string;
   status: string;
   gateway: string;
   dtAquisicao: string;

@@ -1,4 +1,3 @@
-import { Software } from '../../../types/Licenca/Software';
 import { useContext, useEffect, useState } from 'react';
 import { requestBackend } from '../../../http/requests';
 import { AxiosRequestConfig } from 'axios';
@@ -12,19 +11,13 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2';
 import { TipoLicenca } from '../../../types/Licenca/TipoLicenca';
 import LicenseTypeModal from './LicenseTypeModal';
 
 export default function LicenseTypeRegistration() {
   const columns: TableColumn<TipoLicenca>[] = [
-    {
-      name: 'Id',
-      selector: (row) => row.id,
-      sortable: true,
-      compact: true,
-    },
+    { name: 'Id', selector: (row) => row.id, sortable: true, compact: true },
     {
       name: 'Nome',
       selector: (row) => row.nome,
@@ -130,16 +123,12 @@ export default function LicenseTypeRegistration() {
     <>
       <Box display={'flex'} justifyContent={'end'} marginTop={1}>
         <Button
-          variant="contained"
           size="small"
-          color="primary"
+          variant="outlined"
           sx={{ marginRight: 1 }}
-          startIcon={<AddIcon />}
           onClick={() => onAddLicenseType()}
         >
-          <Typography textTransform={'none'} fontSize={14}>
-            Novo
-          </Typography>
+          <AddIcon />
         </Button>
       </Box>
 
