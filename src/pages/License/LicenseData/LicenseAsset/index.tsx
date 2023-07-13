@@ -26,7 +26,7 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
   const columns: TableColumn<Ativo>[] = [
     {
       button: true,
-      width: '70px',
+      width: '60px',
       cell: (row) => (
         <Tooltip title="Desalocar ativo">
           <IconButton
@@ -40,11 +40,11 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
         </Tooltip>
       ),
     },
-    { name: 'Id', selector: (row) => row.id, sortable: true, width: '100px' },
-    { name: 'Nome', selector: (row) => row.nome, sortable: true },
-    { name: 'Hostname', selector: (row) => row.nomeHost, sortable: true },
-    { name: 'Status', selector: (row) => row.status, sortable: true },
-    { name: 'Modelo', selector: (row) => row.modelo, sortable: true },
+    { name: 'Id', selector: (row) => row.id, width: '100px' },
+    { name: 'Nome', selector: (row) => row.nome },
+    { name: 'Hostname', selector: (row) => row.nomeHost },
+    { name: 'Status', selector: (row) => row.status },
+    { name: 'Modelo', selector: (row) => row.modelo },
   ];
 
   const { formContextData, setFormContextData } = useContext(FormContext);
@@ -70,7 +70,6 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
       text: 'Deseja desalocar a licença desse ativo? ',
       icon: 'question',
       showCancelButton: true,
-      //confirmButtonColor: '#dc3545',
       cancelButtonColor: 'secondary',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
@@ -148,8 +147,6 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        selectableRows
-        pointerOnHover
         highlightOnHover
         fixedHeaderScrollHeight={'82vh'}
         customStyles={{

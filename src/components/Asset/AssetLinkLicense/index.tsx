@@ -17,6 +17,7 @@ import { Licenca } from '../../../types/Licenca/Licenca';
 import Swal from 'sweetalert2';
 import SearchBar from '../../../components/SearchBar';
 import Panel from '../../../components/Panel';
+import { Container } from './style';
 
 type AssetLinkLicenseProps = {
   assetId?: string;
@@ -25,24 +26,11 @@ type AssetLinkLicenseProps = {
 };
 
 const columns: TableColumn<Licenca>[] = [
-  { name: 'Id', width: '80px', selector: (row) => row.id, sortable: true },
-  {
-    name: 'Software',
-    width: '260px',
-    selector: (row) => row.software.nome,
-    sortable: true,
-  },
-  {
-    name: 'Qtd. adquirida',
-    selector: (row) => row.qtdAdquirida,
-    sortable: true,
-  },
-  { name: 'Qtd. alocada', selector: (row) => row.qtdAlocada, sortable: true },
-  {
-    name: 'Valor aquisição',
-    selector: (row) => row.vlrAquisicao,
-    sortable: true,
-  },
+  { name: 'Id', width: '80px', selector: (row) => row.id },
+  { name: 'Nome', width: '260px', selector: (row) => row.nome },
+  { name: 'Software', width: '260px', selector: (row) => row.software.nome },
+  { name: 'Tipo', selector: (row) => row.tpLicenca.nome },
+  { name: 'Chave', selector: (row) => row.chave },
 ];
 
 export default function AssetLinkLicense({
@@ -57,7 +45,7 @@ export default function AssetLinkLicense({
 
   useEffect(() => {
     const params: AxiosRequestConfig = {
-      url: `/licenses?licencasDisponiveis=true`,
+      url: `/licenses?licencasDisponiveis=true&nome=${inputFilter}`,
       withCredentials: true,
     };
 
@@ -121,10 +109,11 @@ export default function AssetLinkLicense({
   return (
     <CustomModal openModal={openModal}>
       <BaseCard>
-        <Panel title=" Vincular Licença">
-          <Stack height={500} width={850}>
+        <Panel title="Vincular licença">
+          <Container>
             <Stack direction={'row'}>
               <SearchBar
+                placeholder="Nome..."
                 inputFilter={inputFilter}
                 setInputFilter={setInputFilter}
               />
@@ -155,8 +144,8 @@ export default function AssetLinkLicense({
                 },
               }}
             />
-          </Stack>
-          <Box display={'flex'} justifyContent={'end'}>
+          </Container>
+          <Box display={'flex'} justifyContent={'end'} marginTop={2}>
             <Button
               variant="contained"
               color="error"

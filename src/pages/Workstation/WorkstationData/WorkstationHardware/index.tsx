@@ -50,7 +50,7 @@ export default function ProgressBarDisc({ assetId }: ProgressBarDiscProps) {
         Armazenamento
       </Typography>
       <Divider color="gray" />
-      <Box padding={1}>
+      <Box padding={1} bgcolor={'#ffffff'}>
         <div className="row">
           {disc?.map((disco) => (
             <div className="col-lg-6">

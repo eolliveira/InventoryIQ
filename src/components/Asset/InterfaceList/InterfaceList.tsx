@@ -1,54 +1,47 @@
+import NoData from '../../NoData';
+import Swal from 'sweetalert2';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
-import DeleteOutlineTwoToneIcon from '@mui/icons-material/DeleteOutlineTwoTone';
-import IconButton from '@mui/material/IconButton';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import DataTable, { TableColumn } from 'react-data-table-component';
-import { useCallback, useContext, useEffect, useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
-import CircularLoading from '../../Loaders/Progress';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import Swal from 'sweetalert2';
 import InterfaceForm from '../InterfaceForm';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import CircularLoading from '../../Loaders/Progress';
 import { Interface } from '../../../types/Interface';
 import { requestBackend } from '../../../http/requests';
 import { FormContext } from '../../../contexts/FormContext';
-import NoData from '../../NoData';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import DataTable, { TableColumn } from 'react-data-table-component';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import DeleteOutlineTwoToneIcon from '@mui/icons-material/DeleteOutlineTwoTone';
 
-type InterfaceList = {
-  assetId?: string;
-};
+type InterfaceList = { assetId?: string };
 
 export default function InterfaceList({ assetId }: InterfaceList) {
   const columns: TableColumn<Interface>[] = [
     {
       name: 'Nome',
-      width: '90px',
+      grow: 0.5,
       selector: (row) => (row.nomeLocal ? row.nomeLocal : ' - '),
-      sortable: true,
     },
     {
       name: 'Fabricante',
       selector: (row) => (row.fabricante ? row.fabricante : ' - '),
-      sortable: true,
     },
     {
       name: 'Mascara',
       selector: (row) => (row.mascaraSubRede ? row.mascaraSubRede : ' -'),
-      sortable: true,
     },
     {
       name: 'Endereço Ip',
       selector: (row) => (row.enderecoIp ? row.enderecoIp : ' - '),
-      sortable: true,
     },
     {
       name: 'Endereço Mac',
       selector: (row) => row.enderecoMac,
-      sortable: true,
     },
     {
       button: true,
@@ -80,9 +73,7 @@ export default function InterfaceList({ assetId }: InterfaceList) {
     };
 
     requestBackend(params)
-      .then((response) => {
-        setListInterfaces(response.data);
-      })
+      .then((response) => setListInterfaces(response.data))
       .catch((error) => console.log('Erro ao carregar as interfaces: ' + error))
       .finally(() => setIsLoadingInterfaces(false));
   }, [assetId, formContextData]);

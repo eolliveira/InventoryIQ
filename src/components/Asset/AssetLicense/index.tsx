@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
@@ -21,19 +20,16 @@ import { useNavigate } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 import dayjs from 'dayjs';
 
-type AssetLicenseProps = {
-  assetId?: string;
-};
+type AssetLicenseProps = { assetId?: string };
 
 export default function AssetLicense({ assetId }: AssetLicenseProps) {
   const columns: TableColumn<Licenca>[] = [
     {
       button: true,
-      width: '70px',
+      width: '60px',
       cell: (row) => (
         <Tooltip title="Liberar licença">
           <IconButton
-            sx={{ marginRight: 1 }}
             onClick={() => onReleaseLicense(row.id)}
             aria-label="delete"
             size="small"
@@ -43,29 +39,14 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
         </Tooltip>
       ),
     },
-    { name: 'Software', selector: (row) => row.software.nome, sortable: true },
-    {
-      name: 'Chave',
-      selector: (row) => row.chave,
-      sortable: true,
-      grow: 2,
-    },
-    {
-      name: 'Tipo',
-      selector: (row) => row.tpLicenca.nome,
-      sortable: true,
-    },
+    { name: 'Software', grow: 1.5, selector: (row) => row.software.nome },
+    { name: 'Chave', selector: (row) => row.chave, grow: 2 },
+    { name: 'Tipo', width: '110px', selector: (row) => row.tpLicenca.nome },
     {
       name: 'Data expiração',
+      width: '135px',
       selector: (row) =>
         row.dtExpiracao ? dayjs(row.dtExpiracao).format('DD/MM/YYYY') : ' - ',
-      sortable: true,
-    },
-    {
-      name: 'Data aquisição',
-      selector: (row) =>
-        row.dtAquisicao ? dayjs(row.dtAquisicao).format('DD/MM/YYYY') : ' - ',
-      sortable: true,
     },
   ];
 
@@ -172,7 +153,6 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        selectableRows
         pointerOnHover
         highlightOnHover
         fixedHeaderScrollHeight={'82vh'}

@@ -32,10 +32,11 @@ export default function LicenseTypeRegistration() {
     { name: 'Descricão', width: '500px', selector: (row) => row.descricao },
     {
       button: true,
+
       sortable: true,
       cell: (row) => (
         <IconButton
-          sx={{ marginRight: 1 }}
+          sx={{ marginRight: 5 }}
           onClick={() => onEditLicenseType(row)}
           size="small"
         >
@@ -45,6 +46,7 @@ export default function LicenseTypeRegistration() {
     },
     {
       button: true,
+      width: '40px',
       cell: (row) => (
         <IconButton
           sx={{ marginRight: 1 }}

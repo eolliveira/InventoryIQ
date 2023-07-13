@@ -35,7 +35,7 @@ export default function SoftwareRegistration() {
       sortable: true,
       cell: (row) => (
         <IconButton
-          sx={{ marginRight: 1 }}
+          sx={{ marginRight: 5 }}
           onClick={() => onEditSoftware(row)}
           size="small"
         >
