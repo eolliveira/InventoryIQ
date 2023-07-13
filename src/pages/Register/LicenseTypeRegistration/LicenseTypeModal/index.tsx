@@ -2,7 +2,6 @@ import { useContext, useState } from 'react';
 import { Button } from '@mui/material';
 import { AxiosRequestConfig } from 'axios';
 import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
@@ -16,6 +15,8 @@ import { FormContext } from '../../../../contexts/FormContext';
 import { useForm } from 'react-hook-form';
 import InputText from '../../../../components/inputs/InputText';
 import { TipoLicenca } from '../../../../types/Licenca/TipoLicenca';
+import InputMultiline from '../../../../components/inputs/InputMultiline';
+import { FormControlCustom } from './style';
 
 type LicenseTypeModalProps = {
   data?: TipoLicenca;
@@ -91,51 +92,60 @@ export default function LicenseTypeModal({
   return (
     <CustomModal openModal={openModal}>
       <BaseCard>
-        <Panel title="Tipo de Licença">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl>
-              <InputText
-                required
-                label="Nome"
-                name="nome"
-                control={control}
-                register={register}
-                error={!!errors.nome}
-                helperText={errors.nome?.message}
-              />
+        <Box>
+          <Panel
+            title={
+              formContextData.isAdding
+                ? 'Adicionar tipo de licença'
+                : 'Alterar tipo de licença'
+            }
+          >
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <FormControlCustom>
+                <InputText
+                  required
+                  label="Nome"
+                  name="nome"
+                  control={control}
+                  register={register}
+                  error={!!errors.nome}
+                  helperText={errors.nome?.message}
+                />
 
-              <InputText
-                label="Descrição"
-                name="descricao"
-                control={control}
-                register={register}
-                error={!!errors.descricao}
-                helperText={errors.descricao?.message}
-              />
-              <Box display={'flex'} justifyContent={'end'} marginTop={1}>
-                <Button
-                  variant="contained"
-                  color="error"
-                  startIcon={<CloseIcon />}
-                  onClick={handleCancel}
-                >
-                  <Typography textTransform={'none'}>Cancelar</Typography>
-                </Button>
-                <LoadingButton
-                  color="success"
-                  loading={false}
-                  loadingPosition="start"
-                  startIcon={<SaveIcon />}
-                  variant="contained"
-                  type="submit"
-                  style={{ marginLeft: 10 }}
-                >
-                  <Typography textTransform={'none'}>Salvar</Typography>
-                </LoadingButton>
-              </Box>
-            </FormControl>
-          </form>
-        </Panel>
+                <InputMultiline
+                  label="Descrição"
+                  name="descricao"
+                  rows={5}
+                  control={control}
+                  register={register}
+                  error={!!errors.descricao}
+                  helperText={errors.descricao?.message}
+                />
+                <Box display={'flex'} justifyContent={'end'} marginTop={2}>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    startIcon={<CloseIcon />}
+                    onClick={handleCancel}
+                  >
+                    <Typography textTransform={'none'}>Cancelar</Typography>
+                  </Button>
+                  <LoadingButton
+                    color="success"
+                    loading={false}
+                    loadingPosition="start"
+                    startIcon={<SaveIcon />}
+                    variant="contained"
+                    type="submit"
+                    style={{ marginLeft: 10 }}
+                  >
+                    <Typography textTransform={'none'}>Salvar</Typography>
+                  </LoadingButton>
+                </Box>
+              </FormControlCustom>
+            </form>
+          </Panel>
+        </Box>
       </BaseCard>
     </CustomModal>
   );

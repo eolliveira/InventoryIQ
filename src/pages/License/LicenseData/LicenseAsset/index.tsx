@@ -70,7 +70,7 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
       text: 'Deseja desalocar a licença desse ativo? ',
       icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#dc3545',
+      //confirmButtonColor: '#dc3545',
       cancelButtonColor: 'secondary',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',

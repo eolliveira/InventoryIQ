@@ -16,6 +16,8 @@ import { Software } from '../../../../types/Licenca/Software';
 import { FormContext } from '../../../../contexts/FormContext';
 import { useForm } from 'react-hook-form';
 import InputText from '../../../../components/inputs/InputText';
+import styled from 'styled-components';
+import { FormControlCustom } from './style';
 
 type SoftwareModalProps = {
   data?: Software;
@@ -91,9 +93,13 @@ export default function SoftwareModal({
   return (
     <CustomModal openModal={openModal}>
       <BaseCard>
-        <Panel title="Software">
+        <Panel
+          title={
+            formContextData.isAdding ? 'Adicionar software' : 'Alterar software'
+          }
+        >
           <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl>
+            <FormControlCustom>
               <InputText
                 required
                 label="Nome"
@@ -132,7 +138,7 @@ export default function SoftwareModal({
                   <Typography textTransform={'none'}>Salvar</Typography>
                 </LoadingButton>
               </Box>
-            </FormControl>
+            </FormControlCustom>
           </form>
         </Panel>
       </BaseCard>

@@ -17,7 +17,12 @@ import LicenseTypeModal from './LicenseTypeModal';
 
 export default function LicenseTypeRegistration() {
   const columns: TableColumn<TipoLicenca>[] = [
-    { name: 'Id', selector: (row) => row.id, sortable: true, compact: true },
+    {
+      name: 'Id',
+      width: '100px',
+      selector: (row) => row.id,
+      sortable: true,
+    },
     {
       name: 'Nome',
       selector: (row) => row.nome,
@@ -75,7 +80,7 @@ export default function LicenseTypeRegistration() {
       text: 'Você não será capaz de reverter isso!',
       icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#dc3545',
+      //confirmButtonColor: '#dc3545',
       cancelButtonColor: 'secondary',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
@@ -141,7 +146,6 @@ export default function LicenseTypeRegistration() {
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        selectableRows
         pointerOnHover
         highlightOnHover
         customStyles={{

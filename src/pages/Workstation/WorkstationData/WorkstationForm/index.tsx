@@ -308,7 +308,7 @@ export default function WorkstationForm({
                   name="observacao"
                   register={register}
                   label="Observação"
-                  rows={4}
+                  rows={3.5}
                   error={!!errors.observacao}
                   helperText={errors.observacao?.message}
                 />

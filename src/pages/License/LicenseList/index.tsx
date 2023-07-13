@@ -30,6 +30,7 @@ import LicenseStatusStyle from '../../../components/LicenseStatusStyle';
 import { licenseStatus } from '../../../constants/LicenseStatus';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import dayjs, { Dayjs } from 'dayjs';
+import DeleteIcon from '@mui/icons-material/Delete';
 import InputDatePeriod from '../../../components/inputs/InputDatePeriod';
 
 import InputLabel from '@mui/material/InputLabel';
@@ -37,6 +38,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { Software } from '../../../types/Licenca/Software';
 import { TipoLicenca } from '../../../types/Licenca/TipoLicenca';
+import Swal from 'sweetalert2';
 
 const columns: TableColumn<Licenca>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -76,7 +78,7 @@ const columns: TableColumn<Licenca>[] = [
 ];
 
 export default function LicenseList() {
-  const { setFormContextData } = useContext(FormContext);
+  const { formContextData, setFormContextData } = useContext(FormContext);
   const [page, setPage] = useState<SpringPage<Licenca>>();
   const [inputFilter, setInputFilter] = useState('');
   const [numberPage, setNumberPage] = useState(0);
@@ -96,6 +98,8 @@ export default function LicenseList() {
     useState<Dayjs | null>(null);
   const [dtExpiracaoFilterChecked, setDtExpiracaoFilterchecked] =
     useState(false);
+
+  const [selectedLicense, setSelectedLicense] = useState('');
 
   const [openCustomFilters, setOpenCustomFilters] =
     useState<null | HTMLElement>(null);
@@ -136,6 +140,7 @@ export default function LicenseList() {
       .catch((error) => console.log('Erro' + error));
   }, [
     numberPage,
+    formContextData,
     inputFilter,
     filterField,
     softwareId,
@@ -178,10 +183,66 @@ export default function LicenseList() {
 
   const handleRowClicked = (row: Licenca) => navigate(`/license/${row.id}`);
 
+  const handleSelectedRowsChange = (selectedRows: any) => {
+    if (selectedRows.selectedCount == 1)
+      setSelectedLicense(selectedRows.selectedRows[0].id);
+
+    if (selectedRows.selectedCount == 0) setSelectedLicense('');
+  };
+
   const handleAdd = () => {
     setFormContextData({ isAdding: true });
     setOpenLicenseForm(true);
   };
+
+  function onDelete(licenseId: string) {
+    if (selectedLicense == '') {
+      Swal.fire({
+        title: 'Atenção',
+        text: 'Selecione uma licença para remover!',
+        icon: 'warning',
+      });
+      return;
+    }
+
+    setFormContextData({ isEditing: true });
+    Swal.fire({
+      title: `Deseja remover a licença?`,
+      text: 'Todas as informações serão perdidas! ',
+      icon: 'question',
+      showDenyButton: true,
+      confirmButtonText: 'Confirmar',
+      confirmButtonColor: `#dc3545`,
+      denyButtonText: `Cancelar`,
+      denyButtonColor: '#4d4d4d',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const params: AxiosRequestConfig = {
+          method: 'DELETE',
+          url: `/licenses/${licenseId}`,
+          withCredentials: true,
+        };
+
+        requestBackend(params)
+          .then(() => {
+            Swal.fire({
+              title: 'Removida!',
+              text: `Licença foi removida com sucesso!.`,
+              icon: 'success',
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: 'Falha!',
+              text: `${error.response.data.message}`,
+              icon: 'warning',
+            });
+          })
+          .finally(() => setFormContextData({ isEditing: false }));
+      }
+      setFormContextData({ isEditing: false });
+    });
+  }
 
   function handleClearFilters() {
     setStatusFilterchecked(false);
@@ -301,16 +362,28 @@ export default function LicenseList() {
             />
           )}
         </Box>
-        <Button
-          variant="contained"
-          startIcon={<AddCircleOutlineIcon />}
-          color="primary"
-          onClick={handleAdd}
-        >
-          <Typography fontSize={14} textTransform={'none'}>
-            Novo
-          </Typography>
-        </Button>
+        <Stack flexWrap={'wrap'} direction={'row'} spacing={2}>
+          <Button
+            variant="contained"
+            startIcon={<DeleteIcon />}
+            color="primary"
+            onClick={() => onDelete(selectedLicense)}
+          >
+            <Typography fontSize={14} textTransform={'none'}>
+              Excluir
+            </Typography>
+          </Button>
+          <Button
+            variant="contained"
+            startIcon={<AddCircleOutlineIcon />}
+            color="primary"
+            onClick={handleAdd}
+          >
+            <Typography fontSize={14} textTransform={'none'}>
+              Novo
+            </Typography>
+          </Button>
+        </Stack>
       </Box>
       <DataTable
         dense
@@ -326,6 +399,7 @@ export default function LicenseList() {
         pointerOnHover
         highlightOnHover
         onRowClicked={handleRowClicked}
+        onSelectedRowsChange={handleSelectedRowsChange}
         customStyles={{
           headCells: {
             style: {

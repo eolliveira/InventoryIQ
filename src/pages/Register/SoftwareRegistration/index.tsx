@@ -12,7 +12,6 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import Typography from '@mui/material/Typography';
 import SoftwareModal from './SoftwareModal';
 import Swal from 'sweetalert2';
 
@@ -20,6 +19,7 @@ export default function SoftwareRegistration() {
   const columns: TableColumn<Software>[] = [
     {
       name: 'Id',
+      width: '150px',
       selector: (row) => row.id,
       sortable: true,
     },
@@ -81,7 +81,6 @@ export default function SoftwareRegistration() {
       text: 'Você não será capaz de reverter isso!',
       icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#dc3545',
       cancelButtonColor: 'secondary',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
@@ -146,7 +145,6 @@ export default function SoftwareRegistration() {
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        selectableRows
         pointerOnHover
         highlightOnHover
         customStyles={{

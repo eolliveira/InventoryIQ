@@ -29,13 +29,16 @@ export default function NobreakDetails({ data }: NobreakDetailsProps) {
             <TextInfo label="Fabricante" text={data?.fabricante || '-'} />
             <TextInfo
               label="Potência nominal"
-              text={data?.potencialNominal || '-'}
+              text={data?.potencialNominal + ' VA' || '-'}
             />
             <TextInfo
               label="Tensão de entrada"
-              text={data?.tensaoEntrada || '-'}
+              text={data?.tensaoEntrada + ' v~' || '-'}
             />
-            <TextInfo label="Tensão de saida" text={data?.tensaoSaida || '-'} />
+            <TextInfo
+              label="Tensão de saida"
+              text={data?.tensaoSaida + ' v~' || '-'}
+            />
             <TextInfo label="Observação" text={data?.observacao || '-'} />
           </Card>
         </div>

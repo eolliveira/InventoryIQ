@@ -33,6 +33,10 @@ export default function LicenseDetails({ data }: LicenseDetailsProps) {
               label="Quantidade adquirida"
               text={String(data?.qtdAdquirida) || '-'}
             />
+            <TextInfo
+              label="Quantidade alocada"
+              text={String(data?.qtdAlocada) || '-'}
+            />
             <TextInfo label="Observação" text={data?.observacao || '-'} />
           </Card>
         </div>
