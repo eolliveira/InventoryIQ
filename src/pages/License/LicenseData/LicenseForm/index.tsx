@@ -379,13 +379,3 @@ export default function LicenseForm({
     </CustomModal>
   );
 }
-
-const Container = styled.div`
-  @media (min-width: 992px) {
-    width: 800px;
-  }
-
-  @media (min-width: 1240px) {
-    width: 1000px;
-  }
-`;

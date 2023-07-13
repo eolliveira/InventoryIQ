@@ -11,9 +11,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomModal from '../../../../components/CustomModal';
-import styled from 'styled-components';
 import Typography from '@mui/material/Typography';
-
 import InputDate from '../../../../components/inputs/InputDate';
 import InputText from '../../../../components/inputs/InputText';
 import InputCurrency from '../../../../components/inputs/InputCurrency';
@@ -22,6 +20,7 @@ import Swal from 'sweetalert2';
 import Panel from '../../../../components/Panel';
 import Stack from '@mui/material/Stack';
 import { Mobile } from '../../../../types/Mobile';
+import { Form } from './style';
 
 type MobileFormProps = {
   data?: Mobile;
@@ -279,37 +278,3 @@ export default function MobileForm({
     </CustomModal>
   );
 }
-
-const Form = styled.form`
-  @media (min-width: 400px) {
-    width: 380px;
-  }
-
-  @media (min-width: 600px) {
-    width: 500px;
-  }
-
-  @media (min-width: 720px) {
-    width: 620px;
-  }
-
-  @media (min-width: 750px) {
-    width: 700px;
-  }
-
-  @media (min-width: 900px) {
-    width: 850px;
-  }
-
-  @media (min-width: 1100px) {
-    width: 1000px;
-  }
-
-  @media (min-width: 1300px) {
-    width: 1200px;
-  }
-
-  @media (min-width: 1400px) {
-    width: 1300px;
-  }
-`;

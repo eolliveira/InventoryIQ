@@ -17,6 +17,7 @@ import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 import { formatCurrency } from '../../utils/CurrencyConverter';
 import { Licenca } from '../../types/Licenca/Licenca';
 import { AxiosRequestConfig } from 'axios';
+import { HeaderContainer, Wapper } from './style';
 
 type LicenseSidePanelProps = {
   license: Licenca;
@@ -146,20 +147,3 @@ export default function LicenseSidePanel({ license }: LicenseSidePanelProps) {
     </Wapper>
   );
 }
-
-const Wapper = styled(BaseCard)`
-  height: 100%;
-  padding: 12px;
-`;
-
-const HeaderContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
-
-  @media (min-width: 992px) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-`;
