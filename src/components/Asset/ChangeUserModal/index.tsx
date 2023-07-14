@@ -5,7 +5,6 @@ import { requestBackend } from '../../../http/requests';
 import { FormContext } from '../../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
 import { Usuario } from 'types/Usuario';
-
 import Box from '@mui/material/Box';
 import CustomModal from '../../CustomModal';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -18,6 +17,8 @@ import SearchBar from '../../../components/SearchBar';
 import NoData from '../../../components/NoData';
 import Panel from '../../../components/Panel';
 import Swal from 'sweetalert2';
+import CircularLoading from '../../../components/Loaders/Progress';
+import { Container } from './style';
 
 type ChangeUserModalProps = {
   assetId?: string;
@@ -40,20 +41,19 @@ export default function ChangeUserModal({
   const [users, setUsers] = useState<Usuario[]>();
   const [inputFilter, setInputFilter] = useState('');
   const [selectedUser, setSelectedUser] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const params: AxiosRequestConfig = {
       url: `/users?nome=${inputFilter}`,
       withCredentials: true,
     };
 
     requestBackend(params)
-      .then((response) => {
-        setUsers(response.data.content);
-      })
-      .catch((error) => {
-        window.alert(error.response.data.message);
-      });
+      .then((response) => setUsers(response.data.content))
+      .catch((error) => console.log(error.response.data.message))
+      .finally(() => setIsLoading(false));
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
@@ -86,9 +86,7 @@ export default function ChangeUserModal({
         setFormContextData({ isEditing: false });
         closeForm();
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   }
 
   function handleCancel() {
@@ -100,62 +98,65 @@ export default function ChangeUserModal({
     <CustomModal openModal={openForm}>
       <BaseCard>
         <Panel title="Atribuir usuário">
-          <Stack height={500} width={850}>
-            <Stack direction={'row'}>
-              <SearchBar
-                placeholder="Nome..."
-                inputFilter={inputFilter}
-                setInputFilter={setInputFilter}
+          <Container>
+            <Stack height={500}>
+              <Stack direction={'row'}>
+                <SearchBar
+                  placeholder="Nome..."
+                  inputFilter={inputFilter}
+                  setInputFilter={setInputFilter}
+                />
+              </Stack>
+              <DataTable
+                columns={columns}
+                data={users ? users : []}
+                dense
+                striped
+                responsive
+                fixedHeader
+                noDataComponent={<NoData />}
+                sortIcon={<ExpandMoreIcon />}
+                fixedHeaderScrollHeight={'62vh'}
+                highlightOnHover
+                selectableRows
+                selectableRowsSingle
+                onSelectedRowsChange={handleSelectedRowsChange}
+                progressPending={isLoading}
+                progressComponent={<CircularLoading />}
+                customStyles={{
+                  headCells: {
+                    style: {
+                      fontWeight: 'bold',
+                      height: 30,
+                      fontSize: 13,
+                      letterSpacing: 0.5,
+                    },
+                  },
+                }}
               />
             </Stack>
-            <DataTable
-              columns={columns}
-              data={users ? users : []}
-              dense
-              striped
-              responsive
-              fixedHeader
-              noDataComponent={<NoData />}
-              sortIcon={<ExpandMoreIcon />}
-              fixedHeaderScrollHeight={'62vh'}
-              pointerOnHover
-              highlightOnHover
-              selectableRows
-              selectableRowsSingle
-              onSelectedRowsChange={handleSelectedRowsChange}
-              customStyles={{
-                headCells: {
-                  style: {
-                    fontWeight: 'bold',
-                    height: 30,
-                    fontSize: 13,
-                    letterSpacing: 0.5,
-                  },
-                },
-              }}
-            />
-          </Stack>
-          <Box marginTop={2} display={'flex'} justifyContent={'end'}>
-            <Button
-              variant="contained"
-              color="error"
-              startIcon={<CloseIcon />}
-              onClick={handleCancel}
-            >
-              <Typography textTransform={'none'}>Cancelar</Typography>
-            </Button>
-            <LoadingButton
-              color="success"
-              loading={false}
-              loadingPosition="start"
-              startIcon={<CheckIcon />}
-              variant="contained"
-              onClick={handleConfirm}
-              style={{ marginLeft: 10 }}
-            >
-              <Typography textTransform={'none'}>Confirmar</Typography>
-            </LoadingButton>
-          </Box>
+            <Box marginTop={2} display={'flex'} justifyContent={'end'}>
+              <Button
+                variant="contained"
+                color="error"
+                startIcon={<CloseIcon />}
+                onClick={handleCancel}
+              >
+                <Typography textTransform={'none'}>Cancelar</Typography>
+              </Button>
+              <LoadingButton
+                color="success"
+                loading={false}
+                loadingPosition="start"
+                startIcon={<CheckIcon />}
+                variant="contained"
+                onClick={handleConfirm}
+                style={{ marginLeft: 10 }}
+              >
+                <Typography textTransform={'none'}>Confirmar</Typography>
+              </LoadingButton>
+            </Box>
+          </Container>
         </Panel>
       </BaseCard>
     </CustomModal>

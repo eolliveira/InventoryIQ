@@ -254,6 +254,7 @@ export default function LicenseList() {
     setDtExpiracaoFinalFilter(null);
     setDtExpiracaoInicioFilter(null);
     setFilterField('nome');
+    settTpLicencaId('');
   }
 
   const handleClose = () => setOpenCustomFilters(null);

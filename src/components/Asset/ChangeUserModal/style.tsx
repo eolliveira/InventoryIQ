@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 export const Container = styled.div`
-  height: 500px;
+  width: 280px;
   @media (min-width: 300px) {
     width: 280px;
   }
@@ -9,8 +9,8 @@ export const Container = styled.div`
     width: 380px;
   }
 
-  @media (min-width: 600px) {
-    width: 500px;
+  @media (min-width: 500px) {
+    width: 450px;
   }
 
   @media (min-width: 720px) {

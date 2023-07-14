@@ -130,7 +130,6 @@ export default function AssetLinkLicense({
               noDataComponent={<NoData />}
               pointerOnHover
               highlightOnHover
-              selectableRows
               selectableRowsSingle
               onSelectedRowsChange={handleSelectedRowsChange}
               customStyles={{

@@ -131,7 +131,7 @@ export default function MobileForm({
               : 'Adicionar Dispositivo'
           }
         >
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <form style={{ maxWidth: '900px' }} onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-md-6">
                 <InputText
@@ -176,19 +176,14 @@ export default function MobileForm({
                 />
               </div>
               <div className="col-md-6">
-                <div className="row">
-                  <div className="col-lg-8">
-                    <InputText
-                      label="Hostname"
-                      name="nomeHost"
-                      control={control}
-                      register={register}
-                      error={!!errors.nomeHost}
-                      helperText={errors.nomeHost?.message}
-                    />
-                  </div>
-                  <div className="col-lg-4"></div>
-                </div>
+                <InputText
+                  label="Hostname"
+                  name="nomeHost"
+                  control={control}
+                  register={register}
+                  error={!!errors.nomeHost}
+                  helperText={errors.nomeHost?.message}
+                />
 
                 <InputText
                   label="Numero de série"
@@ -199,22 +194,17 @@ export default function MobileForm({
                   helperText={errors.numeroSerie?.message}
                 />
 
-                <div className="row">
-                  <div className="col-lg-9">
-                    <InputText
-                      label="Modelo"
-                      name="modelo"
-                      control={control}
-                      register={register}
-                      error={!!errors.modelo}
-                      helperText={errors.modelo?.message}
-                    />
-                  </div>
-                  <div className="col-lg-3"></div>
-                </div>
+                <InputText
+                  label="Modelo"
+                  name="modelo"
+                  control={control}
+                  register={register}
+                  error={!!errors.modelo}
+                  helperText={errors.modelo?.message}
+                />
 
                 <div className="row">
-                  <div className="col-lg-5">
+                  <div className="col-sm-6">
                     <InputDate
                       register={register}
                       label="Data aquisição"
@@ -222,7 +212,7 @@ export default function MobileForm({
                       name="dtAquisicao"
                     />
                   </div>
-                  <div className="col-lg-4">
+                  <div className="col-sm-6">
                     <InputDate
                       register={register}
                       name="dtVencimentoGarantia"
@@ -272,7 +262,7 @@ export default function MobileForm({
                 </LoadingButton>
               </Stack>
             </Box>
-          </Form>
+          </form>
         </Panel>
       </BaseCard>
     </CustomModal>

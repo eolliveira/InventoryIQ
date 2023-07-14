@@ -148,7 +148,6 @@ export default function LicenseTypeRegistration() {
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        pointerOnHover
         highlightOnHover
         customStyles={{
           headCells: {

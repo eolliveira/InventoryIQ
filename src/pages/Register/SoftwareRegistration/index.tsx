@@ -145,7 +145,6 @@ export default function SoftwareRegistration() {
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        pointerOnHover
         highlightOnHover
         customStyles={{
           headCells: {

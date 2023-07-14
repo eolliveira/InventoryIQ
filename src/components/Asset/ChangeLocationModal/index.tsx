@@ -17,6 +17,8 @@ import NoData from '../../NoData';
 import SearchBar from '../../../components/SearchBar';
 import Panel from '../../../components/Panel';
 import Swal from 'sweetalert2';
+import { Container } from './style';
+import CircularLoading from '../../../components/Loaders/Progress';
 
 type ChangeLocationModalProps = {
   assetId?: string;
@@ -46,8 +48,10 @@ export default function ChangeLocationModal({
   const [locations, setLocations] = useState<LocalIndustria[]>();
   const [inputFilter, setInputFilter] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const params: AxiosRequestConfig = {
       url: `/IndustrySite?dsLocalIndustria=${inputFilter}`,
       withCredentials: true,
@@ -55,7 +59,8 @@ export default function ChangeLocationModal({
 
     requestBackend(params)
       .then((response) => setLocations(response.data))
-      .catch((error) => window.alert(error.response.data.message));
+      .catch((error) => window.alert(error.response.data.message))
+      .finally(() => setIsLoading(false));
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
@@ -88,9 +93,7 @@ export default function ChangeLocationModal({
         setFormContextData({ isEditing: false });
         closeForm();
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   }
 
   function handleCancel() {
@@ -102,62 +105,66 @@ export default function ChangeLocationModal({
     <CustomModal openModal={openModal}>
       <BaseCard>
         <Panel title="Atribuir local">
-          <Stack height={500} width={850}>
-            <Stack direction={'row'}>
-              <SearchBar
-                placeholder="Nome..."
-                inputFilter={inputFilter}
-                setInputFilter={setInputFilter}
+          <Container>
+            <Stack height={500}>
+              <Stack direction={'row'}>
+                <SearchBar
+                  placeholder="Nome..."
+                  inputFilter={inputFilter}
+                  setInputFilter={setInputFilter}
+                />
+              </Stack>
+              <DataTable
+                columns={columns}
+                data={locations ? locations : []}
+                dense
+                striped
+                responsive
+                fixedHeader
+                sortIcon={<ExpandMoreIcon />}
+                fixedHeaderScrollHeight={'62vh'}
+                noDataComponent={<NoData />}
+                progressComponent={<CircularLoading />}
+                progressPending={isLoading}
+                pointerOnHover
+                highlightOnHover
+                selectableRows
+                selectableRowsSingle
+                onSelectedRowsChange={handleSelectedRowsChange}
+                customStyles={{
+                  headCells: {
+                    style: {
+                      fontWeight: 'bold',
+                      height: 40,
+                      fontSize: 13,
+                      letterSpacing: 0.5,
+                    },
+                  },
+                }}
               />
             </Stack>
-            <DataTable
-              columns={columns}
-              data={locations ? locations : []}
-              dense
-              striped
-              responsive
-              fixedHeader
-              sortIcon={<ExpandMoreIcon />}
-              fixedHeaderScrollHeight={'62vh'}
-              noDataComponent={<NoData />}
-              pointerOnHover
-              highlightOnHover
-              selectableRows
-              selectableRowsSingle
-              onSelectedRowsChange={handleSelectedRowsChange}
-              customStyles={{
-                headCells: {
-                  style: {
-                    fontWeight: 'bold',
-                    height: 40,
-                    fontSize: 13,
-                    letterSpacing: 0.5,
-                  },
-                },
-              }}
-            />
-          </Stack>
-          <Box display={'flex'} marginTop={2} justifyContent={'end'}>
-            <Button
-              variant="contained"
-              color="error"
-              startIcon={<CloseIcon />}
-              onClick={handleCancel}
-            >
-              <Typography textTransform={'none'}>Cancelar</Typography>
-            </Button>
-            <LoadingButton
-              color="success"
-              loading={false}
-              loadingPosition="start"
-              startIcon={<CheckIcon />}
-              variant="contained"
-              onClick={handleConfirm}
-              style={{ marginLeft: 10 }}
-            >
-              <Typography textTransform={'none'}>Confirmar</Typography>
-            </LoadingButton>
-          </Box>
+            <Box display={'flex'} marginTop={2} justifyContent={'end'}>
+              <Button
+                variant="contained"
+                color="error"
+                startIcon={<CloseIcon />}
+                onClick={handleCancel}
+              >
+                <Typography textTransform={'none'}>Cancelar</Typography>
+              </Button>
+              <LoadingButton
+                color="success"
+                loading={false}
+                loadingPosition="start"
+                startIcon={<CheckIcon />}
+                variant="contained"
+                onClick={handleConfirm}
+                style={{ marginLeft: 10 }}
+              >
+                <Typography textTransform={'none'}>Confirmar</Typography>
+              </LoadingButton>
+            </Box>
+          </Container>
         </Panel>
       </BaseCard>
     </CustomModal>

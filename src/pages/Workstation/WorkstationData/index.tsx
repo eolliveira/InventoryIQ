@@ -175,7 +175,7 @@ export default function WorkstationData() {
               ' - ' +
               (workstation ? workstation?.nome : '')}
           </Typography>
-          <Stack spacing={2} direction="row">
+          <Stack spacing={2} flexWrap={`wrap`} direction="row">
             <StockButton
               fontSize={14}
               onClickAdd={handleAdd}

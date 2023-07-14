@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 250px;
+  /* width: 250px;
 
   @media (min-width: 400px) {
     width: 350px;
@@ -25,5 +25,5 @@ export const Container = styled.div`
 
   @media (min-width: 1300px) {
     width: 1150px;
-  }
+  } */
 `;

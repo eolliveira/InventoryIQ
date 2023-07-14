@@ -11,7 +11,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomModal from '../../../../components/CustomModal';
-import styled from 'styled-components';
 import Typography from '@mui/material/Typography';
 import InputDate from '../../../../components/inputs/InputDate';
 import InputText from '../../../../components/inputs/InputText';
@@ -46,7 +45,6 @@ export default function NobreakForm({
 
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
-
     if (data && formContextData.isDuplicated && formContextData.isAdding)
       setFormData(data);
   }, []);
@@ -130,7 +128,7 @@ export default function NobreakForm({
             formContextData.isEditing ? 'Alterar Nobreak' : 'Adicionar Nobreak'
           }
         >
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <form style={{ maxWidth: '920px' }} onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-md-6">
                 <InputText
@@ -191,7 +189,7 @@ export default function NobreakForm({
                 />
 
                 <div className="row">
-                  <div className="col-lg-6">
+                  <div className="col-sm-6">
                     <InputText
                       label="Tensão Entrada"
                       name="tensaoEntrada"
@@ -201,7 +199,7 @@ export default function NobreakForm({
                       helperText={errors.tensaoEntrada?.message}
                     />
                   </div>
-                  <div className="col-lg-6">
+                  <div className="col-sm-6">
                     <InputText
                       label="Tensão Saida"
                       name="tensaoSaida"
@@ -214,7 +212,7 @@ export default function NobreakForm({
                 </div>
 
                 <div className="row">
-                  <div className="col-lg-6">
+                  <div className="col-sm-6">
                     <InputDate
                       register={register}
                       label="Data aquisição"
@@ -222,7 +220,7 @@ export default function NobreakForm({
                       name="dtAquisicao"
                     />
                   </div>
-                  <div className="col-lg-6">
+                  <div className="col-sm-6">
                     <InputDate
                       register={register}
                       name="dtVencimentoGarantia"
@@ -272,31 +270,9 @@ export default function NobreakForm({
                 </LoadingButton>
               </Stack>
             </Box>
-          </Form>
+          </form>
         </Panel>
       </BaseCard>
     </CustomModal>
   );
 }
-
-const Form = styled.form`
-  @media (min-width: 400px) {
-    width: 380px;
-  }
-
-  @media (min-width: 600px) {
-    width: 500px;
-  }
-
-  @media (min-width: 720px) {
-    width: 620px;
-  }
-
-  @media (min-width: 750px) {
-    width: 700px;
-  }
-
-  @media (min-width: 900px) {
-    width: 850px;
-  }
-`;

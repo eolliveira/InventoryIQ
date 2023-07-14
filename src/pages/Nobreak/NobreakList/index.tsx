@@ -255,7 +255,7 @@ export default function NobreakList() {
             />
           )}
         </Box>
-        <Stack direction={'row'} spacing={2}>
+        <Stack direction={'row'} spacing={2} flexWrap={'wrap'}>
           <Button
             variant="contained"
             startIcon={<DeleteIcon />}

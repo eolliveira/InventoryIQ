@@ -245,7 +245,10 @@ export default function WorkstationForm({
             </Box>
           )}
 
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <form
+            style={{ maxWidth: '1250px' }}
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div className="row">
               <div className="col-md-6">
                 <InputText
@@ -258,7 +261,7 @@ export default function WorkstationForm({
                   helperText={errors.nome?.message}
                 />
                 <div className="row">
-                  <div className="col-lg-8">
+                  <div className="col-sm-8">
                     <InputText
                       label="Hostname"
                       name="nomeHost"
@@ -268,7 +271,7 @@ export default function WorkstationForm({
                       helperText={errors.nomeHost?.message}
                     />
                   </div>
-                  <div className="col-lg-4">
+                  <div className="col-sm-4">
                     <InputText
                       label="Memória ram(Virtual)"
                       name="memoriaRam"
@@ -289,7 +292,7 @@ export default function WorkstationForm({
                   helperText={errors.dominio?.message}
                 />
                 <div className="row">
-                  <div className="col-lg-6">
+                  <div className="col-sm-6">
                     <InputText
                       label="Dns"
                       name="dnsList"
@@ -299,7 +302,7 @@ export default function WorkstationForm({
                       helperText={errors.dnsList?.message}
                     />
                   </div>
-                  <div className="col-lg-6">
+                  <div className="col-sm-6">
                     <InputText
                       label="Gateway"
                       name="gateway"
@@ -366,7 +369,7 @@ export default function WorkstationForm({
                 />
 
                 <div className="row">
-                  <div className="col-lg-9">
+                  <div className="col-sm-9">
                     <InputText
                       label="Modelo"
                       name="modelo"
@@ -376,7 +379,7 @@ export default function WorkstationForm({
                       helperText={errors.modelo?.message}
                     />
                   </div>
-                  <div className="col-lg-3">
+                  <div className="col-sm-3">
                     <InputText
                       label="Arquitetura"
                       name="arquiteturaSo"
@@ -389,19 +392,19 @@ export default function WorkstationForm({
                 </div>
 
                 <div className="row">
-                  <div className="col-lg-5">
+                  <div className="col-sm-6 col-lg-5">
                     <InputDate
                       register={register}
-                      label="Data aquisição"
+                      label="Dt. Aquisição"
                       control={control}
                       name="dtAquisicao"
                     />
                   </div>
-                  <div className="col-lg-4">
+                  <div className="col-sm-6 col-lg-4 ">
                     <InputDate
                       register={register}
                       name="dtVencimentoGarantia"
-                      label="Data venc.Garantia"
+                      label="Dt.Venc.Garantia"
                       control={control}
                     />
                   </div>
@@ -537,7 +540,7 @@ export default function WorkstationForm({
                 </LoadingButton>
               </Stack>
             </Box>
-          </Form>
+          </form>
         </Panel>
       </BaseCard>
     </CustomModal>
