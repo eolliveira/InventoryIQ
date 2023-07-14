@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Form = styled.form`
-  @media (min-width: 400px) {
+  /* @media (min-width: 400px) {
     width: 380px;
   }
 
@@ -17,7 +17,9 @@ export const Form = styled.form`
     width: 700px;
   }
 
+//
+
   @media (min-width: 900px) {
     width: 850px;
-  }
+  } */
 `;

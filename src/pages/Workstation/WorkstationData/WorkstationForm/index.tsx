@@ -257,14 +257,29 @@ export default function WorkstationForm({
                   error={!!errors.nome}
                   helperText={errors.nome?.message}
                 />
-                <InputText
-                  label="Fabricante"
-                  name="fabricante"
-                  control={control}
-                  register={register}
-                  error={!!errors.fabricante}
-                  helperText={errors.fabricante?.message}
-                />
+                <div className="row">
+                  <div className="col-lg-8">
+                    <InputText
+                      label="Hostname"
+                      name="nomeHost"
+                      control={control}
+                      register={register}
+                      error={!!errors.nomeHost}
+                      helperText={errors.nomeHost?.message}
+                    />
+                  </div>
+                  <div className="col-lg-4">
+                    <InputText
+                      label="Memória ram(Virtual)"
+                      name="memoriaRam"
+                      control={control}
+                      register={register}
+                      error={!!errors.memoriaRam}
+                      helperText={errors.memoriaRam?.message}
+                    />
+                  </div>
+                </div>
+
                 <InputText
                   label="Dominio"
                   name="dominio"
@@ -331,28 +346,6 @@ export default function WorkstationForm({
                   error={!!errors.processador}
                   helperText={errors.processador?.message}
                 />
-                <div className="row">
-                  <div className="col-lg-8">
-                    <InputText
-                      label="Hostname"
-                      name="nomeHost"
-                      control={control}
-                      register={register}
-                      error={!!errors.nomeHost}
-                      helperText={errors.nomeHost?.message}
-                    />
-                  </div>
-                  <div className="col-lg-4">
-                    <InputText
-                      label="Memória ram(Virtual)"
-                      name="memoriaRam"
-                      control={control}
-                      register={register}
-                      error={!!errors.memoriaRam}
-                      helperText={errors.memoriaRam?.message}
-                    />
-                  </div>
-                </div>
 
                 <InputText
                   label="Numero de série"
@@ -361,6 +354,15 @@ export default function WorkstationForm({
                   register={register}
                   error={!!errors.numeroSerie}
                   helperText={errors.numeroSerie?.message}
+                />
+
+                <InputText
+                  label="Fabricante"
+                  name="fabricante"
+                  control={control}
+                  register={register}
+                  error={!!errors.fabricante}
+                  helperText={errors.fabricante?.message}
                 />
 
                 <div className="row">
@@ -405,7 +407,7 @@ export default function WorkstationForm({
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-6">
+                  <div className="col-lg-4">
                     <InputCurrency
                       label="Valor compra"
                       name="vlrAquisicao"
@@ -543,9 +545,11 @@ export default function WorkstationForm({
 }
 
 const Form = styled.form`
-  @media (min-width: 400px) {
+  /* @media (min-width: 400px) {
     width: 380px;
   }
+
+  //
 
   @media (min-width: 600px) {
     width: 500px;
@@ -573,5 +577,5 @@ const Form = styled.form`
 
   @media (min-width: 1400px) {
     width: 1300px;
-  }
+  } */
 `;

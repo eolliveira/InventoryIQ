@@ -259,7 +259,7 @@ export default function LicenseList() {
   const handleClose = () => setOpenCustomFilters(null);
 
   return (
-    <Panel title="Licenças de Software">
+    <Panel title="Licenças de software">
       <Box
         display={'flex'}
         flexWrap={'wrap'}

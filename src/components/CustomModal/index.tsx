@@ -9,7 +9,7 @@ type CustomModal<T extends ReactNode> = {
 export default function CustomModal({ openModal, children }: CustomModal<any>) {
   return (
     <Modal open={openModal}>
-      <Box
+      {/* <Box
         sx={{
           height: '100vh',
           overflowY: 'auto',
@@ -25,9 +25,18 @@ export default function CustomModal({ openModal, children }: CustomModal<any>) {
             height: 'auto',
           },
         }}
+      > */}
+      <Box
+        height={'100vh'}
+        overflow={'auto'}
+        display={'flex'}
+        padding={'0 15px'}
+        justifyContent={'center'}
+        alignItems={'center'}
       >
         {children}
       </Box>
+      {/* </Box> */}
     </Modal>
   );
 }
