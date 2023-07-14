@@ -30,6 +30,7 @@ export default function MobileDetails({ data }: MobileDetailsProps) {
             <TextInfo label="Fabricante" text={data?.fabricante || '-'} />
             <TextInfo label="Hostname" text={data?.nomeHost || '-'} />
             <TextInfo label="Gateway" text={data?.gateway || '-'} />
+            <TextInfo label="IMEI" text={data?.imei || '-'} />
             <TextInfo label="Observação" text={data?.observacao || '-'} />
           </Card>
         </div>

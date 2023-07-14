@@ -17,6 +17,7 @@ export type Mobile = {
     gateway: string,
     nomeHost: string,
     versaoAndroid: string
+    imei: string,
     idNfEntrada: string;
     usuario: Usuario;
     localIndustria: LocalIndustria;

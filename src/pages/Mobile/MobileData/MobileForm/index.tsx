@@ -20,7 +20,6 @@ import Swal from 'sweetalert2';
 import Panel from '../../../../components/Panel';
 import Stack from '@mui/material/Stack';
 import { Mobile } from '../../../../types/Mobile';
-import { Form } from './style';
 
 type MobileFormProps = {
   data?: Mobile;
@@ -46,7 +45,6 @@ export default function MobileForm({
 
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
-
     if (data && formContextData.isDuplicated && formContextData.isAdding)
       setFormData(data);
   }, []);
@@ -110,6 +108,7 @@ export default function MobileForm({
     formContextData.isDuplicated
       ? setValue('nome', '')
       : setValue('nome', data.nome);
+    setValue('imei', data.imei);
     setValue('gateway', data.gateway);
     setValue('modelo', data.modelo);
     setValue('nomeHost', data.nomeHost);
@@ -170,7 +169,7 @@ export default function MobileForm({
                   name="observacao"
                   register={register}
                   label="Observação"
-                  rows={4}
+                  rows={6}
                   error={!!errors.observacao}
                   helperText={errors.observacao?.message}
                 />
@@ -192,6 +191,15 @@ export default function MobileForm({
                   register={register}
                   error={!!errors.numeroSerie}
                   helperText={errors.numeroSerie?.message}
+                />
+
+                <InputText
+                  label="IMEI"
+                  name="imei"
+                  control={control}
+                  register={register}
+                  error={!!errors.imei}
+                  helperText={errors.imei?.message}
                 />
 
                 <InputText
