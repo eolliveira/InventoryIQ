@@ -86,7 +86,6 @@ export default function InterfaceList({ assetId }: InterfaceList) {
       text: 'Você não será capaz de reverter isso!',
       icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#dc3545',
       cancelButtonColor: 'secondary',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',

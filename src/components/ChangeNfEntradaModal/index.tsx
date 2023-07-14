@@ -1,9 +1,8 @@
 import { BaseCard } from '../../style/GlobalStyles';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { requestBackend } from '../../http/requests';
 import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
-
 import Box from '@mui/material/Box';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
@@ -17,16 +16,11 @@ import SearchBar from '../../components/SearchBar';
 import CircularLoading from '../Loaders/Progress';
 import Panel from '../../components/Panel';
 import Swal from 'sweetalert2';
-
 import dayjs, { Dayjs } from 'dayjs';
-import styled from 'styled-components';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Checkbox from '@mui/material/Checkbox';
-
 import SearchIcon from '@mui/icons-material/Search';
 import NoData from '../../components/NoData';
 import InputDatePeriod from '../../components/inputs/InputDatePeriod';
@@ -40,37 +34,24 @@ type ChangeNfEntradaModalProps = {
 };
 
 const columns: TableColumn<NotaFiscalEntrada>[] = [
-  {
-    name: 'Cod. Pessoa',
-    selector: (row) => row.pessoa.id,
-    sortable: true,
-    width: '14%',
-  },
+  { name: 'Cod. Pessoa', selector: (row) => row.pessoa.id, width: '14%' },
   {
     name: 'Razão Social',
     selector: (row) => row.pessoa.razaoSocial,
-    sortable: true,
     width: '30%',
   },
-  {
-    name: 'Numero da Nota',
-    selector: (row) => row.nrNotaFiscal,
-    sortable: true,
-  },
+  { name: 'Numero da Nota', selector: (row) => row.nrNotaFiscal },
   {
     name: 'Data de Emissão',
     selector: (row) => dayjs(row.dtEmissao).format('DD/MM/YYYY'),
-    sortable: true,
   },
   {
     name: 'Data de Entrada',
     selector: (row) => dayjs(row.dtEntrada).format('DD/MM/YYYY'),
-    sortable: true,
   },
   {
     name: 'Valor da Nota',
     selector: (row) => row.valorNotaFiscal,
-    sortable: true,
   },
 ];
 
@@ -91,10 +72,11 @@ export default function ChangeNfEntradaModal({
   const [dtEmissaoFinalFilter, setDtEmissaoFinalFilter] =
     useState<Dayjs | null>(null);
 
+  useEffect(() => handleSearch(), []);
+
   const handleSelectedRowsChange = (selectedRows: any) => {
     if (selectedRows.selectedCount != 0)
       setSelectedNfEntrada(selectedRows.selectedRows[0].idNfEntrada);
-
     if (selectedRows.selectedCount == 0) setSelectedNfEntrada('');
   };
 
@@ -158,12 +140,8 @@ export default function ChangeNfEntradaModal({
     };
 
     requestBackend(params)
-      .then((response) => {
-        setNotes(response.data.content);
-      })
-      .catch((error) => {
-        window.alert(error.response.data.message);
-      })
+      .then((response) => setNotes(response.data.content))
+      .catch((error) => console.log(error.response.data.message))
       .finally(() => setIsLoading(false));
   };
 

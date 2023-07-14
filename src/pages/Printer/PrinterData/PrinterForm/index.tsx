@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import { BaseCard } from '../../../../style/GlobalStyles';
-import { Button, listClasses } from '@mui/material';
+import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect, useState } from 'react';
 import { FormContext } from '../../../../contexts/FormContext';
@@ -11,7 +11,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomModal from '../../../../components/CustomModal';
-import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import { Interface } from 'types/Interface';
 import Typography from '@mui/material/Typography';
@@ -45,6 +44,7 @@ export default function PrinterForm({
   openForm,
   closeForm,
 }: PrinterFormProps) {
+  const navigate = useNavigate();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [sweeping, setSweeping] = useState(false);
   const [ipAddress, setIpAddress] = useState('');
@@ -57,11 +57,9 @@ export default function PrinterForm({
     setValue,
     control,
   } = useForm<Printer>();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
-
     if (data && formContextData.isDuplicated && formContextData.isAdding)
       setFormData(data);
   }, []);
@@ -143,7 +141,7 @@ export default function PrinterForm({
         setValue('enderecoMac', response.data.enderecoMac);
         setValue('mascaraSubRede', response.data.mascaraSubRede);
 
-        const i: Interface = {
+        const interfaces: Interface = {
           id: response.data.id,
           nomeLocal: response.data.nomeLocal,
           fabricante: response.data.fabricante,
@@ -152,7 +150,7 @@ export default function PrinterForm({
           mascaraSubRede: response.data.mascaraSubRede,
         };
 
-        const newInterface: Interface[] = [i];
+        const newInterface: Interface[] = [interfaces];
         setInterfaces(newInterface);
       })
       .catch(() => {
@@ -213,7 +211,7 @@ export default function PrinterForm({
             </Box>
           )}
 
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <form style={{ maxWidth: `900px` }} onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-md-6">
                 <InputText
@@ -274,7 +272,7 @@ export default function PrinterForm({
               </div>
               <div className="col-md-6">
                 <div className="row">
-                  <div className="col-lg-8">
+                  <div className="col-md-12">
                     <InputText
                       label="Hostname"
                       name="nomeHost"
@@ -284,7 +282,6 @@ export default function PrinterForm({
                       helperText={errors.nomeHost?.message}
                     />
                   </div>
-                  <div className="col-lg-4"></div>
                 </div>
 
                 <InputText
@@ -297,7 +294,7 @@ export default function PrinterForm({
                 />
 
                 <div className="row">
-                  <div className="col-lg-9">
+                  <div className="col-lg-12">
                     <InputText
                       label="Modelo"
                       name="modelo"
@@ -311,7 +308,7 @@ export default function PrinterForm({
                 </div>
 
                 <div className="row">
-                  <div className="col-lg-5">
+                  <div className="col-lg-6">
                     <InputDate
                       register={register}
                       label="Data aquisição"
@@ -319,7 +316,7 @@ export default function PrinterForm({
                       name="dtAquisicao"
                     />
                   </div>
-                  <div className="col-lg-4">
+                  <div className="col-lg-6">
                     <InputDate
                       register={register}
                       name="dtVencimentoGarantia"
@@ -416,43 +413,9 @@ export default function PrinterForm({
                 </LoadingButton>
               </Stack>
             </Box>
-          </Form>
+          </form>
         </Panel>
       </BaseCard>
     </CustomModal>
   );
 }
-
-const Form = styled.form`
-  @media (min-width: 400px) {
-    width: 380px;
-  }
-
-  @media (min-width: 600px) {
-    width: 500px;
-  }
-
-  @media (min-width: 720px) {
-    width: 620px;
-  }
-
-  @media (min-width: 750px) {
-    width: 700px;
-  }
-
-  @media (min-width: 900px) {
-    width: 850px;
-  }
-
-  @media (min-width: 1100px) {
-    width: 1000px;
-  }
-
-  @media (min-width: 1300px) {
-    width: 1200px;
-  }
-
-  @media (min-width: 1400px) {
-    width: 1300px;
-  }
-`;

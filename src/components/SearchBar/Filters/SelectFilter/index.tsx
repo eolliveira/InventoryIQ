@@ -22,13 +22,7 @@ export default function SelectFilter({
   selectedItems,
 }: SelectFilterProps) {
   return (
-    <FormControl
-      size="small"
-      sx={{
-        //backgroundColor: 'rgb(248, 250, 252)',
-        marginRight: 0.5,
-      }}
-    >
+    <FormControl size="small" sx={{ marginRight: 0.5 }}>
       <InputLabel sx={{ fontSize: 14 }}>{label}</InputLabel>
       <Select
         sx={{

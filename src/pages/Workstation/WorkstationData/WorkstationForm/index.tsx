@@ -12,7 +12,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomModal from '../../../../components/CustomModal';
-import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import { WorkstationSync } from 'types/Workstation/WorkstationSync';
 import { Interface } from 'types/Interface';
@@ -71,7 +70,6 @@ export default function WorkstationForm({
 
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
-
     if (data && formContextData.isDuplicated && formContextData.isAdding)
       setFormData(data);
   }, []);
@@ -176,7 +174,6 @@ export default function WorkstationForm({
         });
 
         setDiscos(response.data.discos);
-
         setValue('interfaces', interfaces);
         setValue('discos', discos);
       })
@@ -188,9 +185,7 @@ export default function WorkstationForm({
           confirmButtonColor: '#999999',
         });
       })
-      .finally(() => {
-        setSweeping(false);
-      });
+      .finally(() => setSweeping(false));
   };
 
   const setFormData = (data: Workstation) => {
@@ -546,39 +541,3 @@ export default function WorkstationForm({
     </CustomModal>
   );
 }
-
-const Form = styled.form`
-  /* @media (min-width: 400px) {
-    width: 380px;
-  }
-
-  //
-
-  @media (min-width: 600px) {
-    width: 500px;
-  }
-
-  @media (min-width: 720px) {
-    width: 620px;
-  }
-
-  @media (min-width: 750px) {
-    width: 700px;
-  }
-
-  @media (min-width: 900px) {
-    width: 850px;
-  }
-
-  @media (min-width: 1100px) {
-    width: 1000px;
-  }
-
-  @media (min-width: 1300px) {
-    width: 1200px;
-  }
-
-  @media (min-width: 1400px) {
-    width: 1300px;
-  } */
-`;

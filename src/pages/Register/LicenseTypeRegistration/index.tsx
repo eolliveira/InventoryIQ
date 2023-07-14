@@ -82,7 +82,6 @@ export default function LicenseTypeRegistration() {
       text: 'Você não será capaz de reverter isso!',
       icon: 'question',
       showCancelButton: true,
-      //confirmButtonColor: '#dc3545',
       cancelButtonColor: 'secondary',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',

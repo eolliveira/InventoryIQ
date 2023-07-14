@@ -11,6 +11,7 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import NoData from '../../NoData';
 import { FormContext } from '../../../contexts/FormContext';
 import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
 import Divider from '@mui/material/Divider';
 import dayjs from 'dayjs';
 
@@ -18,13 +19,18 @@ const columns: TableColumn<Movimento>[] = [
   {
     name: 'Data movimento',
     selector: (row) => dayjs(row.dtMovimento).format('DD/MM/YYYY'),
-    sortable: true,
     grow: 0.6,
   },
-  { name: 'Descrição', selector: (row) => row.descricao, sortable: true },
+  {
+    name: 'Descrição',
+    selector: (row) => (
+      <Tooltip title={row.descricao}>
+        <span>{row.descricao}</span>
+      </Tooltip>
+    ),
+  },
   {
     name: 'Status',
-    sortable: true,
     cell: (row) => (
       <>
         <AssetStatusStyle size="small" status={row.statusAtivoAnterior} />
@@ -33,16 +39,10 @@ const columns: TableColumn<Movimento>[] = [
       </>
     ),
   },
-  {
-    name: 'Usuário alterou',
-    selector: (row) => toCamelCase(row.usuario.nome),
-    sortable: true,
-  },
+  { name: 'Usuário alterou', selector: (row) => toCamelCase(row.usuario.nome) },
 ];
 
-type AssetMovementsProps = {
-  assetId?: string;
-};
+type AssetMovementsProps = { assetId?: string };
 
 export default function AssetMovements({ assetId }: AssetMovementsProps) {
   const { formContextData } = useContext(FormContext);
@@ -55,17 +55,11 @@ export default function AssetMovements({ assetId }: AssetMovementsProps) {
     };
 
     requestBackend(params)
-      .then((response) => {
-        setMovements(response.data);
-      })
-      .catch((error) => {
-        console.log('Erro' + error);
-      });
+      .then((response) => setMovements(response.data))
+      .catch((error) => console.log('Erro' + error));
   }, [assetId, formContextData]);
 
-  useEffect(() => {
-    getMovements();
-  }, [getMovements]);
+  useEffect(() => getMovements(), [getMovements]);
 
   const handleRowClicked = () => {};
 

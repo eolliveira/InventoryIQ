@@ -1,4 +1,3 @@
-import { light } from '@material-ui/core/styles/createPalette';
 import { createTheme } from '@mui/material';
 
 export const customTheme = createTheme({
@@ -32,23 +31,5 @@ export const customTheme = createTheme({
       dark: '#9a2530',
       light: '#e35d6a',
     },
-  },
-  components: {
-    // MuiTab: {
-    //   styleOverrides: {
-    //     root: {
-    //       color: '#424242',
-    //       '&.Mui-selected': {
-    //         color: 'black',
-    //         backgroundColor: 'rgb(103 103 103 / 10%)',
-    //         borderRadius: '5px',
-    //         fontWeight: '500',
-    //         '&:hover': {
-    //           backgroundColor: 'rgb(103 103 103 / 20%)',
-    //         },
-    //       },
-    //     },
-    //   },
-    // },
   },
 });

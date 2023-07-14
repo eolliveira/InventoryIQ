@@ -20,7 +20,6 @@ import Swal from 'sweetalert2';
 import Panel from '../../../../components/Panel';
 import Stack from '@mui/material/Stack';
 import { Coletor } from '../../../../types/Coletor';
-import { Form } from './style';
 
 type CollectorFormProps = {
   data?: Coletor;
@@ -102,7 +101,6 @@ export default function CollectorForm({
       isEditing: false,
       isDuplicated: false,
     });
-
     closeForm();
   };
 
@@ -127,7 +125,7 @@ export default function CollectorForm({
             formContextData.isEditing ? 'Alterar coletor' : 'Adicionar coletor'
           }
         >
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <form style={{ maxWidth: `800px` }} onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-md-6">
                 <InputText
@@ -179,7 +177,7 @@ export default function CollectorForm({
                 />
 
                 <div className="row">
-                  <div className="col-lg-6">
+                  <div className="col-sm-6">
                     <InputDate
                       register={register}
                       label="Data aquisição"
@@ -187,7 +185,7 @@ export default function CollectorForm({
                       name="dtAquisicao"
                     />
                   </div>
-                  <div className="col-lg-6">
+                  <div className="col-sm-6">
                     <InputDate
                       register={register}
                       name="dtVencimentoGarantia"
@@ -197,7 +195,7 @@ export default function CollectorForm({
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-6">
+                  <div className="col-sm-6">
                     <InputCurrency
                       label="Valor compra"
                       name="vlrAquisicao"
@@ -237,7 +235,7 @@ export default function CollectorForm({
                 </LoadingButton>
               </Stack>
             </Box>
-          </Form>
+          </form>
         </Panel>
       </BaseCard>
     </CustomModal>

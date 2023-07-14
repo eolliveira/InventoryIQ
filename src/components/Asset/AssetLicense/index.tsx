@@ -64,9 +64,7 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
     requestBackend(params).then((response) => setLicenses(response.data));
   }, [assetId, formContextData]);
 
-  useEffect(() => {
-    getLicenses();
-  }, [getLicenses]);
+  useEffect(() => getLicenses(), [getLicenses]);
 
   const onReleaseLicense = (licenseId: string) => {
     Swal.fire({
