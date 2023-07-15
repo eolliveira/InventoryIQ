@@ -8,9 +8,7 @@ import { Disco } from '../../../../types/Workstation/Disco';
 import HardDrive from './HardDrive';
 import { AxiosRequestConfig } from 'axios';
 
-type ProgressBarDiscProps = {
-  assetId?: string;
-};
+type ProgressBarDiscProps = { assetId?: string };
 
 export default function ProgressBarDisc({ assetId }: ProgressBarDiscProps) {
   const [disc, setDisc] = useState<Disco[]>();
@@ -30,23 +28,11 @@ export default function ProgressBarDisc({ assetId }: ProgressBarDiscProps) {
       });
   }, [assetId]);
 
-  useEffect(() => {
-    getHardDrives();
-  }, [getHardDrives]);
+  useEffect(() => getHardDrives(), [getHardDrives]);
 
   return (
-    <Card
-      sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
-      variant="outlined"
-    >
-      <Typography
-        margin={2}
-        fontSize={16}
-        fontWeight={'bold'}
-        letterSpacing={1}
-        color={'primary'}
-        variant="h2"
-      >
+    <Card sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }} variant="outlined">
+      <Typography margin={2} fontSize={16} fontWeight={'bold'} letterSpacing={1} color={'primary'} variant="h2">
         Armazenamento
       </Typography>
       <Divider color="gray" />

@@ -6,9 +6,7 @@ import { formatCurrency } from '../../../../utils/CurrencyConverter';
 import InterfaceList from '../../../../components/Asset/InterfaceList/InterfaceList';
 import { Mobile } from '../../../../types/Mobile';
 
-type MobileDetailsProps = {
-  data?: Mobile;
-};
+type MobileDetailsProps = { data?: Mobile };
 
 export default function MobileDetails({ data }: MobileDetailsProps) {
   return (
@@ -49,29 +47,17 @@ export default function MobileDetails({ data }: MobileDetailsProps) {
             <TextInfo label="Numero de série" text={data?.numeroSerie || '-'} />
             <TextInfo
               label="Data aquisição"
-              text={
-                data?.dtAquisicao
-                  ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY')
-                  : '-'
-              }
+              text={data?.dtAquisicao ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY') : '-'}
             />
             <div className="row">
               <div className="col-lg-7">
                 <TextInfo
                   label="Data venc. Garantia"
-                  text={
-                    data?.dtVencimentoGarantia
-                      ? dayjs(data?.dtVencimentoGarantia).format('DD/MM/YYYY')
-                      : '-'
-                  }
+                  text={data?.dtVencimentoGarantia ? dayjs(data?.dtVencimentoGarantia).format('DD/MM/YYYY') : '-'}
                 />
                 <TextInfo
                   label="Valor compra"
-                  text={
-                    data?.vlrAquisicao
-                      ? formatCurrency(String(data?.vlrAquisicao))
-                      : '-'
-                  }
+                  text={data?.vlrAquisicao ? formatCurrency(String(data?.vlrAquisicao)) : '-'}
                 />
               </div>
             </div>

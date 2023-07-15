@@ -21,16 +21,12 @@ type InterfaceFormProps = {
   closeModal: () => void;
 };
 
-export default function InterfaceForm({
-  assetId,
-  openModal,
-  closeModal,
-}: InterfaceFormProps) {
+export default function InterfaceForm({ assetId, openModal, closeModal }: InterfaceFormProps) {
   const { setFormContextData } = useContext(FormContext);
   const [enderecoIp, setEnderecoIp] = useState('');
   const [enderecoMac, setEnderecoMac] = useState('');
 
-  function handleSave() {
+  const handleSave = () => {
     if (enderecoIp == '') {
       Swal.fire({
         title: 'Atenção!',
@@ -71,7 +67,7 @@ export default function InterfaceForm({
           icon: 'warning',
         });
       });
-  }
+  };
 
   const handleCancel = () => closeModal();
 
@@ -89,7 +85,6 @@ export default function InterfaceForm({
               value={enderecoIp}
               onChange={(e) => setEnderecoIp(e.target.value)}
             />
-
             <TextField
               style={{ width: 350, marginBottom: 10 }}
               label="Endereço Mac"
@@ -98,14 +93,8 @@ export default function InterfaceForm({
               value={enderecoMac}
               onChange={(e) => setEnderecoMac(e.target.value)}
             />
-
             <Box display={'flex'} justifyContent={'end'}>
-              <Button
-                variant="contained"
-                color="error"
-                startIcon={<CloseIcon />}
-                onClick={handleCancel}
-              >
+              <Button variant="contained" color="error" startIcon={<CloseIcon />} onClick={handleCancel}>
                 <Typography textTransform={'none'}>Cancelar</Typography>
               </Button>
               <LoadingButton

@@ -27,11 +27,7 @@ type CollectorFormProps = {
   closeForm: () => void;
 };
 
-export default function CollectorForm({
-  data,
-  openForm,
-  closeForm,
-}: CollectorFormProps) {
+export default function CollectorForm({ data, openForm, closeForm }: CollectorFormProps) {
   const { formContextData, setFormContextData } = useContext(FormContext);
 
   const {
@@ -46,8 +42,7 @@ export default function CollectorForm({
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
 
-    if (data && formContextData.isDuplicated && formContextData.isAdding)
-      setFormData(data);
+    if (data && formContextData.isDuplicated && formContextData.isAdding) setFormData(data);
   }, []);
 
   const onSubmit = (formData: Coletor) => {
@@ -62,9 +57,7 @@ export default function CollectorForm({
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: formContextData.isAdding ? 'POST' : 'PUT',
-          url: formContextData.isAdding
-            ? '/collectors'
-            : `/collectors/${data?.id}/update`,
+          url: formContextData.isAdding ? '/collectors' : `/collectors/${data?.id}/update`,
           data: formData,
           withCredentials: true,
         };
@@ -105,9 +98,7 @@ export default function CollectorForm({
   };
 
   const setFormData = (data: Coletor) => {
-    formContextData.isDuplicated
-      ? setValue('nome', '')
-      : setValue('nome', data.nome);
+    formContextData.isDuplicated ? setValue('nome', '') : setValue('nome', data.nome);
     setValue('modelo', data.modelo);
     setValue('fabricante', data.fabricante);
     setValue('observacao', data.observacao);
@@ -120,11 +111,7 @@ export default function CollectorForm({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel
-          title={
-            formContextData.isEditing ? 'Alterar coletor' : 'Adicionar coletor'
-          }
-        >
+        <Panel title={formContextData.isEditing ? 'Alterar coletor' : 'Adicionar coletor'}>
           <form style={{ maxWidth: `800px` }} onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-md-6">
@@ -137,7 +124,6 @@ export default function CollectorForm({
                   error={!!errors.nome}
                   helperText={errors.nome?.message}
                 />
-
                 <InputText
                   label="Modelo"
                   name="modelo"
@@ -146,7 +132,6 @@ export default function CollectorForm({
                   error={!!errors.modelo}
                   helperText={errors.modelo?.message}
                 />
-
                 <InputText
                   label="Fabricante"
                   name="fabricante"
@@ -155,7 +140,6 @@ export default function CollectorForm({
                   error={!!errors.fabricante}
                   helperText={errors.fabricante?.message}
                 />
-
                 <InputMultiline
                   control={control}
                   name="observacao"
@@ -175,15 +159,9 @@ export default function CollectorForm({
                   error={!!errors.numeroSerie}
                   helperText={errors.numeroSerie?.message}
                 />
-
                 <div className="row">
                   <div className="col-sm-6">
-                    <InputDate
-                      register={register}
-                      label="Data aquisição"
-                      control={control}
-                      name="dtAquisicao"
-                    />
+                    <InputDate register={register} label="Data aquisição" control={control} name="dtAquisicao" />
                   </div>
                   <div className="col-sm-6">
                     <InputDate
@@ -211,12 +189,7 @@ export default function CollectorForm({
 
             <Box display={'flex'} justifyContent={'end'} marginTop={2}>
               <Stack direction={'row'} spacing={2}>
-                <Button
-                  color="error"
-                  variant="contained"
-                  startIcon={<CloseIcon />}
-                  onClick={onCancelForm}
-                >
+                <Button color="error" variant="contained" startIcon={<CloseIcon />} onClick={onCancelForm}>
                   <Typography fontSize={14} textTransform={'none'}>
                     Cancelar
                   </Typography>

@@ -23,17 +23,18 @@ import dayjs from 'dayjs';
 type AssetLicenseProps = { assetId?: string };
 
 export default function AssetLicense({ assetId }: AssetLicenseProps) {
+  const navigate = useNavigate();
+  const { formContextData, setFormContextData } = useContext(FormContext);
+  const [openAssetLinkLicense, setAssetLinkLicense] = useState(false);
+  const [licenses, setLicenses] = useState<Licenca[]>();
+
   const columns: TableColumn<Licenca>[] = [
     {
       button: true,
       width: '60px',
       cell: (row) => (
         <Tooltip title="Liberar licença">
-          <IconButton
-            onClick={() => onReleaseLicense(row.id)}
-            aria-label="delete"
-            size="small"
-          >
+          <IconButton onClick={() => onReleaseLicense(row.id)} aria-label="delete" size="small">
             <IosShareIcon color="primary" fontSize="inherit" />
           </IconButton>
         </Tooltip>
@@ -45,15 +46,9 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
     {
       name: 'Data expiração',
       width: '135px',
-      selector: (row) =>
-        row.dtExpiracao ? dayjs(row.dtExpiracao).format('DD/MM/YYYY') : ' - ',
+      selector: (row) => (row.dtExpiracao ? dayjs(row.dtExpiracao).format('DD/MM/YYYY') : ' - '),
     },
   ];
-
-  const { formContextData, setFormContextData } = useContext(FormContext);
-  const [licenses, setLicenses] = useState<Licenca[]>();
-  const [openAssetLinkLicense, setAssetLinkLicense] = useState(false);
-  const navigate = useNavigate();
 
   const getLicenses = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -112,32 +107,12 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
   const handleRowClicked = (row: Licenca) => navigate(`/license/${row.id}`);
 
   return (
-    <Card
-      sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
-      variant="outlined"
-    >
-      <Box
-        display={'flex'}
-        justifyContent={'space-between'}
-        alignItems={'center'}
-      >
-        <Typography
-          margin={2}
-          fontSize={16}
-          fontWeight={'bold'}
-          letterSpacing={1}
-          color={'primary'}
-          variant="h2"
-        >
+    <Card sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }} variant="outlined">
+      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+        <Typography margin={2} fontSize={16} fontWeight={'bold'} letterSpacing={1} color={'primary'} variant="h2">
           Licenças vinculadas
         </Typography>
-
-        <Button
-          size="small"
-          variant="outlined"
-          sx={{ marginRight: 1 }}
-          onClick={() => setAssetLinkLicense(true)}
-        >
+        <Button size="small" variant="outlined" sx={{ marginRight: 1 }} onClick={() => setAssetLinkLicense(true)}>
           <AddIcon />
         </Button>
       </Box>

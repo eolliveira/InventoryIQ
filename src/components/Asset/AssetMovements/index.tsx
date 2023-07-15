@@ -16,11 +16,7 @@ import Divider from '@mui/material/Divider';
 import dayjs from 'dayjs';
 
 const columns: TableColumn<Movimento>[] = [
-  {
-    name: 'Data movimento',
-    selector: (row) => dayjs(row.dtMovimento).format('DD/MM/YYYY'),
-    grow: 0.6,
-  },
+  { name: 'Data movimento', selector: (row) => dayjs(row.dtMovimento).format('DD/MM/YYYY'), grow: 0.6 },
   {
     name: 'Descrição',
     selector: (row) => (
@@ -64,18 +60,8 @@ export default function AssetMovements({ assetId }: AssetMovementsProps) {
   const handleRowClicked = () => {};
 
   return (
-    <Card
-      sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
-      variant="outlined"
-    >
-      <Typography
-        margin={2}
-        fontSize={16}
-        fontWeight={'bold'}
-        letterSpacing={1}
-        color={'primary'}
-        variant="h2"
-      >
+    <Card sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }} variant="outlined">
+      <Typography margin={2} fontSize={16} fontWeight={'bold'} letterSpacing={1} color={'primary'} variant="h2">
         Movimentos do ativo
       </Typography>
       <Divider color="gray" />

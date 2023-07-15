@@ -15,7 +15,6 @@ import TextField from '@mui/material/TextField';
 import { assetStatus } from '../../../constants/AssetStatus';
 import Panel from '../../../components/Panel';
 import Swal from 'sweetalert2';
-
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -28,17 +27,13 @@ type ChangeStateProps = {
   closeModal: () => void;
 };
 
-export default function ChangeStateModal({
-  assetId,
-  openModal,
-  closeModal,
-}: ChangeStateProps) {
+export default function ChangeStateModal({ assetId, openModal, closeModal }: ChangeStateProps) {
   const { authContextData, setAuthContextData } = useContext(AuthContext);
   const { setFormContextData } = useContext(FormContext);
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');
 
-  function handleSave() {
+  const handleSave = () => {
     if (state == '') {
       Swal.fire({
         title: 'Atenção!',
@@ -89,11 +84,9 @@ export default function ChangeStateModal({
           icon: 'warning',
         });
       });
-  }
+  };
 
-  function handleCancel() {
-    closeModal();
-  }
+  const handleCancel = () => closeModal();
 
   return (
     <CustomModal openModal={openModal}>
@@ -118,7 +111,6 @@ export default function ChangeStateModal({
                 </MenuItem>
               ))}
             </Select>
-
             <TextField
               required
               style={{ width: 350, marginBottom: 22 }}
@@ -130,14 +122,8 @@ export default function ChangeStateModal({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-
             <Box display={'flex'} justifyContent={'end'}>
-              <Button
-                variant="contained"
-                color="error"
-                startIcon={<CloseIcon />}
-                onClick={handleCancel}
-              >
+              <Button variant="contained" color="error" startIcon={<CloseIcon />} onClick={handleCancel}>
                 <Typography textTransform={'none'}>Cancelar</Typography>
               </Button>
               <LoadingButton

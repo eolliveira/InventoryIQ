@@ -17,29 +17,14 @@ import LicenseTypeModal from './LicenseTypeModal';
 
 export default function LicenseTypeRegistration() {
   const columns: TableColumn<TipoLicenca>[] = [
-    {
-      name: 'Id',
-      width: '100px',
-      selector: (row) => row.id,
-      sortable: true,
-    },
-    {
-      name: 'Nome',
-      selector: (row) => row.nome,
-      compact: true,
-      sortable: true,
-    },
+    { name: 'Id', width: '100px', selector: (row) => row.id, sortable: true },
+    { name: 'Nome', selector: (row) => row.nome, compact: true, sortable: true },
     { name: 'Descricão', width: '500px', selector: (row) => row.descricao },
     {
       button: true,
-
       sortable: true,
       cell: (row) => (
-        <IconButton
-          sx={{ marginRight: 5 }}
-          onClick={() => onEditLicenseType(row)}
-          size="small"
-        >
+        <IconButton sx={{ marginRight: 5 }} onClick={() => onEditLicenseType(row)} size="small">
           <EditTwoToneIcon color="primary" fontSize="inherit" />
         </IconButton>
       ),
@@ -48,11 +33,7 @@ export default function LicenseTypeRegistration() {
       button: true,
       width: '40px',
       cell: (row) => (
-        <IconButton
-          sx={{ marginRight: 1 }}
-          onClick={() => onDeleteLicenseType(row.id)}
-          size="small"
-        >
+        <IconButton sx={{ marginRight: 1 }} onClick={() => onDeleteLicenseType(row.id)} size="small">
           <DeleteTwoToneIcon color="error" fontSize="inherit" />
         </IconButton>
       ),
@@ -64,19 +45,19 @@ export default function LicenseTypeRegistration() {
   const [data, setData] = useState<TipoLicenca>();
   const [openLicenseTypeModal, setLicenseTypeModal] = useState(false);
 
-  function onAddLicenseType() {
+  const onAddLicenseType = () => {
     setData(undefined);
     setFormContextData({ isAdding: true });
     setLicenseTypeModal(true);
-  }
+  };
 
-  function onEditLicenseType(tipo: TipoLicenca) {
+  const onEditLicenseType = (tipo: TipoLicenca) => {
     setData(tipo);
     setFormContextData({ isEditing: true });
     setLicenseTypeModal(true);
-  }
+  };
 
-  function onDeleteLicenseType(licenseTypeId: string) {
+  const onDeleteLicenseType = (licenseTypeId: string) => {
     Swal.fire({
       title: 'Tem certeza?',
       text: 'Você não será capaz de reverter isso!',
@@ -112,7 +93,7 @@ export default function LicenseTypeRegistration() {
           });
       }
     });
-  }
+  };
 
   useEffect(() => {
     const params: AxiosRequestConfig = {
@@ -128,12 +109,7 @@ export default function LicenseTypeRegistration() {
   return (
     <>
       <Box display={'flex'} justifyContent={'end'} marginTop={1}>
-        <Button
-          size="small"
-          variant="outlined"
-          sx={{ marginRight: 1 }}
-          onClick={() => onAddLicenseType()}
-        >
+        <Button size="small" variant="outlined" sx={{ marginRight: 1 }} onClick={() => onAddLicenseType()}>
           <AddIcon />
         </Button>
       </Box>
@@ -160,11 +136,7 @@ export default function LicenseTypeRegistration() {
         }}
       />
       {openLicenseTypeModal && (
-        <LicenseTypeModal
-          data={data}
-          openModal={openLicenseTypeModal}
-          closeModal={() => setLicenseTypeModal(false)}
-        />
+        <LicenseTypeModal data={data} openModal={openLicenseTypeModal} closeModal={() => setLicenseTypeModal(false)} />
       )}
     </>
   );

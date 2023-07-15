@@ -12,11 +12,7 @@ export default function TextInfo({ label, text }: TextInfoProps) {
       <Typography color={'primary'} fontSize={14} fontWeight={'bold'}>
         {label + ':'}
       </Typography>
-      <Typography
-        fontSize={14}
-        color={'primary'}
-        style={{ wordBreak: 'break-word' }}
-      >
+      <Typography fontSize={14} color={'primary'} style={{ wordBreak: 'break-word' }}>
         {text}
       </Typography>
     </Stack>

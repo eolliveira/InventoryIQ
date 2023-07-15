@@ -5,9 +5,7 @@ import TextInfo from '../../../../components/TextInfo';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
 import { Licenca } from '../../../../types/Licenca/Licenca';
 
-type LicenseDetailsProps = {
-  data?: Licenca;
-};
+type LicenseDetailsProps = { data?: Licenca };
 
 export default function LicenseDetails({ data }: LicenseDetailsProps) {
   return (
@@ -26,17 +24,10 @@ export default function LicenseDetails({ data }: LicenseDetailsProps) {
             }}
           >
             <TextInfo label="Nome" text={data?.nome || '-'} />
-
             <TextInfo label="Chave" text={data?.chave || '-'} />
             <TextInfo label="Numero de série" text={data?.numeroSerie || '-'} />
-            <TextInfo
-              label="Quantidade adquirida"
-              text={String(data?.qtdAdquirida) || '-'}
-            />
-            <TextInfo
-              label="Quantidade alocada"
-              text={String(data?.qtdAlocada) || '-'}
-            />
+            <TextInfo label="Quantidade adquirida" text={String(data?.qtdAdquirida) || '-'} />
+            <TextInfo label="Quantidade alocada" text={String(data?.qtdAlocada) || '-'} />
             <TextInfo label="Observação" text={data?.observacao || '-'} />
           </Card>
         </div>
@@ -52,35 +43,20 @@ export default function LicenseDetails({ data }: LicenseDetailsProps) {
             }}
           >
             <TextInfo label="Software" text={data?.software.nome || '-'} />
-            <TextInfo
-              label="Tipo de licença"
-              text={data?.tpLicenca.nome || '-'}
-            />
+            <TextInfo label="Tipo de licença" text={data?.tpLicenca.nome || '-'} />
             <TextInfo
               label="Data aquisição"
-              text={
-                data?.dtAquisicao
-                  ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY')
-                  : '-'
-              }
+              text={data?.dtAquisicao ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY') : '-'}
             />
             <div className="row">
               <div className="col-lg-7">
                 <TextInfo
                   label="Data venc. Garantia"
-                  text={
-                    data?.dtExpiracao
-                      ? dayjs(data?.dtExpiracao).format('DD/MM/YYYY')
-                      : '-'
-                  }
+                  text={data?.dtExpiracao ? dayjs(data?.dtExpiracao).format('DD/MM/YYYY') : '-'}
                 />
                 <TextInfo
                   label="Valor compra"
-                  text={
-                    data?.vlrAquisicao
-                      ? formatCurrency(String(data?.vlrAquisicao))
-                      : '-'
-                  }
+                  text={data?.vlrAquisicao ? formatCurrency(String(data?.vlrAquisicao)) : '-'}
                 />
               </div>
             </div>

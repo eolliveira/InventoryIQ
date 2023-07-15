@@ -1,16 +1,12 @@
 import { Workstation } from '../../../../types/Workstation/Workstation';
-
 import dayjs from 'dayjs';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import TextInfo from '../../../../components/TextInfo';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
-
 import InterfaceList from '../../../../components/Asset/InterfaceList/InterfaceList';
 
-type WorkstationDetailsProps = {
-  data?: Workstation;
-};
+type WorkstationDetailsProps = { data?: Workstation };
 
 export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
   return (
@@ -31,17 +27,11 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
             <TextInfo label="Nome" text={data?.nome || '-'} />
             <TextInfo label="Fabricante" text={data?.fabricante || '-'} />
             <TextInfo label="Hostname" text={data?.nomeHost || '-'} />
-            <TextInfo
-              label="Memória Virtual"
-              text={data?.memoriaRam + ' GB' || '-'}
-            />
+            <TextInfo label="Memória Virtual" text={data?.memoriaRam + ' GB' || '-'} />
             <TextInfo label="Dominio" text={data?.dominio || '-'} />
             <TextInfo label="Gateway" text={data?.gateway || '-'} />
             <TextInfo label="Dns" text={data?.dns || '-'} />
-            <TextInfo
-              label="Ultimo usuário logado"
-              text={data?.ultimoUsuarioLogado || '-'}
-            />
+            <TextInfo label="Ultimo usuário logado" text={data?.ultimoUsuarioLogado || '-'} />
             <TextInfo label="Observação" text={data?.observacao || '-'} />
           </Card>
         </div>
@@ -56,39 +46,24 @@ export default function WorkstationDetails({ data }: WorkstationDetailsProps) {
               minHeight: 386,
             }}
           >
-            <TextInfo
-              label="Sistema operacional"
-              text={data?.sistemaOperacional || '-'}
-            />
+            <TextInfo label="Sistema operacional" text={data?.sistemaOperacional || '-'} />
             <TextInfo label="Processador" text={data?.processador || '-'} />
             <TextInfo label="Arquitetura" text={data?.arquiteturaSo || '-'} />
             <TextInfo label="Numero de série" text={data?.numeroSerie || '-'} />
             <TextInfo label="Modelo" text={data?.modelo || '-'} />
             <TextInfo
               label="Data aquisição"
-              text={
-                data?.dtAquisicao
-                  ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY')
-                  : '-'
-              }
+              text={data?.dtAquisicao ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY') : '-'}
             />
             <div className="row">
               <div className="col-lg-7">
                 <TextInfo
                   label="Data venc. Garantia"
-                  text={
-                    data?.dtVencimentoGarantia
-                      ? dayjs(data?.dtVencimentoGarantia).format('DD/MM/YYYY')
-                      : '-'
-                  }
+                  text={data?.dtVencimentoGarantia ? dayjs(data?.dtVencimentoGarantia).format('DD/MM/YYYY') : '-'}
                 />
                 <TextInfo
                   label="Valor compra"
-                  text={
-                    data?.vlrAquisicao
-                      ? formatCurrency(String(data?.vlrAquisicao))
-                      : '-'
-                  }
+                  text={data?.vlrAquisicao ? formatCurrency(String(data?.vlrAquisicao)) : '-'}
                 />
               </div>
             </div>

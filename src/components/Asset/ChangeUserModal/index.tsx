@@ -32,11 +32,7 @@ const columns: TableColumn<Usuario>[] = [
   { name: 'Email', selector: (row) => row.email, sortable: true },
 ];
 
-export default function ChangeUserModal({
-  assetId,
-  openForm,
-  closeForm,
-}: ChangeUserModalProps) {
+export default function ChangeUserModal({ assetId, openForm, closeForm }: ChangeUserModalProps) {
   const { setFormContextData } = useContext(FormContext);
   const [users, setUsers] = useState<Usuario[]>();
   const [inputFilter, setInputFilter] = useState('');
@@ -57,13 +53,12 @@ export default function ChangeUserModal({
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount != 0)
-      setSelectedUser(selectedRows.selectedRows[0].id);
+    if (selectedRows.selectedCount != 0) setSelectedUser(selectedRows.selectedRows[0].id);
 
     if (selectedRows.selectedCount == 0) setSelectedUser('');
   };
 
-  function handleConfirm() {
+  const handleConfirm = () => {
     if (selectedUser == '') {
       Swal.fire({
         title: 'Atenção',
@@ -74,25 +69,25 @@ export default function ChangeUserModal({
     }
 
     const data = { usuarioId: selectedUser };
-
     const params: AxiosRequestConfig = {
       method: 'PUT',
       url: `/asset/${assetId}/user/update`,
       data: data,
       withCredentials: true,
     };
+
     requestBackend(params)
       .then(() => {
         setFormContextData({ isEditing: false });
         closeForm();
       })
       .catch((error) => console.log(error));
-  }
+  };
 
-  function handleCancel() {
+  const handleCancel = () => {
     setFormContextData({ isEditing: false });
     closeForm();
-  }
+  };
 
   return (
     <CustomModal openModal={openForm}>
@@ -101,11 +96,7 @@ export default function ChangeUserModal({
           <Container>
             <Stack height={500}>
               <Stack direction={'row'}>
-                <SearchBar
-                  placeholder="Nome..."
-                  inputFilter={inputFilter}
-                  setInputFilter={setInputFilter}
-                />
+                <SearchBar placeholder="Nome..." inputFilter={inputFilter} setInputFilter={setInputFilter} />
               </Stack>
               <DataTable
                 columns={columns}
@@ -136,12 +127,7 @@ export default function ChangeUserModal({
               />
             </Stack>
             <Box marginTop={2} display={'flex'} justifyContent={'end'}>
-              <Button
-                variant="contained"
-                color="error"
-                startIcon={<CloseIcon />}
-                onClick={handleCancel}
-              >
+              <Button variant="contained" color="error" startIcon={<CloseIcon />} onClick={handleCancel}>
                 <Typography textTransform={'none'}>Cancelar</Typography>
               </Button>
               <LoadingButton

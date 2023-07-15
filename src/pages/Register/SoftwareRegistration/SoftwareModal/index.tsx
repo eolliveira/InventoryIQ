@@ -2,7 +2,6 @@ import { useContext, useState } from 'react';
 import { Button } from '@mui/material';
 import { AxiosRequestConfig } from 'axios';
 import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
@@ -16,7 +15,6 @@ import { Software } from '../../../../types/Licenca/Software';
 import { FormContext } from '../../../../contexts/FormContext';
 import { useForm } from 'react-hook-form';
 import InputText from '../../../../components/inputs/InputText';
-import styled from 'styled-components';
 import { FormControlCustom } from './style';
 
 type SoftwareModalProps = {
@@ -25,11 +23,8 @@ type SoftwareModalProps = {
   closeModal: () => void;
 };
 
-export default function SoftwareModal({
-  data: software,
-  openModal,
-  closeModal,
-}: SoftwareModalProps) {
+export default function SoftwareModal({ data: software, openModal, closeModal }: SoftwareModalProps) {
+  const { formContextData, setFormContextData } = useContext(FormContext);
   const {
     register,
     handleSubmit,
@@ -38,8 +33,6 @@ export default function SoftwareModal({
     control,
   } = useForm<Software>();
 
-  const { formContextData, setFormContextData } = useContext(FormContext);
-
   useState(() => {
     if (formContextData.isEditing == true) {
       setValue('nome', software?.nome ?? '');
@@ -47,12 +40,10 @@ export default function SoftwareModal({
     }
   });
 
-  function onSubmit(formData: Software) {
+  const onSubmit = (formData: Software) => {
     const params: AxiosRequestConfig = {
       method: formContextData.isEditing ? 'PUT' : 'POST',
-      url: formContextData.isEditing
-        ? `/software/${software?.id}`
-        : '/software',
+      url: formContextData.isEditing ? `/software/${software?.id}` : '/software',
       data: formData,
       withCredentials: true,
     };
@@ -79,25 +70,21 @@ export default function SoftwareModal({
           icon: 'warning',
         });
       });
-  }
+  };
 
-  function handleCancel() {
+  const handleCancel = () => {
     setFormContextData({
       isAdding: false,
       isEditing: false,
       isDuplicated: false,
     });
     closeModal();
-  }
+  };
 
   return (
     <CustomModal openModal={openModal}>
       <BaseCard>
-        <Panel
-          title={
-            formContextData.isAdding ? 'Adicionar software' : 'Alterar software'
-          }
-        >
+        <Panel title={formContextData.isAdding ? 'Adicionar software' : 'Alterar software'}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormControlCustom>
               <InputText
@@ -118,12 +105,7 @@ export default function SoftwareModal({
                 helperText={errors.fabricante?.message}
               />
               <Box display={'flex'} justifyContent={'end'} marginTop={1}>
-                <Button
-                  variant="contained"
-                  color="error"
-                  startIcon={<CloseIcon />}
-                  onClick={handleCancel}
-                >
+                <Button variant="contained" color="error" startIcon={<CloseIcon />} onClick={handleCancel}>
                   <Typography textTransform={'none'}>Cancelar</Typography>
                 </Button>
                 <LoadingButton

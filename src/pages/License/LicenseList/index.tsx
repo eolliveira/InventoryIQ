@@ -1,12 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { SpringPage } from 'types/vendor/spring';
-import {
-  ChangeEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Stack from '@mui/material/Stack';
@@ -43,65 +37,44 @@ const columns: TableColumn<Licenca>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
   { name: 'Software', selector: (row) => row.software.nome, sortable: true },
   { name: 'Chave', selector: (row) => row.chave, sortable: true },
-  {
-    name: 'Tipo Licença',
-    selector: (row) => row.tpLicenca.nome,
-    sortable: true,
-  },
+  { name: 'Tipo Licença', selector: (row) => row.tpLicenca.nome, sortable: true },
   {
     name: 'Status',
     sortable: true,
-    cell: (row) => (
-      <LicenseStatusStyle key={row.id} size="small" status={row.status} />
-    ),
+    cell: (row) => <LicenseStatusStyle key={row.id} size="small" status={row.status} />,
   },
-  {
-    name: 'Qtd. Adquirida',
-    selector: (row) => row.qtdAdquirida,
-    sortable: true,
-    width: '140px',
-  },
-  {
-    name: 'Qtd. Alocada',
-    selector: (row) => row.qtdAlocada,
-    sortable: true,
-    width: '140px',
-  },
+  { name: 'Qtd. Adquirida', selector: (row) => row.qtdAdquirida, sortable: true, width: '140p x' },
+  { name: 'Qtd. Alocada', selector: (row) => row.qtdAlocada, sortable: true, width: '140px' },
   {
     name: 'Data expiração',
-    selector: (row) =>
-      row.dtExpiracao ? dayjs(row.dtExpiracao).format('DD/MM/YYYY') : ' - ',
+    selector: (row) => (row.dtExpiracao ? dayjs(row.dtExpiracao).format('DD/MM/YYYY') : ' - '),
     sortable: true,
     width: '145px',
   },
 ];
 
 export default function LicenseList() {
+  const navigate = useNavigate();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [page, setPage] = useState<SpringPage<Licenca>>();
-  const [inputFilter, setInputFilter] = useState('');
   const [numberPage, setNumberPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState('10');
-  const navigate = useNavigate();
-
-  const [filterField, setFilterField] = useState('nome');
-
-  const [statusFilter, setStatusFilter] = useState('');
-  const [statusFilterChecked, setStatusFilterchecked] = useState(false);
-  const [softwareFilterChecked, setSoftwareFilterchecked] = useState(false);
-  const [tpLicencaFilterChecked, setTpLicencaFilterchecked] = useState(false);
-
-  const [dtExpiracaoInicioFilter, setDtExpiracaoInicioFilter] =
-    useState<Dayjs | null>(null);
-  const [dtExpiracaoFinalFilter, setDtExpiracaoFinalFilter] =
-    useState<Dayjs | null>(null);
-  const [dtExpiracaoFilterChecked, setDtExpiracaoFilterchecked] =
-    useState(false);
 
   const [selectedLicense, setSelectedLicense] = useState('');
 
-  const [openCustomFilters, setOpenCustomFilters] =
-    useState<null | HTMLElement>(null);
+  const [openLicenseForm, setOpenLicenseForm] = useState(false);
+  const [tpLicencaFilterChecked, setTpLicencaFilterchecked] = useState(false);
+  const [softwareFilterChecked, setSoftwareFilterchecked] = useState(false);
+  const [dtExpiracaoFilterChecked, setDtExpiracaoFilterchecked] = useState(false);
+  const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+
+  const [inputFilter, setInputFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [filterField, setFilterField] = useState('nome');
+  const [dtExpiracaoInicioFilter, setDtExpiracaoInicioFilter] = useState<Dayjs | null>(null);
+  const [dtExpiracaoFinalFilter, setDtExpiracaoFinalFilter] = useState<Dayjs | null>(null);
+
+  const [openCustomFilters, setOpenCustomFilters] = useState<null | HTMLElement>(null);
   const open = Boolean(openCustomFilters);
 
   const [softwares, setSoftware] = useState<Software[]>();
@@ -109,24 +82,12 @@ export default function LicenseList() {
   const [tpLicencaId, settTpLicencaId] = useState('');
   const [softwareId, setSoftwareId] = useState('');
 
-  const [openLicenseForm, setOpenLicenseForm] = useState(false);
-
   const getLicenses = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/licenses?${filterField}=${inputFilter}&status=${statusFilter}&softwareId=${softwareId}&tpLicencaId=${tpLicencaId}${
-        dtExpiracaoInicioFilter
-          ? `&dtExpiracaoInicio=${dayjs(dtExpiracaoInicioFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }${
-        dtExpiracaoFinalFilter
-          ? `&dtExpiracaoFinal=${dayjs(dtExpiracaoFinalFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }`,
+        dtExpiracaoInicioFilter ? `&dtExpiracaoInicio=${dayjs(dtExpiracaoInicioFilter).format('DD/MM/YYYY')}` : ''
+      }${dtExpiracaoFinalFilter ? `&dtExpiracaoFinal=${dayjs(dtExpiracaoFinalFilter).format('DD/MM/YYYY')}` : ''}`,
       withCredentials: true,
       params: {
         page: numberPage,
@@ -170,9 +131,7 @@ export default function LicenseList() {
 
     requestBackend(params)
       .then((response) => setLicenseType(response.data))
-      .catch((error) =>
-        console.log('falha ao carregar os tipos de software' + error)
-      );
+      .catch((error) => console.log('falha ao carregar os tipos de software' + error));
   }, []);
 
   useEffect(() => {
@@ -183,9 +142,7 @@ export default function LicenseList() {
   const handleRowClicked = (row: Licenca) => navigate(`/license/${row.id}`);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount == 1)
-      setSelectedLicense(selectedRows.selectedRows[0].id);
-
+    if (selectedRows.selectedCount == 1) setSelectedLicense(selectedRows.selectedRows[0].id);
     if (selectedRows.selectedCount == 0) setSelectedLicense('');
   };
 
@@ -194,7 +151,7 @@ export default function LicenseList() {
     setOpenLicenseForm(true);
   };
 
-  function onDelete(licenseId: string) {
+  const onDelete = (licenseId: string) => {
     if (selectedLicense == '') {
       Swal.fire({
         title: 'Atenção',
@@ -241,9 +198,9 @@ export default function LicenseList() {
       }
       setFormContextData({ isEditing: false });
     });
-  }
+  };
 
-  function handleClearFilters() {
+  const handleClearFilters = () => {
     setStatusFilterchecked(false);
     setSoftwareFilterchecked(false);
     setTpLicencaFilterchecked(false);
@@ -254,19 +211,13 @@ export default function LicenseList() {
     setDtExpiracaoInicioFilter(null);
     setFilterField('nome');
     settTpLicencaId('');
-  }
+  };
 
   const handleClose = () => setOpenCustomFilters(null);
 
   return (
     <Panel title="Licenças de software">
-      <Box
-        display={'flex'}
-        flexWrap={'wrap'}
-        alignItems={'center'}
-        justifyContent={'space-between'}
-        marginBottom={2}
-      >
+      <Box display={'flex'} flexWrap={'wrap'} alignItems={'center'} justifyContent={'space-between'} marginBottom={2}>
         <Box display={'flex'} flexWrap={'wrap'} marginBottom={0.5}>
           <SearchBar
             inputFilter={inputFilter}
@@ -280,7 +231,6 @@ export default function LicenseList() {
             setFieldFilter={setFilterField}
             selectedItems={['nome', 'chave', 'qtdAdquirida', 'qtdAlocada']}
           />
-
           {softwareFilterChecked && (
             <FormControl size="small">
               <InputLabel sx={{ fontSize: 14 }}>Software</InputLabel>
@@ -300,18 +250,13 @@ export default function LicenseList() {
                 }}
               >
                 {softwares?.map((software) => (
-                  <MenuItem
-                    sx={{ fontSize: 13 }}
-                    key={software.id}
-                    value={software.id}
-                  >
+                  <MenuItem sx={{ fontSize: 13 }} key={software.id} value={software.id}>
                     {software.nome}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
           )}
-
           {tpLicencaFilterChecked && (
             <FormControl size="small">
               <InputLabel sx={{ fontSize: 14 }}>Tipo</InputLabel>
@@ -331,18 +276,13 @@ export default function LicenseList() {
                 }}
               >
                 {licenseTypes?.map((software) => (
-                  <MenuItem
-                    sx={{ fontSize: 13 }}
-                    key={software.id}
-                    value={software.id}
-                  >
+                  <MenuItem sx={{ fontSize: 13 }} key={software.id} value={software.id}>
                     {software.nome}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
           )}
-
           {statusFilterChecked && (
             <SelectFilter
               label="Status"
@@ -373,12 +313,7 @@ export default function LicenseList() {
               Excluir
             </Typography>
           </Button>
-          <Button
-            variant="contained"
-            startIcon={<AddCircleOutlineIcon />}
-            color="primary"
-            onClick={handleAdd}
-          >
+          <Button variant="contained" startIcon={<AddCircleOutlineIcon />} color="primary" onClick={handleAdd}>
             <Typography fontSize={14} textTransform={'none'}>
               Novo
             </Typography>
@@ -440,9 +375,7 @@ export default function LicenseList() {
           <MenuItem value={50}>50</MenuItem>
         </Select>
         <Pagination
-          onChange={(event: ChangeEvent<unknown>, numberPage: number) =>
-            setNumberPage(numberPage - 1)
-          }
+          onChange={(event: ChangeEvent<unknown>, numberPage: number) => setNumberPage(numberPage - 1)}
           defaultPage={1}
           count={page?.totalPages}
           variant="outlined"
@@ -450,16 +383,8 @@ export default function LicenseList() {
           size="small"
         />
       </Stack>
-      <Menu
-        sx={{ flexDirection: 'column' }}
-        anchorEl={openCustomFilters}
-        open={open}
-        onClose={handleClose}
-      >
-        <MenuItem
-          sx={{ marginRight: 2, padding: '0px 6px' }}
-          onClick={handleClose}
-        >
+      <Menu sx={{ flexDirection: 'column' }} anchorEl={openCustomFilters} open={open} onClose={handleClose}>
+        <MenuItem sx={{ marginRight: 2, padding: '0px 6px' }} onClick={handleClose}>
           <Checkbox
             size="small"
             checked={softwareFilterChecked}
@@ -469,25 +394,17 @@ export default function LicenseList() {
             Software
           </Typography>
         </MenuItem>
-        <MenuItem
-          sx={{ marginRight: 2, padding: '0px 6px' }}
-          onClick={handleClose}
-        >
+        <MenuItem sx={{ marginRight: 2, padding: '0px 6px' }} onClick={handleClose}>
           <Checkbox
             size="small"
             checked={tpLicencaFilterChecked}
-            onChange={(event) =>
-              setTpLicencaFilterchecked(event.target.checked)
-            }
+            onChange={(event) => setTpLicencaFilterchecked(event.target.checked)}
           />
           <Typography fontSize={13} variant="subtitle2">
             Tipo licença
           </Typography>
         </MenuItem>
-        <MenuItem
-          sx={{ marginRight: 2, padding: '0px 6px' }}
-          onClick={handleClose}
-        >
+        <MenuItem sx={{ marginRight: 2, padding: '0px 6px' }} onClick={handleClose}>
           <Checkbox
             size="small"
             checked={statusFilterChecked}
@@ -497,28 +414,18 @@ export default function LicenseList() {
             Status
           </Typography>
         </MenuItem>
-        <MenuItem
-          sx={{ marginRight: 2, padding: '0px 6px' }}
-          onClick={handleClose}
-        >
+        <MenuItem sx={{ marginRight: 2, padding: '0px 6px' }} onClick={handleClose}>
           <Checkbox
             size="small"
             checked={dtExpiracaoFilterChecked}
-            onChange={(event) =>
-              setDtExpiracaoFilterchecked(event.target.checked)
-            }
+            onChange={(event) => setDtExpiracaoFilterchecked(event.target.checked)}
           />
           <Typography fontSize={13} variant="subtitle2">
             Data expiração
           </Typography>
         </MenuItem>
       </Menu>
-      {openLicenseForm && (
-        <LicenseForm
-          openForm={openLicenseForm}
-          closeForm={() => setOpenLicenseForm(false)}
-        />
-      )}
+      {openLicenseForm && <LicenseForm openForm={openLicenseForm} closeForm={() => setOpenLicenseForm(false)} />}
     </Panel>
   );
 }

@@ -19,11 +19,13 @@ import DeleteOutlineTwoToneIcon from '@mui/icons-material/DeleteOutlineTwoTone';
 import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
 
-type AssetServiceProps = {
-  assetId?: string;
-};
+type AssetServiceProps = { assetId?: string };
 
 export default function AssetService({ assetId }: AssetServiceProps) {
+  const { formContextData, setFormContextData } = useContext(FormContext);
+  const [services, setServices] = useState<Servico[]>();
+  const [openAddService, setOpenAddService] = useState(false);
+
   const columns: TableColumn<Servico>[] = [
     {
       name: 'Data',
@@ -51,21 +53,12 @@ export default function AssetService({ assetId }: AssetServiceProps) {
       button: true,
       width: '80px',
       cell: (row) => (
-        <IconButton
-          sx={{ marginRight: 1 }}
-          onClick={() => onDeleteService(row.id)}
-          aria-label="delete"
-          size="small"
-        >
+        <IconButton sx={{ marginRight: 1 }} onClick={() => onDeleteService(row.id)} aria-label="delete" size="small">
           <DeleteOutlineTwoToneIcon color="primary" fontSize="small" />
         </IconButton>
       ),
     },
   ];
-
-  const { formContextData, setFormContextData } = useContext(FormContext);
-  const [services, setServices] = useState<Servico[]>();
-  const [openAddService, setOpenAddService] = useState(false);
 
   const getServices = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -84,7 +77,7 @@ export default function AssetService({ assetId }: AssetServiceProps) {
 
   useEffect(() => getServices(), [getServices]);
 
-  function onDeleteService(serviceId: string) {
+  const onDeleteService = (serviceId: string) => {
     Swal.fire({
       title: 'Tem certeza?',
       text: 'Você não será capaz de reverter isso!',
@@ -121,35 +114,15 @@ export default function AssetService({ assetId }: AssetServiceProps) {
           });
       }
     });
-  }
+  };
 
   return (
-    <Card
-      sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
-      variant="outlined"
-    >
-      <Box
-        display={'flex'}
-        justifyContent={'space-between'}
-        alignItems={'center'}
-      >
-        <Typography
-          margin={2}
-          fontSize={16}
-          fontWeight={'bold'}
-          letterSpacing={1}
-          color={'primary'}
-          variant="h2"
-        >
+    <Card sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }} variant="outlined">
+      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+        <Typography margin={2} fontSize={16} fontWeight={'bold'} letterSpacing={1} color={'primary'} variant="h2">
           Serviços realizados no ativo
         </Typography>
-
-        <Button
-          size="small"
-          variant="outlined"
-          sx={{ marginRight: 1 }}
-          onClick={() => setOpenAddService(true)}
-        >
+        <Button size="small" variant="outlined" sx={{ marginRight: 1 }} onClick={() => setOpenAddService(true)}>
           <AddIcon />
         </Button>
       </Box>
@@ -177,13 +150,8 @@ export default function AssetService({ assetId }: AssetServiceProps) {
           },
         }}
       />
-
       {openAddService && (
-        <AddServiceModal
-          assetId={assetId}
-          openModal={openAddService}
-          closeModal={() => setOpenAddService(false)}
-        />
+        <AddServiceModal assetId={assetId} openModal={openAddService} closeModal={() => setOpenAddService(false)} />
       )}
     </Card>
   );

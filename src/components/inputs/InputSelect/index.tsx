@@ -10,13 +10,7 @@ type InputSelectProps = {
   selectedItems: string[];
 };
 
-export default function InputSelect({
-  label,
-  required,
-  inputField,
-  setInputField,
-  selectedItems,
-}: InputSelectProps) {
+export default function InputSelect({ label, required, inputField, setInputField, selectedItems }: InputSelectProps) {
   return (
     <FormControl
       size="small"

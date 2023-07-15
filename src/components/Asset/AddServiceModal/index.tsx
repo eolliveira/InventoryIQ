@@ -25,13 +25,13 @@ type AddServiceModalProps = {
 };
 
 export default function AddServiceModal({ assetId, openModal, closeModal }: AddServiceModalProps) {
-  const { authContextData, setAuthContextData } = useContext(AuthContext);
+  const { authContextData } = useContext(AuthContext);
   const { setFormContextData } = useContext(FormContext);
   const [typeService, setTypeService] = useState('');
   const [description, setDescription] = useState('');
   const [value, setValue] = useState(0);
 
-  function handleSave() {
+  const handleSave = () => {
     if (typeService == '') {
       Swal.fire({
         title: 'Atenção',
@@ -83,7 +83,7 @@ export default function AddServiceModal({ assetId, openModal, closeModal }: AddS
 
         closeModal();
       });
-  }
+  };
 
   const handleCancel = () => closeModal();
 

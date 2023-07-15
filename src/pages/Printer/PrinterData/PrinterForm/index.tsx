@@ -39,11 +39,7 @@ type PrinterFormProps = {
   closeForm: () => void;
 };
 
-export default function PrinterForm({
-  data,
-  openForm,
-  closeForm,
-}: PrinterFormProps) {
+export default function PrinterForm({ data, openForm, closeForm }: PrinterFormProps) {
   const navigate = useNavigate();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [sweeping, setSweeping] = useState(false);
@@ -60,8 +56,7 @@ export default function PrinterForm({
 
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
-    if (data && formContextData.isDuplicated && formContextData.isAdding)
-      setFormData(data);
+    if (data && formContextData.isDuplicated && formContextData.isAdding) setFormData(data);
   }, []);
 
   const onSubmit = (formData: Printer) => {
@@ -76,9 +71,7 @@ export default function PrinterForm({
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: formContextData.isAdding ? 'POST' : 'PUT',
-          url: formContextData.isAdding
-            ? '/printer'
-            : `/printer/${data?.id}/update`,
+          url: formContextData.isAdding ? '/printer' : `/printer/${data?.id}/update`,
           data: formData,
           withCredentials: true,
         };
@@ -160,15 +153,11 @@ export default function PrinterForm({
           icon: 'warning',
         });
       })
-      .finally(() => {
-        setSweeping(false);
-      });
+      .finally(() => setSweeping(false));
   };
 
   const setFormData = (data: Printer) => {
-    formContextData.isDuplicated
-      ? setValue('nome', '')
-      : setValue('nome', data.nome);
+    formContextData.isDuplicated ? setValue('nome', '') : setValue('nome', data.nome);
     setValue('dominio', data.dominio);
     setValue('gateway', data.gateway);
     setValue('modelo', data.modelo);
@@ -185,32 +174,16 @@ export default function PrinterForm({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel
-          title={
-            formContextData.isEditing
-              ? 'Alterar impressora'
-              : 'Adicionar impressora'
-          }
-        >
+        <Panel title={formContextData.isEditing ? 'Alterar impressora' : 'Adicionar impressora'}>
           {formContextData.isAdding && (
             <Box display={'flex'}>
-              <SearchBar
-                inputFilter={ipAddress}
-                setInputFilter={setIpAddress}
-              />
+              <SearchBar inputFilter={ipAddress} setInputFilter={setIpAddress} />
 
-              <LoadingButton
-                size="small"
-                color="primary"
-                onClick={handleToSweep}
-                loading={sweeping}
-                variant="text"
-              >
+              <LoadingButton size="small" color="primary" onClick={handleToSweep} loading={sweeping} variant="text">
                 <SearchIcon fontSize="medium" />
               </LoadingButton>
             </Box>
           )}
-
           <form style={{ maxWidth: `900px` }} onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-md-6">
@@ -251,7 +224,6 @@ export default function PrinterForm({
                     />
                   </div>
                 </div>
-
                 <InputText
                   label="Tempo de atividade."
                   name="tempoLigado"
@@ -283,7 +255,6 @@ export default function PrinterForm({
                     />
                   </div>
                 </div>
-
                 <InputText
                   label="Numero de série"
                   name="numeroSerie"
@@ -292,7 +263,6 @@ export default function PrinterForm({
                   error={!!errors.numeroSerie}
                   helperText={errors.numeroSerie?.message}
                 />
-
                 <div className="row">
                   <div className="col-lg-12">
                     <InputText
@@ -306,15 +276,9 @@ export default function PrinterForm({
                   </div>
                   <div className="col-lg-3"></div>
                 </div>
-
                 <div className="row">
                   <div className="col-lg-6">
-                    <InputDate
-                      register={register}
-                      label="Data aquisição"
-                      control={control}
-                      name="dtAquisicao"
-                    />
+                    <InputDate register={register} label="Data aquisição" control={control} name="dtAquisicao" />
                   </div>
                   <div className="col-lg-6">
                     <InputDate
@@ -338,15 +302,10 @@ export default function PrinterForm({
                   </div>
                 </div>
               </div>
-
               {formContextData.isAdding && (
                 <Box display={'flex'} flexDirection={'column'}>
                   <BaseCard>
-                    <Stack
-                      border={'1px #d6d6d6 solid'}
-                      marginTop={0.5}
-                      height={'100px'}
-                    >
+                    <Stack border={'1px #d6d6d6 solid'} marginTop={0.5} height={'100px'}>
                       <Typography
                         borderRadius={'8px 8px 0px 0px'}
                         bgcolor={'#F8FAFC'}
@@ -386,15 +345,9 @@ export default function PrinterForm({
                 </Box>
               )}
             </div>
-
             <Box display={'flex'} justifyContent={'end'} marginTop={2}>
               <Stack direction={'row'} spacing={2}>
-                <Button
-                  color="error"
-                  variant="contained"
-                  startIcon={<CloseIcon />}
-                  onClick={onCancelForm}
-                >
+                <Button color="error" variant="contained" startIcon={<CloseIcon />} onClick={onCancelForm}>
                   <Typography fontSize={14} textTransform={'none'}>
                     Cancelar
                   </Typography>

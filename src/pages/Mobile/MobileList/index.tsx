@@ -3,13 +3,7 @@ import { SpringPage } from 'types/vendor/spring';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
 import { assetStatus } from '../../../constants/AssetStatus';
-import {
-  ChangeEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Stack from '@mui/material/Stack';
@@ -42,14 +36,12 @@ const columns: TableColumn<Mobile>[] = [
   { name: 'Modelo', selector: (row) => row.modelo, sortable: true },
   {
     name: 'Atribuido a',
-    selector: (row) =>
-      row.usuario.nome ? toCamelCase(row.usuario.nome) : ' - ',
+    selector: (row) => (row.usuario.nome ? toCamelCase(row.usuario.nome) : ' - '),
     sortable: true,
   },
   {
     name: 'Local',
-    selector: (row) =>
-      row.localIndustria ? row.localIndustria.dsLocalIndustria : ' - ',
+    selector: (row) => (row.localIndustria ? row.localIndustria.dsLocalIndustria : ' - '),
     sortable: true,
   },
   {
@@ -60,51 +52,43 @@ const columns: TableColumn<Mobile>[] = [
   {
     name: 'Status',
     sortable: true,
-    cell: (row) => (
-      <AssetStatusStyle key={row.id} size="small" status={row.status} />
-    ),
+    cell: (row) => <AssetStatusStyle key={row.id} size="small" status={row.status} />,
   },
   {
     name: 'Dt.Aquisição',
-    selector: (row) =>
-      row.dtAquisicao ? dayjs(row.dtAquisicao).format('DD/MM/YYYY') : ' - ',
+    selector: (row) => (row.dtAquisicao ? dayjs(row.dtAquisicao).format('DD/MM/YYYY') : ' - '),
     sortable: true,
   },
 ];
 
 export default function MobileList() {
   const { formContextData, setFormContextData } = useContext(FormContext);
+  const navigate = useNavigate();
   const [page, setPage] = useState<SpringPage<Mobile>>();
   const [inputFilter, setInputFilter] = useState('');
   const [numberPage, setNumberPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState('10');
-  const navigate = useNavigate();
-
-  const [filterField, setFilterField] = useState('nome');
-
-  const [statusFilter, setStatusFilter] = useState('');
-  const [statusFilterChecked, setStatusFilterchecked] = useState(false);
-
-  const [dtAquisicaoInicioFilter, setDtAquisicaoInicioFilter] =
-    useState<Dayjs | null>(null);
-  const [dtAquisicaoFinalFilter, setDtAquisicaoFinalFilter] =
-    useState<Dayjs | null>(null);
-  const [dtAquisicaoFilterChecked, setDtAquisicaoFilterchecked] =
-    useState(false);
 
   const [selectedAsset, setSelectedAsset] = useState('');
 
+  const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+  const [dtAquisicaoFilterChecked, setDtAquisicaoFilterchecked] = useState(false);
+
+  const [filterField, setFilterField] = useState('nome');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [dtAquisicaoInicioFilter, setDtAquisicaoInicioFilter] = useState<Dayjs | null>(null);
+  const [dtAquisicaoFinalFilter, setDtAquisicaoFinalFilter] = useState<Dayjs | null>(null);
+
   const [openDeviceForm, setOpenDeviceForm] = useState(false);
-  const [openCustomFilters, setOpenCustomFilters] =
-    useState<null | HTMLElement>(null);
+  const [openCustomFilters, setOpenCustomFilters] = useState<null | HTMLElement>(null);
   const open = Boolean(openCustomFilters);
 
-  function handleAddDevice() {
+  const handleAddDevice = () => {
     setFormContextData({ isAdding: true });
     setOpenDeviceForm(true);
-  }
+  };
 
-  function handleDeleteDevice(AssetId: string) {
+  const handleDeleteDevice = (AssetId: string) => {
     if (selectedAsset == '') {
       Swal.fire({
         title: 'Atenção',
@@ -150,9 +134,9 @@ export default function MobileList() {
           .finally(() => setFormContextData({ isEditing: false }));
       }
     });
-  }
+  };
 
-  function handleClearFilters() {
+  const handleClearFilters = () => {
     setStatusFilterchecked(false);
     setDtAquisicaoFilterchecked(false);
     setInputFilter('');
@@ -160,15 +144,14 @@ export default function MobileList() {
     setDtAquisicaoFinalFilter(null);
     setDtAquisicaoInicioFilter(null);
     setFilterField('nome');
-  }
+  };
 
   const handleClose = () => setOpenCustomFilters(null);
 
   const handleRowClicked = (row: Mobile) => navigate(`/mobile/${row.id}`);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount == 1)
-      setSelectedAsset(selectedRows.selectedRows[0].id);
+    if (selectedRows.selectedCount == 1) setSelectedAsset(selectedRows.selectedRows[0].id);
 
     if (selectedRows.selectedCount == 0) setSelectedAsset('');
   };
@@ -177,18 +160,8 @@ export default function MobileList() {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/mobileDevice?${filterField}=${inputFilter}&status=${statusFilter}${
-        dtAquisicaoInicioFilter
-          ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }${
-        dtAquisicaoFinalFilter
-          ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }`,
+        dtAquisicaoInicioFilter ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format('DD/MM/YYYY')}` : ''
+      }${dtAquisicaoFinalFilter ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format('DD/MM/YYYY')}` : ''}`,
       withCredentials: true,
       params: {
         page: numberPage,
@@ -218,13 +191,7 @@ export default function MobileList() {
 
   return (
     <Panel title="Dispositivos móveis">
-      <Box
-        display={'flex'}
-        flexWrap={'wrap'}
-        alignItems={'center'}
-        justifyContent={'space-between'}
-        marginBottom={2}
-      >
+      <Box display={'flex'} flexWrap={'wrap'} alignItems={'center'} justifyContent={'space-between'} marginBottom={2}>
         <Box display={'flex'} flexWrap={'wrap'} marginBottom={0.5}>
           <SearchBar
             inputFilter={inputFilter}
@@ -236,15 +203,7 @@ export default function MobileList() {
           <SelectFilter
             filterField={filterField}
             setFieldFilter={setFilterField}
-            selectedItems={[
-              'nome',
-              'status',
-              'fabricante',
-              'modelo',
-              'atribuido',
-              'local',
-              'numeroSerie',
-            ]}
+            selectedItems={['nome', 'status', 'fabricante', 'modelo', 'atribuido', 'local', 'numeroSerie']}
           />
           {statusFilterChecked && (
             <SelectFilter
@@ -276,12 +235,7 @@ export default function MobileList() {
               Excluir
             </Typography>
           </Button>
-          <Button
-            variant="contained"
-            startIcon={<AddCircleOutlineIcon />}
-            color="primary"
-            onClick={handleAddDevice}
-          >
+          <Button variant="contained" startIcon={<AddCircleOutlineIcon />} color="primary" onClick={handleAddDevice}>
             <Typography fontSize={14} textTransform={'none'}>
               Novo
             </Typography>
@@ -348,9 +302,7 @@ export default function MobileList() {
           </MenuItem>
         </Select>
         <Pagination
-          onChange={(event: ChangeEvent<unknown>, numberPage: number) =>
-            setNumberPage(numberPage - 1)
-          }
+          onChange={(event: ChangeEvent<unknown>, numberPage: number) => setNumberPage(numberPage - 1)}
           defaultPage={1}
           count={page?.totalPages}
           variant="outlined"
@@ -358,16 +310,8 @@ export default function MobileList() {
           size="small"
         />
       </Stack>
-      <Menu
-        sx={{ flexDirection: 'column' }}
-        anchorEl={openCustomFilters}
-        open={open}
-        onClose={handleClose}
-      >
-        <MenuItem
-          sx={{ marginRight: 2, padding: '0px 6px' }}
-          onClick={handleClose}
-        >
+      <Menu sx={{ flexDirection: 'column' }} anchorEl={openCustomFilters} open={open} onClose={handleClose}>
+        <MenuItem sx={{ marginRight: 2, padding: '0px 6px' }} onClick={handleClose}>
           <Checkbox
             size="small"
             checked={statusFilterChecked}
@@ -377,28 +321,18 @@ export default function MobileList() {
             Status
           </Typography>
         </MenuItem>
-        <MenuItem
-          sx={{ marginRight: 2, padding: '0px 6px' }}
-          onClick={handleClose}
-        >
+        <MenuItem sx={{ marginRight: 2, padding: '0px 6px' }} onClick={handleClose}>
           <Checkbox
             size="small"
             checked={dtAquisicaoFilterChecked}
-            onChange={(event) =>
-              setDtAquisicaoFilterchecked(event.target.checked)
-            }
+            onChange={(event) => setDtAquisicaoFilterchecked(event.target.checked)}
           />
           <Typography fontSize={13} variant="subtitle2">
             Data aquisição
           </Typography>
         </MenuItem>
       </Menu>
-      {openDeviceForm && (
-        <MobileForm
-          openForm={openDeviceForm}
-          closeForm={() => setOpenDeviceForm(false)}
-        />
-      )}
+      {openDeviceForm && <MobileForm openForm={openDeviceForm} closeForm={() => setOpenDeviceForm(false)} />}
     </Panel>
   );
 }

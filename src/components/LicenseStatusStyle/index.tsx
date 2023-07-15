@@ -8,20 +8,9 @@ type LicenseStatusStyleProps = {
   handleClick?: () => void;
 };
 
-export default function LicenseStatusStyle({
-  status,
-  size,
-  clickable,
-  handleClick,
-}: LicenseStatusStyleProps) {
+export default function LicenseStatusStyle({ status, size, clickable, handleClick }: LicenseStatusStyleProps) {
   const color =
-    status === 'ATIVA'
-      ? '#00C853'
-      : status === 'INATIVA'
-      ? '#979797'
-      : status === 'EXPIRADA'
-      ? '#D84315'
-      : 'default';
+    status === 'ATIVA' ? '#00C853' : status === 'INATIVA' ? '#979797' : status === 'EXPIRADA' ? '#D84315' : 'default';
 
   const bgColor =
     status === 'ATIVA'

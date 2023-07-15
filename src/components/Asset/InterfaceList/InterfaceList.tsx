@@ -22,37 +22,16 @@ type InterfaceList = { assetId?: string };
 
 export default function InterfaceList({ assetId }: InterfaceList) {
   const columns: TableColumn<Interface>[] = [
-    {
-      name: 'Nome',
-      grow: 0.5,
-      selector: (row) => (row.nomeLocal ? row.nomeLocal : ' - '),
-    },
-    {
-      name: 'Fabricante',
-      selector: (row) => (row.fabricante ? row.fabricante : ' - '),
-    },
-    {
-      name: 'Mascara',
-      selector: (row) => (row.mascaraSubRede ? row.mascaraSubRede : ' -'),
-    },
-    {
-      name: 'Endereço Ip',
-      selector: (row) => (row.enderecoIp ? row.enderecoIp : ' - '),
-    },
-    {
-      name: 'Endereço Mac',
-      selector: (row) => row.enderecoMac,
-    },
+    { name: 'Nome', grow: 0.5, selector: (row) => (row.nomeLocal ? row.nomeLocal : ' - ') },
+    { name: 'Fabricante', selector: (row) => (row.fabricante ? row.fabricante : ' - ') },
+    { name: 'Mascara', selector: (row) => (row.mascaraSubRede ? row.mascaraSubRede : ' -') },
+    { name: 'Endereço Ip', selector: (row) => (row.enderecoIp ? row.enderecoIp : ' - ') },
+    { name: 'Endereço Mac', selector: (row) => row.enderecoMac },
     {
       button: true,
       width: '80px',
       cell: (row) => (
-        <IconButton
-          sx={{ marginRight: 1 }}
-          onClick={() => onDeleteInterface(row.id)}
-          aria-label="delete"
-          size="small"
-        >
+        <IconButton sx={{ marginRight: 1 }} onClick={() => onDeleteInterface(row.id)} aria-label="delete" size="small">
           <DeleteOutlineTwoToneIcon color="primary" fontSize="small" />
         </IconButton>
       ),
@@ -80,7 +59,7 @@ export default function InterfaceList({ assetId }: InterfaceList) {
 
   useEffect(() => getInterfaces(), [getInterfaces]);
 
-  function onDeleteInterface(interfaceId: string) {
+  const onDeleteInterface = (interfaceId: string) => {
     Swal.fire({
       title: 'Tem certeza?',
       text: 'Você não será capaz de reverter isso!',
@@ -116,35 +95,15 @@ export default function InterfaceList({ assetId }: InterfaceList) {
           });
       }
     });
-  }
+  };
 
   return (
-    <Card
-      sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
-      variant="outlined"
-    >
-      <Box
-        display={'flex'}
-        justifyContent={'space-between'}
-        alignItems={'center'}
-      >
-        <Typography
-          margin={2}
-          fontSize={16}
-          fontWeight={'bold'}
-          letterSpacing={1}
-          color={'primary'}
-          variant="h2"
-        >
+    <Card sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }} variant="outlined">
+      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+        <Typography margin={2} fontSize={16} fontWeight={'bold'} letterSpacing={1} color={'primary'} variant="h2">
           Interfaces
         </Typography>
-
-        <Button
-          size="small"
-          variant="outlined"
-          sx={{ marginRight: 1 }}
-          onClick={() => setOpenAddInterface(true)}
-        >
+        <Button size="small" variant="outlined" sx={{ marginRight: 1 }} onClick={() => setOpenAddInterface(true)}>
           <AddIcon />
         </Button>
       </Box>
@@ -175,11 +134,7 @@ export default function InterfaceList({ assetId }: InterfaceList) {
         }}
       />
       {openAddInterface && (
-        <InterfaceForm
-          assetId={assetId}
-          openModal={openAddInterface}
-          closeModal={() => setOpenAddInterface(false)}
-        />
+        <InterfaceForm assetId={assetId} openModal={openAddInterface} closeModal={() => setOpenAddInterface(false)} />
       )}
     </Card>
   );

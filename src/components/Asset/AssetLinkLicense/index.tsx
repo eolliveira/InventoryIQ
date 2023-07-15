@@ -33,11 +33,7 @@ const columns: TableColumn<Licenca>[] = [
   { name: 'Chave', selector: (row) => row.chave },
 ];
 
-export default function AssetLinkLicense({
-  assetId,
-  openModal,
-  closeModal,
-}: AssetLinkLicenseProps) {
+export default function AssetLinkLicense({ assetId, openModal, closeModal }: AssetLinkLicenseProps) {
   const { setFormContextData } = useContext(FormContext);
   const [licenses, setLicenses] = useState<Licenca[]>();
   const [inputFilter, setInputFilter] = useState('');
@@ -55,13 +51,12 @@ export default function AssetLinkLicense({
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount != 0)
-      setSelectedLicense(selectedRows.selectedRows[0].id);
+    if (selectedRows.selectedCount != 0) setSelectedLicense(selectedRows.selectedRows[0].id);
 
     if (selectedRows.selectedCount == 0) setSelectedLicense('');
   };
 
-  function handleConfirm() {
+  const handleConfirm = () => {
     if (selectedLicense == '') {
       Swal.fire({
         title: 'Atenção',
@@ -70,16 +65,15 @@ export default function AssetLinkLicense({
       });
       return;
     }
-    const data = {
-      ativoId: assetId,
-      licencaId: selectedLicense,
-    };
+
+    const data = { ativoId: assetId, licencaId: selectedLicense };
     const params: AxiosRequestConfig = {
       method: 'PUT',
       url: `/licenses/linkActive`,
       withCredentials: true,
       data: data,
     };
+
     requestBackend(params)
       .then(() => {
         setFormContextData({ isEditing: false });
@@ -99,12 +93,12 @@ export default function AssetLinkLicense({
           icon: 'warning',
         });
       });
-  }
+  };
 
-  function handleCancel() {
+  const handleCancel = () => {
     setFormContextData({ isEditing: false });
     closeModal();
-  }
+  };
 
   return (
     <CustomModal openModal={openModal}>
@@ -112,11 +106,7 @@ export default function AssetLinkLicense({
         <Panel title="Vincular licença">
           <Container>
             <Stack direction={'row'}>
-              <SearchBar
-                placeholder="Nome..."
-                inputFilter={inputFilter}
-                setInputFilter={setInputFilter}
-              />
+              <SearchBar placeholder="Nome..." inputFilter={inputFilter} setInputFilter={setInputFilter} />
             </Stack>
             <DataTable
               columns={columns}
@@ -145,12 +135,7 @@ export default function AssetLinkLicense({
             />
           </Container>
           <Box display={'flex'} justifyContent={'end'} marginTop={2}>
-            <Button
-              variant="contained"
-              color="error"
-              startIcon={<CloseIcon />}
-              onClick={handleCancel}
-            >
+            <Button variant="contained" color="error" startIcon={<CloseIcon />} onClick={handleCancel}>
               <Typography textTransform={'none'}>Cancelar</Typography>
             </Button>
             <LoadingButton

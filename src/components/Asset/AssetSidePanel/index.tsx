@@ -31,9 +31,7 @@ import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import EventRepeatTwoToneIcon from '@mui/icons-material/EventRepeatTwoTone';
 import { Coletor } from 'types/Coletor';
 
-type AssetSidePanelProps = {
-  data: Printer | Workstation | Nobreak | Mobile | Coletor;
-};
+type AssetSidePanelProps = { data: Printer | Workstation | Nobreak | Mobile | Coletor };
 
 export default function AssetSidePanel({ data }: AssetSidePanelProps) {
   const { setFormContextData } = useContext(FormContext);
@@ -41,8 +39,7 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
   const [openChangeStateModal, setOpenChangeStateModal] = useState(false);
   const [openChangeUserModal, setOpenChangeUserModal] = useState(false);
   const [openChangeLocationModal, setOpenChangeLocationModal] = useState(false);
-  const [openChangeNfEntradaModal, setOpenChangeNfEntradaModal] =
-    useState(false);
+  const [openChangeNfEntradaModal, setOpenChangeNfEntradaModal] = useState(false);
 
   const getNfEntrada = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -67,28 +64,16 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
             <Typography color={'primary'} fontWeight={'bold'} fontSize={14}>
               Ultimo Sincronismo
             </Typography>
-            <Stack
-              marginBottom={1.5}
-              marginTop={0.2}
-              direction={'row'}
-              spacing={1}
-            >
+            <Stack marginBottom={1.5} marginTop={0.2} direction={'row'} spacing={1}>
               <EventRepeatTwoToneIcon fontSize="small" color="primary" />
               <Typography style={{ marginTop: 2 }} fontSize={13}>
-                {data.dhUltimaVarredura
-                  ? dayjs(data.dhUltimaVarredura).format('DD/MM/YYYY HH:mm:ss')
-                  : ' - '}
+                {data.dhUltimaVarredura ? dayjs(data.dhUltimaVarredura).format('DD/MM/YYYY HH:mm:ss') : ' - '}
               </Typography>
             </Stack>
           </Box>
         )}
         <Box>
-          <Typography
-            marginBottom={0.5}
-            color={'primary'}
-            fontWeight={'bold'}
-            fontSize={14}
-          >
+          <Typography marginBottom={0.5} color={'primary'} fontWeight={'bold'} fontSize={14}>
             Status
           </Typography>
           <AssetStatusStyle
@@ -115,33 +100,13 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
               padding: 1.5,
             }}
           >
-            <Box
-              display={'flex'}
-              flexWrap={'wrap'}
-              justifyContent={'space-around'}
-              alignItems={'center'}
-            >
-              <AccountCircleTwoToneIcon
-                color="primary"
-                sx={{ marginRight: 1 }}
-              />
-              <Box
-                display={'flex'}
-                flex={1}
-                flexDirection={'column'}
-                justifyContent={'flex-start'}
-              >
+            <Box display={'flex'} flexWrap={'wrap'} justifyContent={'space-around'} alignItems={'center'}>
+              <AccountCircleTwoToneIcon color="primary" sx={{ marginRight: 1 }} />
+              <Box display={'flex'} flex={1} flexDirection={'column'} justifyContent={'flex-start'}>
                 <Typography color={'primary'} fontSize={14} variant="subtitle2">
-                  {(data.usuario &&
-                    data.usuario.nome &&
-                    toCamelCase(data.usuario.nome)) ||
-                    ' - '}
+                  {(data.usuario && data.usuario.nome && toCamelCase(data.usuario.nome)) || ' - '}
                 </Typography>
-                <Typography
-                  color={'secondary'}
-                  fontSize={12}
-                  variant="subtitle2"
-                >
+                <Typography color={'secondary'} fontSize={12} variant="subtitle2">
                   {data.usuario ? data.usuario.email : ' - '}
                 </Typography>
               </Box>
@@ -159,12 +124,7 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
           </Card>
         </>
       )}
-      <Typography
-        marginTop={1}
-        color={'primary'}
-        fontWeight={'bold'}
-        fontSize={14}
-      >
+      <Typography marginTop={1} color={'primary'} fontWeight={'bold'} fontSize={14}>
         Local
       </Typography>
       <Card
@@ -176,27 +136,14 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
           padding: 1.5,
         }}
       >
-        <Box
-          display={'flex'}
-          justifyContent={'space-around'}
-          flexWrap={'wrap'}
-          alignItems={'center'}
-        >
+        <Box display={'flex'} justifyContent={'space-around'} flexWrap={'wrap'} alignItems={'center'}>
           <RoomTwoToneIcon color="primary" style={{ marginRight: 5 }} />
 
-          <Typography
-            color={'primary'}
-            flex={1}
-            fontSize={13}
-            marginTop={0.5}
-            variant="subtitle2"
-          >
+          <Typography color={'primary'} flex={1} fontSize={13} marginTop={0.5} variant="subtitle2">
             {data.localIndustria
               ? (data.localIndustria.id ? data.localIndustria.id : '') +
                 ' - ' +
-                (data.localIndustria.dsLocalIndustria
-                  ? toCamelCase(data.localIndustria.dsLocalIndustria)
-                  : '')
+                (data.localIndustria.dsLocalIndustria ? toCamelCase(data.localIndustria.dsLocalIndustria) : '')
               : ' - '}
           </Typography>
 
@@ -213,12 +160,7 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
         <Box display={'flex'} flexDirection={'column'}>
-          <Typography
-            color={'primary'}
-            fontWeight={'bold'}
-            fontSize={13}
-            variant="subtitle2"
-          >
+          <Typography color={'primary'} fontWeight={'bold'} fontSize={13} variant="subtitle2">
             Centro de custo
           </Typography>
           <Typography color={'secondary'} fontSize={12} variant="subtitle2">
@@ -226,18 +168,11 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
               data.localIndustria.centroCusto &&
               data.localIndustria.centroCusto.id +
                 ' - ' +
-                toCamelCase(
-                  data.localIndustria.centroCusto.descricaoCentroCusto
-                )}
+                toCamelCase(data.localIndustria.centroCusto.descricaoCentroCusto)}
           </Typography>
         </Box>
       </Card>
-      <Typography
-        marginTop={1}
-        color={'primary'}
-        fontWeight={'bold'}
-        fontSize={14}
-      >
+      <Typography marginTop={1} color={'primary'} fontWeight={'bold'} fontSize={14}>
         Nota Fiscal
       </Typography>
       <Card
@@ -251,12 +186,7 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
       >
         <Box display={'flex'} justifyContent={'space-between'}>
           <Box display={'flex'} flexDirection={'column'}>
-            <Typography
-              color={'primary'}
-              fontWeight={'bold'}
-              fontSize={13}
-              variant="subtitle2"
-            >
+            <Typography color={'primary'} fontWeight={'bold'} fontSize={13} variant="subtitle2">
               Numero nota fiscal
             </Typography>
             <Typography color={'secondary'} fontSize={12} variant="subtitle2">
@@ -277,34 +207,20 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
         <Box display={'flex'} flexDirection={'column'}>
-          <Typography
-            color={'primary'}
-            fontWeight={'bold'}
-            fontSize={13}
-            variant="subtitle2"
-          >
+          <Typography color={'primary'} fontWeight={'bold'} fontSize={13} variant="subtitle2">
             Fornecedor
           </Typography>
           <Typography color={'secondary'} fontSize={12} variant="subtitle2">
-            {nfEntrada?.pessoa
-              ? nfEntrada?.pessoa.id + ' - ' + nfEntrada?.pessoa.razaoSocial
-              : ' - '}
+            {nfEntrada?.pessoa ? nfEntrada?.pessoa.id + ' - ' + nfEntrada?.pessoa.razaoSocial : ' - '}
           </Typography>
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
         <Box display={'flex'} flexDirection={'column'}>
-          <Typography
-            color={'primary'}
-            fontWeight={'bold'}
-            fontSize={13}
-            variant="subtitle2"
-          >
+          <Typography color={'primary'} fontWeight={'bold'} fontSize={13} variant="subtitle2">
             Valor da nota
           </Typography>
           <Typography color={'secondary'} fontSize={12} variant="subtitle2">
-            {nfEntrada?.valorNotaFiscal
-              ? formatCurrency(nfEntrada.valorNotaFiscal)
-              : ' - '}
+            {nfEntrada?.valorNotaFiscal ? formatCurrency(nfEntrada.valorNotaFiscal) : ' - '}
           </Typography>
         </Box>
       </Card>
@@ -315,7 +231,6 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
           closeModal={() => setOpenChangeStateModal(false)}
         />
       )}
-
       {openChangeUserModal && (
         <ChangeUserModal
           assetId={data.id}
@@ -323,7 +238,6 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
           closeForm={() => setOpenChangeUserModal(false)}
         />
       )}
-
       {openChangeLocationModal && (
         <ChangeLocationModal
           assetId={data.id}
@@ -331,7 +245,6 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
           closeModal={() => setOpenChangeLocationModal(false)}
         />
       )}
-
       {openChangeNfEntradaModal && (
         <ChangeNfEntradaModal
           license={false}

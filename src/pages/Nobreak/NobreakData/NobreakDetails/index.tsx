@@ -5,9 +5,7 @@ import TextInfo from '../../../../components/TextInfo';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
 import { Nobreak } from '../../../../types/Nobreak';
 
-type NobreakDetailsProps = {
-  data?: Nobreak;
-};
+type NobreakDetailsProps = { data?: Nobreak };
 
 export default function NobreakDetails({ data }: NobreakDetailsProps) {
   return (
@@ -27,18 +25,9 @@ export default function NobreakDetails({ data }: NobreakDetailsProps) {
           >
             <TextInfo label="Nome" text={data?.nome || '-'} />
             <TextInfo label="Fabricante" text={data?.fabricante || '-'} />
-            <TextInfo
-              label="Potência nominal"
-              text={data?.potencialNominal + ' VA' || '-'}
-            />
-            <TextInfo
-              label="Tensão de entrada"
-              text={data?.tensaoEntrada + ' v~' || '-'}
-            />
-            <TextInfo
-              label="Tensão de saida"
-              text={data?.tensaoSaida + ' v~' || '-'}
-            />
+            <TextInfo label="Potência nominal" text={data?.potencialNominal + ' VA' || '-'} />
+            <TextInfo label="Tensão de entrada" text={data?.tensaoEntrada + ' v~' || '-'} />
+            <TextInfo label="Tensão de saida" text={data?.tensaoSaida + ' v~' || '-'} />
             <TextInfo label="Observação" text={data?.observacao || '-'} />
           </Card>
         </div>
@@ -55,32 +44,19 @@ export default function NobreakDetails({ data }: NobreakDetailsProps) {
           >
             <TextInfo label="Modelo" text={data?.modelo || '-'} />
             <TextInfo label="Numero de série" text={data?.numeroSerie || '-'} />
-
             <TextInfo
               label="Data aquisição"
-              text={
-                data?.dtAquisicao
-                  ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY')
-                  : '-'
-              }
+              text={data?.dtAquisicao ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY') : '-'}
             />
             <div className="row">
               <div className="col-lg-7">
                 <TextInfo
                   label="Data venc. Garantia"
-                  text={
-                    data?.dtVencimentoGarantia
-                      ? dayjs(data?.dtVencimentoGarantia).format('DD/MM/YYYY')
-                      : '-'
-                  }
+                  text={data?.dtVencimentoGarantia ? dayjs(data?.dtVencimentoGarantia).format('DD/MM/YYYY') : '-'}
                 />
                 <TextInfo
                   label="Valor compra"
-                  text={
-                    data?.vlrAquisicao
-                      ? formatCurrency(String(data?.vlrAquisicao))
-                      : '-'
-                  }
+                  text={data?.vlrAquisicao ? formatCurrency(String(data?.vlrAquisicao)) : '-'}
                 />
               </div>
             </div>

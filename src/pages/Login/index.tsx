@@ -68,9 +68,7 @@ export default function Login() {
           <Typography color={'error'} variant="subtitle2">
             {errors.login?.message}
           </Typography>
-
           <Typography color={'GrayText'}>SENHA</Typography>
-
           <input
             {...register('password', {
               required: 'Campo obrigatório!',
@@ -82,11 +80,7 @@ export default function Login() {
           <Typography color={'error'} variant="subtitle2">
             {errors.password?.message}
           </Typography>
-          <LoadingButton
-            sx={{ color: '#d1ab00c8' }}
-            type="submit"
-            loading={isLoading}
-          >
+          <LoadingButton sx={{ color: '#d1ab00c8' }} type="submit" loading={isLoading}>
             <Typography textTransform={'none'}>Entrar</Typography>
           </LoadingButton>
         </Form>

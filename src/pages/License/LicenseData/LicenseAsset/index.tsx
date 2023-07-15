@@ -18,9 +18,7 @@ import { AxiosRequestConfig } from 'axios';
 import { Ativo } from '../../../../types/Ativo';
 import LicenseLinkAsset from '../LicenseLinkAsset';
 
-type LicenseAssetProps = {
-  licenseId?: string;
-};
+type LicenseAssetProps = { licenseId?: string };
 
 export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
   const columns: TableColumn<Ativo>[] = [
@@ -29,12 +27,7 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
       width: '60px',
       cell: (row) => (
         <Tooltip title="Desalocar ativo">
-          <IconButton
-            sx={{ marginRight: 1 }}
-            onClick={() => onReleaseLicense(row.id)}
-            aria-label="delete"
-            size="small"
-          >
+          <IconButton sx={{ marginRight: 1 }} onClick={() => onReleaseLicense(row.id)} aria-label="delete" size="small">
             <IosShareIcon color="primary" fontSize="inherit" />
           </IconButton>
         </Tooltip>
@@ -60,9 +53,7 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
     requestBackend(params).then((response) => setAssets(response.data));
   }, [licenseId, formContextData]);
 
-  useEffect(() => {
-    getAssets();
-  }, [getAssets]);
+  useEffect(() => getAssets(), [getAssets]);
 
   const onReleaseLicense = (assetId: string) => {
     Swal.fire({
@@ -89,11 +80,7 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
 
         requestBackend(params)
           .then(() => {
-            Swal.fire(
-              'Sucesso!',
-              'Licença foi desalocada do ativo!',
-              'success'
-            );
+            Swal.fire('Sucesso!', 'Licença foi desalocada do ativo!', 'success');
             setFormContextData({ isEditing: false });
           })
           .catch((error) => {
@@ -108,32 +95,12 @@ export default function LicenseAsset({ licenseId }: LicenseAssetProps) {
   };
 
   return (
-    <Card
-      sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }}
-      variant="outlined"
-    >
-      <Box
-        display={'flex'}
-        justifyContent={'space-between'}
-        alignItems={'center'}
-      >
-        <Typography
-          margin={2}
-          fontSize={16}
-          fontWeight={'bold'}
-          letterSpacing={1}
-          color={'primary'}
-          variant="h2"
-        >
+    <Card sx={{ marginTop: 2, marginBottom: 2, backgroundColor: '#F8FAFC' }} variant="outlined">
+      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+        <Typography margin={2} fontSize={16} fontWeight={'bold'} letterSpacing={1} color={'primary'} variant="h2">
           Ativos vinculados
         </Typography>
-
-        <Button
-          size="small"
-          variant="outlined"
-          sx={{ marginRight: 1 }}
-          onClick={() => setAssetLinkLicense(true)}
-        >
+        <Button size="small" variant="outlined" sx={{ marginRight: 1 }} onClick={() => setAssetLinkLicense(true)}>
           <AddIcon />
         </Button>
       </Box>

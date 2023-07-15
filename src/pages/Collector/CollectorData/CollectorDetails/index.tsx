@@ -6,9 +6,7 @@ import { formatCurrency } from '../../../../utils/CurrencyConverter';
 import { Coletor } from '../../../../types/Coletor';
 import InterfaceList from '../../../../components/Asset/InterfaceList/InterfaceList';
 
-type CollectorDetailsProps = {
-  data?: Coletor;
-};
+type CollectorDetailsProps = { data?: Coletor };
 
 export default function CollectorDetails({ data }: CollectorDetailsProps) {
   return (
@@ -47,29 +45,17 @@ export default function CollectorDetails({ data }: CollectorDetailsProps) {
 
             <TextInfo
               label="Data aquisição"
-              text={
-                data?.dtAquisicao
-                  ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY')
-                  : '-'
-              }
+              text={data?.dtAquisicao ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY') : '-'}
             />
             <div className="row">
               <div className="col-lg-7">
                 <TextInfo
                   label="Data venc. Garantia"
-                  text={
-                    data?.dtVencimentoGarantia
-                      ? dayjs(data?.dtVencimentoGarantia).format('DD/MM/YYYY')
-                      : '-'
-                  }
+                  text={data?.dtVencimentoGarantia ? dayjs(data?.dtVencimentoGarantia).format('DD/MM/YYYY') : '-'}
                 />
                 <TextInfo
                   label="Valor compra"
-                  text={
-                    data?.vlrAquisicao
-                      ? formatCurrency(String(data?.vlrAquisicao))
-                      : '-'
-                  }
+                  text={data?.vlrAquisicao ? formatCurrency(String(data?.vlrAquisicao)) : '-'}
                 />
               </div>
             </div>

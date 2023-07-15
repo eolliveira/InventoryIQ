@@ -1,11 +1,4 @@
-import {
-  Sidebar,
-  Menu,
-  MenuItem,
-  SubMenu,
-  useProSidebar,
-  sidebarClasses,
-} from 'react-pro-sidebar';
+import { Sidebar, Menu, MenuItem, SubMenu, useProSidebar, sidebarClasses } from 'react-pro-sidebar';
 import { ButtonColapseContainer, SidebarContainer } from './style';
 import MenuIcon from '@mui/icons-material/Menu';
 import DevicesIcon from '@mui/icons-material/Devices';
@@ -23,9 +16,7 @@ import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import DevicesOutlinedIcon from '@mui/icons-material/DevicesOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 export default function MenuSidebar() {
-  const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
-    useProSidebar();
-
+  const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } = useProSidebar();
   const location = useLocation();
 
   return (
@@ -77,16 +68,7 @@ export default function MenuSidebar() {
             }}
             iscollapsed={`${collapsed}`}
           >
-            {!collapsed ? (
-              <img
-                style={{ marginRight: '15px' }}
-                width={'150px'}
-                src={Logo}
-                alt="Logo"
-              />
-            ) : (
-              ''
-            )}
+            {!collapsed ? <img style={{ marginRight: '15px' }} width={'150px'} src={Logo} alt="Logo" /> : ''}
 
             {collapsed ? (
               <IconButton

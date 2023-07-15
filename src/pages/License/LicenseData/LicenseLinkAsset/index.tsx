@@ -28,23 +28,11 @@ const columns: TableColumn<Workstation>[] = [
   { name: 'Id', selector: (row) => row.id, sortable: true },
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
   { name: 'Hostname', selector: (row) => row.nomeHost, sortable: true },
-  {
-    name: 'Fabricante',
-    selector: (row) => row.fabricante,
-    sortable: true,
-  },
-  {
-    name: 'Valor aquisição',
-    selector: (row) => row.vlrAquisicao,
-    sortable: true,
-  },
+  { name: 'Fabricante', selector: (row) => row.fabricante, sortable: true },
+  { name: 'Valor aquisição', selector: (row) => row.vlrAquisicao, sortable: true },
 ];
 
-export default function LicenseLinkAsset({
-  licenseId,
-  openModal,
-  closeModal,
-}: LicenseLinkAssetProps) {
+export default function LicenseLinkAsset({ licenseId, openModal, closeModal }: LicenseLinkAssetProps) {
   const { setFormContextData } = useContext(FormContext);
   const [assets, setAssets] = useState<Workstation[]>();
   const [inputFilter, setInputFilter] = useState('');
@@ -62,13 +50,12 @@ export default function LicenseLinkAsset({
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount != 0)
-      setSelectedAsset(selectedRows.selectedRows[0].id);
+    if (selectedRows.selectedCount != 0) setSelectedAsset(selectedRows.selectedRows[0].id);
 
     if (selectedRows.selectedCount == 0) setSelectedAsset('');
   };
 
-  function handleConfirm() {
+  const handleConfirm = () => {
     if (selectedAsset == '') {
       Swal.fire({
         title: 'Atenção',
@@ -106,16 +93,16 @@ export default function LicenseLinkAsset({
           icon: 'warning',
         });
       });
-  }
+  };
 
-  function handleCancel() {
+  const handleCancel = () => {
     setFormContextData({
       isEditing: false,
       isAdding: false,
       isDuplicated: false,
     });
     closeModal();
-  }
+  };
 
   return (
     <CustomModal openModal={openModal}>
@@ -123,10 +110,7 @@ export default function LicenseLinkAsset({
         <Panel title="Vincular ativo">
           <Stack height={500} width={850}>
             <Stack direction={'row'}>
-              <SearchBar
-                inputFilter={inputFilter}
-                setInputFilter={setInputFilter}
-              />
+              <SearchBar inputFilter={inputFilter} setInputFilter={setInputFilter} />
             </Stack>
             <DataTable
               columns={columns}
@@ -156,12 +140,7 @@ export default function LicenseLinkAsset({
             />
           </Stack>
           <Box display={'flex'} justifyContent={'end'}>
-            <Button
-              variant="contained"
-              color="error"
-              startIcon={<CloseIcon />}
-              onClick={handleCancel}
-            >
+            <Button variant="contained" color="error" startIcon={<CloseIcon />} onClick={handleCancel}>
               <Typography textTransform={'none'}>Cancelar</Typography>
             </Button>
             <LoadingButton

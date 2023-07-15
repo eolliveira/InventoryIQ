@@ -13,9 +13,8 @@ import FactCheckTwoToneIcon from '@mui/icons-material/FactCheckTwoTone';
 
 export default function Register() {
   const [tabValue, setTabValue] = useState('1');
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-    setTabValue(newValue);
-  };
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => setTabValue(newValue);
+
   return (
     <Panel title="Cadastro">
       <TabContext value={tabValue}>
@@ -27,12 +26,7 @@ export default function Register() {
           }}
         >
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs
-              value={tabValue}
-              onChange={handleTabChange}
-              textColor="primary"
-              indicatorColor="primary"
-            >
+            <Tabs value={tabValue} onChange={handleTabChange} textColor="primary" indicatorColor="primary">
               <Tab
                 value="1"
                 label="Software"

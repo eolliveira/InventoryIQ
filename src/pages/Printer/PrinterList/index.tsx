@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SpringPage } from 'types/vendor/spring';
 import { AxiosRequestConfig } from 'axios';
@@ -42,87 +36,53 @@ const columns: TableColumn<Printer>[] = [
   { name: 'Modelo', selector: (row) => row.modelo, sortable: true },
   {
     name: 'Local',
-    selector: (row) =>
-      row.localIndustria ? row.localIndustria.dsLocalIndustria : ' - ',
+    selector: (row) => (row.localIndustria ? row.localIndustria.dsLocalIndustria : ' - '),
     sortable: true,
   },
-  {
-    name: 'Numero de Série',
-    selector: (row) => (row.numeroSerie ? row.numeroSerie : ' - '),
-    sortable: true,
-  },
-  {
-    name: 'Status',
-    sortable: true,
-    cell: (row) => (
-      <AssetStatusStyle key={row.id} size="small" status={row.status} />
-    ),
-  },
+  { name: 'Numero de Série', selector: (row) => (row.numeroSerie ? row.numeroSerie : ' - '), sortable: true },
+  { name: 'Status', sortable: true, cell: (row) => <AssetStatusStyle key={row.id} size="small" status={row.status} /> },
   {
     name: 'Dt.aquisição',
-    selector: (row) =>
-      row.dtAquisicao ? dayjs(row.dtAquisicao).format('DD/MM/YYYY') : ' - ',
+    selector: (row) => (row.dtAquisicao ? dayjs(row.dtAquisicao).format('DD/MM/YYYY') : ' - '),
     sortable: true,
   },
 ];
 
 export default function PrinterList() {
+  const navigate = useNavigate();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [page, setPage] = useState<SpringPage<Printer>>();
-  const [inputFilter, setInputFilter] = useState('');
   const [numberPage, setNumberPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState('10');
-  const navigate = useNavigate();
-
-  const [filterField, setFilterField] = useState('nome');
-
-  const [statusFilter, setStatusFilter] = useState('');
-  const [statusFilterChecked, setStatusFilterchecked] = useState(false);
-
-  const [dtAquisicaoInicioFilter, setDtAquisicaoInicioFilter] =
-    useState<Dayjs | null>(null);
-  const [dtAquisicaoFinalFilter, setDtAquisicaoFinalFilter] =
-    useState<Dayjs | null>(null);
-  const [dtAquisicaoFilterChecked, setDtAquisicaoFilterchecked] =
-    useState(false);
-
-  const [selectedAsset, setSelectedAsset] = useState('');
 
   const [openPrinterForm, setOpenPrinterForm] = useState(false);
-  const [openCustomFilters, setOpenCustomFilters] =
-    useState<null | HTMLElement>(null);
+  const [openCustomFilters, setOpenCustomFilters] = useState<null | HTMLElement>(null);
   const open = Boolean(openCustomFilters);
+
+  const [rowsPerPage, setRowsPerPage] = useState('10');
+  const [selectedAsset, setSelectedAsset] = useState('');
+
+  const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+  const [dtAquisicaoFilterChecked, setDtAquisicaoFilterchecked] = useState(false);
+
+  const [inputFilter, setInputFilter] = useState('');
+  const [filterField, setFilterField] = useState('nome');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [dtAquisicaoInicioFilter, setDtAquisicaoInicioFilter] = useState<Dayjs | null>(null);
+  const [dtAquisicaoFinalFilter, setDtAquisicaoFinalFilter] = useState<Dayjs | null>(null);
 
   const getPrintersData = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/printer?${filterField}=${inputFilter}&status=${statusFilter}${
-        dtAquisicaoInicioFilter
-          ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }${
-        dtAquisicaoFinalFilter
-          ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }`,
+        dtAquisicaoInicioFilter ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format('DD/MM/YYYY')}` : ''
+      }${dtAquisicaoFinalFilter ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format('DD/MM/YYYY')}` : ''}`,
       withCredentials: true,
-      params: {
-        page: numberPage,
-        size: rowsPerPage,
-      },
+      params: { page: numberPage, size: rowsPerPage },
     };
 
     requestBackend(params)
-      .then((response) => {
-        setPage(response.data);
-      })
-      .catch((error) => {
-        console.log('Erro' + error);
-      });
+      .then((response) => setPage(response.data))
+      .catch((error) => console.log('Erro' + error));
   }, [
     numberPage,
     rowsPerPage,
@@ -136,12 +96,12 @@ export default function PrinterList() {
 
   useEffect(() => getPrintersData(), [getPrintersData]);
 
-  function handleAdd() {
+  const handleAdd = () => {
     setFormContextData({ isAdding: true });
     setOpenPrinterForm(true);
-  }
+  };
 
-  function handleDelete(AssetId: string) {
+  const handleDelete = (AssetId: string) => {
     if (selectedAsset == '') {
       Swal.fire({
         title: 'Atenção',
@@ -188,9 +148,9 @@ export default function PrinterList() {
       }
       setFormContextData({ isEditing: false });
     });
-  }
+  };
 
-  function handleClearFilters() {
+  const handleClearFilters = () => {
     setStatusFilterchecked(false);
     setDtAquisicaoFilterchecked(false);
     setInputFilter('');
@@ -198,28 +158,21 @@ export default function PrinterList() {
     setDtAquisicaoFinalFilter(null);
     setDtAquisicaoInicioFilter(null);
     setFilterField('nome');
-  }
+  };
 
   const handleClose = () => setOpenCustomFilters(null);
 
   const handleRowClicked = (row: Printer) => navigate(`/printer/${row.id}`);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount == 1)
-      setSelectedAsset(selectedRows.selectedRows[0].id);
+    if (selectedRows.selectedCount == 1) setSelectedAsset(selectedRows.selectedRows[0].id);
 
     if (selectedRows.selectedCount == 0) setSelectedAsset('');
   };
 
   return (
     <Panel title="Impressoras">
-      <Box
-        display={'flex'}
-        flexWrap={'wrap'}
-        alignItems={'center'}
-        justifyContent={'space-between'}
-        marginBottom={2}
-      >
+      <Box display={'flex'} flexWrap={'wrap'} alignItems={'center'} justifyContent={'space-between'} marginBottom={2}>
         <Box display={'flex'} flexWrap={'wrap'} marginBottom={0.5}>
           <SearchBar
             inputFilter={inputFilter}
@@ -231,13 +184,7 @@ export default function PrinterList() {
           <SelectFilter
             filterField={filterField}
             setFieldFilter={setFilterField}
-            selectedItems={[
-              'nome',
-              'nomeHost',
-              'modelo',
-              'local',
-              'numeroSerie',
-            ]}
+            selectedItems={['nome', 'nomeHost', 'modelo', 'local', 'numeroSerie']}
           />
           {statusFilterChecked && (
             <SelectFilter
@@ -269,12 +216,7 @@ export default function PrinterList() {
               Excluir
             </Typography>
           </Button>
-          <Button
-            variant="contained"
-            startIcon={<AddCircleOutlineIcon />}
-            color="primary"
-            onClick={handleAdd}
-          >
+          <Button variant="contained" startIcon={<AddCircleOutlineIcon />} color="primary" onClick={handleAdd}>
             <Typography fontSize={14} textTransform={'none'}>
               Novo
             </Typography>
@@ -341,9 +283,7 @@ export default function PrinterList() {
           </MenuItem>
         </Select>
         <Pagination
-          onChange={(event: ChangeEvent<unknown>, numberPage: number) =>
-            setNumberPage(numberPage - 1)
-          }
+          onChange={(event: ChangeEvent<unknown>, numberPage: number) => setNumberPage(numberPage - 1)}
           defaultPage={1}
           count={page?.totalPages}
           variant="outlined"
@@ -351,16 +291,8 @@ export default function PrinterList() {
           size="small"
         />
       </Stack>
-      <Menu
-        sx={{ flexDirection: 'column' }}
-        anchorEl={openCustomFilters}
-        open={open}
-        onClose={handleClose}
-      >
-        <MenuItem
-          sx={{ marginRight: 2, padding: '0px 6px' }}
-          onClick={handleClose}
-        >
+      <Menu sx={{ flexDirection: 'column' }} anchorEl={openCustomFilters} open={open} onClose={handleClose}>
+        <MenuItem sx={{ marginRight: 2, padding: '0px 6px' }} onClick={handleClose}>
           <Checkbox
             size="small"
             checked={statusFilterChecked}
@@ -370,28 +302,18 @@ export default function PrinterList() {
             Status
           </Typography>
         </MenuItem>
-        <MenuItem
-          sx={{ marginRight: 2, padding: '0px 6px' }}
-          onClick={handleClose}
-        >
+        <MenuItem sx={{ marginRight: 2, padding: '0px 6px' }} onClick={handleClose}>
           <Checkbox
             size="small"
             checked={dtAquisicaoFilterChecked}
-            onChange={(event) =>
-              setDtAquisicaoFilterchecked(event.target.checked)
-            }
+            onChange={(event) => setDtAquisicaoFilterchecked(event.target.checked)}
           />
           <Typography fontSize={13} variant="subtitle2">
             Data aquisição
           </Typography>
         </MenuItem>
       </Menu>
-      {openPrinterForm && (
-        <PrinterForm
-          openForm={openPrinterForm}
-          closeForm={() => setOpenPrinterForm(false)}
-        />
-      )}
+      {openPrinterForm && <PrinterForm openForm={openPrinterForm} closeForm={() => setOpenPrinterForm(false)} />}
     </Panel>
   );
 }

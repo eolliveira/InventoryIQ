@@ -18,7 +18,6 @@ import TabPanel from '@material-ui/lab/TabPanel';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import AssetSidePanel from '../../../components/Asset/AssetSidePanel';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
@@ -33,19 +32,18 @@ import MemoryTwoToneIcon from '@mui/icons-material/MemoryTwoTone';
 import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
+import { ContainerSidePanel, CustomTab, Wapper } from './style';
 
-type urlParams = {
-  workstationId: string;
-};
+type urlParams = { workstationId: string };
 
 export default function WorkstationData() {
+  const navigate = useNavigate();
   const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
   const { workstationId } = useParams<urlParams>();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [workstation, setWorkstation] = useState<Workstation>();
   const [sweeping, setSweeping] = useState(false);
   const [tabValue, setTabValue] = useState('1');
-  const navigate = useNavigate();
 
   const getWorkstationData = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -59,9 +57,6 @@ export default function WorkstationData() {
   }, [workstationId, sweeping, formContextData]);
 
   useEffect(() => getWorkstationData(), [getWorkstationData]);
-
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
-    setTabValue(newValue);
 
   const handleAdd = () => {
     setFormContextData({ isAdding: true });
@@ -77,6 +72,8 @@ export default function WorkstationData() {
     setFormContextData({ isAdding: true, isDuplicated: true });
     setOpenWorkstationForm(true);
   };
+
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => setTabValue(newValue);
 
   const handleRemove = () => {
     Swal.fire({
@@ -126,9 +123,7 @@ export default function WorkstationData() {
     };
 
     requestBackend(params)
-      .then(() =>
-        Swal.fire('Sucesso', 'Dados do ativo foram sincronizados!', 'success')
-      )
+      .then(() => Swal.fire('Sucesso', 'Dados do ativo foram sincronizados!', 'success'))
       .catch(() => {
         Swal.fire({
           title: 'Falha!',
@@ -155,25 +150,11 @@ export default function WorkstationData() {
           justifyContent={'space-between'}
           margin={'20px 0'}
         >
-          <IconButton
-            aria-label="back"
-            size="medium"
-            onClick={() => navigate('/workstation')}
-          >
+          <IconButton aria-label="back" size="medium" onClick={() => navigate('/workstation')}>
             <ArrowBackIcon color="primary" />
           </IconButton>
-
-          <Typography
-            fontSize={16}
-            fontWeight={'bold'}
-            letterSpacing={0.7}
-            color={'primary'}
-            marginLeft={2}
-            flex={1}
-          >
-            {(workstation ? workstation?.id : '') +
-              ' - ' +
-              (workstation ? workstation?.nome : '')}
+          <Typography fontSize={16} fontWeight={'bold'} letterSpacing={0.7} color={'primary'} marginLeft={2} flex={1}>
+            {(workstation ? workstation?.id : '') + ' - ' + (workstation ? workstation?.nome : '')}
           </Typography>
           <Stack spacing={2} flexWrap={`wrap`} direction="row">
             <StockButton
@@ -201,50 +182,14 @@ export default function WorkstationData() {
           </Stack>
         </Box>
         <TabContext value={tabValue}>
-          <AppBar
-            position="static"
-            style={{
-              boxShadow: 'none',
-              backgroundColor: `white`,
-            }}
-          >
+          <AppBar position="static" style={{ boxShadow: 'none', backgroundColor: `white` }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs
-                value={tabValue}
-                onChange={handleTabChange}
-                textColor="primary"
-                indicatorColor="primary"
-              >
-                <CustomTab
-                  value="1"
-                  label="Detalhes"
-                  iconPosition="start"
-                  icon={<TextSnippetTwoToneIcon />}
-                />
-                <CustomTab
-                  value="2"
-                  label="Hardware"
-                  iconPosition="start"
-                  icon={<MemoryTwoToneIcon />}
-                />
-                <CustomTab
-                  value="3"
-                  label="Movimentos"
-                  iconPosition="start"
-                  icon={<ChangeCircleTwoToneIcon />}
-                />
-                <CustomTab
-                  value="4"
-                  label="Licenças"
-                  iconPosition="start"
-                  icon={<WorkspacePremiumTwoToneIcon />}
-                />
-                <CustomTab
-                  value="5"
-                  label="Serviços"
-                  iconPosition="start"
-                  icon={<HandymanTwoToneIcon />}
-                />
+              <Tabs value={tabValue} onChange={handleTabChange} textColor="primary" indicatorColor="primary">
+                <CustomTab value="1" label="Detalhes" iconPosition="start" icon={<TextSnippetTwoToneIcon />} />
+                <CustomTab value="2" label="Hardware" iconPosition="start" icon={<MemoryTwoToneIcon />} />
+                <CustomTab value="3" label="Movimentos" iconPosition="start" icon={<ChangeCircleTwoToneIcon />} />
+                <CustomTab value="4" label="Licenças" iconPosition="start" icon={<WorkspacePremiumTwoToneIcon />} />
+                <CustomTab value="5" label="Serviços" iconPosition="start" icon={<HandymanTwoToneIcon />} />
               </Tabs>
             </Box>
           </AppBar>
@@ -275,33 +220,3 @@ export default function WorkstationData() {
     </Wapper>
   );
 }
-
-const Wapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0px;
-  height: calc(100vh - 110px);
-
-  @media (min-width: 991px) {
-    flex-direction: row-reverse;
-  }
-`;
-
-const CustomTab = styled(Tab)`
-  font-size: small !important;
-  text-transform: none !important;
-`;
-
-const ContainerSidePanel = styled.div`
-  padding: 0px;
-  margin-bottom: 4px;
-
-  @media (min-width: 1100px) {
-    margin-bottom: 0px;
-  }
-
-  @media (min-width: 991px) {
-    margin-bottom: 0px;
-    padding: 0px 0px 0px 4px;
-  }
-`;

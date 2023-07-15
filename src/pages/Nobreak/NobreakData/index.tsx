@@ -1,11 +1,8 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-
 import TabContext from '@material-ui/lab/TabContext';
-import styled from 'styled-components';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
 import AssetMovements from '../../../components/Asset/AssetMovements';
-import AssetLicense from '../../../components/Asset/AssetLicense';
 import AssetService from '../../../components/Asset/AssetService';
 import StockButton from '../../../components/buttons/StockButton';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -13,7 +10,6 @@ import { requestBackend } from '../../../http/requests';
 import TabPanel from '@material-ui/lab/TabPanel';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import AssetSidePanel from '../../../components/Asset/AssetSidePanel';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
@@ -22,24 +18,23 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2';
 import TextSnippetTwoToneIcon from '@mui/icons-material/TextSnippetTwoTone';
-import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
 import { Nobreak } from 'types/Nobreak';
 import NobreakForm from './NobreakForm';
 import NobreakDetails from './NobreakDetails';
+import { ContainerSidePanel, CustomTab, Wapper } from './style';
 
-type urlParams = {
-  nobreakId: string;
-};
+type urlParams = { nobreakId: string };
 
 export default function NobreakData() {
-  const [openNobreakForm, setOpenNobreakForm] = useState(false);
-  const { nobreakId } = useParams<urlParams>();
+  const navigate = useNavigate();
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [nobreak, setNobreak] = useState<Nobreak>();
+  const { nobreakId } = useParams<urlParams>();
+
   const [tabValue, setTabValue] = useState('1');
-  const navigate = useNavigate();
+  const [openNobreakForm, setOpenNobreakForm] = useState(false);
 
   const getNobreakData = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -54,18 +49,17 @@ export default function NobreakData() {
 
   useEffect(() => getNobreakData(), [getNobreakData]);
 
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
-    setTabValue(newValue);
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => setTabValue(newValue);
 
-  function handleAdd() {
+  const handleAdd = () => {
     setFormContextData({ isAdding: true });
     setOpenNobreakForm(true);
-  }
+  };
 
-  function handleEdit() {
+  const handleEdit = () => {
     setFormContextData({ isEditing: true });
     setOpenNobreakForm(true);
-  }
+  };
 
   const handleDuplicate = () => {
     setFormContextData({ isAdding: true, isDuplicated: true });
@@ -124,25 +118,12 @@ export default function NobreakData() {
           justifyContent={'space-between'}
           margin={'20px 0'}
         >
-          <IconButton
-            aria-label="back"
-            size="medium"
-            onClick={() => navigate('/nobreak')}
-          >
+          <IconButton aria-label="back" size="medium" onClick={() => navigate('/nobreak')}>
             <ArrowBackIcon color="primary" />
           </IconButton>
 
-          <Typography
-            fontSize={16}
-            fontWeight={'bold'}
-            letterSpacing={0.7}
-            color={'primary'}
-            marginLeft={2}
-            flex={1}
-          >
-            {(nobreak ? nobreak?.id : '') +
-              ' - ' +
-              (nobreak ? nobreak?.nome : '')}
+          <Typography fontSize={16} fontWeight={'bold'} letterSpacing={0.7} color={'primary'} marginLeft={2} flex={1}>
+            {(nobreak ? nobreak?.id : '') + ' - ' + (nobreak ? nobreak?.nome : '')}
           </Typography>
 
           <StockButton
@@ -163,31 +144,10 @@ export default function NobreakData() {
             }}
           >
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs
-                value={tabValue}
-                onChange={handleTabChange}
-                textColor="primary"
-                indicatorColor="primary"
-              >
-                <CustomTab
-                  value="1"
-                  label="Detalhes"
-                  iconPosition="start"
-                  icon={<TextSnippetTwoToneIcon />}
-                />
-
-                <CustomTab
-                  value="2"
-                  label="Movimentos"
-                  iconPosition="start"
-                  icon={<ChangeCircleTwoToneIcon />}
-                />
-                <CustomTab
-                  value="3"
-                  label="Serviços"
-                  iconPosition="start"
-                  icon={<HandymanTwoToneIcon />}
-                />
+              <Tabs value={tabValue} onChange={handleTabChange} textColor="primary" indicatorColor="primary">
+                <CustomTab value="1" label="Detalhes" iconPosition="start" icon={<TextSnippetTwoToneIcon />} />
+                <CustomTab value="2" label="Movimentos" iconPosition="start" icon={<ChangeCircleTwoToneIcon />} />
+                <CustomTab value="3" label="Serviços" iconPosition="start" icon={<HandymanTwoToneIcon />} />
               </Tabs>
             </Box>
           </AppBar>
@@ -203,42 +163,8 @@ export default function NobreakData() {
         </TabContext>
       </BaseCard>
       {openNobreakForm && (
-        <NobreakForm
-          data={nobreak}
-          openForm={openNobreakForm}
-          closeForm={() => setOpenNobreakForm(false)}
-        />
+        <NobreakForm data={nobreak} openForm={openNobreakForm} closeForm={() => setOpenNobreakForm(false)} />
       )}
     </Wapper>
   );
 }
-
-const Wapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0px;
-  height: calc(100vh - 110px);
-
-  @media (min-width: 991px) {
-    flex-direction: row-reverse;
-  }
-`;
-
-const CustomTab = styled(Tab)`
-  font-size: small !important;
-  text-transform: none !important;
-`;
-
-const ContainerSidePanel = styled.div`
-  padding: 0px;
-  margin-bottom: 4px;
-
-  @media (min-width: 1100px) {
-    margin-bottom: 0px;
-  }
-
-  @media (min-width: 991px) {
-    margin-bottom: 0px;
-    padding: 0px 0px 0px 4px;
-  }
-`;

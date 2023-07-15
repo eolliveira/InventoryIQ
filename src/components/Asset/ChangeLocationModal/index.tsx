@@ -31,19 +31,12 @@ const columns: TableColumn<LocalIndustria>[] = [
   { name: 'Nome', selector: (row) => row.dsLocalIndustria, sortable: true },
   {
     name: 'Centro de custo',
-    selector: (row) =>
-      row.centroCusto
-        ? row.centroCusto.id + ' - ' + row.centroCusto.descricaoCentroCusto
-        : ' - ',
+    selector: (row) => (row.centroCusto ? row.centroCusto.id + ' - ' + row.centroCusto.descricaoCentroCusto : ' - '),
     sortable: true,
   },
 ];
 
-export default function ChangeLocationModal({
-  assetId,
-  openModal,
-  closeModal: closeForm,
-}: ChangeLocationModalProps) {
+export default function ChangeLocationModal({ assetId, openModal, closeModal: closeForm }: ChangeLocationModalProps) {
   const { setFormContextData } = useContext(FormContext);
   const [locations, setLocations] = useState<LocalIndustria[]>();
   const [inputFilter, setInputFilter] = useState('');
@@ -64,14 +57,11 @@ export default function ChangeLocationModal({
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount != 0) {
-      setSelectedLocation(selectedRows.selectedRows[0].id);
-    }
-
+    if (selectedRows.selectedCount != 0) setSelectedLocation(selectedRows.selectedRows[0].id);
     if (selectedRows.selectedCount == 0) setSelectedLocation('');
   };
 
-  function handleConfirm() {
+  const handleConfirm = () => {
     if (selectedLocation == '') {
       Swal.fire({
         title: 'Atenção',
@@ -81,6 +71,7 @@ export default function ChangeLocationModal({
 
       return;
     }
+
     const data = { localIndustriaId: selectedLocation };
     const params: AxiosRequestConfig = {
       method: 'PUT',
@@ -94,12 +85,12 @@ export default function ChangeLocationModal({
         closeForm();
       })
       .catch((error) => console.log(error));
-  }
+  };
 
-  function handleCancel() {
+  const handleCancel = () => {
     setFormContextData({ isEditing: false });
     closeForm();
-  }
+  };
 
   return (
     <CustomModal openModal={openModal}>
@@ -108,11 +99,7 @@ export default function ChangeLocationModal({
           <Container>
             <Stack height={500}>
               <Stack direction={'row'}>
-                <SearchBar
-                  placeholder="Nome..."
-                  inputFilter={inputFilter}
-                  setInputFilter={setInputFilter}
-                />
+                <SearchBar placeholder="Nome..." inputFilter={inputFilter} setInputFilter={setInputFilter} />
               </Stack>
               <DataTable
                 columns={columns}
@@ -144,12 +131,7 @@ export default function ChangeLocationModal({
               />
             </Stack>
             <Box display={'flex'} marginTop={2} justifyContent={'end'}>
-              <Button
-                variant="contained"
-                color="error"
-                startIcon={<CloseIcon />}
-                onClick={handleCancel}
-              >
+              <Button variant="contained" color="error" startIcon={<CloseIcon />} onClick={handleCancel}>
                 <Typography textTransform={'none'}>Cancelar</Typography>
               </Button>
               <LoadingButton

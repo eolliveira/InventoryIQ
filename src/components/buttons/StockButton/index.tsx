@@ -12,10 +12,10 @@ import Typography from '@mui/material/Typography';
 type StockButtonProps = {
   fontSize?: number;
   isDisabled?: boolean;
-  onClickAdd?: Function;
-  onClickEdit?: Function;
-  onClickRemove?: Function;
-  onClickDuplicate?: Function;
+  onClickAdd?: () => void;
+  onClickEdit?: () => void;
+  onClickRemove?: () => void;
+  onClickDuplicate?: () => void;
 };
 
 export default function StockButton({
@@ -29,9 +29,7 @@ export default function StockButton({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) =>
-    setAnchorEl(event.currentTarget);
-
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
   return (

@@ -1,9 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { FormContext } from '../../contexts/FormContext';
-import { BaseCard } from '../../style/GlobalStyles';
-
 import Box from '@mui/material/Box';
-import styled from 'styled-components';
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import EditIcon from '@mui/icons-material/Edit';
@@ -19,16 +16,13 @@ import { Licenca } from '../../types/Licenca/Licenca';
 import { AxiosRequestConfig } from 'axios';
 import { HeaderContainer, Wapper } from './style';
 
-type LicenseSidePanelProps = {
-  license: Licenca;
-};
+type LicenseSidePanelProps = { license: Licenca };
 
 export default function LicenseSidePanel({ license }: LicenseSidePanelProps) {
   const { setFormContextData } = useContext(FormContext);
   const [nfEntrada, setNfEntrada] = useState<NotaFiscalEntrada>();
   const [openChangeStateModal, setOpenChangeStateModal] = useState(false);
-  const [openChangeNfEntradaModal, setOpenChangeNfEntradaModal] =
-    useState(false);
+  const [openChangeNfEntradaModal, setOpenChangeNfEntradaModal] = useState(false);
 
   const getNfEntrada = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -37,9 +31,7 @@ export default function LicenseSidePanel({ license }: LicenseSidePanelProps) {
     };
 
     requestBackend(params)
-      .then((response) => {
-        setNfEntrada(response.data);
-      })
+      .then((response) => setNfEntrada(response.data))
       .catch((error) => window.alert(error.response.data.message));
   }, [license]);
 
@@ -51,28 +43,14 @@ export default function LicenseSidePanel({ license }: LicenseSidePanelProps) {
     <Wapper>
       <HeaderContainer>
         <Box>
-          <Typography
-            marginBottom={0.5}
-            color={'primary'}
-            fontWeight={'bold'}
-            fontSize={14}
-          >
+          <Typography marginBottom={0.5} color={'primary'} fontWeight={'bold'} fontSize={14}>
             Status
           </Typography>
-          <LicenseStatusStyle
-            key={license.id}
-            size="medium"
-            status={license.status}
-          />
+          <LicenseStatusStyle key={license.id} size="medium" status={license.status} />
         </Box>
       </HeaderContainer>
       <Divider sx={{ marginTop: 2, marginBottom: 1 }} color="#d9d9d9" />
-      <Typography
-        marginTop={1}
-        color={'primary'}
-        fontWeight={'bold'}
-        fontSize={14}
-      >
+      <Typography marginTop={1} color={'primary'} fontWeight={'bold'} fontSize={14}>
         Nota Fiscal
       </Typography>
       <Card
@@ -111,9 +89,7 @@ export default function LicenseSidePanel({ license }: LicenseSidePanelProps) {
             Fornecedor
           </Typography>
           <Typography color={'secondary'} fontSize={12} variant="subtitle2">
-            {nfEntrada?.pessoa
-              ? nfEntrada?.pessoa.id + ' - ' + nfEntrada?.pessoa.razaoSocial
-              : ' - '}
+            {nfEntrada?.pessoa ? nfEntrada?.pessoa.id + ' - ' + nfEntrada?.pessoa.razaoSocial : ' - '}
           </Typography>
         </Box>
         <Divider sx={{ marginTop: 1, marginBottom: 1 }} color="#d9d9d9" />
@@ -122,9 +98,7 @@ export default function LicenseSidePanel({ license }: LicenseSidePanelProps) {
             Valor da nota
           </Typography>
           <Typography color={'secondary'} fontSize={12} variant="subtitle2">
-            {nfEntrada?.valorNotaFiscal
-              ? formatCurrency(nfEntrada.valorNotaFiscal)
-              : ' - '}
+            {nfEntrada?.valorNotaFiscal ? formatCurrency(nfEntrada.valorNotaFiscal) : ' - '}
           </Typography>
         </Box>
       </Card>
@@ -135,7 +109,6 @@ export default function LicenseSidePanel({ license }: LicenseSidePanelProps) {
           closeModal={() => setOpenChangeStateModal(false)}
         />
       )}
-
       {openChangeNfEntradaModal && (
         <ChangeNfEntradaModal
           license

@@ -8,12 +8,7 @@ type AssetStatusStyleProps = {
   handleClick?: () => void;
 };
 
-export default function AssetStatusStyle({
-  status,
-  size,
-  clickable,
-  handleClick,
-}: AssetStatusStyleProps) {
+export default function AssetStatusStyle({ status, size, clickable, handleClick }: AssetStatusStyleProps) {
   const color =
     status === 'DISPONIVEL'
       ? '#00C853'

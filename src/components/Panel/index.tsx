@@ -14,14 +14,7 @@ export default function Panel({ title, children }: PanelProps<any>) {
   return (
     <BaseCard>
       <Stack sx={{ bgcolor: '#F8FAFC', borderRadius: '8px 8px 0px 0px' }}>
-        <Typography
-          margin={2}
-          fontSize={16}
-          fontWeight={'bold'}
-          letterSpacing={1}
-          color={'primary'}
-          variant="h2"
-        >
+        <Typography margin={2} fontSize={16} fontWeight={'bold'} letterSpacing={1} color={'primary'} variant="h2">
           {title}
         </Typography>
       </Stack>

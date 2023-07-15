@@ -27,11 +27,7 @@ type NobreakFormProps = {
   closeForm: () => void;
 };
 
-export default function NobreakForm({
-  data,
-  openForm,
-  closeForm,
-}: NobreakFormProps) {
+export default function NobreakForm({ data, openForm, closeForm }: NobreakFormProps) {
   const { formContextData, setFormContextData } = useContext(FormContext);
 
   const {
@@ -45,8 +41,7 @@ export default function NobreakForm({
 
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
-    if (data && formContextData.isDuplicated && formContextData.isAdding)
-      setFormData(data);
+    if (data && formContextData.isDuplicated && formContextData.isAdding) setFormData(data);
   }, []);
 
   const onSubmit = (formData: Nobreak) => {
@@ -61,9 +56,7 @@ export default function NobreakForm({
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: formContextData.isAdding ? 'POST' : 'PUT',
-          url: formContextData.isAdding
-            ? '/nobreak'
-            : `/nobreak/${data?.id}/update`,
+          url: formContextData.isAdding ? '/nobreak' : `/nobreak/${data?.id}/update`,
           data: formData,
           withCredentials: true,
         };
@@ -105,9 +98,7 @@ export default function NobreakForm({
   };
 
   const setFormData = (data: Nobreak) => {
-    formContextData.isDuplicated
-      ? setValue('nome', '')
-      : setValue('nome', data.nome);
+    formContextData.isDuplicated ? setValue('nome', '') : setValue('nome', data.nome);
     setValue('modelo', data.modelo);
     setValue('fabricante', data.fabricante);
     setValue('observacao', data.observacao);
@@ -123,11 +114,7 @@ export default function NobreakForm({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel
-          title={
-            formContextData.isEditing ? 'Alterar Nobreak' : 'Adicionar Nobreak'
-          }
-        >
+        <Panel title={formContextData.isEditing ? 'Alterar Nobreak' : 'Adicionar Nobreak'}>
           <form style={{ maxWidth: '920px' }} onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-md-6">
@@ -140,7 +127,6 @@ export default function NobreakForm({
                   error={!!errors.nome}
                   helperText={errors.nome?.message}
                 />
-
                 <InputText
                   label="Modelo"
                   name="modelo"
@@ -149,7 +135,6 @@ export default function NobreakForm({
                   error={!!errors.modelo}
                   helperText={errors.modelo?.message}
                 />
-
                 <InputText
                   label="Fabricante"
                   name="fabricante"
@@ -158,7 +143,6 @@ export default function NobreakForm({
                   error={!!errors.fabricante}
                   helperText={errors.fabricante?.message}
                 />
-
                 <InputMultiline
                   control={control}
                   name="observacao"
@@ -178,7 +162,6 @@ export default function NobreakForm({
                   error={!!errors.numeroSerie}
                   helperText={errors.numeroSerie?.message}
                 />
-
                 <InputText
                   label="Potência nominal"
                   name="potencialNominal"
@@ -187,7 +170,6 @@ export default function NobreakForm({
                   error={!!errors.potencialNominal}
                   helperText={errors.potencialNominal?.message}
                 />
-
                 <div className="row">
                   <div className="col-sm-6">
                     <InputText
@@ -210,15 +192,9 @@ export default function NobreakForm({
                     />
                   </div>
                 </div>
-
                 <div className="row">
                   <div className="col-sm-6">
-                    <InputDate
-                      register={register}
-                      label="Data aquisição"
-                      control={control}
-                      name="dtAquisicao"
-                    />
+                    <InputDate register={register} label="Data aquisição" control={control} name="dtAquisicao" />
                   </div>
                   <div className="col-sm-6">
                     <InputDate
@@ -243,15 +219,9 @@ export default function NobreakForm({
                 </div>
               </div>
             </div>
-
             <Box display={'flex'} justifyContent={'end'} marginTop={2}>
               <Stack direction={'row'} spacing={2}>
-                <Button
-                  color="error"
-                  variant="contained"
-                  startIcon={<CloseIcon />}
-                  onClick={onCancelForm}
-                >
+                <Button color="error" variant="contained" startIcon={<CloseIcon />} onClick={onCancelForm}>
                   <Typography fontSize={14} textTransform={'none'}>
                     Cancelar
                   </Typography>

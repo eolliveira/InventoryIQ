@@ -11,7 +11,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomModal from '../../../../components/CustomModal';
-import styled from 'styled-components';
 import Typography from '@mui/material/Typography';
 import InputDate from '../../../../components/inputs/InputDate';
 import InputText from '../../../../components/inputs/InputText';
@@ -27,10 +26,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { TipoLicenca } from '../../../../types/Licenca/TipoLicenca';
 import { licenseStatus } from '../../../../constants/LicenseStatus';
-import {
-  removeUnderline,
-  toCamelCase,
-} from '../../../../utils/StringConverter';
+import { removeUnderline, toCamelCase } from '../../../../utils/StringConverter';
 import InputNumber from '../../../../components/inputs/InputNumber';
 import InputMultiline from '../../../../components/inputs/InputMultiline';
 
@@ -40,11 +36,7 @@ type LicenseFormProps = {
   closeForm: () => void;
 };
 
-export default function LicenseForm({
-  licenseData,
-  openForm,
-  closeForm,
-}: LicenseFormProps) {
+export default function LicenseForm({ licenseData, openForm, closeForm }: LicenseFormProps) {
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [licenseTypes, setLicenseType] = useState<TipoLicenca[]>();
   const [softwares, setSoftware] = useState<Software[]>();
@@ -69,9 +61,7 @@ export default function LicenseForm({
 
     requestBackend(params)
       .then((response) => setLicenseType(response.data))
-      .catch((error) =>
-        console.log('falha ao carregar os tipos de software' + error)
-      );
+      .catch((error) => console.log('falha ao carregar os tipos de software' + error));
   }, []);
 
   const getSoftwares = useCallback(() => {
@@ -131,9 +121,7 @@ export default function LicenseForm({
 
         const params: AxiosRequestConfig = {
           method: formContextData.isAdding ? 'POST' : 'PUT',
-          url: formContextData.isAdding
-            ? '/licenses'
-            : `/licenses/${licenseData?.id}/update`,
+          url: formContextData.isAdding ? '/licenses' : `/licenses/${licenseData?.id}/update`,
           data,
           withCredentials: true,
         };
@@ -176,11 +164,7 @@ export default function LicenseForm({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel
-          title={
-            formContextData.isEditing ? 'Alterar Licença' : 'Adicionar Licença'
-          }
-        >
+        <Panel title={formContextData.isEditing ? 'Alterar Licença' : 'Adicionar Licença'}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-lg-6">
@@ -193,11 +177,8 @@ export default function LicenseForm({
                   error={!!errors.nome}
                   helperText={errors.nome?.message}
                 />
-
                 <FormControl fullWidth size="small" margin="dense">
-                  <InputLabel sx={{ fontSize: 14 }}>
-                    Selecione um software
-                  </InputLabel>
+                  <InputLabel sx={{ fontSize: 14 }}>Selecione um software</InputLabel>
                   <Select
                     required
                     label="Selecione um software"
@@ -208,17 +189,12 @@ export default function LicenseForm({
                     }}
                   >
                     {softwares?.map((software) => (
-                      <MenuItem
-                        sx={{ fontSize: 13 }}
-                        key={software.id}
-                        value={software.id}
-                      >
+                      <MenuItem sx={{ fontSize: 13 }} key={software.id} value={software.id}>
                         {software.nome}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
-
                 <FormControl fullWidth size="small" margin={'dense'}>
                   <InputLabel sx={{ fontSize: 14 }}>Tipo da licença</InputLabel>
                   <Select
@@ -231,17 +207,12 @@ export default function LicenseForm({
                     }}
                   >
                     {licenseTypes?.map((licenseType) => (
-                      <MenuItem
-                        sx={{ fontSize: 13 }}
-                        key={licenseType.id}
-                        value={licenseType.id}
-                      >
+                      <MenuItem sx={{ fontSize: 13 }} key={licenseType.id} value={licenseType.id}>
                         {licenseType.nome}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
-
                 <InputText
                   required
                   label="Chave"
@@ -281,11 +252,7 @@ export default function LicenseForm({
                           }}
                         >
                           {licenseStatus?.map((status) => (
-                            <MenuItem
-                              sx={{ fontSize: 13 }}
-                              key={status}
-                              value={status}
-                            >
+                            <MenuItem sx={{ fontSize: 13 }} key={status} value={status}>
                               {toCamelCase(removeUnderline(status))}
                             </MenuItem>
                           ))}
@@ -305,20 +272,10 @@ export default function LicenseForm({
                   </div>
 
                   <div className="col-lg-6">
-                    <InputDate
-                      register={register}
-                      label="Data aquisição"
-                      control={control}
-                      name="dtAquisicao"
-                    />
+                    <InputDate register={register} label="Data aquisição" control={control} name="dtAquisicao" />
                   </div>
                   <div className="col-lg-6">
-                    <InputDate
-                      register={register}
-                      name="dtExpiracao"
-                      label="Data Expiracao"
-                      control={control}
-                    />
+                    <InputDate register={register} name="dtExpiracao" label="Data Expiracao" control={control} />
                   </div>
                 </div>
                 <div className="row">
@@ -346,15 +303,9 @@ export default function LicenseForm({
                 </div>
               </div>
             </div>
-
             <Box display={'flex'} justifyContent={'end'} marginTop={3}>
               <Stack direction={'row'} spacing={2}>
-                <Button
-                  color="error"
-                  variant="contained"
-                  startIcon={<CloseIcon />}
-                  onClick={onCancelForm}
-                >
+                <Button color="error" variant="contained" startIcon={<CloseIcon />} onClick={onCancelForm}>
                   <Typography fontSize={14} textTransform={'none'}>
                     Cancelar
                   </Typography>

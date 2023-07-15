@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
@@ -12,7 +11,6 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { getTokenData, hasAnyHoles, isAuthenticated } from '../../utils/Auth';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
-
 import Avatar from '@mui/material/Avatar';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
@@ -33,18 +31,12 @@ export default function Header() {
         tokenData: getTokenData(),
       });
     } else {
-      setAuthContextData({
-        authenticated: false,
-      });
+      setAuthContextData({ authenticated: false });
     }
   }, [setAuthContextData]);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClickUser = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+  const handleCloseUser = () => setAnchorEl(null);
 
   const handleLogout = () => {
     removeAuthData();
@@ -64,7 +56,7 @@ export default function Header() {
         }}
       >
         <IconButton
-          onClick={handleClick}
+          onClick={handleClickUser}
           sx={{ mr: 1 }}
           aria-controls={open ? 'account-menu' : undefined}
           aria-haspopup="true"
@@ -74,13 +66,12 @@ export default function Header() {
             {authContextData.tokenData?.sub.substring(0, 1)}
           </Avatar>
         </IconButton>
-
         <Menu
           anchorEl={anchorEl}
           id="account-menu"
           open={open}
-          onClose={handleClose}
-          onClick={handleClose}
+          onClose={handleCloseUser}
+          onClick={handleCloseUser}
           PaperProps={{
             elevation: 0,
             sx: {
@@ -112,22 +103,13 @@ export default function Header() {
         >
           <MenuItem>
             {hasAnyHoles(['ROLE_ADMIN']) ? (
-              <ManageAccountsOutlinedIcon
-                sx={{ marginRight: 1 }}
-                color="primary"
-              />
+              <ManageAccountsOutlinedIcon sx={{ marginRight: 1 }} color="primary" />
             ) : (
-              <PermIdentityOutlinedIcon
-                sx={{ marginRight: 1 }}
-                color="primary"
-              />
+              <PermIdentityOutlinedIcon sx={{ marginRight: 1 }} color="primary" />
             )}
-            <Typography fontSize={14}>
-              {authContextData.tokenData?.sub}
-            </Typography>
+            <Typography fontSize={14}>{authContextData.tokenData?.sub}</Typography>
           </MenuItem>
           <Divider />
-
           <MenuItem onClick={handleLogout}>
             <ListItemIcon>
               <Logout color="primary" />

@@ -1,8 +1,5 @@
 import { FormControl, Select, MenuItem } from '@mui/material';
-import {
-  removeUnderline,
-  toCamelCase,
-} from '../../../../utils/StringConverter';
+import { removeUnderline, toCamelCase } from '../../../../utils/StringConverter';
 import InputLabel from '@mui/material/InputLabel';
 import { Dispatch, SetStateAction } from 'react';
 

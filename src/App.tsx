@@ -39,10 +39,7 @@ export default function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="register" element={<Register />} />
             <Route path="workstation" element={<WorkstationList />} />
-            <Route
-              path="workstation/:workstationId"
-              element={<WorkstationData />}
-            />
+            <Route path="workstation/:workstationId" element={<WorkstationData />} />
             <Route path="license" element={<LicenseList />} />
             <Route path="license/:licenseId" element={<LicenseData />} />
             <Route path="printer" element={<PrinterList />} />

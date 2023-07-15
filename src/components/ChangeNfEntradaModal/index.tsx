@@ -35,24 +35,11 @@ type ChangeNfEntradaModalProps = {
 
 const columns: TableColumn<NotaFiscalEntrada>[] = [
   { name: 'Cod. Pessoa', selector: (row) => row.pessoa.id, width: '14%' },
-  {
-    name: 'Razão Social',
-    selector: (row) => row.pessoa.razaoSocial,
-    width: '30%',
-  },
+  { name: 'Razão Social', selector: (row) => row.pessoa.razaoSocial, width: '30%' },
   { name: 'Numero da Nota', selector: (row) => row.nrNotaFiscal },
-  {
-    name: 'Data de Emissão',
-    selector: (row) => dayjs(row.dtEmissao).format('DD/MM/YYYY'),
-  },
-  {
-    name: 'Data de Entrada',
-    selector: (row) => dayjs(row.dtEntrada).format('DD/MM/YYYY'),
-  },
-  {
-    name: 'Valor da Nota',
-    selector: (row) => row.valorNotaFiscal,
-  },
+  { name: 'Data de Emissão', selector: (row) => dayjs(row.dtEmissao).format('DD/MM/YYYY') },
+  { name: 'Data de Entrada', selector: (row) => dayjs(row.dtEntrada).format('DD/MM/YYYY') },
+  { name: 'Valor da Nota', selector: (row) => row.valorNotaFiscal },
 ];
 
 export default function ChangeNfEntradaModal({
@@ -65,22 +52,16 @@ export default function ChangeNfEntradaModal({
   const [isLoading, setIsLoading] = useState(false);
   const [notes, setNotes] = useState<NotaFiscalEntrada[]>();
   const [selectedNfEntrada, setSelectedNfEntrada] = useState('');
-
   const [inputFilter, setInputFilter] = useState('');
-  const [dtEmissaoInicioFilter, setDtEmissaoInicioFilter] =
-    useState<Dayjs | null>(null);
-  const [dtEmissaoFinalFilter, setDtEmissaoFinalFilter] =
-    useState<Dayjs | null>(null);
+  const [dtEmissaoInicioFilter, setDtEmissaoInicioFilter] = useState<Dayjs | null>(null);
+  const [dtEmissaoFinalFilter, setDtEmissaoFinalFilter] = useState<Dayjs | null>(null);
+  const [openCustomFilters, setOpenCustomFilters] = useState<null | HTMLElement>(null);
+  const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+  const open = Boolean(openCustomFilters);
 
   useEffect(() => handleSearch(), []);
 
-  const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount != 0)
-      setSelectedNfEntrada(selectedRows.selectedRows[0].idNfEntrada);
-    if (selectedRows.selectedCount == 0) setSelectedNfEntrada('');
-  };
-
-  function handleConfirm() {
+  const handleConfirm = () => {
     if (selectedNfEntrada == '') {
       Swal.fire({
         title: 'Atenção',
@@ -92,9 +73,7 @@ export default function ChangeNfEntradaModal({
     const data = { idNfEntrada: selectedNfEntrada };
     const params: AxiosRequestConfig = {
       method: 'PUT',
-      url: license
-        ? `/licenses/${assetId}/nfEntrada/update`
-        : `/asset/${assetId}/nfEntrada/update`,
+      url: license ? `/licenses/${assetId}/nfEntrada/update` : `/asset/${assetId}/nfEntrada/update`,
       data,
       withCredentials: true,
     };
@@ -116,26 +95,14 @@ export default function ChangeNfEntradaModal({
           icon: 'success',
         });
       });
-  }
+  };
 
   const handleSearch = () => {
     setIsLoading(true);
     const params: AxiosRequestConfig = {
-      url: `/nfEntrada?${
-        inputFilter ? `&NrNotaFiscal=${inputFilter.trim()}` : ''
-      }${
-        dtEmissaoInicioFilter
-          ? `&dtEmissaoInicio=${dayjs(dtEmissaoInicioFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }${
-        dtEmissaoFinalFilter
-          ? `&dtEmissaoFinal=${dayjs(dtEmissaoFinalFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }`,
+      url: `/nfEntrada?${inputFilter ? `&NrNotaFiscal=${inputFilter.trim()}` : ''}${
+        dtEmissaoInicioFilter ? `&dtEmissaoInicio=${dayjs(dtEmissaoInicioFilter).format('DD/MM/YYYY')}` : ''
+      }${dtEmissaoFinalFilter ? `&dtEmissaoFinal=${dayjs(dtEmissaoFinalFilter).format('DD/MM/YYYY')}` : ''}`,
       withCredentials: true,
     };
 
@@ -147,23 +114,22 @@ export default function ChangeNfEntradaModal({
 
   const handleClose = () => setOpenCustomFilters(null);
 
-  function handleCancel() {
+  const handleCancel = () => {
     setFormContextData({ isEditing: false });
     closeForm();
-  }
+  };
 
-  const [openCustomFilters, setOpenCustomFilters] =
-    useState<null | HTMLElement>(null);
+  const handleSelectedRowsChange = (selectedRows: any) => {
+    if (selectedRows.selectedCount != 0) setSelectedNfEntrada(selectedRows.selectedRows[0].idNfEntrada);
+    if (selectedRows.selectedCount == 0) setSelectedNfEntrada('');
+  };
 
-  function handleClearFilters() {
+  const handleClearFilters = () => {
     setStatusFilterchecked(false);
     setDtEmissaoFinalFilter(null);
     setDtEmissaoInicioFilter(null);
     setInputFilter('');
-  }
-
-  const [statusFilterChecked, setStatusFilterchecked] = useState(false);
-  const open = Boolean(openCustomFilters);
+  };
 
   return (
     <CustomModal openModal={openForm}>
@@ -194,7 +160,6 @@ export default function ChangeNfEntradaModal({
               >
                 <SearchIcon />
               </LoadingButton>
-
               {statusFilterChecked && (
                 <InputDatePeriod
                   label="Dt.Emissão"
@@ -257,23 +222,12 @@ export default function ChangeNfEntradaModal({
               <Typography textTransform={'none'}>Confirmar</Typography>
             </LoadingButton>
           </Box>
-
-          <Menu
-            sx={{ flexDirection: 'column' }}
-            anchorEl={openCustomFilters}
-            open={open}
-            onClose={handleClose}
-          >
-            <MenuItem
-              sx={{ marginRight: 2, padding: '0px 6px' }}
-              onClick={handleClose}
-            >
+          <Menu sx={{ flexDirection: 'column' }} anchorEl={openCustomFilters} open={open} onClose={handleClose}>
+            <MenuItem sx={{ marginRight: 2, padding: '0px 6px' }} onClick={handleClose}>
               <Checkbox
                 size="small"
                 checked={statusFilterChecked}
-                onChange={(event) =>
-                  setStatusFilterchecked(event.target.checked)
-                }
+                onChange={(event) => setStatusFilterchecked(event.target.checked)}
               />
               <Typography fontSize={13} variant="subtitle2">
                 Data de emissão

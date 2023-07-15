@@ -17,28 +17,15 @@ import Swal from 'sweetalert2';
 
 export default function SoftwareRegistration() {
   const columns: TableColumn<Software>[] = [
-    {
-      name: 'Id',
-      width: '150px',
-      selector: (row) => row.id,
-      sortable: true,
-    },
-    {
-      name: 'Nome',
-      selector: (row) => row.nome,
-      sortable: true,
-    },
+    { name: 'Id', width: '150px', selector: (row) => row.id, sortable: true },
+    { name: 'Nome', selector: (row) => row.nome, sortable: true },
     { name: 'Fabricante', selector: (row) => row.fabricante },
     {
       button: true,
       width: '40px',
       sortable: true,
       cell: (row) => (
-        <IconButton
-          sx={{ marginRight: 5 }}
-          onClick={() => onEditSoftware(row)}
-          size="small"
-        >
+        <IconButton sx={{ marginRight: 5 }} onClick={() => onEditSoftware(row)} size="small">
           <EditTwoToneIcon color="primary" fontSize="inherit" />
         </IconButton>
       ),
@@ -47,11 +34,7 @@ export default function SoftwareRegistration() {
       button: true,
       width: '40px',
       cell: (row) => (
-        <IconButton
-          sx={{ marginRight: 1 }}
-          onClick={() => onDeleteSoftware(row.id)}
-          size="small"
-        >
+        <IconButton sx={{ marginRight: 1 }} onClick={() => onDeleteSoftware(row.id)} size="small">
           <DeleteTwoToneIcon color="error" fontSize="inherit" />
         </IconButton>
       ),
@@ -63,19 +46,19 @@ export default function SoftwareRegistration() {
   const [data, setData] = useState<Software>();
   const [openSoftwareModal, setOpenSoftwareModal] = useState(false);
 
-  function onAddSoftware() {
+  const onAddSoftware = () => {
     setData(undefined);
     setFormContextData({ isAdding: true });
     setOpenSoftwareModal(true);
-  }
+  };
 
-  function onEditSoftware(software: Software) {
+  const onEditSoftware = (software: Software) => {
     setData(software);
     setFormContextData({ isEditing: true });
     setOpenSoftwareModal(true);
-  }
+  };
 
-  function onDeleteSoftware(softwareId: string) {
+  const onDeleteSoftware = (softwareId: string) => {
     Swal.fire({
       title: 'Tem certeza?',
       text: 'Você não será capaz de reverter isso!',
@@ -111,7 +94,7 @@ export default function SoftwareRegistration() {
           });
       }
     });
-  }
+  };
 
   useEffect(() => {
     const params: AxiosRequestConfig = {
@@ -127,12 +110,7 @@ export default function SoftwareRegistration() {
   return (
     <>
       <Box display={'flex'} justifyContent={'end'} marginTop={1}>
-        <Button
-          size="small"
-          variant="outlined"
-          sx={{ marginRight: 1 }}
-          onClick={() => onAddSoftware()}
-        >
+        <Button size="small" variant="outlined" sx={{ marginRight: 1 }} onClick={() => onAddSoftware()}>
           <AddIcon />
         </Button>
       </Box>
@@ -158,11 +136,7 @@ export default function SoftwareRegistration() {
         }}
       />
       {openSoftwareModal && (
-        <SoftwareModal
-          data={data}
-          openModal={openSoftwareModal}
-          closeModal={() => setOpenSoftwareModal(false)}
-        />
+        <SoftwareModal data={data} openModal={openSoftwareModal} closeModal={() => setOpenSoftwareModal(false)} />
       )}
     </>
   );

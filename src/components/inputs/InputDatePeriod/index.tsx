@@ -1,5 +1,4 @@
 import 'dayjs/locale/pt-br';
-
 import Box from '@mui/material/Box';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -7,13 +6,13 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { SetStateAction } from 'react';
 import { Dayjs } from 'dayjs';
 
-interface InputDatePeriodProps {
+type InputDatePeriodProps = {
   label: string;
   valueStart: Dayjs | null;
   valueEnd: Dayjs | null;
   onChangeStart: (date: SetStateAction<Dayjs | null>) => void;
   onChangeEnd: (date: SetStateAction<Dayjs | null>) => void;
-}
+};
 
 export default function InputDatePeriod({
   label,

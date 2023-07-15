@@ -6,9 +6,7 @@ import { formatCurrency } from '../../../../utils/CurrencyConverter';
 import { Printer } from '../../../../types/Printer/Printer';
 import InterfaceList from '../../../../components/Asset/InterfaceList/InterfaceList';
 
-type PrinterDetailsProps = {
-  data?: Printer;
-};
+type PrinterDetailsProps = { data?: Printer };
 
 export default function PrinterDetails({ data }: PrinterDetailsProps) {
   return (
@@ -51,29 +49,17 @@ export default function PrinterDetails({ data }: PrinterDetailsProps) {
             <TextInfo label="Impressões" text={data?.totalImpressoes || '-'} />
             <TextInfo
               label="Data aquisição"
-              text={
-                data?.dtAquisicao
-                  ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY')
-                  : '-'
-              }
+              text={data?.dtAquisicao ? dayjs(data?.dtAquisicao).format('DD/MM/YYYY') : '-'}
             />
             <div className="row">
               <div className="col-lg-7">
                 <TextInfo
                   label="Data venc. Garantia"
-                  text={
-                    data?.dtVencimentoGarantia
-                      ? dayjs(data?.dtVencimentoGarantia).format('DD/MM/YYYY')
-                      : '-'
-                  }
+                  text={data?.dtVencimentoGarantia ? dayjs(data?.dtVencimentoGarantia).format('DD/MM/YYYY') : '-'}
                 />
                 <TextInfo
                   label="Valor compra"
-                  text={
-                    data?.vlrAquisicao
-                      ? formatCurrency(String(data?.vlrAquisicao))
-                      : '-'
-                  }
+                  text={data?.vlrAquisicao ? formatCurrency(String(data?.vlrAquisicao)) : '-'}
                 />
               </div>
             </div>

@@ -57,7 +57,6 @@ export default function SearchBar({
           outline: 0,
         }}
       />
-
       {onClearFilters && (
         <IconButton size="small" onClick={onClearFilters}>
           <CloseIcon
@@ -69,12 +68,8 @@ export default function SearchBar({
           />
         </IconButton>
       )}
-
       {setOpenCustomFilters && (
-        <IconButton
-          size="small"
-          onClick={(event) => setOpenCustomFilters(event.currentTarget)}
-        >
+        <IconButton size="small" onClick={(event) => setOpenCustomFilters(event.currentTarget)}>
           <TuneIcon fontSize="small" color="primary" />
         </IconButton>
       )}

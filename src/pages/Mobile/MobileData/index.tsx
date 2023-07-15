@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-
 import TabContext from '@material-ui/lab/TabContext';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
@@ -30,9 +29,7 @@ import MobileForm from './MobileForm';
 import MobileDetails from './MobileDetails';
 import { ContainerSidePanel, CustomTab, Wapper } from './style';
 
-type urlParams = {
-  deviceId: string;
-};
+type urlParams = { deviceId: string };
 
 export default function MobileData() {
   const [openDeviceForm, setOpenDeviceForm] = useState(false);
@@ -55,18 +52,17 @@ export default function MobileData() {
 
   useEffect(() => getDeviceData(), [getDeviceData]);
 
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
-    setTabValue(newValue);
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => setTabValue(newValue);
 
-  function handleAdd() {
+  const handleAdd = () => {
     setFormContextData({ isAdding: true });
     setOpenDeviceForm(true);
-  }
+  };
 
-  function handleEdit() {
+  const handleEdit = () => {
     setFormContextData({ isEditing: true });
     setOpenDeviceForm(true);
-  }
+  };
 
   const handleDuplicate = () => {
     setFormContextData({ isAdding: true, isDuplicated: true });
@@ -125,22 +121,11 @@ export default function MobileData() {
           justifyContent={'space-between'}
           margin={'20px 0'}
         >
-          <IconButton
-            aria-label="back"
-            size="medium"
-            onClick={() => navigate('/mobile')}
-          >
+          <IconButton aria-label="back" size="medium" onClick={() => navigate('/mobile')}>
             <ArrowBackIcon color="primary" />
           </IconButton>
 
-          <Typography
-            fontSize={16}
-            fontWeight={'bold'}
-            letterSpacing={0.7}
-            color={'primary'}
-            marginLeft={2}
-            flex={1}
-          >
+          <Typography fontSize={16} fontWeight={'bold'} letterSpacing={0.7} color={'primary'} marginLeft={2} flex={1}>
             {(device ? device?.id : '') + ' - ' + (device ? device?.nome : '')}
           </Typography>
           <Stack spacing={2} direction="row">
@@ -163,37 +148,11 @@ export default function MobileData() {
             }}
           >
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs
-                value={tabValue}
-                onChange={handleTabChange}
-                textColor="primary"
-                indicatorColor="primary"
-              >
-                <CustomTab
-                  value="1"
-                  label="Detalhes"
-                  iconPosition="start"
-                  icon={<TextSnippetTwoToneIcon />}
-                />
-
-                <CustomTab
-                  value="2"
-                  label="Movimentos"
-                  iconPosition="start"
-                  icon={<ChangeCircleTwoToneIcon />}
-                />
-                <CustomTab
-                  value="3"
-                  label="Licenças"
-                  iconPosition="start"
-                  icon={<WorkspacePremiumTwoToneIcon />}
-                />
-                <CustomTab
-                  value="4"
-                  label="Serviços"
-                  iconPosition="start"
-                  icon={<HandymanTwoToneIcon />}
-                />
+              <Tabs value={tabValue} onChange={handleTabChange} textColor="primary" indicatorColor="primary">
+                <CustomTab value="1" label="Detalhes" iconPosition="start" icon={<TextSnippetTwoToneIcon />} />
+                <CustomTab value="2" label="Movimentos" iconPosition="start" icon={<ChangeCircleTwoToneIcon />} />
+                <CustomTab value="3" label="Licenças" iconPosition="start" icon={<WorkspacePremiumTwoToneIcon />} />
+                <CustomTab value="4" label="Serviços" iconPosition="start" icon={<HandymanTwoToneIcon />} />
               </Tabs>
             </Box>
           </AppBar>
@@ -212,11 +171,7 @@ export default function MobileData() {
         </TabContext>
       </BaseCard>
       {openDeviceForm && (
-        <MobileForm
-          data={device}
-          openForm={openDeviceForm}
-          closeForm={() => setOpenDeviceForm(false)}
-        />
+        <MobileForm data={device} openForm={openDeviceForm} closeForm={() => setOpenDeviceForm(false)} />
       )}
     </Wapper>
   );

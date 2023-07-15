@@ -14,14 +14,7 @@ interface InputDateProps {
   required?: boolean;
 }
 
-export default function InputDate({
-  control,
-  name,
-  label,
-  helperText,
-  register,
-  required,
-}: InputDateProps) {
+export default function InputDate({ control, name, label, helperText, register, required }: InputDateProps) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'pt-br'}>
       <Controller

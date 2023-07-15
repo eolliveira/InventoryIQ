@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-
 import TabContext from '@material-ui/lab/TabContext';
 import styled from 'styled-components';
 import SyncIcon from '@mui/icons-material/Sync';
@@ -15,7 +14,6 @@ import TabPanel from '@material-ui/lab/TabPanel';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import AssetSidePanel from '../../../components/Asset/AssetSidePanel';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
@@ -31,10 +29,9 @@ import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
 import { Printer } from '../../../types/Printer/Printer';
 import PrinterDetails from './PrinterDetails';
 import PrinterForm from './PrinterForm';
+import { ContainerSidePanel, CustomTab, Wapper } from './style';
 
-type urlParams = {
-  printerId: string;
-};
+type urlParams = { printerId: string };
 
 export default function PrinterData() {
   const [openPrinterForm, setOpenPrinterForm] = useState(false);
@@ -58,18 +55,17 @@ export default function PrinterData() {
 
   useEffect(() => getPrinterData(), [getPrinterData]);
 
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
-    setTabValue(newValue);
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => setTabValue(newValue);
 
-  function handleAdd() {
+  const handleAdd = () => {
     setFormContextData({ isAdding: true });
     setOpenPrinterForm(true);
-  }
+  };
 
-  function handleEdit() {
+  const handleEdit = () => {
     setFormContextData({ isEditing: true });
     setOpenPrinterForm(true);
-  }
+  };
 
   const handleDuplicate = () => {
     setFormContextData({ isAdding: true, isDuplicated: true });
@@ -124,9 +120,7 @@ export default function PrinterData() {
     };
 
     requestBackend(params)
-      .then(() =>
-        Swal.fire('Sucesso', 'Dados do ativo foram sincronizados!', 'success')
-      )
+      .then(() => Swal.fire('Sucesso', 'Dados do ativo foram sincronizados!', 'success'))
       .catch(() => {
         Swal.fire({
           title: 'Falha!',
@@ -153,25 +147,11 @@ export default function PrinterData() {
           justifyContent={'space-between'}
           margin={'20px 0'}
         >
-          <IconButton
-            aria-label="back"
-            size="medium"
-            onClick={() => navigate('/printer')}
-          >
+          <IconButton aria-label="back" size="medium" onClick={() => navigate('/printer')}>
             <ArrowBackIcon color="primary" />
           </IconButton>
-
-          <Typography
-            fontSize={16}
-            fontWeight={'bold'}
-            letterSpacing={0.7}
-            color={'primary'}
-            marginLeft={2}
-            flex={1}
-          >
-            {(printer ? printer?.id : '') +
-              ' - ' +
-              (printer ? printer?.nome : '')}
+          <Typography fontSize={16} fontWeight={'bold'} letterSpacing={0.7} color={'primary'} marginLeft={2} flex={1}>
+            {(printer ? printer?.id : '') + ' - ' + (printer ? printer?.nome : '')}
           </Typography>
           <Stack spacing={2} direction="row">
             <StockButton
@@ -207,37 +187,11 @@ export default function PrinterData() {
             }}
           >
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs
-                value={tabValue}
-                onChange={handleTabChange}
-                textColor="primary"
-                indicatorColor="primary"
-              >
-                <CustomTab
-                  value="1"
-                  label="Detalhes"
-                  iconPosition="start"
-                  icon={<TextSnippetTwoToneIcon />}
-                />
-
-                <CustomTab
-                  value="2"
-                  label="Movimentos"
-                  iconPosition="start"
-                  icon={<ChangeCircleTwoToneIcon />}
-                />
-                <CustomTab
-                  value="3"
-                  label="Licenças"
-                  iconPosition="start"
-                  icon={<WorkspacePremiumTwoToneIcon />}
-                />
-                <CustomTab
-                  value="4"
-                  label="Serviços"
-                  iconPosition="start"
-                  icon={<HandymanTwoToneIcon />}
-                />
+              <Tabs value={tabValue} onChange={handleTabChange} textColor="primary" indicatorColor="primary">
+                <CustomTab value="1" label="Detalhes" iconPosition="start" icon={<TextSnippetTwoToneIcon />} />
+                <CustomTab value="2" label="Movimentos" iconPosition="start" icon={<ChangeCircleTwoToneIcon />} />
+                <CustomTab value="3" label="Licenças" iconPosition="start" icon={<WorkspacePremiumTwoToneIcon />} />
+                <CustomTab value="4" label="Serviços" iconPosition="start" icon={<HandymanTwoToneIcon />} />
               </Tabs>
             </Box>
           </AppBar>
@@ -256,42 +210,8 @@ export default function PrinterData() {
         </TabContext>
       </BaseCard>
       {openPrinterForm && (
-        <PrinterForm
-          data={printer}
-          openForm={openPrinterForm}
-          closeForm={() => setOpenPrinterForm(false)}
-        />
+        <PrinterForm data={printer} openForm={openPrinterForm} closeForm={() => setOpenPrinterForm(false)} />
       )}
     </Wapper>
   );
 }
-
-const Wapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0px;
-  height: calc(100vh - 110px);
-
-  @media (min-width: 991px) {
-    flex-direction: row-reverse;
-  }
-`;
-
-const CustomTab = styled(Tab)`
-  font-size: small !important;
-  text-transform: none !important;
-`;
-
-const ContainerSidePanel = styled.div`
-  padding: 0px;
-  margin-bottom: 4px;
-
-  @media (min-width: 1100px) {
-    margin-bottom: 0px;
-  }
-
-  @media (min-width: 991px) {
-    margin-bottom: 0px;
-    padding: 0px 0px 0px 4px;
-  }
-`;

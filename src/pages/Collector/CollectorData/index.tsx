@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-
 import TabContext from '@material-ui/lab/TabContext';
 import styled from 'styled-components';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -27,9 +26,7 @@ import { Coletor } from 'types/Coletor';
 import CollectorForm from './CollectorForm';
 import CollectorDetails from './CollectorDetails';
 
-type urlParams = {
-  collectorId: string;
-};
+type urlParams = { collectorId: string };
 
 export default function CollectorData() {
   const [openCollectorForm, setOpenCollectorForm] = useState(false);
@@ -52,18 +49,17 @@ export default function CollectorData() {
 
   useEffect(() => getCollectorData(), [getCollectorData]);
 
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) =>
-    setTabValue(newValue);
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => setTabValue(newValue);
 
-  function handleAdd() {
+  const handleAdd = () => {
     setFormContextData({ isAdding: true });
     setOpenCollectorForm(true);
-  }
+  };
 
-  function handleEdit() {
+  const handleEdit = () => {
     setFormContextData({ isEditing: true });
     setOpenCollectorForm(true);
-  }
+  };
 
   const handleDuplicate = () => {
     setFormContextData({ isAdding: true, isDuplicated: true });
@@ -122,25 +118,11 @@ export default function CollectorData() {
           justifyContent={'space-between'}
           margin={'20px 0'}
         >
-          <IconButton
-            aria-label="back"
-            size="medium"
-            onClick={() => navigate('/collector')}
-          >
+          <IconButton aria-label="back" size="medium" onClick={() => navigate('/collector')}>
             <ArrowBackIcon color="primary" />
           </IconButton>
-
-          <Typography
-            fontSize={16}
-            fontWeight={'bold'}
-            letterSpacing={0.7}
-            color={'primary'}
-            marginLeft={2}
-            flex={1}
-          >
-            {(collector ? collector?.id : '') +
-              ' - ' +
-              (collector ? collector?.nome : '')}
+          <Typography fontSize={16} fontWeight={'bold'} letterSpacing={0.7} color={'primary'} marginLeft={2} flex={1}>
+            {(collector ? collector?.id : '') + ' - ' + (collector ? collector?.nome : '')}
           </Typography>
 
           <StockButton
@@ -161,31 +143,11 @@ export default function CollectorData() {
             }}
           >
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs
-                value={tabValue}
-                onChange={handleTabChange}
-                textColor="primary"
-                indicatorColor="primary"
-              >
-                <CustomTab
-                  value="1"
-                  label="Detalhes"
-                  iconPosition="start"
-                  icon={<TextSnippetTwoToneIcon />}
-                />
+              <Tabs value={tabValue} onChange={handleTabChange} textColor="primary" indicatorColor="primary">
+                <CustomTab value="1" label="Detalhes" iconPosition="start" icon={<TextSnippetTwoToneIcon />} />
 
-                <CustomTab
-                  value="2"
-                  label="Movimentos"
-                  iconPosition="start"
-                  icon={<ChangeCircleTwoToneIcon />}
-                />
-                <CustomTab
-                  value="3"
-                  label="Serviços"
-                  iconPosition="start"
-                  icon={<HandymanTwoToneIcon />}
-                />
+                <CustomTab value="2" label="Movimentos" iconPosition="start" icon={<ChangeCircleTwoToneIcon />} />
+                <CustomTab value="3" label="Serviços" iconPosition="start" icon={<HandymanTwoToneIcon />} />
               </Tabs>
             </Box>
           </AppBar>
@@ -201,11 +163,7 @@ export default function CollectorData() {
         </TabContext>
       </BaseCard>
       {openCollectorForm && (
-        <CollectorForm
-          data={collector}
-          openForm={openCollectorForm}
-          closeForm={() => setOpenCollectorForm(false)}
-        />
+        <CollectorForm data={collector} openForm={openCollectorForm} closeForm={() => setOpenCollectorForm(false)} />
       )}
     </Wapper>
   );

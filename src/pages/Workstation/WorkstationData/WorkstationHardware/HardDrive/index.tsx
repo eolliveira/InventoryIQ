@@ -7,9 +7,7 @@ import ProgressBarDisc from '../ProgressBarDisc';
 import DiscFullIcon from '@mui/icons-material/DiscFull';
 import { Stack } from '@mui/material';
 
-type HardDriveProps = {
-  disco: Disco;
-};
+type HardDriveProps = { disco: Disco };
 
 export default function HardDrive({ disco }: HardDriveProps) {
   return (
@@ -33,13 +31,7 @@ export default function HardDrive({ disco }: HardDriveProps) {
       <Typography color={'primary'} fontSize={13}>
         {'Capacidade: ' +
           (Number(disco.capacidade) / Number((1e9).toFixed(1))).toFixed(1) +
-          `${
-            Number(
-              (Number(disco.capacidade) / Number((1e9).toFixed(1))).toFixed(1)
-            ) < 1000
-              ? ' GB'
-              : ' TB'
-          }`}
+          `${Number((Number(disco.capacidade) / Number((1e9).toFixed(1))).toFixed(1)) < 1000 ? ' GB' : ' TB'}`}
       </Typography>
       <Divider color="gray" />
       {disco.particoes.map((particao: Particao) => (
@@ -53,14 +45,9 @@ export default function HardDrive({ disco }: HardDriveProps) {
             available={Number(particao.capacidade) - Number(particao.usado)}
           />
           <Typography marginBottom={0.5} color={'primary'} fontSize={13}>
-            {(
-              (Number(particao.capacidade) - Number(particao.usado)) /
-              Number((1e9).toFixed(1))
-            ).toFixed(1) +
+            {((Number(particao.capacidade) - Number(particao.usado)) / Number((1e9).toFixed(1))).toFixed(1) +
               ' GB livre(s) de ' +
-              (Number(particao.capacidade) / Number((1e9).toFixed(1))).toFixed(
-                1
-              ) +
+              (Number(particao.capacidade) / Number((1e9).toFixed(1))).toFixed(1) +
               ' GB'}
           </Typography>
         </>

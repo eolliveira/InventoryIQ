@@ -48,11 +48,7 @@ type WorkstationFormProps = {
   closeForm: () => void;
 };
 
-export default function WorkstationForm({
-  data,
-  openForm,
-  closeForm,
-}: WorkstationFormProps) {
+export default function WorkstationForm({ data, openForm, closeForm }: WorkstationFormProps) {
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [sweeping, setSweeping] = useState(false);
   const [ipAddress, setIpAddress] = useState('');
@@ -70,8 +66,7 @@ export default function WorkstationForm({
 
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
-    if (data && formContextData.isDuplicated && formContextData.isAdding)
-      setFormData(data);
+    if (data && formContextData.isDuplicated && formContextData.isAdding) setFormData(data);
   }, []);
 
   const onSubmit = (formData: WorkstationSync) => {
@@ -86,9 +81,7 @@ export default function WorkstationForm({
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: formContextData.isAdding ? 'POST' : 'PUT',
-          url: formContextData.isAdding
-            ? `/workstation`
-            : `/workstation/${data?.id}/update`,
+          url: formContextData.isAdding ? `/workstation` : `/workstation/${data?.id}/update`,
           data: formData,
           withCredentials: true,
         };
@@ -189,9 +182,7 @@ export default function WorkstationForm({
   };
 
   const setFormData = (data: Workstation) => {
-    formContextData.isDuplicated
-      ? setValue('nome', '')
-      : setValue('nome', data.nome);
+    formContextData.isDuplicated ? setValue('nome', '') : setValue('nome', data.nome);
     setValue('fabricante', data.fabricante);
     setValue('nomeHost', data.nomeHost);
     setValue('dominio', data.dominio);
@@ -213,37 +204,17 @@ export default function WorkstationForm({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel
-          title={
-            formContextData.isAdding
-              ? 'Adicionar Estação de Trabalho'
-              : 'Alterar Estação de Trabalho'
-          }
-        >
+        <Panel title={formContextData.isAdding ? 'Adicionar Estação de Trabalho' : 'Alterar Estação de Trabalho'}>
           {formContextData.isAdding && (
             <Box display={'flex'}>
-              <SearchBar
-                placeholder="0.0.0.0"
-                inputFilter={ipAddress}
-                setInputFilter={setIpAddress}
-              />
+              <SearchBar placeholder="0.0.0.0" inputFilter={ipAddress} setInputFilter={setIpAddress} />
 
-              <LoadingButton
-                size="small"
-                color="primary"
-                onClick={handleToSweep}
-                loading={sweeping}
-                variant="text"
-              >
+              <LoadingButton size="small" color="primary" onClick={handleToSweep} loading={sweeping} variant="text">
                 <SearchIcon fontSize="medium" />
               </LoadingButton>
             </Box>
           )}
-
-          <form
-            style={{ maxWidth: '1250px' }}
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <form style={{ maxWidth: '1250px' }} onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-md-6">
                 <InputText
@@ -277,7 +248,6 @@ export default function WorkstationForm({
                     />
                   </div>
                 </div>
-
                 <InputText
                   label="Dominio"
                   name="dominio"
@@ -335,7 +305,6 @@ export default function WorkstationForm({
                   error={!!errors.sistemaOperacional}
                   helperText={errors.sistemaOperacional?.message}
                 />
-
                 <InputText
                   label="Processador"
                   name="processador"
@@ -344,7 +313,6 @@ export default function WorkstationForm({
                   error={!!errors.processador}
                   helperText={errors.processador?.message}
                 />
-
                 <InputText
                   label="Numero de série"
                   name="numeroSerie"
@@ -353,7 +321,6 @@ export default function WorkstationForm({
                   error={!!errors.numeroSerie}
                   helperText={errors.numeroSerie?.message}
                 />
-
                 <InputText
                   label="Fabricante"
                   name="fabricante"
@@ -362,7 +329,6 @@ export default function WorkstationForm({
                   error={!!errors.fabricante}
                   helperText={errors.fabricante?.message}
                 />
-
                 <div className="row">
                   <div className="col-sm-9">
                     <InputText
@@ -385,15 +351,9 @@ export default function WorkstationForm({
                     />
                   </div>
                 </div>
-
                 <div className="row">
                   <div className="col-sm-6 col-lg-5">
-                    <InputDate
-                      register={register}
-                      label="Dt. Aquisição"
-                      control={control}
-                      name="dtAquisicao"
-                    />
+                    <InputDate register={register} label="Dt. Aquisição" control={control} name="dtAquisicao" />
                   </div>
                   <div className="col-sm-6 col-lg-4 ">
                     <InputDate
@@ -417,15 +377,10 @@ export default function WorkstationForm({
                   </div>
                 </div>
               </div>
-
               {formContextData.isAdding && (
                 <Box display={'flex'} flexDirection={'column'}>
                   <BaseCard>
-                    <Stack
-                      border={'1px #d6d6d6 solid'}
-                      marginTop={0.5}
-                      height={'100px'}
-                    >
+                    <Stack border={'1px #d6d6d6 solid'} marginTop={0.5} height={'100px'}>
                       <Typography
                         borderRadius={'8px 8px 0px 0px'}
                         bgcolor={'#F8FAFC'}
@@ -462,13 +417,8 @@ export default function WorkstationForm({
                       />
                     </Stack>
                   </BaseCard>
-
                   <BaseCard>
-                    <Stack
-                      border={'1px #d6d6d6 solid'}
-                      marginTop={0.5}
-                      height={'100px'}
-                    >
+                    <Stack border={'1px #d6d6d6 solid'} marginTop={0.5} height={'100px'}>
                       <Typography
                         borderRadius={'8px 8px 0px 0px'}
                         bgcolor={'#F8FAFC'}
@@ -508,15 +458,9 @@ export default function WorkstationForm({
                 </Box>
               )}
             </div>
-
             <Box display={'flex'} justifyContent={'end'} marginTop={2}>
               <Stack direction={'row'} spacing={2}>
-                <Button
-                  color="error"
-                  variant="contained"
-                  startIcon={<CloseIcon />}
-                  onClick={onCancelForm}
-                >
+                <Button color="error" variant="contained" startIcon={<CloseIcon />} onClick={onCancelForm}>
                   <Typography fontSize={14} textTransform={'none'}>
                     Cancelar
                   </Typography>

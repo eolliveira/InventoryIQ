@@ -1,22 +1,23 @@
-import { useContext, useState } from 'react';
 import { Button } from '@mui/material';
-import { AxiosRequestConfig } from 'axios';
-import Box from '@mui/material/Box';
-import LoadingButton from '@mui/lab/LoadingButton';
-import SaveIcon from '@mui/icons-material/Save';
-import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import Swal from 'sweetalert2';
-import { requestBackend } from '../../../../http/requests';
-import CustomModal from '../../../../components/CustomModal';
-import { BaseCard } from '../../../../style/GlobalStyles';
-import Panel from '../../../../components/Panel';
-import { FormContext } from '../../../../contexts/FormContext';
 import { useForm } from 'react-hook-form';
-import InputText from '../../../../components/inputs/InputText';
-import { TipoLicenca } from '../../../../types/Licenca/TipoLicenca';
-import InputMultiline from '../../../../components/inputs/InputMultiline';
+import { AxiosRequestConfig } from 'axios';
+import { useContext, useState } from 'react';
 import { FormControlCustom } from './style';
+import { BaseCard } from '../../../../style/GlobalStyles';
+import { requestBackend } from '../../../../http/requests';
+import { FormContext } from '../../../../contexts/FormContext';
+import { TipoLicenca } from '../../../../types/Licenca/TipoLicenca';
+
+import Swal from 'sweetalert2';
+import Box from '@mui/material/Box';
+import SaveIcon from '@mui/icons-material/Save';
+import Panel from '../../../../components/Panel';
+import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
+import LoadingButton from '@mui/lab/LoadingButton';
+import CustomModal from '../../../../components/CustomModal';
+import InputText from '../../../../components/inputs/InputText';
+import InputMultiline from '../../../../components/inputs/InputMultiline';
 
 type LicenseTypeModalProps = {
   data?: TipoLicenca;
@@ -24,11 +25,8 @@ type LicenseTypeModalProps = {
   closeModal: () => void;
 };
 
-export default function LicenseTypeModal({
-  data,
-  openModal,
-  closeModal,
-}: LicenseTypeModalProps) {
+export default function LicenseTypeModal({ data, openModal, closeModal }: LicenseTypeModalProps) {
+  const { formContextData, setFormContextData } = useContext(FormContext);
   const {
     register,
     handleSubmit,
@@ -37,8 +35,6 @@ export default function LicenseTypeModal({
     control,
   } = useForm<TipoLicenca>();
 
-  const { formContextData, setFormContextData } = useContext(FormContext);
-
   useState(() => {
     if (formContextData.isEditing == true) {
       setValue('nome', data?.nome ?? '');
@@ -46,12 +42,10 @@ export default function LicenseTypeModal({
     }
   });
 
-  function onSubmit(formData: TipoLicenca) {
+  const onSubmit = (formData: TipoLicenca) => {
     const params: AxiosRequestConfig = {
       method: formContextData.isEditing ? 'PUT' : 'POST',
-      url: formContextData.isEditing
-        ? `/licenseType/${data?.id}`
-        : '/licenseType',
+      url: formContextData.isEditing ? `/licenseType/${data?.id}` : '/licenseType',
       data: formData,
       withCredentials: true,
     };
@@ -78,28 +72,22 @@ export default function LicenseTypeModal({
           icon: 'warning',
         });
       });
-  }
+  };
 
-  function handleCancel() {
+  const handleCancel = () => {
     setFormContextData({
       isAdding: false,
       isEditing: false,
       isDuplicated: false,
     });
     closeModal();
-  }
+  };
 
   return (
     <CustomModal openModal={openModal}>
       <BaseCard>
         <Box>
-          <Panel
-            title={
-              formContextData.isAdding
-                ? 'Adicionar tipo de licença'
-                : 'Alterar tipo de licença'
-            }
-          >
+          <Panel title={formContextData.isAdding ? 'Adicionar tipo de licença' : 'Alterar tipo de licença'}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormControlCustom>
                 <InputText
@@ -111,7 +99,6 @@ export default function LicenseTypeModal({
                   error={!!errors.nome}
                   helperText={errors.nome?.message}
                 />
-
                 <InputMultiline
                   label="Descrição"
                   name="descricao"
@@ -122,12 +109,7 @@ export default function LicenseTypeModal({
                   helperText={errors.descricao?.message}
                 />
                 <Box display={'flex'} justifyContent={'end'} marginTop={2}>
-                  <Button
-                    variant="contained"
-                    color="error"
-                    startIcon={<CloseIcon />}
-                    onClick={handleCancel}
-                  >
+                  <Button variant="contained" color="error" startIcon={<CloseIcon />} onClick={handleCancel}>
                     <Typography textTransform={'none'}>Cancelar</Typography>
                   </Button>
                   <LoadingButton
