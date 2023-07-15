@@ -4,13 +4,7 @@ import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
 import { assetStatus } from '../../../constants/AssetStatus';
 import { Workstation } from '../../../types/Workstation/Workstation';
-import {
-  ChangeEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Stack from '@mui/material/Stack';
@@ -44,80 +38,52 @@ const columns: TableColumn<Workstation>[] = [
   { name: 'Modelo', selector: (row) => row.modelo, sortable: true },
   {
     name: 'Atribuido a',
-    selector: (row) =>
-      row.usuario.nome ? toCamelCase(row.usuario.nome) : ' - ',
+    selector: (row) => (row.usuario.nome ? toCamelCase(row.usuario.nome) : ' - '),
     sortable: true,
   },
   {
     name: 'Local',
-    selector: (row) =>
-      row.localIndustria ? row.localIndustria.dsLocalIndustria : ' - ',
+    selector: (row) => (row.localIndustria ? row.localIndustria.dsLocalIndustria : ' - '),
     sortable: true,
   },
-  {
-    name: 'Status',
-    sortable: true,
-    cell: (row) => (
-      <AssetStatusStyle key={row.id} size="small" status={row.status} />
-    ),
-  },
+  { name: 'Status', sortable: true, cell: (row) => <AssetStatusStyle key={row.id} size="small" status={row.status} /> },
   {
     name: 'Dt.Aquisição',
-    selector: (row) =>
-      row.dtAquisicao ? dayjs(row.dtAquisicao).format('DD/MM/YYYY') : ' - ',
+    selector: (row) => (row.dtAquisicao ? dayjs(row.dtAquisicao).format('DD/MM/YYYY') : ' - '),
     sortable: true,
   },
 ];
 
 export default function WorkstationList() {
   const { formContextData, setFormContextData } = useContext(FormContext);
+  const navigate = useNavigate();
   const [page, setPage] = useState<SpringPage<Workstation>>();
-  const [inputFilter, setInputFilter] = useState('');
   const [numberPage, setNumberPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState('10');
-  const navigate = useNavigate();
 
-  const [filterField, setFilterField] = useState('nome');
-
-  const [statusFilter, setStatusFilter] = useState('');
-  const [statusFilterChecked, setStatusFilterchecked] = useState(false);
-
-  const [dtAquisicaoInicioFilter, setDtAquisicaoInicioFilter] =
-    useState<Dayjs | null>(null);
-  const [dtAquisicaoFinalFilter, setDtAquisicaoFinalFilter] =
-    useState<Dayjs | null>(null);
-  const [dtAquisicaoFilterChecked, setDtAquisicaoFilterchecked] =
-    useState(false);
+  const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
+  const [openCustomFilters, setOpenCustomFilters] = useState<null | HTMLElement>(null);
+  const open = Boolean(openCustomFilters);
 
   const [selectedAsset, setSelectedAsset] = useState('');
 
-  const [openCustomFilters, setOpenCustomFilters] =
-    useState<null | HTMLElement>(null);
-  const open = Boolean(openCustomFilters);
+  const [statusFilterChecked, setStatusFilterchecked] = useState(false);
+  const [dtAquisicaoFilterChecked, setDtAquisicaoFilterchecked] = useState(false);
 
-  const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
+  const [filterField, setFilterField] = useState('nome');
+  const [inputFilter, setInputFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [dtAquisicaoInicioFilter, setDtAquisicaoInicioFilter] = useState<Dayjs | null>(null);
+  const [dtAquisicaoFinalFilter, setDtAquisicaoFinalFilter] = useState<Dayjs | null>(null);
 
   const getWorkstatioData = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/workstation?${filterField}=${inputFilter}&status=${statusFilter}${
-        dtAquisicaoInicioFilter
-          ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }${
-        dtAquisicaoFinalFilter
-          ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format(
-              'DD/MM/YYYY'
-            )}`
-          : ''
-      }`,
+        dtAquisicaoInicioFilter ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format('DD/MM/YYYY')}` : ''
+      }${dtAquisicaoFinalFilter ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format('DD/MM/YYYY')}` : ''}`,
+      params: { page: numberPage, size: rowsPerPage },
       withCredentials: true,
-      params: {
-        page: numberPage,
-        size: rowsPerPage,
-      },
     };
 
     requestBackend(params)
@@ -141,7 +107,7 @@ export default function WorkstationList() {
     setOpenWorkstationForm(true);
   };
 
-  function onDelete(AssetId: string) {
+  const handleDelete = (AssetId: string) => {
     if (selectedAsset == '') {
       Swal.fire({
         title: 'Atenção',
@@ -188,39 +154,29 @@ export default function WorkstationList() {
       }
       setFormContextData({ isEditing: false });
     });
-  }
+  };
 
   const handleSelectedRowsChange = (selectedRows: any) => {
-    if (selectedRows.selectedCount == 1)
-      setSelectedAsset(selectedRows.selectedRows[0].id);
-
+    if (selectedRows.selectedCount == 1) setSelectedAsset(selectedRows.selectedRows[0].id);
     if (selectedRows.selectedCount == 0) setSelectedAsset('');
   };
 
-  const handleRowClicked = (row: Workstation) =>
-    navigate(`/workstation/${row.id}`);
-
-  const handleClose = () => setOpenCustomFilters(null);
-
-  function handleClearFilters() {
+  const handleClearFilters = () => {
     setStatusFilterchecked(false);
     setDtAquisicaoFilterchecked(false);
-    setInputFilter('');
-    setStatusFilter('');
     setDtAquisicaoFinalFilter(null);
     setDtAquisicaoInicioFilter(null);
     setFilterField('nome');
-  }
+    setInputFilter('');
+    setStatusFilter('');
+  };
+
+  const handleRowClicked = (row: Workstation) => navigate(`/workstation/${row.id}`);
+  const handleClose = () => setOpenCustomFilters(null);
 
   return (
     <Panel title="Estações de trabalho">
-      <Box
-        display={'flex'}
-        flexWrap={'wrap'}
-        alignItems={'center'}
-        justifyContent={'space-between'}
-        marginBottom={2}
-      >
+      <Box display={'flex'} flexWrap={'wrap'} alignItems={'center'} justifyContent={'space-between'} marginBottom={2}>
         <Box display={'flex'} flexWrap={'wrap'} marginBottom={0.5}>
           <SearchBar
             inputFilter={inputFilter}
@@ -232,14 +188,7 @@ export default function WorkstationList() {
           <SelectFilter
             filterField={filterField}
             setFieldFilter={setFilterField}
-            selectedItems={[
-              'nome',
-              'dominio',
-              'fabricante',
-              'modelo',
-              'atribuido',
-              'local',
-            ]}
+            selectedItems={['nome', 'dominio', 'fabricante', 'modelo', 'atribuido', 'local']}
           />
           {statusFilterChecked && (
             <SelectFilter
@@ -265,18 +214,13 @@ export default function WorkstationList() {
             variant="contained"
             startIcon={<DeleteIcon />}
             color="primary"
-            onClick={() => onDelete(selectedAsset)}
+            onClick={() => handleDelete(selectedAsset)}
           >
             <Typography fontSize={14} textTransform={'none'}>
               Excluir
             </Typography>
           </Button>
-          <Button
-            variant="contained"
-            startIcon={<AddCircleOutlineIcon />}
-            color="primary"
-            onClick={handleAdd}
-          >
+          <Button variant="contained" startIcon={<AddCircleOutlineIcon />} color="primary" onClick={handleAdd}>
             <Typography fontSize={14} textTransform={'none'}>
               Novo
             </Typography>
@@ -343,9 +287,7 @@ export default function WorkstationList() {
           </MenuItem>
         </Select>
         <Pagination
-          onChange={(event: ChangeEvent<unknown>, numberPage: number) =>
-            setNumberPage(numberPage - 1)
-          }
+          onChange={(event: ChangeEvent<unknown>, numberPage: number) => setNumberPage(numberPage - 1)}
           defaultPage={1}
           count={page?.totalPages}
           variant="outlined"
@@ -353,16 +295,8 @@ export default function WorkstationList() {
           size="small"
         />
       </Stack>
-      <Menu
-        sx={{ flexDirection: 'column' }}
-        anchorEl={openCustomFilters}
-        open={open}
-        onClose={handleClose}
-      >
-        <MenuItem
-          sx={{ marginRight: 2, padding: '0px 6px' }}
-          onClick={handleClose}
-        >
+      <Menu sx={{ flexDirection: 'column' }} anchorEl={openCustomFilters} open={open} onClose={handleClose}>
+        <MenuItem sx={{ marginRight: 2, padding: '0px 6px' }} onClick={handleClose}>
           <Checkbox
             size="small"
             checked={statusFilterChecked}
@@ -372,16 +306,11 @@ export default function WorkstationList() {
             Status
           </Typography>
         </MenuItem>
-        <MenuItem
-          sx={{ marginRight: 2, padding: '0px 6px' }}
-          onClick={handleClose}
-        >
+        <MenuItem sx={{ marginRight: 2, padding: '0px 6px' }} onClick={handleClose}>
           <Checkbox
             size="small"
             checked={dtAquisicaoFilterChecked}
-            onChange={(event) =>
-              setDtAquisicaoFilterchecked(event.target.checked)
-            }
+            onChange={(event) => setDtAquisicaoFilterchecked(event.target.checked)}
           />
           <Typography fontSize={13} variant="subtitle2">
             Data aquisição
@@ -389,10 +318,7 @@ export default function WorkstationList() {
         </MenuItem>
       </Menu>
       {openWorkstationForm && (
-        <WorkstationForm
-          openForm={openWorkstationForm}
-          closeForm={() => setOpenWorkstationForm(false)}
-        />
+        <WorkstationForm openForm={openWorkstationForm} closeForm={() => setOpenWorkstationForm(false)} />
       )}
     </Panel>
   );

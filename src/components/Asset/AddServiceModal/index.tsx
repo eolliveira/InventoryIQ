@@ -24,11 +24,7 @@ type AddServiceModalProps = {
   closeModal: () => void;
 };
 
-export default function AddServiceModal({
-  assetId,
-  openModal,
-  closeModal,
-}: AddServiceModalProps) {
+export default function AddServiceModal({ assetId, openModal, closeModal }: AddServiceModalProps) {
   const { authContextData, setAuthContextData } = useContext(AuthContext);
   const { setFormContextData } = useContext(FormContext);
   const [typeService, setTypeService] = useState('');
@@ -89,9 +85,7 @@ export default function AddServiceModal({
       });
   }
 
-  function handleCancel() {
-    closeModal();
-  }
+  const handleCancel = () => closeModal();
 
   return (
     <CustomModal openModal={openModal}>
@@ -129,12 +123,7 @@ export default function AddServiceModal({
             />
 
             <Box display={'flex'} justifyContent={'end'}>
-              <Button
-                variant="contained"
-                color="error"
-                startIcon={<CloseIcon />}
-                onClick={handleCancel}
-              >
+              <Button variant="contained" color="error" startIcon={<CloseIcon />} onClick={handleCancel}>
                 <Typography textTransform={'none'}>Cancelar</Typography>
               </Button>
               <LoadingButton
