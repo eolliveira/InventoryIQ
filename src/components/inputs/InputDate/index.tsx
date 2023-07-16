@@ -22,9 +22,7 @@ export default function InputDate({ control, name, label, helperText, register, 
         name={name}
         render={({ field: { onChange, value } }) => (
           <DatePicker
-            {...register(name, {
-              required: required ? 'Campo requirido' : undefined,
-            })}
+            {...register(name, { required: required ? 'Campo requirido' : undefined })}
             format="DD/MM/YYYY"
             label={label}
             slotProps={{
@@ -45,10 +43,8 @@ export default function InputDate({ control, name, label, helperText, register, 
                 },
               },
             }}
-            value={value ? dayjs(value) : undefined}
-            onChange={(newValue) => {
-              onChange(newValue);
-            }}
+            value={value ? dayjs(value) : null}
+            onChange={(newValue) => onChange(newValue)}
           />
         )}
       />
