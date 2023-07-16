@@ -11,8 +11,7 @@ export const SidebarContainer = styled.div`
 
 export const ButtonColapseContainer = styled.div<Props>`
   background-color: 'rgb(255, 255, 255)';
-  justify-content: ${(props) =>
-    props.iscollapsed ? 'flex-end' : 'space-between'};
+  justify-content: ${(props) => (props.iscollapsed ? 'flex-end' : 'space-between')};
   height: 70px;
   display: flex;
   align-items: center;

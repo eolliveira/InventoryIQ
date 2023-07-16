@@ -5,7 +5,7 @@ import { useContext, useState } from 'react';
 import { VERSION, requestBackendLogin } from '../../http/requests';
 import { saveAuthData } from '../../utils/LocalStorage';
 import { getTokenData } from '../../utils/Auth';
-import Logo from '../../assets/img/logo2.gif';
+import Logo from '../../assets/img/logo.gif';
 import Swal from 'sweetalert2';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';

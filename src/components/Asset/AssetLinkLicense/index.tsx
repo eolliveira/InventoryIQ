@@ -47,7 +47,7 @@ export default function AssetLinkLicense({ assetId, openModal, closeModal }: Ass
 
     requestBackend(params)
       .then((response) => setLicenses(response.data.content))
-      .catch((error) => window.alert(error.response.data.message));
+      .catch((error) => console.log(error.response.data.message));
   }, [inputFilter]);
 
   const handleSelectedRowsChange = (selectedRows: any) => {

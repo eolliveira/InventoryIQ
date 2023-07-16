@@ -1,15 +1,11 @@
 import { Sidebar, Menu, MenuItem, SubMenu, useProSidebar, sidebarClasses } from 'react-pro-sidebar';
 import { ButtonColapseContainer, SidebarContainer } from './style';
 import MenuIcon from '@mui/icons-material/Menu';
-import DevicesIcon from '@mui/icons-material/Devices';
 import { Link, useLocation } from 'react-router-dom';
-import SpeedIcon from '@mui/icons-material/Speed';
 import { NavLink } from 'react-router-dom';
-import DescriptionIcon from '@mui/icons-material/Description';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import IconButton from '@mui/material/IconButton';
-import Logo from '../../assets/img/logo2.gif';
-import SettingsIcon from '@mui/icons-material/Settings';
+import Logo from '../../assets/img/logo.gif';
 import Divider from '@mui/material/Divider';
 import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';

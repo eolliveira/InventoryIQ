@@ -52,7 +52,7 @@ export default function ChangeLocationModal({ assetId, openModal, closeModal: cl
 
     requestBackend(params)
       .then((response) => setLocations(response.data))
-      .catch((error) => window.alert(error.response.data.message))
+      .catch((error) => console.log(error.response.data.message))
       .finally(() => setIsLoading(false));
   }, [inputFilter]);
 
