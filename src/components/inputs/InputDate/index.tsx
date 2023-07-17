@@ -31,16 +31,8 @@ export default function InputDate({ control, name, label, helperText, register, 
                 size: 'small',
                 variant: 'outlined',
                 helperText: helperText,
-                InputLabelProps: {
-                  style: {
-                    fontSize: 14,
-                  },
-                },
-                InputProps: {
-                  style: {
-                    fontSize: 13,
-                  },
-                },
+                InputLabelProps: { style: { fontSize: 14 } },
+                InputProps: { style: { fontSize: 13 } },
               },
             }}
             value={value ? dayjs(value) : null}

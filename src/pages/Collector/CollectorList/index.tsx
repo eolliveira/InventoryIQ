@@ -27,7 +27,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Swal from 'sweetalert2';
 import dayjs, { Dayjs } from 'dayjs';
 import InputDatePeriod from '../../../components/inputs/InputDatePeriod';
-import { Coletor } from '../../../types/Coletor';
+import { Coletor } from '../../../types/Ativo/Coletor';
 import CollectorForm from '../CollectorData/CollectorForm';
 
 const columns: TableColumn<Coletor>[] = [

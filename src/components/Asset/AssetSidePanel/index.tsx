@@ -11,7 +11,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ChangeUserModal from '../ChangeUserModal';
 import ChangeLocationModal from '../ChangeLocationModal';
 import ChangeNfEntradaModal from '../../ChangeNfEntradaModal';
-import { Workstation } from 'types/Workstation/Workstation';
+import { Workstation } from 'types/Ativo/Workstation/Workstation';
 import { requestBackend } from '../../../http/requests';
 import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
 import { formatCurrency } from '../../../utils/CurrencyConverter';
@@ -20,7 +20,7 @@ import Stack from '@mui/material/Stack';
 import AssetStatusStyle from '../AssetStatusStyle';
 import Card from '@mui/material/Card';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import { Printer } from '../../../types/Printer/Printer';
+import { Printer } from '../../../types/Ativo/Printer/Printer';
 import { Nobreak } from '../../../types/Nobreak';
 import { Mobile } from 'types/Mobile';
 import { Wapper, HeaderContainer } from './style';
@@ -29,7 +29,7 @@ import dayjs from 'dayjs';
 import RoomTwoToneIcon from '@mui/icons-material/RoomTwoTone';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import EventRepeatTwoToneIcon from '@mui/icons-material/EventRepeatTwoTone';
-import { Coletor } from 'types/Coletor';
+import { Coletor } from 'types/Ativo/Coletor';
 
 type AssetSidePanelProps = { data: Printer | Workstation | Nobreak | Mobile | Coletor };
 

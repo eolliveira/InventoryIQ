@@ -29,10 +29,8 @@ export default function InputCurrency({
       defaultValue={defaultValue ?? ''}
       render={({ field: { value, onChange } }) => (
         <TextField
-          {...register(name, {
-            required: required ? 'Campo requerido' : undefined,
-          })}
           fullWidth
+          {...register(name, { required: required ? 'Campo requerido' : undefined })}
           margin="dense"
           name={name}
           error={error}
@@ -43,18 +41,8 @@ export default function InputCurrency({
           value={value ?? ''}
           onChange={onChange}
           size="small"
-          InputProps={{
-            size: 'small',
-            sx: {
-              height: 35,
-              fontSize: 13,
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              fontSize: 14,
-            },
-          }}
+          InputProps={{ size: 'small', sx: { height: 35, fontSize: 13 } }}
+          InputLabelProps={{ sx: { fontSize: 14 } }}
         />
       )}
     />

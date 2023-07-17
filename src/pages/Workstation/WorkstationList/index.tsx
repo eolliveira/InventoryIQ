@@ -3,7 +3,7 @@ import { SpringPage } from 'types/vendor/spring';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
 import { assetStatus } from '../../../constants/AssetStatus';
-import { Workstation } from '../../../types/Workstation/Workstation';
+import { Workstation } from '../../../types/Ativo/Workstation/Workstation';
 import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';

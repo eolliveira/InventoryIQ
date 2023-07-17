@@ -4,7 +4,7 @@ import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import { useCallback, useEffect, useState } from 'react';
 import { requestBackend } from '../../../../http/requests';
-import { Disco } from '../../../../types/Workstation/Disco';
+import { Disco } from '../../../../types/Ativo/Workstation/Disco';
 import HardDrive from './HardDrive';
 import { AxiosRequestConfig } from 'axios';
 

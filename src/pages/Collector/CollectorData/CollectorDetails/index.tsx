@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import TextInfo from '../../../../components/TextInfo';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
-import { Coletor } from '../../../../types/Coletor';
+import { Coletor } from '../../../../types/Ativo/Coletor';
 import InterfaceList from '../../../../components/Asset/InterfaceList/InterfaceList';
 
 type CollectorDetailsProps = { data?: Coletor };

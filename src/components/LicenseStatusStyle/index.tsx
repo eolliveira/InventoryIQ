@@ -27,13 +27,7 @@ export default function LicenseStatusStyle({ status, size, clickable, handleClic
       onClick={handleClick}
       size={size}
       label={status && removeUnderline(toCamelCase(status))}
-      sx={{
-        color: color ?? undefined,
-        backgroundColor: bgColor ?? undefined,
-        '&:hover': {
-          backgroundColor: bgColor,
-        },
-      }}
+      sx={{ color: color ?? undefined, backgroundColor: bgColor ?? undefined, '&:hover': { backgroundColor: bgColor } }}
     />
   );
 }

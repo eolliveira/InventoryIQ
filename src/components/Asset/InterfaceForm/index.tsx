@@ -28,11 +28,7 @@ export default function InterfaceForm({ assetId, openModal, closeModal }: Interf
 
   const handleSave = () => {
     if (enderecoIp == '') {
-      Swal.fire({
-        title: 'Atenção!',
-        text: 'Informe um endereço ip!',
-        icon: 'warning',
-      });
+      Swal.fire({ title: 'Atenção!', text: 'Informe um endereço ip!', icon: 'warning' });
       return;
     }
 
@@ -51,21 +47,12 @@ export default function InterfaceForm({ assetId, openModal, closeModal }: Interf
 
     requestBackend(params)
       .then(() => {
-        Swal.fire({
-          title: 'Sucesso!',
-          text: 'Interface foi adicionada com sucesso!',
-          icon: 'success',
-        });
-
+        Swal.fire({ title: 'Sucesso!', text: 'Interface foi adicionada com sucesso!', icon: 'success' });
         setFormContextData({ isEditing: false });
         closeModal();
       })
       .catch((error: any) => {
-        Swal.fire({
-          title: 'Atenção',
-          text: error.response.data.message,
-          icon: 'warning',
-        });
+        Swal.fire({ title: 'Atenção', text: error.response.data.message, icon: 'warning' });
       });
   };
 

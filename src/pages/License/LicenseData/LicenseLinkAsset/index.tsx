@@ -13,10 +13,11 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 import Swal from 'sweetalert2';
 import SearchBar from '../../../../components/SearchBar';
 import Panel from '../../../../components/Panel';
-import { Workstation } from 'types/Workstation/Workstation';
+import { Workstation } from 'types/Ativo/Workstation/Workstation';
 import { FormContext } from '../../../../contexts/FormContext';
 import CustomModal from '../../../../components/CustomModal';
 import NoData from '../../../../components/NoData';
+import { Container } from './style';
 
 type LicenseLinkAssetProps = {
   licenseId?: string;
@@ -108,7 +109,7 @@ export default function LicenseLinkAsset({ licenseId, openModal, closeModal }: L
     <CustomModal openModal={openModal}>
       <BaseCard>
         <Panel title="Vincular ativo">
-          <Stack height={500} width={850}>
+          <Container>
             <Stack direction={'row'}>
               <SearchBar inputFilter={inputFilter} setInputFilter={setInputFilter} />
             </Stack>
@@ -138,8 +139,8 @@ export default function LicenseLinkAsset({ licenseId, openModal, closeModal }: L
                 },
               }}
             />
-          </Stack>
-          <Box display={'flex'} justifyContent={'end'}>
+          </Container>
+          <Box display={'flex'} justifyContent={'end'} marginTop={2}>
             <Button variant="contained" color="error" startIcon={<CloseIcon />} onClick={handleCancel}>
               <Typography textTransform={'none'}>Cancelar</Typography>
             </Button>

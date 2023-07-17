@@ -1,4 +1,4 @@
-import { Workstation } from '../../../../types/Workstation/Workstation';
+import { Workstation } from '../../../../types/Ativo/Workstation/Workstation';
 import dayjs from 'dayjs';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';

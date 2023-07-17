@@ -19,7 +19,7 @@ import InputMultiline from '../../../../components/inputs/InputMultiline';
 import Swal from 'sweetalert2';
 import Panel from '../../../../components/Panel';
 import Stack from '@mui/material/Stack';
-import { Coletor } from '../../../../types/Coletor';
+import { Coletor } from '../../../../types/Ativo/Coletor';
 
 type CollectorFormProps = {
   data?: Coletor;

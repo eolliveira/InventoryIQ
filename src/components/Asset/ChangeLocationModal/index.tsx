@@ -27,12 +27,11 @@ type ChangeLocationModalProps = {
 };
 
 const columns: TableColumn<LocalIndustria>[] = [
-  { name: 'Id', selector: (row) => row.id, sortable: true, width: '125px' },
-  { name: 'Nome', selector: (row) => row.dsLocalIndustria, sortable: true },
+  { name: 'Id', selector: (row) => row.id, width: '125px' },
+  { name: 'Nome', selector: (row) => row.dsLocalIndustria },
   {
     name: 'Centro de custo',
     selector: (row) => (row.centroCusto ? row.centroCusto.id + ' - ' + row.centroCusto.descricaoCentroCusto : ' - '),
-    sortable: true,
   },
 ];
 
@@ -63,12 +62,7 @@ export default function ChangeLocationModal({ assetId, openModal, closeModal: cl
 
   const handleConfirm = () => {
     if (selectedLocation == '') {
-      Swal.fire({
-        title: 'Atenção',
-        text: 'Selecione um Local para atribuir!',
-        icon: 'warning',
-      });
-
+      Swal.fire({ title: 'Atenção', text: 'Selecione um Local para atribuir!', icon: 'warning' });
       return;
     }
 

@@ -1,5 +1,11 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { FormContext } from '../../contexts/FormContext';
+import { requestBackend } from '../../http/requests';
+import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
+import { formatCurrency } from '../../utils/CurrencyConverter';
+import { Licenca } from '../../types/Licenca/Licenca';
+import { AxiosRequestConfig } from 'axios';
+import { HeaderContainer, Wapper } from './style';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
@@ -9,12 +15,6 @@ import Typography from '@mui/material/Typography';
 import ChangeNfEntradaModal from '../ChangeNfEntradaModal';
 import ChangeStateModal from '../Asset/ChangeAssetStateModal';
 import LicenseStatusStyle from '../../components/LicenseStatusStyle';
-import { requestBackend } from '../../http/requests';
-import { NotaFiscalEntrada } from 'types/NotaFiscalEntrada/NotaFiscalEntrada';
-import { formatCurrency } from '../../utils/CurrencyConverter';
-import { Licenca } from '../../types/Licenca/Licenca';
-import { AxiosRequestConfig } from 'axios';
-import { HeaderContainer, Wapper } from './style';
 
 type LicenseSidePanelProps = { license: Licenca };
 
@@ -55,12 +55,7 @@ export default function LicenseSidePanel({ license }: LicenseSidePanelProps) {
       </Typography>
       <Card
         variant="outlined"
-        sx={{
-          backgroundColor: '#F8FAFC',
-          border: '1px solid #e9e9e9',
-          borderRadius: 2,
-          padding: 1.5,
-        }}
+        sx={{ backgroundColor: '#F8FAFC', border: '1px solid #e9e9e9', borderRadius: 2, padding: 1.5 }}
       >
         <Box display={'flex'} justifyContent={'space-between'}>
           <Box display={'flex'} flexDirection={'column'}>
@@ -73,11 +68,9 @@ export default function LicenseSidePanel({ license }: LicenseSidePanelProps) {
           </Box>
 
           <IconButton
-            onClick={(e) => {
+            onClick={() => {
               setOpenChangeNfEntradaModal(true);
-              setFormContextData({
-                isEditing: true,
-              });
+              setFormContextData({ isEditing: true });
             }}
           >
             <EditIcon color="primary" fontSize="small" />

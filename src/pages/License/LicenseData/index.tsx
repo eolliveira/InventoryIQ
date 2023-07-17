@@ -1,28 +1,28 @@
+import { useNavigate, useParams } from 'react-router-dom';
+import { requestBackend } from '../../../http/requests';
+import { FormContext } from '../../../contexts/FormContext';
+import { BaseCard } from '../../../style/GlobalStyles';
+import { AxiosRequestConfig } from 'axios';
+import { Licenca } from '../../../types/Licenca/Licenca';
+import { ContainerSidePanel, CustomTab, Wapper } from './style';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
 import StockButton from '../../../components/buttons/StockButton';
-import { useNavigate, useParams } from 'react-router-dom';
-import { requestBackend } from '../../../http/requests';
-import TabPanel from '@material-ui/lab/TabPanel';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
-import { FormContext } from '../../../contexts/FormContext';
-import { BaseCard } from '../../../style/GlobalStyles';
-import { AxiosRequestConfig } from 'axios';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2';
-import { Licenca } from '../../../types/Licenca/Licenca';
 import LicenseForm from './LicenseForm';
 import LicenseDetails from './LicenseDetails';
 import LicenseAsset from './LicenseAsset';
 import LicenseSidePanel from '../../../components/LicenseSidePanel';
 import AssignmentReturnedTwoToneIcon from '@mui/icons-material/AssignmentReturnedTwoTone';
 import TextSnippetTwoToneIcon from '@mui/icons-material/TextSnippetTwoTone';
-import { ContainerSidePanel, CustomTab, Wapper } from './style';
 import TabContext from '@mui/lab/TabContext';
+import TabPanel from '@mui/lab/TabPanel/TabPanel';
 
 type urlParams = { licenseId: string };
 
@@ -43,20 +43,14 @@ export default function LicenseData() {
     requestBackend(params)
       .then((response) => setLicense(response.data))
       .catch((error) => {
-        Swal.fire({
-          title: 'Falha',
-          text: 'Falha ao obter dados da Licença!',
-          icon: 'warning',
-        });
+        Swal.fire({ title: 'Falha', text: 'Falha ao obter dados da Licença!', icon: 'warning' });
         console.log(error.response.data.message);
       });
   }, [licenseId, formContextData]);
 
   useEffect(() => getLicenseData(), [getLicenseData]);
 
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-    setTabValue(newValue);
-  };
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => setTabValue(newValue);
 
   const handleAdd = () => {
     setFormContextData({ isAdding: true });
@@ -88,19 +82,11 @@ export default function LicenseData() {
 
         requestBackend(params)
           .then(() => {
-            Swal.fire({
-              title: 'Removido',
-              text: 'Licença foi removida com sucesso!',
-              icon: 'success',
-            });
+            Swal.fire({ title: 'Removido', text: 'Licença foi removida com sucesso!', icon: 'success' });
             navigate('/license');
           })
           .catch((error) => {
-            Swal.fire({
-              title: 'Atenção',
-              text: `${error.response.data.message}`,
-              icon: 'warning',
-            });
+            Swal.fire({ title: 'Atenção', text: `${error.response.data.message}`, icon: 'warning' });
           });
       }
     });
@@ -122,7 +108,6 @@ export default function LicenseData() {
           <IconButton aria-label="back" size="medium" onClick={() => navigate('/license')}>
             <ArrowBackIcon color="primary" />
           </IconButton>
-
           <Typography fontSize={16} fontWeight={'bold'} letterSpacing={0.7} color={'primary'} marginLeft={2} flex={1}>
             {(license ? license?.id : '') + ' - ' + (license ? license?.nome : '')}
           </Typography>

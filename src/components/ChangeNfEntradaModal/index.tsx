@@ -25,6 +25,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import NoData from '../../components/NoData';
 import InputDatePeriod from '../../components/inputs/InputDatePeriod';
 import { Container } from './style';
+import { formatCurrency } from '../../utils/CurrencyConverter';
 
 type ChangeNfEntradaModalProps = {
   assetId?: string;
@@ -39,7 +40,7 @@ const columns: TableColumn<NotaFiscalEntrada>[] = [
   { name: 'Numero da Nota', selector: (row) => row.nrNotaFiscal },
   { name: 'Data de Emissão', selector: (row) => dayjs(row.dtEmissao).format('DD/MM/YYYY') },
   { name: 'Data de Entrada', selector: (row) => dayjs(row.dtEntrada).format('DD/MM/YYYY') },
-  { name: 'Valor da Nota', selector: (row) => row.valorNotaFiscal },
+  { name: 'Valor da Nota', selector: (row) => formatCurrency(row.valorNotaFiscal) },
 ];
 
 export default function ChangeNfEntradaModal({

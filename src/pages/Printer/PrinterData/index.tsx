@@ -26,7 +26,7 @@ import TextSnippetTwoToneIcon from '@mui/icons-material/TextSnippetTwoTone';
 import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
-import { Printer } from '../../../types/Printer/Printer';
+import { Printer } from '../../../types/Ativo/Printer/Printer';
 import PrinterDetails from './PrinterDetails';
 import PrinterForm from './PrinterForm';
 import { ContainerSidePanel, CustomTab, Wapper } from './style';

@@ -1,8 +1,8 @@
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import { Particao } from '../../../../../types/Workstation/Particao';
-import { Disco } from '../../../../../types/Workstation/Disco';
+import { Particao } from '../../../../../types/Ativo/Workstation/Particao';
+import { Disco } from '../../../../../types/Ativo/Workstation/Disco';
 import ProgressBarDisc from '../ProgressBarDisc';
 import DiscFullIcon from '@mui/icons-material/DiscFull';
 import { Stack } from '@mui/material';

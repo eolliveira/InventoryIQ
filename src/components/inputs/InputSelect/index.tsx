@@ -12,13 +12,7 @@ type InputSelectProps = {
 
 export default function InputSelect({ label, required, inputField, setInputField, selectedItems }: InputSelectProps) {
   return (
-    <FormControl
-      size="small"
-      sx={{
-        backgroundColor: 'rgb(248, 250, 252)',
-        color: 'primary',
-      }}
-    >
+    <FormControl size="small" sx={{ backgroundColor: 'rgb(248, 250, 252)', color: 'primary' }}>
       <InputLabel id="demo-simple-select-label">{label}</InputLabel>
       <Select
         sx={{ color: 'primary' }}
@@ -27,9 +21,7 @@ export default function InputSelect({ label, required, inputField, setInputField
         id="demo-simple-select-label"
         label={label}
         value={inputField}
-        onChange={(e) => {
-          setInputField(e.target.value);
-        }}
+        onChange={(e) => setInputField(e.target.value)}
       >
         {selectedItems.map((item, index) => (
           <MenuItem sx={{ fontSize: 14 }} key={index} value={item}>

@@ -29,9 +29,7 @@ export default function InputText({
       defaultValue={defaultValue ?? ''}
       render={({ field: { value, onChange } }) => (
         <TextField
-          {...register(name, {
-            required: required ? 'Campo requerido' : undefined,
-          })}
+          {...register(name, { required: required ? 'Campo requerido' : undefined })}
           fullWidth
           margin="dense"
           name={name}
@@ -43,18 +41,8 @@ export default function InputText({
           value={value ?? ''}
           onChange={onChange}
           size="small"
-          InputProps={{
-            size: 'small',
-            sx: {
-              height: 35,
-              fontSize: 13,
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              fontSize: 14,
-            },
-          }}
+          InputProps={{ size: 'small', sx: { height: 35, fontSize: 13 } }}
+          InputLabelProps={{ sx: { fontSize: 14 } }}
         />
       )}
     />

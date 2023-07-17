@@ -24,7 +24,7 @@ import Panel from '../../../../components/Panel';
 import SearchBar from '../../../../components/SearchBar';
 import Stack from '@mui/material/Stack';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import { Printer } from '../../../../types/Printer/Printer';
+import { Printer } from '../../../../types/Ativo/Printer/Printer';
 
 const columns: TableColumn<Interface>[] = [
   { name: 'Fabricante', selector: (row) => row.fabricante },

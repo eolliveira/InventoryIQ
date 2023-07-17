@@ -13,7 +13,7 @@ import ProgressBarDisc from './WorkstationHardware';
 import StockButton from '../../../components/buttons/StockButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestBackend } from '../../../http/requests';
-import { Workstation } from '../../../types/Workstation/Workstation';
+import { Workstation } from '../../../types/Ativo/Workstation/Workstation';
 import TabPanel from '@material-ui/lab/TabPanel';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';

@@ -33,20 +33,8 @@ export default function InputDatePeriod({
             textField: {
               size: 'small',
               variant: 'outlined',
-              InputLabelProps: {
-                style: {
-                  fontSize: 13,
-                },
-              },
-              InputProps: {
-                style: {
-                  fontSize: 13,
-                  borderRadius: 8,
-                  maxWidth: 150,
-                  height: 35,
-                  marginRight: 1,
-                },
-              },
+              InputLabelProps: { style: { fontSize: 13 } },
+              InputProps: { style: { fontSize: 13, borderRadius: 8, maxWidth: 150, height: 35, marginRight: 1 } },
             },
           }}
         />
@@ -59,11 +47,7 @@ export default function InputDatePeriod({
             textField: {
               size: 'small',
               variant: 'outlined',
-              InputLabelProps: {
-                style: {
-                  fontSize: 13,
-                },
-              },
+              InputLabelProps: { style: { fontSize: 13 } },
               InputProps: {
                 style: {
                   fontSize: 13,

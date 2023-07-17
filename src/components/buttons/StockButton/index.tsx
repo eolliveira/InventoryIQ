@@ -8,6 +8,7 @@ import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 type StockButtonProps = {
   fontSize?: number;
@@ -33,7 +34,7 @@ export default function StockButton({
   const handleClose = () => setAnchorEl(null);
 
   return (
-    <div>
+    <Box>
       <Button
         id="customized-button"
         aria-controls={open ? 'demo-customized-menu' : undefined}
@@ -59,9 +60,7 @@ export default function StockButton({
           alignItems: 'normal',
         }}
         id="customized-menu"
-        MenuListProps={{
-          'aria-labelledby': 'demo-customized-button',
-        }}
+        MenuListProps={{ 'aria-labelledby': 'demo-customized-button' }}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
@@ -83,12 +82,12 @@ export default function StockButton({
         )}
         {onClickEdit && (
           <MenuItem
+            sx={{ mb: 0.5 }}
             onClick={() => {
               onClickEdit();
               handleClose();
             }}
             disableRipple
-            sx={{ mb: 0.5 }}
           >
             <EditIcon fontSize="small" color="primary" sx={{ mr: 0.5 }} />
             <Typography textTransform={'none'} color={'primary'} fontSize={13}>
@@ -106,7 +105,6 @@ export default function StockButton({
             sx={{ mb: 0.5 }}
           >
             <FileCopyIcon fontSize="small" color="primary" sx={{ mr: 0.5 }} />
-
             <Typography textTransform={'none'} color={'primary'} fontSize={13}>
               Duplicar
             </Typography>
@@ -128,6 +126,6 @@ export default function StockButton({
           </MenuItem>
         )}
       </Menu>
-    </div>
+    </Box>
   );
 }

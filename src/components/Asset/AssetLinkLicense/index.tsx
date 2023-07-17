@@ -17,6 +17,7 @@ import { Licenca } from '../../../types/Licenca/Licenca';
 import Swal from 'sweetalert2';
 import SearchBar from '../../../components/SearchBar';
 import Panel from '../../../components/Panel';
+import { Container } from './style';
 
 type AssetLinkLicenseProps = {
   assetId?: string;
@@ -89,7 +90,7 @@ export default function AssetLinkLicense({ assetId, openModal, closeModal }: Ass
     <CustomModal openModal={openModal}>
       <BaseCard>
         <Panel title="Vincular licença">
-          <Box>
+          <Container>
             <Stack direction={'row'}>
               <SearchBar placeholder="Nome..." inputFilter={inputFilter} setInputFilter={setInputFilter} />
             </Stack>
@@ -118,7 +119,7 @@ export default function AssetLinkLicense({ assetId, openModal, closeModal }: Ass
                 },
               }}
             />
-          </Box>
+          </Container>
           <Box display={'flex'} justifyContent={'end'} marginTop={2}>
             <Button variant="contained" color="error" startIcon={<CloseIcon />} onClick={handleCancel}>
               <Typography textTransform={'none'}>Cancelar</Typography>

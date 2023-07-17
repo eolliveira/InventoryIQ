@@ -22,7 +22,7 @@ import Swal from 'sweetalert2';
 import TextSnippetTwoToneIcon from '@mui/icons-material/TextSnippetTwoTone';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
-import { Coletor } from 'types/Coletor';
+import { Coletor } from 'types/Ativo/Coletor';
 import CollectorForm from './CollectorForm';
 import CollectorDetails from './CollectorDetails';
 

@@ -28,9 +28,7 @@ export default function InputMultiline({
       control={control}
       render={({ field: { value, onChange } }) => (
         <TextField
-          {...register(name, {
-            required: required ? 'Campo requerido' : undefined,
-          })}
+          {...register(name, { required: required ? 'Campo requerido' : undefined })}
           id={name}
           name={name}
           margin="dense"
@@ -45,17 +43,8 @@ export default function InputMultiline({
           variant="outlined"
           onChange={onChange}
           size="small"
-          InputProps={{
-            size: 'small',
-            sx: {
-              fontSize: 13,
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              fontSize: 14,
-            },
-          }}
+          InputProps={{ size: 'small', sx: { fontSize: 13 } }}
+          InputLabelProps={{ sx: { fontSize: 14 } }}
         />
       )}
     />

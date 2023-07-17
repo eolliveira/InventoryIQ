@@ -1,5 +1,5 @@
 import { LocalIndustria } from "types/LocalIndustria";
-import { Usuario } from "../Usuario";
+import { Usuario } from "../../Usuario";
 
 export type Workstation = {
   id: string;

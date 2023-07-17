@@ -20,6 +20,7 @@ import DeleteOutlineTwoToneIcon from '@mui/icons-material/DeleteOutlineTwoTone';
 import Swal from 'sweetalert2';
 import MessageOutlinedIcon from '@mui/icons-material/MessageOutlined';
 import dayjs from 'dayjs';
+import { formatCurrency } from '../../../utils/CurrencyConverter';
 
 type AssetServiceProps = { assetId?: string };
 
@@ -40,7 +41,12 @@ export default function AssetService({ assetId }: AssetServiceProps) {
     },
     { name: 'Tipo', sortable: true, selector: (row) => toCamelCase(removeUnderline(row.tipoServico)) },
     { name: 'Usuário realizou', sortable: true, selector: (row) => toCamelCase(row.usuario.nome) },
-    { name: 'Valor', sortable: true, width: '90px', selector: (row) => row.vlServico },
+    {
+      name: 'Valor',
+      sortable: true,
+      width: '90px',
+      selector: (row) => (row.vlServico ? formatCurrency(String(row.vlServico)) : ``),
+    },
     {
       button: true,
       width: '80px',
@@ -123,7 +129,6 @@ export default function AssetService({ assetId }: AssetServiceProps) {
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        pointerOnHover
         highlightOnHover
         fixedHeaderScrollHeight={'82vh'}
         customStyles={{
