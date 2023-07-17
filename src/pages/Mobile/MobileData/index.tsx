@@ -12,7 +12,6 @@ import TabPanel from '@material-ui/lab/TabPanel';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import AssetSidePanel from '../../../components/Asset/AssetSidePanel';
 import { FormContext } from '../../../contexts/FormContext';
 import { BaseCard } from '../../../style/GlobalStyles';
@@ -124,7 +123,6 @@ export default function MobileData() {
           <IconButton aria-label="back" size="medium" onClick={() => navigate('/mobile')}>
             <ArrowBackIcon color="primary" />
           </IconButton>
-
           <Typography fontSize={16} fontWeight={'bold'} letterSpacing={0.7} color={'primary'} marginLeft={2} flex={1}>
             {(device ? device?.id : '') + ' - ' + (device ? device?.nome : '')}
           </Typography>
