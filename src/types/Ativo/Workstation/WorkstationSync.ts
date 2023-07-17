@@ -1,4 +1,4 @@
-import { Interface } from 'types/Interface';
+import { Interface } from 'types/Ativo/Interface';
 import { Disco } from './Disco';
 
 export type WorkstationSync = {

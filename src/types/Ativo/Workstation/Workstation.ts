@@ -1,4 +1,4 @@
-import { LocalIndustria } from "types/LocalIndustria";
+import { LocalIndustria } from "types/Local";
 import { Usuario } from "../../Usuario";
 
 export type Workstation = {

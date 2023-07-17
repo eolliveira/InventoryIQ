@@ -12,7 +12,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomModal from '../../../../components/CustomModal';
 import SearchIcon from '@mui/icons-material/Search';
-import { Interface } from 'types/Interface';
+import { Interface } from 'types/Ativo/Interface';
 import Typography from '@mui/material/Typography';
 import NoData from '../../../../components/NoData';
 import InputDate from '../../../../components/inputs/InputDate';

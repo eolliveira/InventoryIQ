@@ -25,7 +25,7 @@ import CircularLoading from '../../../components/Loaders/Progress';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Swal from 'sweetalert2';
-import { Nobreak } from '../../../types/Nobreak';
+import { Nobreak } from '../../../types/Ativo/Nobreak';
 import NobreakForm from '../NobreakData/NobreakForm';
 import dayjs, { Dayjs } from 'dayjs';
 import InputDatePeriod from '../../../components/inputs/InputDatePeriod';

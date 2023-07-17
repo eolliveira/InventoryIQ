@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import TextInfo from '../../../../components/TextInfo';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
 import InterfaceList from '../../../../components/Asset/InterfaceList/InterfaceList';
-import { Mobile } from '../../../../types/Mobile';
+import { Mobile } from '../../../../types/Ativo/Mobile';
 
 type MobileDetailsProps = { data?: Mobile };
 

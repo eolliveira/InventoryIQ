@@ -10,7 +10,7 @@ import InterfaceForm from '../InterfaceForm';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CircularLoading from '../../Loaders/Progress';
-import { Interface } from '../../../types/Interface';
+import { Interface } from '../../../types/Ativo/Interface';
 import { requestBackend } from '../../../http/requests';
 import { FormContext } from '../../../contexts/FormContext';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';

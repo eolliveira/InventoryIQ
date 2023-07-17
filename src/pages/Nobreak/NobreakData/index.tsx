@@ -20,7 +20,7 @@ import Swal from 'sweetalert2';
 import TextSnippetTwoToneIcon from '@mui/icons-material/TextSnippetTwoTone';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
-import { Nobreak } from 'types/Nobreak';
+import { Nobreak } from 'types/Ativo/Nobreak';
 import NobreakForm from './NobreakForm';
 import NobreakDetails from './NobreakDetails';
 import { ContainerSidePanel, CustomTab, Wapper } from './style';

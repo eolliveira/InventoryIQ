@@ -25,7 +25,7 @@ import CircularLoading from '../../../components/Loaders/Progress';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Swal from 'sweetalert2';
-import { Mobile } from '../../../types/Mobile';
+import { Mobile } from '../../../types/Ativo/Mobile';
 import MobileForm from '../MobileData/MobileForm';
 import { toCamelCase } from '../../../utils/StringConverter';
 import dayjs, { Dayjs } from 'dayjs';

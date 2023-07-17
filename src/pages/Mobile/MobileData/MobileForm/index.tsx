@@ -19,7 +19,7 @@ import InputMultiline from '../../../../components/inputs/InputMultiline';
 import Swal from 'sweetalert2';
 import Panel from '../../../../components/Panel';
 import Stack from '@mui/material/Stack';
-import { Mobile } from '../../../../types/Mobile';
+import { Mobile } from '../../../../types/Ativo/Mobile';
 
 type MobileFormProps = {
   data?: Mobile;
@@ -27,11 +27,7 @@ type MobileFormProps = {
   closeForm: () => void;
 };
 
-export default function MobileForm({
-  data,
-  openForm,
-  closeForm,
-}: MobileFormProps) {
+export default function MobileForm({ data, openForm, closeForm }: MobileFormProps) {
   const { formContextData, setFormContextData } = useContext(FormContext);
 
   const {
@@ -45,8 +41,7 @@ export default function MobileForm({
 
   useEffect(() => {
     if (data && formContextData.isEditing) setFormData(data);
-    if (data && formContextData.isDuplicated && formContextData.isAdding)
-      setFormData(data);
+    if (data && formContextData.isDuplicated && formContextData.isAdding) setFormData(data);
   }, []);
 
   const onSubmit = (formData: Mobile) => {
@@ -61,9 +56,7 @@ export default function MobileForm({
       if (result.isConfirmed) {
         const params: AxiosRequestConfig = {
           method: formContextData.isAdding ? 'POST' : 'PUT',
-          url: formContextData.isAdding
-            ? '/mobileDevice'
-            : `/mobileDevice/${data?.id}/update`,
+          url: formContextData.isAdding ? '/mobileDevice' : `/mobileDevice/${data?.id}/update`,
           data: formData,
           withCredentials: true,
         };
@@ -105,9 +98,7 @@ export default function MobileForm({
   };
 
   const setFormData = (data: Mobile) => {
-    formContextData.isDuplicated
-      ? setValue('nome', '')
-      : setValue('nome', data.nome);
+    formContextData.isDuplicated ? setValue('nome', '') : setValue('nome', data.nome);
     setValue('imei', data.imei);
     setValue('gateway', data.gateway);
     setValue('modelo', data.modelo);
@@ -123,13 +114,7 @@ export default function MobileForm({
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel
-          title={
-            formContextData.isEditing
-              ? 'Alterar Dispositivo'
-              : 'Adicionar Dispositivo'
-          }
-        >
+        <Panel title={formContextData.isEditing ? 'Alterar Dispositivo' : 'Adicionar Dispositivo'}>
           <form style={{ maxWidth: '900px' }} onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-md-6">
@@ -213,12 +198,7 @@ export default function MobileForm({
 
                 <div className="row">
                   <div className="col-sm-6">
-                    <InputDate
-                      register={register}
-                      label="Data aquisição"
-                      control={control}
-                      name="dtAquisicao"
-                    />
+                    <InputDate register={register} label="Data aquisição" control={control} name="dtAquisicao" />
                   </div>
                   <div className="col-sm-6">
                     <InputDate
@@ -246,12 +226,7 @@ export default function MobileForm({
 
             <Box display={'flex'} justifyContent={'end'} marginTop={2}>
               <Stack direction={'row'} spacing={2}>
-                <Button
-                  color="error"
-                  variant="contained"
-                  startIcon={<CloseIcon />}
-                  onClick={onCancelForm}
-                >
+                <Button color="error" variant="contained" startIcon={<CloseIcon />} onClick={onCancelForm}>
                   <Typography fontSize={14} textTransform={'none'}>
                     Cancelar
                   </Typography>

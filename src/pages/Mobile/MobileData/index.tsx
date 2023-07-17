@@ -23,7 +23,7 @@ import TextSnippetTwoToneIcon from '@mui/icons-material/TextSnippetTwoTone';
 import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
-import { Mobile } from '../../../types/Mobile';
+import { Mobile } from '../../../types/Ativo/Mobile';
 import MobileForm from './MobileForm';
 import MobileDetails from './MobileDetails';
 import { ContainerSidePanel, CustomTab, Wapper } from './style';

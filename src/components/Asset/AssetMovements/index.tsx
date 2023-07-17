@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
-import { Movimento } from '../../../types/Movimento';
+import { Movimento } from '../../../types/Ativo/Movimento';
 import { toCamelCase } from '../../../utils/StringConverter';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';

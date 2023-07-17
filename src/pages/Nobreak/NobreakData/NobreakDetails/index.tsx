@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import TextInfo from '../../../../components/TextInfo';
 import { formatCurrency } from '../../../../utils/CurrencyConverter';
-import { Nobreak } from '../../../../types/Nobreak';
+import { Nobreak } from '../../../../types/Ativo/Nobreak';
 
 type NobreakDetailsProps = { data?: Nobreak };
 

@@ -1,5 +1,5 @@
-import { LocalIndustria } from "./LocalIndustria";
-import { Usuario } from "./Usuario";
+import { LocalIndustria } from "../Local";
+import { Usuario } from "../Usuario";
 
 export type Mobile = {
     id: string,

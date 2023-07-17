@@ -4,7 +4,7 @@ import { Button, Stack } from '@mui/material';
 import { requestBackend } from '../../../http/requests';
 import { FormContext } from '../../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
-import { LocalIndustria } from 'types/LocalIndustria';
+import { LocalIndustria } from 'types/Local';
 import Box from '@mui/material/Box';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';

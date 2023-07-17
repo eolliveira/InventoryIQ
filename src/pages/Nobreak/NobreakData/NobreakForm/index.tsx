@@ -19,7 +19,7 @@ import InputMultiline from '../../../../components/inputs/InputMultiline';
 import Swal from 'sweetalert2';
 import Panel from '../../../../components/Panel';
 import Stack from '@mui/material/Stack';
-import { Nobreak } from '../../../../types/Nobreak';
+import { Nobreak } from '../../../../types/Ativo/Nobreak';
 
 type NobreakFormProps = {
   data?: Nobreak;

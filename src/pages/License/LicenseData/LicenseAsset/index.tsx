@@ -1,3 +1,8 @@
+import { AxiosRequestConfig } from 'axios';
+import { Ativo } from '../../../../types/Ativo/Ativo';
+import { requestBackend } from '../../../../http/requests';
+import { FormContext } from '../../../../contexts/FormContext';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -6,16 +11,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import { useCallback, useContext, useEffect, useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import NoData from '../../../../components/NoData';
-import { requestBackend } from '../../../../http/requests';
-import { FormContext } from '../../../../contexts/FormContext';
 import IconButton from '@mui/material/IconButton';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import Swal from 'sweetalert2';
-import { AxiosRequestConfig } from 'axios';
-import { Ativo } from '../../../../types/Ativo';
 import LicenseLinkAsset from '../LicenseLinkAsset';
 
 type LicenseAssetProps = { licenseId?: string };

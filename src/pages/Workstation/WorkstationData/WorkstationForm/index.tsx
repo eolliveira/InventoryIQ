@@ -14,7 +14,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CustomModal from '../../../../components/CustomModal';
 import SearchIcon from '@mui/icons-material/Search';
 import { WorkstationSync } from 'types/Ativo/Workstation/WorkstationSync';
-import { Interface } from 'types/Interface';
+import { Interface } from 'types/Ativo/Interface';
 import { Disco } from 'types/Ativo/Workstation/Disco';
 import { Particao } from 'types/Ativo/Workstation/Particao';
 import Typography from '@mui/material/Typography';
