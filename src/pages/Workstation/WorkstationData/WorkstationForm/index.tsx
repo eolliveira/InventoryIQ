@@ -88,11 +88,7 @@ export default function WorkstationForm({ data, openForm, closeForm }: Workstati
 
         requestBackend(params)
           .then((response) => {
-            Swal.fire({
-              title: 'Concluido!',
-              text: 'Dados foram salvos!',
-              icon: 'success',
-            });
+            Swal.fire({ title: 'Concluido!', text: 'Dados foram salvos!', icon: 'success' });
             setFormContextData({
               isAdding: false,
               isEditing: false,
@@ -102,11 +98,7 @@ export default function WorkstationForm({ data, openForm, closeForm }: Workstati
             closeForm();
           })
           .catch((error) => {
-            Swal.fire({
-              title: 'Atenção',
-              text: `${error.response.data.message}`,
-              icon: 'warning',
-            });
+            Swal.fire({ title: 'Atenção', text: `${error.response.data.message}`, icon: 'warning' });
           });
       }
     });
@@ -118,7 +110,6 @@ export default function WorkstationForm({ data, openForm, closeForm }: Workstati
       isEditing: false,
       isDuplicated: false,
     });
-
     closeForm();
   };
 
@@ -208,9 +199,20 @@ export default function WorkstationForm({ data, openForm, closeForm }: Workstati
           {formContextData.isAdding && (
             <Box display={'flex'}>
               <SearchBar placeholder="0.0.0.0" inputFilter={ipAddress} setInputFilter={setIpAddress} />
-
-              <LoadingButton size="small" color="primary" onClick={handleToSweep} loading={sweeping} variant="text">
-                <SearchIcon fontSize="medium" />
+              <LoadingButton
+                sx={{
+                  bgcolor: 'primary',
+                  height: 33,
+                  marginTop: 0,
+                  marginLeft: 0.5,
+                  marginRight: 1,
+                }}
+                size="small"
+                onClick={handleToSweep}
+                loading={sweeping}
+                variant="contained"
+              >
+                <SearchIcon />
               </LoadingButton>
             </Box>
           )}

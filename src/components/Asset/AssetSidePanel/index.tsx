@@ -138,7 +138,6 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
       >
         <Box display={'flex'} justifyContent={'space-around'} flexWrap={'wrap'} alignItems={'center'}>
           <RoomTwoToneIcon color="primary" style={{ marginRight: 5 }} />
-
           <Typography color={'primary'} flex={1} fontSize={13} marginTop={0.5} variant="subtitle2">
             {data.localIndustria
               ? (data.localIndustria.id ? data.localIndustria.id : '') +
@@ -197,9 +196,7 @@ export default function AssetSidePanel({ data }: AssetSidePanelProps) {
           <IconButton
             onClick={() => {
               setOpenChangeNfEntradaModal(true);
-              setFormContextData({
-                isEditing: true,
-              });
+              setFormContextData({ isEditing: true });
             }}
           >
             <EditTwoToneIcon color="primary" fontSize="small" />
