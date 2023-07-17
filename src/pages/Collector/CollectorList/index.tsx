@@ -45,6 +45,7 @@ const columns: TableColumn<Coletor>[] = [
 
 export default function CollectorList() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [page, setPage] = useState<SpringPage<Coletor>>();
   const [numberPage, setNumberPage] = useState(0);
@@ -66,6 +67,7 @@ export default function CollectorList() {
   const [dtAquisicaoFinalFilter, setDtAquisicaoFinalFilter] = useState<Dayjs | null>(null);
 
   const getCollectorsData = useCallback(() => {
+    setIsLoading(true);
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/collectors?${filterField}=${inputFilter}&status=${statusFilter}${
@@ -80,7 +82,8 @@ export default function CollectorList() {
 
     requestBackend(params)
       .then((response) => setPage(response.data))
-      .catch((error) => console.log('Erro' + error));
+      .catch((error) => console.log('Erro' + error))
+      .finally(() => setIsLoading(false));
   }, [
     numberPage,
     rowsPerPage,
@@ -232,9 +235,10 @@ export default function CollectorList() {
         selectableRows
         pointerOnHover
         highlightOnHover
-        onRowClicked={handleRowClicked}
         selectableRowsSingle
+        onRowClicked={handleRowClicked}
         onSelectedRowsChange={handleSelectedRowsChange}
+        progressPending={isLoading}
         progressComponent={<CircularLoading />}
         customStyles={{
           headCells: {

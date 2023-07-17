@@ -63,6 +63,7 @@ const columns: TableColumn<Mobile>[] = [
 
 export default function MobileList() {
   const { formContextData, setFormContextData } = useContext(FormContext);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [page, setPage] = useState<SpringPage<Mobile>>();
   const [inputFilter, setInputFilter] = useState('');
@@ -82,6 +83,38 @@ export default function MobileList() {
   const [openDeviceForm, setOpenDeviceForm] = useState(false);
   const [openCustomFilters, setOpenCustomFilters] = useState<null | HTMLElement>(null);
   const open = Boolean(openCustomFilters);
+
+  const getDevicesData = useCallback(() => {
+    setIsLoading(true);
+
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: `/mobileDevice?${filterField}=${inputFilter}&status=${statusFilter}${
+        dtAquisicaoInicioFilter ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format('DD/MM/YYYY')}` : ''
+      }${dtAquisicaoFinalFilter ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format('DD/MM/YYYY')}` : ''}`,
+      withCredentials: true,
+      params: {
+        page: numberPage,
+        size: rowsPerPage,
+      },
+    };
+
+    requestBackend(params)
+      .then((response) => setPage(response.data))
+      .catch((error) => console.log('Erro' + error))
+      .finally(() => setIsLoading(false));
+  }, [
+    numberPage,
+    rowsPerPage,
+    formContextData,
+    inputFilter,
+    filterField,
+    statusFilter,
+    dtAquisicaoInicioFilter,
+    dtAquisicaoFinalFilter,
+  ]);
+
+  useEffect(() => getDevicesData(), [getDevicesData]);
 
   const handleAddDevice = () => {
     setFormContextData({ isAdding: true });
@@ -152,42 +185,8 @@ export default function MobileList() {
 
   const handleSelectedRowsChange = (selectedRows: any) => {
     if (selectedRows.selectedCount == 1) setSelectedAsset(selectedRows.selectedRows[0].id);
-
     if (selectedRows.selectedCount == 0) setSelectedAsset('');
   };
-
-  const getDevicesData = useCallback(() => {
-    const params: AxiosRequestConfig = {
-      method: 'GET',
-      url: `/mobileDevice?${filterField}=${inputFilter}&status=${statusFilter}${
-        dtAquisicaoInicioFilter ? `&dtAquisicaoInicio=${dayjs(dtAquisicaoInicioFilter).format('DD/MM/YYYY')}` : ''
-      }${dtAquisicaoFinalFilter ? `&dtAquisicaoFinal=${dayjs(dtAquisicaoFinalFilter).format('DD/MM/YYYY')}` : ''}`,
-      withCredentials: true,
-      params: {
-        page: numberPage,
-        size: rowsPerPage,
-      },
-    };
-
-    requestBackend(params)
-      .then((response) => {
-        setPage(response.data);
-      })
-      .catch((error) => {
-        console.log('Erro' + error);
-      });
-  }, [
-    numberPage,
-    rowsPerPage,
-    formContextData,
-    inputFilter,
-    filterField,
-    statusFilter,
-    dtAquisicaoInicioFilter,
-    dtAquisicaoFinalFilter,
-  ]);
-
-  useEffect(() => getDevicesData(), [getDevicesData]);
 
   return (
     <Panel title="Dispositivos móveis">
@@ -250,14 +249,15 @@ export default function MobileList() {
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        fixedHeaderScrollHeight={'68vh'}
         selectableRows
         pointerOnHover
         highlightOnHover
-        onRowClicked={handleRowClicked}
         selectableRowsSingle
+        onRowClicked={handleRowClicked}
         onSelectedRowsChange={handleSelectedRowsChange}
+        progressPending={isLoading}
         progressComponent={<CircularLoading />}
+        fixedHeaderScrollHeight={'68vh'}
         customStyles={{
           headCells: {
             style: {

@@ -29,21 +29,11 @@ export const requestBackend = (config: AxiosRequestConfig) => {
   return axios({ ...config, baseURL: BASE_URL, headers });
 };
 
-axios.interceptors.request.use(
-  function (config) {
-    // Do something before request is sent
-    return config;
-  },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-  }
-);
-
 axios.interceptors.response.use(
   function (response) {
     return response;
   },
+
   function (error) {
     if (error.response.status === 401) { window.location.href = '/login' }
     if (error.response.status === 403) { window.location.href = '/forbidden '}

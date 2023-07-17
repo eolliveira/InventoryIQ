@@ -32,6 +32,7 @@ import FormControl from '@mui/material/FormControl';
 import { Software } from '../../../types/Licenca/Software';
 import { TipoLicenca } from '../../../types/Licenca/TipoLicenca';
 import Swal from 'sweetalert2';
+import CircularLoading from '../../../components/Loaders/Progress';
 
 const columns: TableColumn<Licenca>[] = [
   { name: 'Nome', selector: (row) => row.nome, sortable: true },
@@ -55,6 +56,7 @@ const columns: TableColumn<Licenca>[] = [
 
 export default function LicenseList() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [page, setPage] = useState<SpringPage<Licenca>>();
   const [numberPage, setNumberPage] = useState(0);
@@ -83,6 +85,7 @@ export default function LicenseList() {
   const [softwareId, setSoftwareId] = useState('');
 
   const getLicenses = useCallback(() => {
+    setIsLoading(true);
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/licenses?${filterField}=${inputFilter}&status=${statusFilter}&softwareId=${softwareId}&tpLicencaId=${tpLicencaId}${
@@ -97,7 +100,8 @@ export default function LicenseList() {
 
     requestBackend(params)
       .then((response) => setPage(response.data))
-      .catch((error) => console.log('Erro' + error));
+      .catch((error) => console.log('Erro' + error))
+      .finally(() => setIsLoading(false));
   }, [
     numberPage,
     formContextData,
@@ -335,6 +339,8 @@ export default function LicenseList() {
         highlightOnHover
         onRowClicked={handleRowClicked}
         onSelectedRowsChange={handleSelectedRowsChange}
+        progressPending={isLoading}
+        progressComponent={<CircularLoading />}
         customStyles={{
           headCells: {
             style: {

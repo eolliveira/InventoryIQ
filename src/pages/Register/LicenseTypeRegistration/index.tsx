@@ -14,12 +14,13 @@ import AddIcon from '@mui/icons-material/Add';
 import Swal from 'sweetalert2';
 import { TipoLicenca } from '../../../types/Licenca/TipoLicenca';
 import LicenseTypeModal from './LicenseTypeModal';
+import CircularLoading from '../../../components/Loaders/Progress';
 
 export default function LicenseTypeRegistration() {
   const columns: TableColumn<TipoLicenca>[] = [
-    { name: 'Id', width: '100px', selector: (row) => row.id, sortable: true },
-    { name: 'Nome', selector: (row) => row.nome, compact: true, sortable: true },
-    { name: 'Descricão', width: '500px', selector: (row) => row.descricao },
+    { name: 'Id', width: '100px', sortable: true, selector: (row) => row.id },
+    { name: 'Nome', sortable: true, selector: (row) => row.nome, compact: true },
+    { name: 'Descricão', width: '500px', sortable: true, selector: (row) => row.descricao },
     {
       button: true,
       sortable: true,
@@ -40,10 +41,24 @@ export default function LicenseTypeRegistration() {
     },
   ];
 
+  const [isLoading, setIsLoading] = useState(false);
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [types, setTypes] = useState<TipoLicenca[]>();
   const [data, setData] = useState<TipoLicenca>();
   const [openLicenseTypeModal, setLicenseTypeModal] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const params: AxiosRequestConfig = {
+      url: '/licenseType',
+      withCredentials: true,
+    };
+
+    requestBackend(params)
+      .then((response) => setTypes(response.data))
+      .catch((error) => console.log('Erro' + error))
+      .finally(() => setIsLoading(false));
+  }, [formContextData]);
 
   const onAddLicenseType = () => {
     setData(undefined);
@@ -95,17 +110,6 @@ export default function LicenseTypeRegistration() {
     });
   };
 
-  useEffect(() => {
-    const params: AxiosRequestConfig = {
-      url: '/licenseType',
-      withCredentials: true,
-    };
-
-    requestBackend(params)
-      .then((response) => setTypes(response.data))
-      .catch((error) => console.log('Erro' + error));
-  }, [formContextData]);
-
   return (
     <>
       <Box display={'flex'} justifyContent={'end'} marginTop={1}>
@@ -113,7 +117,6 @@ export default function LicenseTypeRegistration() {
           <AddIcon />
         </Button>
       </Box>
-
       <DataTable
         dense
         striped
@@ -124,6 +127,8 @@ export default function LicenseTypeRegistration() {
         responsive
         fixedHeader
         highlightOnHover
+        progressPending={isLoading}
+        progressComponent={<CircularLoading />}
         customStyles={{
           headCells: {
             style: {

@@ -45,6 +45,7 @@ const columns: TableColumn<Nobreak>[] = [
 
 export default function NobreakList() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [page, setPage] = useState<SpringPage<Nobreak>>();
   const [numberPage, setNumberPage] = useState(0);
@@ -66,6 +67,7 @@ export default function NobreakList() {
   const open = Boolean(openCustomFilters);
 
   const getNobreakData = useCallback(() => {
+    setIsLoading(true);
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/nobreak?${filterField}=${inputFilter}&status=${statusFilter}${
@@ -79,12 +81,9 @@ export default function NobreakList() {
     };
 
     requestBackend(params)
-      .then((response) => {
-        setPage(response.data);
-      })
-      .catch((error) => {
-        console.log('Erro' + error);
-      });
+      .then((response) => setPage(response.data))
+      .catch((error) => console.log('Erro' + error))
+      .finally(() => setIsLoading(false));
   }, [
     numberPage,
     rowsPerPage,
@@ -168,7 +167,6 @@ export default function NobreakList() {
 
   const handleSelectedRowsChange = (selectedRows: any) => {
     if (selectedRows.selectedCount == 1) setSelectedAsset(selectedRows.selectedRows[0].id);
-
     if (selectedRows.selectedCount == 0) setSelectedAsset('');
   };
 
@@ -234,14 +232,15 @@ export default function NobreakList() {
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        fixedHeaderScrollHeight={'68vh'}
         selectableRows
         pointerOnHover
         highlightOnHover
-        onRowClicked={handleRowClicked}
         selectableRowsSingle
+        onRowClicked={handleRowClicked}
         onSelectedRowsChange={handleSelectedRowsChange}
+        progressPending={isLoading}
         progressComponent={<CircularLoading />}
+        fixedHeaderScrollHeight={'68vh'}
         customStyles={{
           headCells: {
             style: {

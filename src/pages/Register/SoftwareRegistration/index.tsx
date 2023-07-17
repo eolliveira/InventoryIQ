@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import SoftwareModal from './SoftwareModal';
 import Swal from 'sweetalert2';
+import CircularLoading from '../../../components/Loaders/Progress';
 
 export default function SoftwareRegistration() {
   const columns: TableColumn<Software>[] = [
@@ -41,10 +42,24 @@ export default function SoftwareRegistration() {
     },
   ];
 
+  const [isLoading, setIsLoading] = useState(false);
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [softwares, setSoftwares] = useState<Software[]>();
   const [data, setData] = useState<Software>();
   const [openSoftwareModal, setOpenSoftwareModal] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const params: AxiosRequestConfig = {
+      url: '/software',
+      withCredentials: true,
+    };
+
+    requestBackend(params)
+      .then((response) => setSoftwares(response.data))
+      .catch((error) => console.log('Erro' + error))
+      .finally(() => setIsLoading(false));
+  }, [formContextData]);
 
   const onAddSoftware = () => {
     setData(undefined);
@@ -96,17 +111,6 @@ export default function SoftwareRegistration() {
     });
   };
 
-  useEffect(() => {
-    const params: AxiosRequestConfig = {
-      url: '/software',
-      withCredentials: true,
-    };
-
-    requestBackend(params)
-      .then((response) => setSoftwares(response.data))
-      .catch((error) => console.log('Erro' + error));
-  }, [formContextData]);
-
   return (
     <>
       <Box display={'flex'} justifyContent={'end'} marginTop={1}>
@@ -124,6 +128,8 @@ export default function SoftwareRegistration() {
         responsive
         fixedHeader
         highlightOnHover
+        progressPending={isLoading}
+        progressComponent={<CircularLoading />}
         customStyles={{
           headCells: {
             style: {

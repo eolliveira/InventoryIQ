@@ -55,11 +55,12 @@ const columns: TableColumn<Workstation>[] = [
 ];
 
 export default function WorkstationList() {
-  const { formContextData, setFormContextData } = useContext(FormContext);
   const navigate = useNavigate();
-  const [page, setPage] = useState<SpringPage<Workstation>>();
   const [numberPage, setNumberPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState('10');
+  const [page, setPage] = useState<SpringPage<Workstation>>();
+  const { formContextData, setFormContextData } = useContext(FormContext);
 
   const [openWorkstationForm, setOpenWorkstationForm] = useState(false);
   const [openCustomFilters, setOpenCustomFilters] = useState<null | HTMLElement>(null);
@@ -77,6 +78,7 @@ export default function WorkstationList() {
   const [dtAquisicaoFinalFilter, setDtAquisicaoFinalFilter] = useState<Dayjs | null>(null);
 
   const getWorkstatioData = useCallback(() => {
+    setIsLoading(true);
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/workstation?${filterField}=${inputFilter}&status=${statusFilter}${
@@ -88,7 +90,8 @@ export default function WorkstationList() {
 
     requestBackend(params)
       .then((response) => setPage(response.data))
-      .catch((error) => console.log('Erro' + error));
+      .catch((error) => console.log('Erro' + error))
+      .finally(() => setIsLoading(false));
   }, [
     numberPage,
     rowsPerPage,
@@ -240,9 +243,10 @@ export default function WorkstationList() {
         pointerOnHover
         highlightOnHover
         onRowClicked={handleRowClicked}
-        selectableRowsSingle
         onSelectedRowsChange={handleSelectedRowsChange}
+        selectableRowsSingle
         progressComponent={<CircularLoading />}
+        progressPending={isLoading}
         customStyles={{
           headCells: {
             style: {

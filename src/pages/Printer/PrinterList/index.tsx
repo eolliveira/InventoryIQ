@@ -50,6 +50,7 @@ const columns: TableColumn<Printer>[] = [
 
 export default function PrinterList() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const { formContextData, setFormContextData } = useContext(FormContext);
   const [page, setPage] = useState<SpringPage<Printer>>();
   const [numberPage, setNumberPage] = useState(0);
@@ -71,6 +72,7 @@ export default function PrinterList() {
   const [dtAquisicaoFinalFilter, setDtAquisicaoFinalFilter] = useState<Dayjs | null>(null);
 
   const getPrintersData = useCallback(() => {
+    setIsLoading(true);
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: `/printer?${filterField}=${inputFilter}&status=${statusFilter}${
@@ -82,7 +84,8 @@ export default function PrinterList() {
 
     requestBackend(params)
       .then((response) => setPage(response.data))
-      .catch((error) => console.log('Erro' + error));
+      .catch((error) => console.log('Erro' + error))
+      .finally(() => setIsLoading(false));
   }, [
     numberPage,
     rowsPerPage,
@@ -166,7 +169,6 @@ export default function PrinterList() {
 
   const handleSelectedRowsChange = (selectedRows: any) => {
     if (selectedRows.selectedCount == 1) setSelectedAsset(selectedRows.selectedRows[0].id);
-
     if (selectedRows.selectedCount == 0) setSelectedAsset('');
   };
 
@@ -231,14 +233,15 @@ export default function PrinterList() {
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        fixedHeaderScrollHeight={'68vh'}
         selectableRows
         pointerOnHover
         highlightOnHover
-        onRowClicked={handleRowClicked}
         selectableRowsSingle
+        onRowClicked={handleRowClicked}
         onSelectedRowsChange={handleSelectedRowsChange}
+        progressPending={isLoading}
         progressComponent={<CircularLoading />}
+        fixedHeaderScrollHeight={'68vh'}
         customStyles={{
           headCells: {
             style: {
