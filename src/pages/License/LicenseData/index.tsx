@@ -66,10 +66,9 @@ export default function LicenseData() {
     Swal.fire({
       icon: 'question',
       title: `Deseja remover esta Licença?`,
-      text: 'Todas as informações serão perdidas! ',
+      text: 'Todas as informações serão perdidas!',
       showDenyButton: true,
       confirmButtonText: 'Confirmar',
-      confirmButtonColor: `#dc3545`,
       denyButtonText: `Cancelar`,
       denyButtonColor: '#4d4d4d',
     }).then((result) => {

@@ -184,9 +184,7 @@ export default function LicenseForm({ licenseData, openForm, closeForm }: Licens
                     label="Selecione um software"
                     value={softwareId}
                     sx={{ fontSize: 13 }}
-                    onChange={(e: any) => {
-                      setSoftwareId(e.target.value);
-                    }}
+                    onChange={(e: any) => setSoftwareId(e.target.value)}
                   >
                     {softwares?.map((software) => (
                       <MenuItem sx={{ fontSize: 13 }} key={software.id} value={software.id}>
