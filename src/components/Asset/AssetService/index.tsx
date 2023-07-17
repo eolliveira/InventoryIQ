@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { toCamelCase } from '../../../utils/StringConverter';
+import { removeUnderline, toCamelCase } from '../../../utils/StringConverter';
 import { Servico } from '../../../types/Servico';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
@@ -14,9 +14,11 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import AddServiceModal from '../AddServiceModal';
 import NoData from '../../NoData';
+import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlineTwoToneIcon from '@mui/icons-material/DeleteOutlineTwoTone';
 import Swal from 'sweetalert2';
+import MessageOutlinedIcon from '@mui/icons-material/MessageOutlined';
 import dayjs from 'dayjs';
 
 type AssetServiceProps = { assetId?: string };
@@ -27,28 +29,18 @@ export default function AssetService({ assetId }: AssetServiceProps) {
   const [openAddService, setOpenAddService] = useState(false);
 
   const columns: TableColumn<Servico>[] = [
+    { name: 'Data', selector: (row) => dayjs(row.dhGerou).format('DD/MM/YYYY'), sortable: true, grow: 0.4 },
     {
-      name: 'Data',
-      selector: (row) => dayjs(row.dhGerou).format('DD/MM/YYYY'),
-      sortable: true,
-      grow: 0.6,
+      button: true,
+      cell: (row) => (
+        <Tooltip title={row.descricao}>
+          <MessageOutlinedIcon fontSize="small" color="primary" />
+        </Tooltip>
+      ),
     },
-    {
-      name: 'Tipo',
-      selector: (row) => row.tipoServico,
-      sortable: true,
-    },
-    {
-      name: 'Usuário realizou',
-      selector: (row) => toCamelCase(row.usuario.nome),
-      sortable: true,
-    },
-    {
-      name: 'Valor',
-      width: '90px',
-      selector: (row) => row.vlServico,
-      sortable: true,
-    },
+    { name: 'Tipo', sortable: true, selector: (row) => toCamelCase(removeUnderline(row.tipoServico)) },
+    { name: 'Usuário realizou', sortable: true, selector: (row) => toCamelCase(row.usuario.nome) },
+    { name: 'Valor', sortable: true, width: '90px', selector: (row) => row.vlServico },
     {
       button: true,
       width: '80px',
@@ -67,12 +59,8 @@ export default function AssetService({ assetId }: AssetServiceProps) {
     };
 
     requestBackend(params)
-      .then((response) => {
-        setServices(response.data);
-      })
-      .catch((error) => {
-        console.log('Erro' + error);
-      });
+      .then((response) => setServices(response.data))
+      .catch((error) => console.log('Erro' + error));
   }, [assetId, formContextData]);
 
   useEffect(() => getServices(), [getServices]);
@@ -83,7 +71,6 @@ export default function AssetService({ assetId }: AssetServiceProps) {
       text: 'Você não será capaz de reverter isso!',
       icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#dc3545',
       cancelButtonColor: 'secondary',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',

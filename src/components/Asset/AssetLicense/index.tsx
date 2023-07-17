@@ -1,12 +1,12 @@
+import DataTable, { TableColumn } from 'react-data-table-component';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import DataTable, { TableColumn } from 'react-data-table-component';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import { useCallback, useContext, useEffect, useState } from 'react';
 import { Licenca } from 'types/Licenca/Licenca';
 import NoData from '../../NoData';
 import { requestBackend } from '../../../http/requests';
@@ -55,7 +55,6 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
       url: `/asset/${assetId}/licenses`,
       withCredentials: true,
     };
-
     requestBackend(params).then((response) => setLicenses(response.data));
   }, [assetId, formContextData]);
 
@@ -86,20 +85,10 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
 
         requestBackend(params)
           .then(() => {
-            Swal.fire({
-              title: 'Sucesso!',
-              text: 'Licença foi liberada!',
-              icon: 'success',
-            });
+            Swal.fire({ title: 'Sucesso!', text: 'Licença foi liberada!', icon: 'success' });
             setFormContextData({ isEditing: false });
           })
-          .catch((error) => {
-            Swal.fire({
-              title: 'Erro!',
-              text: `${error.response.data.message}`,
-              icon: 'error',
-            });
-          });
+          .catch((error) => Swal.fire({ title: 'Erro!', text: `${error.response.data.message}`, icon: 'error' }));
       }
     });
   };
@@ -122,12 +111,12 @@ export default function AssetLicense({ assetId }: AssetLicenseProps) {
         striped
         data={licenses ? licenses : []}
         columns={columns}
-        sortIcon={<ExpandMoreIcon />}
-        noDataComponent={<NoData />}
         responsive
         fixedHeader
         pointerOnHover
         highlightOnHover
+        noDataComponent={<NoData />}
+        sortIcon={<ExpandMoreIcon />}
         fixedHeaderScrollHeight={'82vh'}
         onRowClicked={handleRowClicked}
         customStyles={{

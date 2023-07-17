@@ -52,17 +52,12 @@ export default function AssetLinkLicense({ assetId, openModal, closeModal }: Ass
 
   const handleSelectedRowsChange = (selectedRows: any) => {
     if (selectedRows.selectedCount != 0) setSelectedLicense(selectedRows.selectedRows[0].id);
-
     if (selectedRows.selectedCount == 0) setSelectedLicense('');
   };
 
   const handleConfirm = () => {
     if (selectedLicense == '') {
-      Swal.fire({
-        title: 'Atenção',
-        text: 'Selecione uma lincença para vincular ao ativo!',
-        icon: 'warning',
-      });
+      Swal.fire({ title: 'Atenção', text: 'Selecione uma lincença para vincular ao ativo!', icon: 'warning' });
       return;
     }
 
@@ -77,21 +72,12 @@ export default function AssetLinkLicense({ assetId, openModal, closeModal }: Ass
     requestBackend(params)
       .then(() => {
         setFormContextData({ isEditing: false });
-
-        Swal.fire({
-          title: 'Sucesso!',
-          text: 'Licença foi vinculada ao ativo!',
-          icon: 'success',
-        });
+        Swal.fire({ title: 'Sucesso!', text: 'Licença foi vinculada ao ativo!', icon: 'success' });
 
         closeModal();
       })
       .catch((error) => {
-        Swal.fire({
-          title: 'Falha!',
-          text: `${error.response.data.message}`,
-          icon: 'warning',
-        });
+        Swal.fire({ title: 'Falha!', text: `${error.response.data.message}`, icon: 'warning' });
       });
   };
 
