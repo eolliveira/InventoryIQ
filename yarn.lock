@@ -810,17 +810,6 @@
   resolved "https://registry.yarnpkg.com/@mui/types/-/types-7.2.4.tgz#b6fade19323b754c5c6de679a38f068fd50b9328"
   integrity sha512-LBcwa8rN84bKF+f5sDyku42w1NTxaPgPyYKODsh01U1fVstTClbUoSA96oyRBnSNyEiAVjKm6Gwx9vjR+xyqHA==
 
-"@mui/utils@^5.11.13":
-  version "5.11.13"
-  resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.11.13.tgz#8d7317f221e8973200764820fa7f2a622dbc7150"
-  integrity sha512-5ltA58MM9euOuUcnvwFJqpLdEugc9XFsRR8Gt4zZNb31XzMfSKJPR4eumulyhsOTK1rWf7K4D63NKFPfX0AxqA==
-  dependencies:
-    "@babel/runtime" "^7.21.0"
-    "@types/prop-types" "^15.7.5"
-    "@types/react-is" "^16.7.1 || ^17.0.0"
-    prop-types "^15.8.1"
-    react-is "^18.2.0"
-
 "@mui/utils@^5.12.3":
   version "5.12.3"
   resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.12.3.tgz#3fa3570dac7ec66bb9cc84ab7c16ab6e1b7200f2"
@@ -831,17 +820,6 @@
     "@types/react-is" "^16.7.1 || ^17.0.0"
     prop-types "^15.8.1"
     react-is "^18.2.0"
-
-"@mui/x-data-grid@^6.0.3":
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-6.0.3.tgz#ff780a83c7f298ada6c1c02149e4269e7eece4d3"
-  integrity sha512-wcv5O+p25ouvB100FwVPLTLBAmvoP1SaTtOxpCYbfVSLMKkP4bbynA9a+enWtnuvcC8k5qvI75Tx5nRVbFUykA==
-  dependencies:
-    "@babel/runtime" "^7.21.0"
-    "@mui/utils" "^5.11.13"
-    clsx "^1.2.1"
-    prop-types "^15.8.1"
-    reselect "^4.1.7"
 
 "@mui/x-date-pickers@^6.3.1":
   version "6.3.1"
@@ -917,13 +895,6 @@
   version "0.14.22"
   resolved "https://registry.yarnpkg.com/@types/react-addons-linked-state-mixin/-/react-addons-linked-state-mixin-0.14.22.tgz#a8fe5929bbfa10947f3bf62d4a878706ec6b7718"
   integrity sha512-DF9utM6VjuIaY388R6XWWDs7CIDTH7on1k1yR+hqaL/T4/OqSCW5uij28APq9KI82CZf0/qtBJI+pjvXcOh0kQ==
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-beforeunload@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@types/react-beforeunload/-/react-beforeunload-2.1.1.tgz#ee77c0843a588c13df4a5a4eebe48b23b361e1d5"
-  integrity sha512-KER+M11lrXhp++tHDm9P7YWaKKBWwNyZkwnHSV3QQXGU2ZcP9x+O0Y7ZDZqGQD1OlGF4P8fmcpll3ol3a8KXsQ==
   dependencies:
     "@types/react" "*"
 
@@ -1672,11 +1643,6 @@ regenerator-runtime@^0.13.11:
   version "0.13.11"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
   integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
-
-reselect@^4.1.7:
-  version "4.1.7"
-  resolved "https://registry.yarnpkg.com/reselect/-/reselect-4.1.7.tgz#56480d9ff3d3188970ee2b76527bd94a95567a42"
-  integrity sha512-Zu1xbUt3/OPwsXL46hvOOoQrap2azE7ZQbokq61BQfiXvhewsKDwhMeZjTX9sX0nvw1t/U5Audyn1I9P/m9z0A==
 
 resolve-from@^4.0.0:
   version "4.0.0"
