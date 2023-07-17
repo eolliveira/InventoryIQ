@@ -249,9 +249,7 @@ export default function LicenseList() {
                   borderRadius: 2,
                   marginRight: 0.5,
                 }}
-                onChange={(e: any) => {
-                  setSoftwareId(e.target.value);
-                }}
+                onChange={(e) => setSoftwareId(e.target.value)}
               >
                 {softwares?.map((software) => (
                   <MenuItem sx={{ fontSize: 13 }} key={software.id} value={software.id}>

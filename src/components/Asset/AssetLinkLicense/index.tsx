@@ -1,5 +1,5 @@
 import { BaseCard } from '../../../style/GlobalStyles';
-import { useContext, useEffect, useState } from 'react';
+import { SetStateAction, useContext, useEffect, useState } from 'react';
 import { Button, Stack } from '@mui/material';
 import { requestBackend } from '../../../http/requests';
 import { FormContext } from '../../../contexts/FormContext';
@@ -50,7 +50,10 @@ export default function AssetLinkLicense({ assetId, openModal, closeModal }: Ass
       .catch((error) => console.log(error.response.data.message));
   }, [inputFilter]);
 
-  const handleSelectedRowsChange = (selectedRows: any) => {
+  const handleSelectedRowsChange = (selectedRows: {
+    selectedCount: number;
+    selectedRows: { id: SetStateAction<string> }[];
+  }) => {
     if (selectedRows.selectedCount != 0) setSelectedLicense(selectedRows.selectedRows[0].id);
     if (selectedRows.selectedCount == 0) setSelectedLicense('');
   };
@@ -106,6 +109,7 @@ export default function AssetLinkLicense({ assetId, openModal, closeModal }: Ass
               noDataComponent={<NoData />}
               pointerOnHover
               highlightOnHover
+              selectableRows
               selectableRowsSingle
               onSelectedRowsChange={handleSelectedRowsChange}
               customStyles={{

@@ -1,5 +1,5 @@
 import { BaseCard } from '../../style/GlobalStyles';
-import { useContext, useEffect, useState } from 'react';
+import { SetStateAction, useContext, useEffect, useState } from 'react';
 import { requestBackend } from '../../http/requests';
 import { FormContext } from '../../contexts/FormContext';
 import { AxiosRequestConfig } from 'axios';
@@ -120,7 +120,10 @@ export default function ChangeNfEntradaModal({
     closeForm();
   };
 
-  const handleSelectedRowsChange = (selectedRows: any) => {
+  const handleSelectedRowsChange = (selectedRows: {
+    selectedCount: number;
+    selectedRows: { idNfEntrada: SetStateAction<string> }[];
+  }) => {
     if (selectedRows.selectedCount != 0) setSelectedNfEntrada(selectedRows.selectedRows[0].idNfEntrada);
     if (selectedRows.selectedCount == 0) setSelectedNfEntrada('');
   };
