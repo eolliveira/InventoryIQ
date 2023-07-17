@@ -42,22 +42,11 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
     return response;
   },
   function (error) {
-    if (error.response.status === 401) {
-      window.location.href = '/login';
-      console.log("codigo de resposta 401");
-            
-    }
-
-    if (error.response.status === 403) {
-      //window.location.href = '/dashboard';
-      console.log("codigo de resposta 403");
-    }
-
+    if (error.response.status === 401) { window.location.href = '/login' }
+    if (error.response.status === 403) { window.location.href = '/forbidden '}
     return Promise.reject(error);
   }
 );

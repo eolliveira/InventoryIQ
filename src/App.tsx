@@ -19,6 +19,7 @@ import NobreakList from './pages/Nobreak/NobreakList';
 import MobileList from './pages/Mobile/MobileList';
 import CollectorList from './pages/Collector/CollectorList';
 import CollectorData from './pages/Collector/CollectorData';
+import AccessDenied from './pages/AccessDenied';
 
 export default function App() {
   const [authContextData, setAuthContextData] = useState<AuthContextData>({
@@ -35,6 +36,7 @@ export default function App() {
       <FormContext.Provider value={{ formContextData, setFormContextData }}>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="forbidden" element={<AccessDenied />} />
           <Route path="/" element={<Layout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="register" element={<Register />} />

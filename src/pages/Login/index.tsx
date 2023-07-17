@@ -41,7 +41,7 @@ export default function Login() {
       })
       .catch((error) => {
         Swal.fire({
-          title: 'Falha',
+          title: 'Atenção!',
           text: `${error.response.data.message}`,
           icon: 'warning',
         });
