@@ -10,7 +10,7 @@ type PanelProps<T extends ReactNode> = {
   children?: T;
 };
 
-export default function Panel({ title, children }: PanelProps<any>) {
+export default function Panel({ title, children }: PanelProps<ReactNode>) {
   return (
     <BaseCard>
       <Stack sx={{ bgcolor: '#F8FAFC', borderRadius: '8px 8px 0px 0px' }}>

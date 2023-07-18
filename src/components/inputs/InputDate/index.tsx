@@ -1,16 +1,16 @@
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Control, Controller, UseFormRegister } from 'react-hook-form';
+import { Control, Controller, FieldValues, UseFormRegister } from 'react-hook-form';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 
 interface InputDateProps {
-  control: Control<any, any>;
+  control: Control;
   name: string;
   helperText?: string;
   label: string;
-  register: UseFormRegister<any>;
+  register: UseFormRegister<FieldValues>;
   required?: boolean;
 }
 

@@ -1,5 +1,5 @@
 import { BaseCard } from '../../../style/GlobalStyles';
-import { useContext, useEffect, useState } from 'react';
+import { SetStateAction, useContext, useEffect, useState } from 'react';
 import { Button, Stack } from '@mui/material';
 import { requestBackend } from '../../../http/requests';
 import { FormContext } from '../../../contexts/FormContext';
@@ -55,7 +55,10 @@ export default function ChangeLocationModal({ assetId, openModal, closeModal: cl
       .finally(() => setIsLoading(false));
   }, [inputFilter]);
 
-  const handleSelectedRowsChange = (selectedRows: any) => {
+  const handleSelectedRowsChange = (selectedRows: {
+    selectedCount: number;
+    selectedRows: { id: SetStateAction<string> }[];
+  }) => {
     if (selectedRows.selectedCount != 0) setSelectedLocation(selectedRows.selectedRows[0].id);
     if (selectedRows.selectedCount == 0) setSelectedLocation('');
   };

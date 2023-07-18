@@ -7,7 +7,7 @@ type CustomModal<T extends ReactNode> = {
   children?: T;
 };
 
-export default function CustomModal({ openModal, children }: CustomModal<any>) {
+export default function CustomModal({ openModal, children }: CustomModal<ReactNode>) {
   return (
     <Modal open={openModal}>
       <Box

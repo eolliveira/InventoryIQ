@@ -51,9 +51,7 @@ export default function InterfaceForm({ assetId, openModal, closeModal }: Interf
         setFormContextData({ isEditing: false });
         closeModal();
       })
-      .catch((error: any) => {
-        Swal.fire({ title: 'Atenção', text: error.response.data.message, icon: 'warning' });
-      });
+      .catch((error) => Swal.fire({ title: 'Atenção', text: error.response.data.message, icon: 'warning' }));
   };
 
   const handleCancel = () => closeModal();

@@ -1,14 +1,14 @@
-import { Control, Controller, UseFormRegister } from 'react-hook-form';
+import { Control, Controller, FieldValues, UseFormRegister } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 
 type InputNumberProps = {
   name: string;
-  control: Control<any, any>;
+  control: Control;
   defaultValue?: string;
   label?: string;
   error?: boolean;
   helperText?: string;
-  register: UseFormRegister<any>;
+  register: UseFormRegister<FieldValues>;
   required?: boolean;
 };
 
