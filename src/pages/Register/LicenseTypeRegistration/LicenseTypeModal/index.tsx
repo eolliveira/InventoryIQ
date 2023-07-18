@@ -65,12 +65,8 @@ export default function LicenseTypeModal({ data, openModal, closeModal }: Licens
         });
         closeModal();
       })
-      .catch((error: any) => {
-        Swal.fire({
-          title: 'Atenção',
-          text: error.response.data.message,
-          icon: 'warning',
-        });
+      .catch((error) => {
+        Swal.fire({ title: 'Atenção', text: error.response.data.message, icon: 'warning' });
       });
   };
 

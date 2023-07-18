@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, SetStateAction, useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SpringPage } from 'types/vendor/spring';
 import { AxiosRequestConfig } from 'axios';
@@ -167,7 +167,10 @@ export default function PrinterList() {
 
   const handleRowClicked = (row: Printer) => navigate(`/printer/${row.id}`);
 
-  const handleSelectedRowsChange = (selectedRows: any) => {
+  const handleSelectedRowsChange = (selectedRows: {
+    selectedCount: number;
+    selectedRows: { id: SetStateAction<string> }[];
+  }) => {
     if (selectedRows.selectedCount == 1) setSelectedAsset(selectedRows.selectedRows[0].id);
     if (selectedRows.selectedCount == 0) setSelectedAsset('');
   };

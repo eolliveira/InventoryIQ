@@ -63,12 +63,8 @@ export default function SoftwareModal({ data: software, openModal, closeModal }:
 
         closeModal();
       })
-      .catch((error: any) => {
-        Swal.fire({
-          title: 'Atenção',
-          text: error.response.data.message,
-          icon: 'warning',
-        });
+      .catch((error) => {
+        Swal.fire({ title: 'Atenção', text: error.response.data.message, icon: 'warning' });
       });
   };
 

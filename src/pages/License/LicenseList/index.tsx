@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { SpringPage } from 'types/vendor/spring';
-import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, SetStateAction, useCallback, useContext, useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Stack from '@mui/material/Stack';
@@ -145,7 +145,10 @@ export default function LicenseList() {
 
   const handleRowClicked = (row: Licenca) => navigate(`/license/${row.id}`);
 
-  const handleSelectedRowsChange = (selectedRows: any) => {
+  const handleSelectedRowsChange = (selectedRows: {
+    selectedCount: number;
+    selectedRows: { id: SetStateAction<string> }[];
+  }) => {
     if (selectedRows.selectedCount == 1) setSelectedLicense(selectedRows.selectedRows[0].id);
     if (selectedRows.selectedCount == 0) setSelectedLicense('');
   };
@@ -267,15 +270,8 @@ export default function LicenseList() {
                 autoWidth
                 label="Tipo"
                 value={tpLicencaId}
-                sx={{
-                  minWidth: 100,
-                  fontSize: 13,
-                  borderRadius: 2,
-                  marginRight: 0.5,
-                }}
-                onChange={(e: any) => {
-                  settTpLicencaId(e.target.value);
-                }}
+                onChange={(e) => settTpLicencaId(e.target.value)}
+                sx={{ minWidth: 100, fontSize: 13, borderRadius: 2, marginRight: 0.5 }}
               >
                 {licenseTypes?.map((software) => (
                   <MenuItem sx={{ fontSize: 13 }} key={software.id} value={software.id}>

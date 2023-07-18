@@ -6,11 +6,11 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 
 interface InputDateProps {
-  control: Control;
+  control: Control<any, any>;
   name: string;
   helperText?: string;
   label: string;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<any>;
   required?: boolean;
 }
 

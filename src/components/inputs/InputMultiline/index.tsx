@@ -3,11 +3,11 @@ import TextField from '@mui/material/TextField';
 
 type InputMultilineProps = {
   name: string;
-  control: Control;
+  control: Control<any, any>;
   label?: string;
   error?: boolean;
   helperText?: string;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<any>;
   required?: boolean;
   rows: number;
 };

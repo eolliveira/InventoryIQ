@@ -3,12 +3,12 @@ import TextField from '@mui/material/TextField';
 
 type InputNumberProps = {
   name: string;
-  control: Control;
+  control: Control<any, any>;
   defaultValue?: string;
   label?: string;
   error?: boolean;
   helperText?: string;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<any>;
   required?: boolean;
 };
 

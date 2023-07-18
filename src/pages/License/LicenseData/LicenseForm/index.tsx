@@ -184,7 +184,7 @@ export default function LicenseForm({ licenseData, openForm, closeForm }: Licens
                     label="Selecione um software"
                     value={softwareId}
                     sx={{ fontSize: 13 }}
-                    onChange={(e: any) => setSoftwareId(e.target.value)}
+                    onChange={(e) => setSoftwareId(e.target.value)}
                   >
                     {softwares?.map((software) => (
                       <MenuItem sx={{ fontSize: 13 }} key={software.id} value={software.id}>
@@ -200,9 +200,7 @@ export default function LicenseForm({ licenseData, openForm, closeForm }: Licens
                     label="Tipo da licença"
                     value={tpLicencaId}
                     sx={{ fontSize: 13 }}
-                    onChange={(e: any) => {
-                      setTpLicencaId(e.target.value);
-                    }}
+                    onChange={(e) => setTpLicencaId(e.target.value)}
                   >
                     {licenseTypes?.map((licenseType) => (
                       <MenuItem sx={{ fontSize: 13 }} key={licenseType.id} value={licenseType.id}>
@@ -245,9 +243,7 @@ export default function LicenseForm({ licenseData, openForm, closeForm }: Licens
                           label="Status"
                           value={status}
                           sx={{ fontSize: 13 }}
-                          onChange={(e: any) => {
-                            setStatus(e.target.value);
-                          }}
+                          onChange={(e) => setStatus(e.target.value)}
                         >
                           {licenseStatus?.map((status) => (
                             <MenuItem sx={{ fontSize: 13 }} key={status} value={status}>

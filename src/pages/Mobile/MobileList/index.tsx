@@ -3,7 +3,7 @@ import { SpringPage } from 'types/vendor/spring';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../http/requests';
 import { assetStatus } from '../../../constants/AssetStatus';
-import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, SetStateAction, useCallback, useContext, useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import Stack from '@mui/material/Stack';
@@ -183,7 +183,10 @@ export default function MobileList() {
 
   const handleRowClicked = (row: Mobile) => navigate(`/mobile/${row.id}`);
 
-  const handleSelectedRowsChange = (selectedRows: any) => {
+  const handleSelectedRowsChange = (selectedRows: {
+    selectedCount: number;
+    selectedRows: { id: SetStateAction<string> }[];
+  }) => {
     if (selectedRows.selectedCount == 1) setSelectedAsset(selectedRows.selectedRows[0].id);
     if (selectedRows.selectedCount == 0) setSelectedAsset('');
   };
