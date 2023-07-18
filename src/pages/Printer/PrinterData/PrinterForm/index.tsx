@@ -113,6 +113,15 @@ export default function PrinterForm({ data, openForm, closeForm }: PrinterFormPr
   };
 
   const handleToSweep = () => {
+    if (ipAddress == '') {
+      Swal.fire({
+        title: 'Atenção!',
+        text: `Informe o endereço Ip!`,
+        icon: 'warning',
+      });
+      return;
+    }
+
     setSweeping(true);
 
     const params: AxiosRequestConfig = {
@@ -146,10 +155,10 @@ export default function PrinterForm({ data, openForm, closeForm }: PrinterFormPr
         const newInterface: Interface[] = [interfaces];
         setInterfaces(newInterface);
       })
-      .catch(() => {
+      .catch((error) => {
         Swal.fire({
           title: 'Falha!',
-          text: `Não foi possivel obter os dados do ativo. Por favor verifique se o endereço ip esta correto e se o agente esta configurado corretamente!`,
+          text: `${error.response.data.message}`,
           icon: 'warning',
         });
       })
@@ -177,10 +186,21 @@ export default function PrinterForm({ data, openForm, closeForm }: PrinterFormPr
         <Panel title={formContextData.isEditing ? 'Alterar impressora' : 'Adicionar impressora'}>
           {formContextData.isAdding && (
             <Box display={'flex'}>
-              <SearchBar inputFilter={ipAddress} setInputFilter={setIpAddress} />
-
-              <LoadingButton size="small" color="primary" onClick={handleToSweep} loading={sweeping} variant="text">
-                <SearchIcon fontSize="medium" />
+              <SearchBar placeholder="0.0.0.0" inputFilter={ipAddress} setInputFilter={setIpAddress} />
+              <LoadingButton
+                sx={{
+                  bgcolor: 'primary',
+                  height: 33,
+                  marginTop: 0,
+                  marginLeft: 0.5,
+                  marginRight: 1,
+                }}
+                size="small"
+                onClick={handleToSweep}
+                loading={sweeping}
+                variant="contained"
+              >
+                <SearchIcon />
               </LoadingButton>
             </Box>
           )}

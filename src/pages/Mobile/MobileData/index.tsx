@@ -1,3 +1,9 @@
+import { ContainerSidePanel, CustomTab, Wapper } from './style';
+import { useNavigate, useParams } from 'react-router-dom';
+import { requestBackend } from '../../../http/requests';
+import { FormContext } from '../../../contexts/FormContext';
+import { BaseCard } from '../../../style/GlobalStyles';
+import { AxiosRequestConfig } from 'axios';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import TabContext from '@material-ui/lab/TabContext';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -6,16 +12,11 @@ import AssetMovements from '../../../components/Asset/AssetMovements';
 import AssetLicense from '../../../components/Asset/AssetLicense';
 import AssetService from '../../../components/Asset/AssetService';
 import StockButton from '../../../components/buttons/StockButton';
-import { useNavigate, useParams } from 'react-router-dom';
-import { requestBackend } from '../../../http/requests';
 import TabPanel from '@material-ui/lab/TabPanel';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import AssetSidePanel from '../../../components/Asset/AssetSidePanel';
-import { FormContext } from '../../../contexts/FormContext';
-import { BaseCard } from '../../../style/GlobalStyles';
-import { AxiosRequestConfig } from 'axios';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2';
@@ -26,7 +27,6 @@ import ChangeCircleTwoToneIcon from '@mui/icons-material/ChangeCircleTwoTone';
 import { Mobile } from '../../../types/Ativo/Mobile';
 import MobileForm from './MobileForm';
 import MobileDetails from './MobileDetails';
-import { ContainerSidePanel, CustomTab, Wapper } from './style';
 
 type urlParams = { deviceId: string };
 
@@ -88,21 +88,10 @@ export default function MobileData() {
 
         requestBackend(params)
           .then(() => {
-            Swal.fire({
-              title: 'Removido',
-              text: 'ativo removido com sucesso!',
-              icon: 'success',
-            });
-
+            Swal.fire({ title: 'Removido', text: 'ativo removido com sucesso!', icon: 'success' });
             navigate('/mobile');
           })
-          .catch((error) => {
-            Swal.fire({
-              title: 'Falha!',
-              text: `${error.response.data.message}`,
-              icon: 'warning',
-            });
-          });
+          .catch((error) => Swal.fire({ title: 'Falha!', text: `${error.response.data.message}`, icon: 'warning' }));
       }
     });
   };

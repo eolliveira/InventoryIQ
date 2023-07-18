@@ -94,6 +94,7 @@ export default function AddServiceModal({ assetId, openModal, closeModal }: AddS
               onChange={(e) => setDescription(e.target.value)}
             />
             <TextField
+              sx={{ maxWidth: '160px' }}
               type="number"
               label="Valor do serviço"
               variant="outlined"

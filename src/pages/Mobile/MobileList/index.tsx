@@ -205,7 +205,7 @@ export default function MobileList() {
           <SelectFilter
             filterField={filterField}
             setFieldFilter={setFilterField}
-            selectedItems={['nome', 'status', 'fabricante', 'modelo', 'atribuido', 'local', 'numeroSerie']}
+            selectedItems={['nome', 'modelo', 'atribuido', 'local', 'numeroSerie']}
           />
           {statusFilterChecked && (
             <SelectFilter

@@ -105,6 +105,15 @@ export default function WorkstationForm({ data, openForm, closeForm }: Workstati
   };
 
   const onCancelForm = () => {
+    if (ipAddress == '') {
+      Swal.fire({
+        title: 'Atenção!',
+        text: `Informe o endereço Ip!`,
+        icon: 'warning',
+      });
+      return;
+    }
+
     setFormContextData({
       isAdding: false,
       isEditing: false,
@@ -161,10 +170,10 @@ export default function WorkstationForm({ data, openForm, closeForm }: Workstati
         setValue('interfaces', interfaces);
         setValue('discos', discos);
       })
-      .catch(() => {
+      .catch((error) => {
         Swal.fire({
           title: 'Falha!',
-          text: `Não foi possivel obter os dados do ativo. Por favor verifique se o endereço ip esta correto e se o agente esta configurado corretamente!`,
+          text: `${error.response.data.message}`,
           icon: 'warning',
           confirmButtonColor: '#999999',
         });
