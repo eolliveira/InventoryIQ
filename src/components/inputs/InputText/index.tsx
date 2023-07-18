@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 
 type InputTextProps = {
   name: string;
-  control: Control<any, any>;
+  control: Control<any, FieldValues>;
   defaultValue?: string;
   label?: string;
   error?: boolean;

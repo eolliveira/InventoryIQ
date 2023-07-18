@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 
 type InputMultilineProps = {
   name: string;
-  control: Control<any, any>;
+  control: Control<any, FieldValues>;
   label?: string;
   error?: boolean;
   helperText?: string;

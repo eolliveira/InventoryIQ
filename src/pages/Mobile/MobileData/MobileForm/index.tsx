@@ -114,7 +114,7 @@ export default function MobileForm({ data, openForm, closeForm }: MobileFormProp
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel title={formContextData.isEditing ? 'Alterar Dispositivo' : 'Adicionar Dispositivo'}>
+        <Panel title={formContextData.isEditing ? 'Alterar dispositivo' : 'Adicionar dispositivo'}>
           <form style={{ maxWidth: '900px' }} onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-md-6">

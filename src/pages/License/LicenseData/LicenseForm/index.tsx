@@ -164,8 +164,8 @@ export default function LicenseForm({ licenseData, openForm, closeForm }: Licens
   return (
     <CustomModal openModal={openForm}>
       <BaseCard>
-        <Panel title={formContextData.isEditing ? 'Alterar Licença' : 'Adicionar Licença'}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+        <Panel title={formContextData.isEditing ? 'Alterar licença' : 'Adicionar licença'}>
+          <form style={{ maxWidth: `900px` }} onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-lg-6">
                 <InputText

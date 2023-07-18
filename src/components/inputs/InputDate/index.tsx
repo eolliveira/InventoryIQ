@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 
 interface InputDateProps {
-  control: Control<any, any>;
+  control: Control<any, FieldValues>;
   name: string;
   helperText?: string;
   label: string;

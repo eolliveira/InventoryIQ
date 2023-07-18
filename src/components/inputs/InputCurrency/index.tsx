@@ -1,9 +1,10 @@
 import { Control, Controller, FieldValues, UseFormRegister } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
+import { ReactNode } from 'react';
 
 type InputCurrencyProps = {
   name: string;
-  control: Control<any, any>;
+  control: Control<any, FieldValues>;
   defaultValue?: string;
   label?: string;
   error?: boolean;
