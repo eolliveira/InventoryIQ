@@ -123,6 +123,15 @@ export default function WorkstationForm({ data, openForm, closeForm }: Workstati
   };
 
   const handleToSweep = () => {
+    if (ipAddress == '') {
+      Swal.fire({
+        title: 'Atenção!',
+        text: `Informe o endereço Ip!`,
+        icon: 'warning',
+      });
+      return;
+    }
+
     setSweeping(true);
 
     const params: AxiosRequestConfig = {
