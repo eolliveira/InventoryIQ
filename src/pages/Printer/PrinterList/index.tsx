@@ -276,6 +276,7 @@ export default function PrinterList() {
           value={rowsPerPage}
           onChange={(event: SelectChangeEvent) => {
             setRowsPerPage(event.target.value);
+            setNumberPage(0);
           }}
         >
           <MenuItem sx={{ fontSize: 14 }} value={5}>

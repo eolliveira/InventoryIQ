@@ -58,7 +58,7 @@ export default function WorkstationList() {
   const navigate = useNavigate();
   const [numberPage, setNumberPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState('10');
+  const [rowsPerPage, setRowsPerPage] = useState('15');
   const [page, setPage] = useState<SpringPage<Workstation>>();
   const { formContextData, setFormContextData } = useContext(FormContext);
 
@@ -241,7 +241,7 @@ export default function WorkstationList() {
         noDataComponent={<NoData />}
         responsive
         fixedHeader
-        fixedHeaderScrollHeight={'68vh'}
+        fixedHeaderScrollHeight={'70vh'}
         selectableRows
         pointerOnHover
         highlightOnHover
@@ -281,13 +281,14 @@ export default function WorkstationList() {
           value={rowsPerPage}
           onChange={(event: SelectChangeEvent) => {
             setRowsPerPage(event.target.value);
+            setNumberPage(0);
           }}
         >
           <MenuItem sx={{ fontSize: 14 }} value={5}>
             5
           </MenuItem>
-          <MenuItem sx={{ fontSize: 14 }} value={10}>
-            10
+          <MenuItem sx={{ fontSize: 14 }} value={15}>
+            15
           </MenuItem>
           <MenuItem sx={{ fontSize: 14 }} value={50}>
             50
