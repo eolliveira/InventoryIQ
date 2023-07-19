@@ -5,13 +5,14 @@ import { useContext, useState } from 'react';
 import { VERSION, requestBackendLogin } from '../../http/requests';
 import { saveAuthData } from '../../utils/LocalStorage';
 import { getTokenData } from '../../utils/Auth';
+import { Container, Form, LogoContainer, VersionContainer } from './style';
 import Logo from '../../assets/img/logo.gif';
 import Swal from 'sweetalert2';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
-import './style';
-import { Container, Form, LogoContainer, VersionContainer } from './style';
 import Box from '@mui/material/Box';
+import packageJson from '../../../package.json';
+import './style';
 
 type LoginData = {
   login: string;
@@ -87,7 +88,7 @@ export default function Login() {
       </Box>
       <VersionContainer>
         <Typography fontWeight={'bold'} variant="subtitle2">
-          versão {VERSION}
+          versão {packageJson.version}
         </Typography>
       </VersionContainer>
     </Container>

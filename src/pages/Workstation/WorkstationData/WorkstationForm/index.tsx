@@ -8,15 +8,15 @@ import { FormContext } from '../../../../contexts/FormContext';
 import { useNavigate } from 'react-router-dom';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from '../../../../http/requests';
+import { WorkstationSync } from 'types/Ativo/Workstation/WorkstationSync';
+import { Interface } from 'types/Ativo/Interface';
+import { Disco } from 'types/Ativo/Workstation/Disco';
+import { Particao } from 'types/Ativo/Workstation/Particao';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomModal from '../../../../components/CustomModal';
 import SearchIcon from '@mui/icons-material/Search';
-import { WorkstationSync } from 'types/Ativo/Workstation/WorkstationSync';
-import { Interface } from 'types/Ativo/Interface';
-import { Disco } from 'types/Ativo/Workstation/Disco';
-import { Particao } from 'types/Ativo/Workstation/Particao';
 import Typography from '@mui/material/Typography';
 import NoData from '../../../../components/NoData';
 import InputDate from '../../../../components/inputs/InputDate';
@@ -105,15 +105,6 @@ export default function WorkstationForm({ data, openForm, closeForm }: Workstati
   };
 
   const onCancelForm = () => {
-    if (ipAddress == '') {
-      Swal.fire({
-        title: 'Atenção!',
-        text: `Informe o endereço Ip!`,
-        icon: 'warning',
-      });
-      return;
-    }
-
     setFormContextData({
       isAdding: false,
       isEditing: false,
