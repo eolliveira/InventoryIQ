@@ -96,8 +96,8 @@ export default function MenuSidebar() {
               padding: 12,
               borderRadius: 10,
             }}
-            active={location.pathname.startsWith('/dashboard')}
-            component={<Link to={'/dashboard'} />}
+            // active={location.pathname.startsWith('/dashboard')}
+            // component={<Link to={'/dashboard'} />}
             icon={<SpeedOutlinedIcon />}
           >
             Dashboard

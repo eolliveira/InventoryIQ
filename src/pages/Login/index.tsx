@@ -2,7 +2,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
-import { VERSION, requestBackendLogin } from '../../http/requests';
+import { requestBackendLogin } from '../../http/requests';
 import { saveAuthData } from '../../utils/LocalStorage';
 import { getTokenData } from '../../utils/Auth';
 import { Container, Form, LogoContainer, VersionContainer } from './style';
@@ -38,7 +38,7 @@ export default function Login() {
           authenticated: true,
           tokenData: getTokenData(),
         });
-        navigate('/dashboard');
+        navigate('/license');
       })
       .catch((error) => {
         Swal.fire({
