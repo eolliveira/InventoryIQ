@@ -11,15 +11,15 @@ COPY ./dist .
 
 # Cria o arquivo de configuração do Nginx
 RUN echo 'server { \
-    listen 3000; \
-    listen [::]:3000; \
+    listen 8083; \
+    listen [::]:8083; \
     server_name localhost; \
     root /usr/share/nginx/html; \
     index index.html; \
     try_files $uri $uri/ /index.html; \
     }' > /etc/nginx/conf.d/default.conf
 
-EXPOSE 3000
+EXPOSE 8083
 
 # Comando para iniciar o Nginx quando o container for executado
 CMD ["nginx", "-g", "daemon off;"]
