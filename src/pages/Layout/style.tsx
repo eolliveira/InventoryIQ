@@ -1,14 +1,9 @@
-import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   height: 100%;
   display: flex;
 `;
-
-export function Content({ children }: { children: ReactNode }) {
-  return <ContentWrapper>{children}</ContentWrapper>;
-}
 
 export const Main = styled.main`
   background-color: rgb(238, 242, 246);
@@ -17,7 +12,7 @@ export const Main = styled.main`
   padding: 15px;
 `;
 
-export const ContentWrapper = styled.div`
+export const Content = styled.div`
   flex: 1;
   height: 100vh;
   overflow: hidden;

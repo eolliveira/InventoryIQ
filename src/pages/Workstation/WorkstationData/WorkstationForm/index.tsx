@@ -117,7 +117,7 @@ export default function WorkstationForm({ data, openForm, closeForm }: Workstati
     if (ipAddress == '') {
       Swal.fire({
         title: 'Atenção!',
-        text: `Informe o endereço Ip!`,
+        text: `Informe um endereço Ip!`,
         icon: 'warning',
       });
       return;

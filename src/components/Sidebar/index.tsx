@@ -11,6 +11,7 @@ import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import DevicesOutlinedIcon from '@mui/icons-material/DevicesOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+
 export default function MenuSidebar() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } = useProSidebar();
   const location = useLocation();

@@ -19,7 +19,7 @@ const columns: TableColumn<Movimento>[] = [
   { name: 'Data movimento', selector: (row) => dayjs(row.dtMovimento).format('DD/MM/YYYY'), grow: 0.6 },
   {
     name: 'Descrição',
-    selector: (row) => (
+    cell: (row) => (
       <Tooltip title={row.descricao}>
         <span>{row.descricao}</span>
       </Tooltip>
