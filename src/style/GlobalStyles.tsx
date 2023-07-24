@@ -22,6 +22,9 @@ export const GlobalStyles = createGlobalStyle`
       background-color: #dc3545;
     }
 
+    .ps-sidebar-root.css-1satt3r {
+      border-right-style: none;
+    }
 
 `;
 
