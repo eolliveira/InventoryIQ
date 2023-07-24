@@ -2,7 +2,6 @@ import { Sidebar, Menu, MenuItem, SubMenu, useProSidebar, sidebarClasses } from 
 import { ButtonColapseContainer, SidebarContainer } from './style';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, useLocation } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import IconButton from '@mui/material/IconButton';
 import Logo from '../../assets/img/logo.gif';
@@ -11,6 +10,7 @@ import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import DevicesOutlinedIcon from '@mui/icons-material/DevicesOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import SideBarMenuItem from './SidebarMenuItem';
 
 export default function MenuSidebar() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } = useProSidebar();
@@ -112,56 +112,11 @@ export default function MenuSidebar() {
             icon={<DevicesOutlinedIcon />}
             label="Ativos"
           >
-            <MenuItem
-              style={{
-                margin: '10px 10px 0px 10px',
-                borderRadius: 10,
-              }}
-              active={location.pathname.startsWith('/workstation')}
-              component={<NavLink to={'/workstation'} />}
-            >
-              Estação de trabalho
-            </MenuItem>
-            <MenuItem
-              style={{
-                margin: '10px 10px 0px 10px',
-                borderRadius: 10,
-              }}
-              active={location.pathname.startsWith('/printer')}
-              component={<NavLink to={'/printer'} />}
-            >
-              Impressora
-            </MenuItem>
-            <MenuItem
-              style={{
-                margin: '10px 10px 0px 10px',
-                borderRadius: 10,
-              }}
-              active={location.pathname.startsWith('/mobile')}
-              component={<NavLink to={'/mobile'} />}
-            >
-              Mobile
-            </MenuItem>
-            <MenuItem
-              style={{
-                margin: '10px 10px 0px 10px',
-                borderRadius: 10,
-              }}
-              active={location.pathname.startsWith('/nobreak')}
-              component={<NavLink to={'/nobreak'} />}
-            >
-              Nobreak
-            </MenuItem>
-            <MenuItem
-              style={{
-                margin: '10px 10px 10px 10px',
-                borderRadius: 10,
-              }}
-              active={location.pathname.startsWith('/collector')}
-              component={<NavLink to={'/collector'} />}
-            >
-              Coletor
-            </MenuItem>
+            <SideBarMenuItem label="Estação de trabalho" path="/workstation" />
+            <SideBarMenuItem label="Impressora" path="/printer" />
+            <SideBarMenuItem label="Mobile" path="/mobile" />
+            <SideBarMenuItem label="Nobreak" path="/nobreak" />
+            <SideBarMenuItem label="Coletor" path="/collector" />
           </SubMenu>
           <MenuItem
             style={{
@@ -185,16 +140,7 @@ export default function MenuSidebar() {
             icon={<SettingsOutlinedIcon />}
             label="Configurações"
           >
-            <MenuItem
-              style={{
-                margin: '10px 10px 10px 10px',
-                borderRadius: 10,
-              }}
-              active={location.pathname.startsWith('/register')}
-              component={<NavLink to={'/register'} />}
-            >
-              Cadastro
-            </MenuItem>
+            <SideBarMenuItem label="Cadastro" path="/register" />
           </SubMenu>
         </Menu>
       </Sidebar>
